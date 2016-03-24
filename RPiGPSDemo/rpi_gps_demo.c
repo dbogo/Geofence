@@ -4,44 +4,105 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
+
+char* generate_nmea_sentence(void){
+	srand(time(NULL));
+	char* nmea = malloc(100 * sizeof(char)); // allocate string of 100
+	memset(nmea, '\0', sizeof(nmea));
+	int r = rand() % 2;
+	if(r == 0) strcat(nmea, "$GPGGA,");
+	else strcat(nmea, "$GPRMC,");
+	
+	// 2. append time (first convert to a string) NOTE: is there a nicer way to do this ?
+	char str[30];
+	sprintf(str, "%d,", rand());
+	strcat(nmea, str);
+	
+	//continue to generate the correct type of nmea sentence
+	if(strncmp(nmea, "$GPGGA", 6) == 0){
+		// 3. latitude can only be between 0 and 90
+		memset(str, '\0', sizeof(str));
+		sprintf(str, "%f,", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.9)) * 100);
+		strcat(nmea, str);
+		// 4. longitude can only be between 0 and 180
+		memset(str, '\0', sizeof(str));
+		sprintf(str, "%f,", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.9)) * 200);
+		strcat(nmea, str);
+		// 5. fix quality
+		memset(str, '\0', sizeof(str));
+		sprintf(str, "%d,", (uint8_t)((rand()%8)+1)); // fix can be from 0-8 but 0 is invalid signal. dont bother right now
+		strcat(nmea, str);
+		// 6. num of tracked satellites
+		memset(str, '\0', sizeof(str));
+		sprintf(str, "%d,", (uint8_t)((rand()%9)+2)); // arbitrary number but no too big (24 sats in space at all)
+		strcat(nmea, str);
+		// 7. HDOP (for example between 0 and 30, (the more the worse!))
+		memset(str, '\0', sizeof(str));
+		sprintf(str, "%f,", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.3)) * 100); // arbitrary number but no too big (24 sats in space at all)
+		strcat(nmea, str);
+		// 8. altitude above sea level
+		memset(str, '\0', sizeof(str));
+		sprintf(str, "%f,M,", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1)))) * 1000); // arbitrary number but no too big (24 sats in space at all)
+		strcat(nmea, str);
+		// 9. height above gedid, time since last DGPS update (sec), DGPS satation id, checksum
+		memset(str, '\0', sizeof(str));
+		sprintf(str, "%f,M,0,0,E*68", ((((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.191)) * 1000) - 106)); // arbitrary number but no too big (24 sats in space at all)
+		strcat(nmea, str);
+	} else {
+		strcat(nmea, "A,"); //status
+		// 4. latitude can only be between 0 and 90
+		memset(str, '\0', sizeof(str));
+		sprintf(str, "%f,", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.9)) * 100);
+		strcat(nmea, str);
+		// 5. longitude can only be between 0 and 180
+		memset(str, '\0', sizeof(str));
+		sprintf(str, "%f,", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.9)) * 200);
+		strcat(nmea, str);
+		//speed over the ground IN KNOTS
+		memset(str, '\0', sizeof(str));
+		sprintf(str, "%f,", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.55)) * 100);
+		strcat(nmea, str);
+		// track angle in degrees True (course, thus 0-360), date, magnetic variation, and checksum, all not relevant for us
+		memset(str, '\0', sizeof(str));
+		sprintf(str, "%f,230394,3.1,W*68", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.36)) * 1000);
+		strcat(nmea, str);
+	}
+	return nmea;
+}
 
 GPSSamp* RPiGetGPSSample(void){
-	char* nmea1 = NMEA_GGA;
-	//char* nmea2 = NMEA_RMC;
-	
+	char* nmea = generate_nmea_sentence(); // get randomly generated NMEA sentence
 	GPSSamp* sample = malloc(sizeof(GPSSamp));
 	
-	if((strstr(nmea1, "$GPGGA") != NULL)){
-		printf("got GGA !\n");
+	if((strstr(nmea, "$GPGGA") != NULL)){
 		gga ggaSamp;
-		parse_gga(&ggaSamp, nmea1);
+		parse_gga(&ggaSamp, nmea);
 		sample->altitude = ggaSamp.altitude;
 		sample->longitude = ggaSamp.longitude;
 		sample->latitude = ggaSamp.latitude;
-	}
-	else if((strstr(nmea1, "$GPRMC") != NULL)){
-		printf("got RMC !\n");
+		sample->course = sample->speed = 0.0f; // temporary solution
+	} else if((strstr(nmea, "$GPRMC") != NULL)){
 		rmc rmcSamp;
-		parse_rmc(&rmcSamp, nmea1);
+		parse_rmc(&rmcSamp, nmea);
 		sample->longitude = rmcSamp.longitude;
 		sample->latitude = rmcSamp.latitude;
 		sample->course = rmcSamp.course;
 		sample->speed = rmcSamp.speed;
-	} 
-	else{
+		sample->altitude = 0.0f; // temporary solution
+	} else{
 		//NOTE: think of a better way to warn about failure (memset)
 		//char s[5];
 		//memset(s, '\0', sizeof(s));
-		printf("unrecognized NMEA format %.5s!\n", nmea1);
+		printf("unrecognized NMEA format %.5s!\n", nmea);
 		return NULL;
-		// FIXME: what to return here, if at all ?!?!?!
 	}
 	
 	return sample;
 }
 
-/*
+#if 0
 void RPiGetGPSSample(GPSSamp* sample, char* nmea, bool hasgga, bool hasrmc){
 	// if the signal is GGA and we didn't register it yet
 	if((strstr(nmea, "$GPGGA") != NULL) && (hasgga == false)){
@@ -69,7 +130,8 @@ void RPiGetGPSSample(GPSSamp* sample, char* nmea, bool hasgga, bool hasrmc){
 		;
 		// FIXME: what to return here, if at all ?!?!?!
 	}
-}*/
+}
+#endif
 
 void parse_gga(gga* samp, char *nmea){
     char *p = nmea;
@@ -117,22 +179,7 @@ void parse_gga(gga* samp, char *nmea){
 
     p = strchr(p, ',')+1;
     samp->altitude = atof(p);
-	//printf("sampALT: %f \n",samp->altitude);
 }
-
-/*
-void parse_rmc(rmc* samp, char* nmea){
-	char *p = nmea;
-	p = strchr(p, ',')+1; //skip time
-	p = strchr(p, ',')+1; //skip status
-	
-	// this is precious!
-	char tes[50];
-    memset(tes, '\0', sizeof(tes));
-    //strncpy(tes, p, m-p);
-	printf("%f asdadawddw234wadsd\n", atof(strncpy(tes, p, m-p)));
-}*/
-
 
 void parse_rmc(rmc* samp, char *nmea){
     char *p = nmea;

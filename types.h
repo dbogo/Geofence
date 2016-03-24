@@ -18,18 +18,16 @@
 extern "C" {
 #endif
 	
-#include <inttypes.h>
-	
 typedef enum { false, true } bool;
 typedef unsigned char uint8_t;
 
 
 typedef struct {
-	float latitude; // value from 0.0 to 90.0
-	float longitude; // value from 0.0 to 180.0 NOTE:east/west !
+	double latitude; // value from 0.0 to 90.0
+	double longitude; // value from 0.0 to 180.0 NOTE:east/west !
 	float speed;
 	float altitude;
-	float course;
+	double course;
 } GPSSamp;
 
 typedef struct {
@@ -39,9 +37,9 @@ typedef struct {
 } Zone;
 
 typedef struct {
-	float latitude; // Latitude e.g: 4124.8963 (XXYY.ZZKK.. DEG, MIN, SEC.SS)
+	double latitude; // Latitude e.g: 4124.8963 (XXYY.ZZKK.. DEG, MIN, SEC.SS)
 	char lat; // Latitude e.g: N
-	float longitude; // Longitude e.g: 08151.6838 (XXXYY.ZZKK.. DEG, MIN, SEC.SS)
+	double longitude; // Longitude e.g: 08151.6838 (XXXYY.ZZKK.. DEG, MIN, SEC.SS)
 	char lon; // Longitude e.g: W
 	uint8_t quality;  // Quality 0, 1, 2
 	uint8_t satellites; // Number of satellites: 1,2,3,4,5...
@@ -49,12 +47,12 @@ typedef struct {
 } gga;
 
 typedef struct {
-	float latitude;
+	double latitude;
 	char lat;
-	float longitude;
+	double longitude;
 	char lon;
 	float speed;
-	float course;
+	double course;
 } rmc;
 
 

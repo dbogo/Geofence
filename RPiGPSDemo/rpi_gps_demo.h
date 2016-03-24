@@ -25,5 +25,7 @@ extern GPSSamp* RPiGetGPSSample(void);
 extern void parse_gga(gga* samp, char *nmea);
 extern void parse_rmc(rmc* samp, char *nmea);
 
+char* generate_nmea_sentence(void);
+
 #endif /* RPI_GPS_DEMO_H */
 
