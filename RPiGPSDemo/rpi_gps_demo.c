@@ -24,11 +24,11 @@ char* generate_nmea_sentence(void){
 	if(strncmp(nmea, "$GPGGA", 6) == 0){
 		// 3. latitude can only be between 0 and 90
 		memset(str, '\0', sizeof(str));
-		sprintf(str, "%f,", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.9)) * 100);
+		sprintf(str, "%f,N,", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.9)) * 100);
 		strcat(nmea, str);
 		// 4. longitude can only be between 0 and 180
 		memset(str, '\0', sizeof(str));
-		sprintf(str, "%f,", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.9)) * 200);
+		sprintf(str, "%f,E,", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.9)) * 200);
 		strcat(nmea, str);
 		// 5. fix quality
 		memset(str, '\0', sizeof(str));
@@ -54,11 +54,11 @@ char* generate_nmea_sentence(void){
 		strcat(nmea, "A,"); //status
 		// 4. latitude can only be between 0 and 90
 		memset(str, '\0', sizeof(str));
-		sprintf(str, "%f,", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.9)) * 100);
+		sprintf(str, "%f,N,", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.9)) * 100);
 		strcat(nmea, str);
 		// 5. longitude can only be between 0 and 180
 		memset(str, '\0', sizeof(str));
-		sprintf(str, "%f,", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.9)) * 200);
+		sprintf(str, "%f,E,", ((double)(rand() / ((double)((unsigned)RAND_MAX + 1))*0.9)) * 200);
 		strcat(nmea, str);
 		//speed over the ground IN KNOTS
 		memset(str, '\0', sizeof(str));
@@ -133,6 +133,7 @@ void RPiGetGPSSample(GPSSamp* sample, char* nmea, bool hasgga, bool hasrmc){
 }
 #endif
 
+//registers lat, lon, quality, satellites, altitude
 void parse_gga(gga* samp, char *nmea){
     char *p = nmea;
     p = strchr(p, ',')+1; //skip time
@@ -181,6 +182,7 @@ void parse_gga(gga* samp, char *nmea){
     samp->altitude = atof(p);
 }
 
+//registers lat, lon, spd, course
 void parse_rmc(rmc* samp, char *nmea){
     char *p = nmea;
 
