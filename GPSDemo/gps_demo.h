@@ -10,7 +10,7 @@
 
 #include "../types.h" // contains the data type of GPS info
 
-extern GPSSamp getGPSSample();
+extern GPSSamp* getGPSSample();
 
 
 #endif /* GPS_DEMO_H */
