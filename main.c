@@ -6,16 +6,14 @@
 #include <stdio.h>
 #include "main.h"
 #include <stdlib.h>
-#include "GPSDemo/gps_demo.h"
 #include "RPiGPSDemo/rpi_gps_demo.h"
-
+#include "GPSInterface.h"
 #include <time.h>
-/*
- * Latitude = Y (0-90)
- * Longitude = X (0-180)
- */
 
 /*
+					Latitude = Y (0-90)
+					Longitude = X (0-180)
+
  						AT THE EQUATOR
 		One degree of latitude =  110.57 km or  68.71 mi
 		One minute of latitude =    1.84 km or   1.15 mi
@@ -38,50 +36,48 @@ int main(int argc, char** argv) {
 
 	//TODO: timer
 
-	GPSSamp* sample = NULL;
+	GPSSamp* sample = malloc(sizeof(GPSSamp));
+	int sampleStatus = 0; // invalid(9), gga(2), rmc(3), or full(1).
 
+	//TODO: reconsider this busy loop design !!
 	//very basic loop with 1 sec interval
-	long a = time(NULL);
-	int b = 0;
+	time_t startTimeSec = time(NULL);
+	time_t currentTimeSec = 0;
 	while (1) {
-		b = time(NULL);
-		if ((b - a) > 0) {
-			//sample = RPiGetGPSSample();
-			sample = getGPSSample();
+		currentTimeSec = time(NULL);
+		if ((currentTimeSec - startTimeSec) >= TIME_TO_WAIT_SEC) {
+			sampleStatus = getGPSSample(sample);
 			printf("lat: %f, lon: %f, alt: %f, crs: %f, spd: %f\n", sample->latitude,
 				sample->longitude, sample->altitude, sample->course, sample->speed);
 
-			if (sampInRange(sample, &zone)) {
-				printf("\n\t--IN RANGE !--\n");
+			printf("%d", sampleStatus);
+			if (isSampleInRange(sample, &zone)) {
+				printf("\t--IN RANGE !--\n");
 			} else {
-				printf("\n\t--OUT OF RANGE !--\n");
+				printf("\t--OUT OF RANGE !--\n");
 			}
-			a = b;
+			startTimeSec = currentTimeSec;
+			printf("\n");
 		}
 	}
+	
+	free(sample);
 
-	/*
-	if(sample == NULL){
-		printf("\nUnrecognized NMEA format !\n");
-	} else {
-		printf("\nsample:\nlat:%f\nlong:%f\nspd:%f\nalt:%f\ncrs:%f\n", sample->latitude,
-		 sample->longitude, sample->speed, sample->altitude, sample->course);
-	}*/
-
-	if (sampInRange(sample, &zone)) {
-		printf("\n\t--IN RANGE !--\n");
-	} else {
-		printf("\n\t--OUT OF RANGE !--\n");
-	}
 	return (0);
 }
 
-bool sampInRange(GPSSamp* samp, Zone* zone) {
-	// figure out if samp is within borders (including altitude)
-	if (((samp->latitude <= max(zone->p1.latitude, zone->p2.latitude)) && (samp->latitude >= min(zone->p1.latitude, zone->p2.latitude)))
-			&& ((samp->longitude <= max(zone->p1.longitude, zone->p2.longitude)) && (samp->longitude >= min(zone->p1.longitude, zone->p2.longitude)))
-			&& (samp->altitude <= zone->altitude))
-		return true;
-	return false;
+bool isSampleInRange(GPSSamp* samp, Zone* zone) {
+	if(samp->altitude > zone->altitude) 
+		return false;
+
+	if(samp->latitude >= max(zone->p1.latitude, zone->p2.latitude) || 
+		samp->latitude <= min(zone->p1.latitude, zone->p2.latitude))
+		return false;
+
+	if(samp->longitude >= max(zone->p1.longitude, zone->p2.longitude) || 
+		samp->longitude <= min(zone->p1.longitude, zone->p2.longitude))
+		return false;
+
+	return true;
 }
 

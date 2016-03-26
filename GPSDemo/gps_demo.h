@@ -8,10 +8,7 @@
 #ifndef GPS_DEMO_H
 #define GPS_DEMO_H
 
-#include "../types.h" // contains the data type of GPS info
-
-extern GPSSamp* getGPSSample();
-
+#include "../GPSInterface.h"
 
 #endif /* GPS_DEMO_H */
 

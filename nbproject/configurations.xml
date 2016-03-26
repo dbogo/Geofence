@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>GPSInterface.h</itemPath>
       <itemPath>main.h</itemPath>
       <itemPath>types.h</itemPath>
     </logicalFolder>
@@ -58,6 +59,8 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="GPSInterface.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="main.h" ex="false" tool="3" flavor2="0">
@@ -86,6 +89,8 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="GPSInterface.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="main.h" ex="false" tool="3" flavor2="0">

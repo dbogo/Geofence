@@ -9,3 +9,5 @@ dist/Debug/
 
 run.sh
 run.sh~
+/build/
+/dist/

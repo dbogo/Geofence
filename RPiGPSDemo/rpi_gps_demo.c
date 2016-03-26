@@ -1,5 +1,5 @@
 #include "rpi_gps_demo.h"
-#include "nmea_examples.h"
+//#include "nmea_examples.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -72,66 +72,30 @@ char* generate_nmea_sentence(void){
 	return nmea;
 }
 
-GPSSamp* RPiGetGPSSample(void){
+int getGPSSample(GPSSamp* samp){
 	char* nmea = generate_nmea_sentence(); // get randomly generated NMEA sentence
-	GPSSamp* sample = malloc(sizeof(GPSSamp));
 	
 	if((strstr(nmea, "$GPGGA") != NULL)){
 		gga ggaSamp;
 		parse_gga(&ggaSamp, nmea);
-		sample->altitude = ggaSamp.altitude;
-		sample->longitude = ggaSamp.longitude;
-		sample->latitude = ggaSamp.latitude;
-		sample->course = sample->speed = 0.0f; // temporary solution
+		samp->altitude = ggaSamp.altitude;
+		samp->longitude = ggaSamp.longitude;
+		samp->latitude = ggaSamp.latitude;
+		samp->course = samp->speed = 0.0f; // temporary solution
+		return REGISTERED_GGA;
 	} else if((strstr(nmea, "$GPRMC") != NULL)){
 		rmc rmcSamp;
 		parse_rmc(&rmcSamp, nmea);
-		sample->longitude = rmcSamp.longitude;
-		sample->latitude = rmcSamp.latitude;
-		sample->course = rmcSamp.course;
-		sample->speed = rmcSamp.speed;
-		sample->altitude = 0.0f; // temporary solution
-	} else{
-		//NOTE: think of a better way to warn about failure (memset)
-		//char s[5];
-		//memset(s, '\0', sizeof(s));
-		printf("unrecognized NMEA format %.5s!\n", nmea);
-		return NULL;
+		samp->longitude = rmcSamp.longitude;
+		samp->latitude = rmcSamp.latitude;
+		samp->course = rmcSamp.course;
+		samp->speed = rmcSamp.speed;
+		samp->altitude = 0.0f; // temporary solution
+		return REGISTERED_RMC;
 	}
 	
-	return sample;
+	return UNRECOGNIZED_NMEA_FORMAT;	
 }
-
-#if 0
-void RPiGetGPSSample(GPSSamp* sample, char* nmea, bool hasgga, bool hasrmc){
-	// if the signal is GGA and we didn't register it yet
-	if((strstr(nmea, "$GPGGA") != NULL) && (hasgga == false)){
-		printf("gga !\n");
-		gga ggaSamp;
-		parse_gga(&ggaSamp, nmea);
-		sample->altitude = ggaSamp.altitude;
-		sample->longitude = ggaSamp.longitude;
-		sample->latitude = ggaSamp.latitude;
-		hasgga = true;
-	} else if((strstr(nmea, "$GPRMC") != NULL) && (hasrmc == false)){
-		printf("rmc !\n");
-		rmc rmcSamp;
-		parse_rmc(&rmcSamp, nmea);
-		sample->longitude = rmcSamp.longitude;
-		sample->latitude = rmcSamp.latitude;
-		sample->course = rmcSamp.course;
-		sample->speed = rmcSamp.speed;
-		hasrmc = true;
-	} else {
-		//NOTE: think of a better way to warn about failure (memset)
-		char s[5];
-		memset(s, '\0', sizeof(s));
-		printf("unrecognized NMEA format %s!\n", strncpy(s, nmea, 6));
-		;
-		// FIXME: what to return here, if at all ?!?!?!
-	}
-}
-#endif
 
 //registers lat, lon, quality, satellites, altitude
 void parse_gga(gga* samp, char *nmea){

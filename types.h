@@ -21,6 +21,7 @@ extern "C" {
 typedef enum { false, true } bool;
 typedef unsigned char uint8_t;
 
+#define TIME_TO_WAIT_SEC 1
 
 typedef struct {
 	double latitude; // value from 0.0 to 90.0
