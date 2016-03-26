@@ -1,8 +1,11 @@
-RPiGPSDemo/build
-RPiGPSDemo/dist
+RPiGPSDemo/build/Debug/
+RPiGPSDemo/dist/Debug
 
-GPSDemo/build
-GPSDemo/dist
+GPSDemo/build/Debug/
+GPSDemo/dist/Debug/
+
+build/Debug/
+dist/Debug/
 
 run.sh
 run.sh~
