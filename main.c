@@ -1,14 +1,11 @@
-/* 
- * File:   main.c
- * Author: bogo
- */
-
 #include <stdio.h>
-#include "main.h"
-#include <stdlib.h>
-#include "RPiGPSDemo/rpi_gps_demo.h"
-#include "GPSInterface.h"
 #include <time.h>
+#include <stdlib.h>
+
+#include "main.h"
+#include "RPiGPSDemo/rpi_gps_demo.h"
+//#include "GPSInterface.h"
+
 
 /*
 					Latitude = Y (0-90)
@@ -49,8 +46,8 @@ int main(int argc, char** argv) {
 			sampleStatus = getGPSSample(sample);
 			printf("lat: %f, lon: %f, alt: %f, crs: %f, spd: %f\n", sample->latitude,
 				sample->longitude, sample->altitude, sample->course, sample->speed);
-
-			printf("%d", sampleStatus);
+			
+			printf("%d ", sampleStatus);
 			if (isSampleInRange(sample, &zone)) {
 				printf("\t--IN RANGE !--\n");
 			} else {

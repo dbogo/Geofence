@@ -1,10 +1,3 @@
-
-/* 
- * File:   gps_demo.h
- * Author: bogo
- *
-  */
-
 #ifndef GPS_DEMO_H
 #define GPS_DEMO_H
 

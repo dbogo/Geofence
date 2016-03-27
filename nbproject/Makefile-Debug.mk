@@ -52,7 +52,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-LGPSDemo/dist/Debug/GNU-Linux -LRPiGPSDemo/dist/Debug/GNU-Linux -lGPSDemo -dynamic -lRPiGPSDemo -dynamic
+LDLIBSOPTIONS=-LRPiGPSDemo/dist/Debug/GNU-Linux -LGPSDemo/dist/Debug/GNU-Linux -lRPiGPSDemo -dynamic -lGPSDemo -dynamic
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -65,7 +65,7 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/geofence: ${OBJECTFILES}
 ${OBJECTDIR}/main.o: main.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -IGPSDemo -IRPiGPSDemo -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+	$(COMPILE.c) -g -IRPiGPSDemo -IGPSDemo -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
 
 # Subprojects
 .build-subprojects:

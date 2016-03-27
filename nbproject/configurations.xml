@@ -41,20 +41,20 @@
         <cTool>
           <standard>3</standard>
           <incDir>
-            <pElem>GPSDemo</pElem>
             <pElem>RPiGPSDemo</pElem>
+            <pElem>GPSDemo</pElem>
           </incDir>
         </cTool>
         <linkerTool>
           <linkerAddLib>
-            <pElem>GPSDemo/dist/Debug/GNU-Linux</pElem>
             <pElem>RPiGPSDemo/dist/Debug/GNU-Linux</pElem>
+            <pElem>GPSDemo/dist/Debug/GNU-Linux</pElem>
           </linkerAddLib>
           <commandlineTool>gcc</commandlineTool>
           <linkerLibItems>
-            <linkerLibLibItem>GPSDemo</linkerLibLibItem>
-            <linkerOptionItem>-dynamic</linkerOptionItem>
             <linkerLibLibItem>RPiGPSDemo</linkerLibLibItem>
+            <linkerOptionItem>-dynamic</linkerOptionItem>
+            <linkerLibLibItem>GPSDemo</linkerLibLibItem>
             <linkerOptionItem>-dynamic</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
