@@ -43,6 +43,7 @@ char* generate_nmea_sentence(void){
 	}
 	
 	printf("%s\n", nmea);
+	//free(nmea);
 	return nmea;
 }
 
@@ -67,7 +68,7 @@ int getGPSSample(GPSSamp* samp){
 		samp->altitude = 0.0f; // temporary solution
 		return REGISTERED_RMC;
 	}
-	
+	free(nmea);
 	return UNRECOGNIZED_NMEA_FORMAT;	
 }
 
