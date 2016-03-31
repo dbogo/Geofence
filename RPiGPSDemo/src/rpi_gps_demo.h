@@ -1,12 +1,7 @@
-/* 
- * File:   rpi_gps_demo.h
- * Author: bogo
- */
-
 #ifndef RPI_GPS_DEMO_H
 #define RPI_GPS_DEMO_H
 
-#include "../GPSInterface.h"
+#include "../../src/GPSInterface.h"
 
 //NOTE: SHOULD THOSE BE 'extern' ????
 

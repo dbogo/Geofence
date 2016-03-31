@@ -3,7 +3,8 @@
 #include <stdlib.h>
 
 #include "main.h"
-#include "RPiGPSDemo/rpi_gps_demo.h"
+#include "../RPiGPSDemo/src/rpi_gps_demo.h"
+//#include "src/log4c.h"
 //#include "GPSInterface.h"
 
 
@@ -35,7 +36,7 @@ int main(int argc, char** argv) {
 
 	GPSSamp* sample = malloc(sizeof(GPSSamp));
 	int sampleStatus = 0; // invalid(9), gga(2), rmc(3), or full(1).
-
+	
 	//TODO: reconsider this busy loop design !!
 	//very basic loop with 1 sec interval
 	time_t startTimeSec = time(NULL);

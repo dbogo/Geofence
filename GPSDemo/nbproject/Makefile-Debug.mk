@@ -35,7 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/gps_demo.o
+	${OBJECTDIR}/src/gps_demo.o
 
 
 # C Compiler Flags
@@ -62,10 +62,10 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libGPSDemo.${CND_DLIB_EXT}: ${OBJECTF
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libGPSDemo.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
 
-${OBJECTDIR}/gps_demo.o: gps_demo.c 
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/gps_demo.o: src/gps_demo.c 
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.c) -g -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gps_demo.o gps_demo.c
+	$(COMPILE.c) -g -std=c99 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/gps_demo.o src/gps_demo.c
 
 # Subprojects
 .build-subprojects:
