@@ -4,6 +4,11 @@ RPiGPSDemo/dist/Debug
 GPSDemo/build/Debug/
 GPSDemo/dist/Debug/
 
+log4c/share
+log4c/bin
+log4c/lib
+log4c/etc
+
 build/Debug/
 dist/Debug/
 
