@@ -13,7 +13,5 @@ build/
 dist/
 
 log.txt
-run.sh
-run.sh~
 /build/
 /dist/
