@@ -52,6 +52,7 @@ int main(int argc, char** argv) {
 		printf("log4c_fini() failed.\n");
 	}
 	
+	fclose(fp);
 	
 	//TODO: timer
 
