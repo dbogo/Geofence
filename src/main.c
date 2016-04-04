@@ -28,6 +28,7 @@
 		One second of latitude =   31.03 m  or  101.79 ft
  */
 
+//TODO: should not be here; fix hardcoding
 Zone zone = {.altitude = 285.0f,
 	.p1.latitude = 20.5f, .p1.longitude = 20.8f,
 	.p2.latitude = 43.5f, .p2.longitude = 44.0f};
@@ -35,22 +36,11 @@ Zone zone = {.altitude = 285.0f,
 int main(int argc, char** argv) {
 	
 	FILE* fp;
-	fp = fopen("log.txt", "w");
+	fp = fopen(LOG_FILE, "w");
 	
 	log4c_category_t* logCat = NULL;
-	
-	if(log4c_init()){
-		printf("lo4c_init() failed.\n");
-	} else {
-		logCat = log4c_category_get("geofence.src.logtest");
-		log4c_category_set_appender(logCat, log4c_appender_get("log.txt"));
-		log4c_category_log(logCat, LOG4C_PRIORITY_ERROR, "Hello World");
-	}
-	
-	//cleanup
-	if(log4c_fini()){
-		printf("log4c_fini() failed.\n");
-	}
+	initLogSystem(logCat, "geofence.logtest", LOG_FILE);
+	logEvent(logCat, LOG4C_PRIORITY_ERROR, "Hello Log!");
 	
 	fclose(fp);
 	
@@ -89,6 +79,32 @@ int main(int argc, char** argv) {
 	}
 	
 	return (0);
+}
+
+//apender name is actually the stream - e.g a specific file, stdout, etc...
+int initLogSystem(const log4c_category_t* logObj, const char* instanceName, const char* appenderName){
+	int errCode = log4c_init();
+	if(errCode){
+		printf("log4c_init() failed.\n");
+	} else {
+		//Instantiate a log4c_category_t with name instanceName
+		logObj = log4c_category_get(instanceName);
+		log4c_category_set_appender(logObj, log4c_appender_get(appenderName));
+		
+	}
+	return errCode;
+}
+
+// format - may be just the string we want to log (the message itself)
+void logEvent(const log4c_category_t* logObj, int logPriority, const char* format){
+	log4c_category_log(logObj, logPriority, format);
+}
+
+int finiLogSystem(){
+	int errCode = log4c_fini();
+	if(errCode)
+		printf("log4c_fini() failed.\n");
+	return errCode;
 }
 
 void handleEvents(){
