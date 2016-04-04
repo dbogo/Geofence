@@ -1,19 +1,17 @@
-RPiGPSDemo/build
-RPiGPSDemo/dist
+RPiGPSDemo/build/
+RPiGPSDemo/dist/
 
-GPSDemo/build
-GPSDemo/dist
+GPSDemo/build/
+GPSDemo/dist/
 
-log4c/etc
-log4c/bin
-log4c/lib
-log4c/share
+log4c/etc/
+log4c/bin/
+log4c/lib/
+log4c/share/
 
 build/
 dist/
 
 log.txt
-run.sh
-run.sh~
 /build/
 /dist/
