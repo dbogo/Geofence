@@ -47,9 +47,12 @@ char* generate_nmea_sentence(void){
 	return nmea;
 }
 
-int getGPSSample(GPSSamp* samp){
-	char* nmea = generate_nmea_sentence(); // get randomly generated NMEA sentence
-	
+//NOTE: passToLog lets the user of this function 
+int getGPSSample(GPSSamp* samp, bool passToLog){
+	//TODO: somehow make this nmea sentence be passed outside,
+    // where I need it to be looged in a file.
+    char* nmea = generate_nmea_sentence();
+    
 	if((strstr(nmea, "$GPGGA") != NULL)){
 		gga ggaSamp;
 		parse_gga(&ggaSamp, nmea);
@@ -71,6 +74,12 @@ int getGPSSample(GPSSamp* samp){
 	free(nmea);
 	return UNRECOGNIZED_NMEA_FORMAT;	
 }
+
+#if 0
+char* saveNMEAforLog(void){
+    return nmea;
+}
+#endif
 
 //registers lat, lon, quality, satellites, altitude
 void parse_gga(gga* samp, char *nmea){

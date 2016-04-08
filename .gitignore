@@ -12,6 +12,9 @@ log4c/share/
 build/
 dist/
 
+logs/
+
 log.txt
+operation.log
 /build/
 /dist/

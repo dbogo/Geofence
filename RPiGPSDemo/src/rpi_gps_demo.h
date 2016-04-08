@@ -16,7 +16,11 @@
 void parse_gga(gga* samp, char *nmea);
 void parse_rmc(rmc* samp, char *nmea);
 
+//NOTE: changed to extern but review this decision later.
+//meant to use this function in main.c to put NMEA 
+//sentences in a log file
 char* generate_nmea_sentence(void);
+//char* saveNMEAforLog(void);
 
 #endif /* RPI_GPS_DEMO_H */
 

@@ -5,7 +5,7 @@
 
   
 // gets info from GPS
-int getGPSSample(GPSSamp* samp){
+int getGPSSample(GPSSamp* samp, bool passToLog){
 	static double a = 0.0f;
 	
 	samp->altitude = 285.0f + a;
