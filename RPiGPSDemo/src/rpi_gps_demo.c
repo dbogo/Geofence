@@ -1,5 +1,4 @@
 #include "rpi_gps_demo.h"
-//#include "nmea_examples.h"
 
 #include <string.h>
 #include <stdio.h>

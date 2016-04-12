@@ -8,8 +8,8 @@ extern "C" {
 typedef enum { false, true } bool;
 typedef unsigned char uint8_t;
 
-#define TIME_TO_WAIT_SEC 1
 
+/* NOTE: Pay attention to to calculations where course is in radians or in degrees ! */
 typedef struct {
 	double latitude; // value from 0.0 to 90.0
 	double longitude; // value from 0.0 to 180.0 NOTE:east/west !
@@ -21,7 +21,7 @@ typedef struct {
 typedef struct {
 	GPSSamp p1;
 	GPSSamp p2;
-	float altitude; // TODO
+	float altitude; // NOTE: Zone is a 3D shape
 } Zone;
 
 typedef struct {

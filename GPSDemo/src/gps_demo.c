@@ -1,19 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
-//#include "gps_demo.h"
-#include "../../src/GPSInterface.h"
+#include <math.h>
 
+#include "gps_demo.h"
+#include "../../src/utils.h"
   
-// gets info from GPS
+/* creates random GPSSamp data for simulation. 
+ directly sets samp value rather than generate a cusom NMEA sentence
+ ** for that see RPiGPSDemo
+*/
 int getGPSSample(GPSSamp* samp, bool passToLog){
-	static double a = 0.0f;
-	
-	samp->altitude = 285.0f + a;
-	samp->latitude = 20.55f + a;
-	samp->longitude = 43.52f + a;
-	samp->speed = 10.0f;
-	samp->course = 60.5f;
-	
-	a += 0.05;
+	//TODO: introduce some randomizing factor
+	samp->speed = 2.5f;
+	samp->course = 50.0f;
+
+	samp->latitude = samp->latitude +  samp->speed * sin(samp->course * PI/180);
+	samp->longitude = samp->latitude +  samp->speed * cos(samp->course * PI/180);
+	samp->altitude = 280.0f;
+
 	return FULL_SAMPLE;
 }

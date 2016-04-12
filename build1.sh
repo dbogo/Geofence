@@ -11,7 +11,7 @@ gcc -shared -o RPiGPSDemo/dist/Debug/GNU-Linux/libRPiGPSDemo.so RPiGPSDemo/build
 #GPSDemo
 gcc -shared -o GPSDemo/dist/Debug/GNU-Linux/libGPSDemo.so GPSDemo/build/gps_demo.o
 
-
-gcc -o dist/Debug/GNU-Linux/geofence src/*.c -LRPiGPSDemo/dist/Debug/GNU-Linux -LGPSDemo/dist/Debug/GNU-Linux -Llog4c/lib -Ilog4c/include -Wl,-rpath=/home/bogo/Desktop/Geofence/RPiGPSDemo/dist/Debug/GNU-Linux -Wl,-rpath=/home/bogo/Desktop/Geofence/log4c/lib -Wall -lRPiGPSDemo -dynamic -lGPSDemo -dynamic -llog4c -dynamic
+gcc -o dist/Debug/GNU-Linux/geofence src/*.c -LGPSDemo/dist/Debug/GNU-Linux -Llog4c/lib -Ilog4c/include -Wl,-rpath=/home/bogo/Desktop/Geofence/GPSDemo/dist/Debug/GNU-Linux -Wl,-rpath=/home/bogo/Desktop/Geofence/log4c/lib -Wall -lGPSDemo -dynamic -llog4c -dynamic -lm
+#gcc -o dist/Debug/GNU-Linux/geofence src/*.c -LRPiGPSDemo/dist/Debug/GNU-Linux -LGPSDemo/dist/Debug/GNU-Linux -Llog4c/lib -Ilog4c/include -Wl,-rpath=/home/bogo/Desktop/Geofence/RPiGPSDemo/dist/Debug/GNU-Linux -Wl,-rpath=/home/bogo/Desktop/Geofence/log4c/lib -Wall -lRPiGPSDemo -dynamic -lGPSDemo -dynamic -llog4c -dynamic -lm
 
 rm main.*

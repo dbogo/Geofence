@@ -28,7 +28,11 @@
 #define UNRECOGNIZED_NMEA_FORMAT 9
 
 
-// 'generic' function of a GPS sample, implemented by different libraries
+/* 
+'generic' function of a GPS sample, implemented by different libraries
+	TODO: review the purpose of passToLog.. either find a way to use it 
+	or remove it for now..
+*/
 extern int getGPSSample(GPSSamp* samp, bool passToLog);
 
 #endif /* GPSINTERFACE_H */
