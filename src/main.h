@@ -4,10 +4,8 @@
 
 #include "types.h"
 
-#define max(a, b) (((a) > (b)) ? (a) : (b))
-#define min(a, b) (((a) < (b)) ? (a) : (b))
-
 bool isSampleInRange(GPSSamp* samp, Zone* zone);
-// TODO: void handleEvents(void);
+bool isDroneGoingOffBorder(GPSSamp* samp, Zone* zone);
+// TODO: possibly some kind of event handling (for debuggin)
 
 #endif /* SAMPLE_TYPE_H */
