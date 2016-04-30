@@ -9,7 +9,7 @@
 char* generate_nmea_sentence(void){
 	srand(time(NULL));
 	
-	char* nmea = malloc(100 * sizeof(char)); // allocate string of 100
+	char* nmea = malloc(100 * sizeof(char)); // allocate a string of 100
 	memset(nmea, '\0', sizeof(nmea));
 	
 	int r = rand() % 2;
@@ -42,7 +42,7 @@ char* generate_nmea_sentence(void){
 	}
 	
 	printf("%s\n", nmea);
-	//free(nmea);
+	//free(nmea); NOTE: should be freed or not ?
 	return nmea;
 }
 
