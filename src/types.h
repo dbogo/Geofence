@@ -1,9 +1,12 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <stdlib.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 	
 typedef enum { false, true } bool;
 typedef unsigned char uint8_t;
@@ -18,11 +21,33 @@ typedef struct {
 	double course;
 } GPSSamp;
 
+/* A representation of a single 2D point on the surface. */
 typedef struct {
-	GPSSamp p1;
-	GPSSamp p2;
+	double latitude;
+	double longitude;
+} GEO_Point;
+
+/* A TEMPORARY implementaion of a Geo-zone.
+	implemented as a rectangle */
+typedef struct {
+	GEO_Point p1;
+	GEO_Point p2;
 	float altitude; // NOTE: Zone is a 3D shape
 } Zone;
+
+/* A straight line connectring two points in 2D */
+typedef struct {
+	GEO_Point p1;
+	GEO_Point p2;
+} Segment;
+
+/* An arbitrary Geo-zone that is a simple polygon.
+	may consist of more than 2 vertices. */
+typedef struct {
+	size_t numVertices;
+	float altitude;
+	GEO_Point vertices[];
+} Zone_general;
 
 typedef struct {
 	double latitude; // Latitude e.g: 4124.8963 (XXYY.ZZKK.. DEG, MIN, SEC.SS)
@@ -43,10 +68,8 @@ typedef struct {
 	double course;
 } rmc;
 
-
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* TYPES_H */
-

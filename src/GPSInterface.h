@@ -21,6 +21,7 @@
 #define GPSINTERFACE_H
 
 #include "types.h"
+#include "utils.h"
 
 #define FULL_SAMPLE	1
 #define REGISTERED_GGA 2
@@ -34,6 +35,12 @@
 	or remove it for now..
 */
 extern int getGPSSample(GPSSamp* samp, bool passToLog);
+
+bool isSampleInRangeGeneral(GPSSamp* samp, Zone_general* zone_gen);
+bool isSampleInRange(GPSSamp* samp, Zone* zone);
+int pnpoly(int nvert, double *vertx, double *verty, double testx, double testy);
+//int areIntersecting(Segment side1, Segment side2);
+bool isDroneGoingOffBorder(GPSSamp* samp, Zone* zone);
 
 #endif /* GPSINTERFACE_H */
 
