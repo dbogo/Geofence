@@ -40,7 +40,7 @@ bool isSampleInRangeGeneral(GPSSamp* samp, Zone_general* zone_gen);
 bool isSampleInRange(GPSSamp* samp, Zone* zone);
 int pnpoly(int nvert, double *vertx, double *verty, double testx, double testy);
 //int areIntersecting(Segment side1, Segment side2);
-bool isDroneGoingOffBorder(GPSSamp* samp, Zone* zone);
+bool isDroneGoingOffBorder(GPSSamp* samp, Zone_general* zone_gen);
 
 #endif /* GPSINTERFACE_H */
 

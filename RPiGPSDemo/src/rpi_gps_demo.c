@@ -46,7 +46,7 @@ char* generate_nmea_sentence(void){
 	return nmea;
 }
 
-//NOTE: passToLog lets the user of this function 
+//NOTE: passToLog
 int getGPSSample(GPSSamp* samp, bool passToLog){
 	//TODO: somehow make this nmea sentence be passed outside,
     // where I need it to be looged in a file.

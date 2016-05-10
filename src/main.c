@@ -23,7 +23,8 @@ void timer_handler(int signum){
 #endif
 
 int main(int argc, char** argv) {
-
+	init();
+	finish();
 	// hardcode some zone data for a quick test !
 	Zone_general zone;
 	zone.numVertices = 6;
@@ -43,104 +44,99 @@ int main(int argc, char** argv) {
 	zone.vertices[4] = p4;
 	zone.vertices[5] = p5;
 	
-	FILE* fp;
-	//FILE* fp2;
-	fp = fopen(OPERATION_LOG_FILE, "w");
-	//fp2 = fopen(NMEA_LOG_FILE, "w");
+	Log_Master logMaster = {
+		.operationLogger = {
+			.logFile = fopen(OPERATION_LOG_FILE, "w"),
+			.logObj = NULL,
+			.logInstanceName = "operationlog"
+		} , 
+		.errorLogger = {
+			.logFile = fopen(ERROR_LOG_FILE, "w"),
+			.logObj = NULL,
+			.logInstanceName = "errorlog"
+		}
+	};
 
-	log4c_category_t* operationLogger = NULL;
-	//log4c_category_t* nmeaLogger = NULL;
-	
-	char* operationLogInstanceName = "operationlog";
-	//char* nmeaLogInstanceName = "nmealog";
-
-	initLogSystem(&operationLogger, operationLogInstanceName, OPERATION_LOG_FILE);
-	//initLogSystem(&nmeaLogger, nmeaLogInstanceName, NMEA_LOG_FILE);
+	initLogSystem(&logMaster);
 
 	GPSSamp sample;
 	char logStr[80];
 	//int sampleStatus = 0; // invalid(9), gga(2), rmc(3), or full(1).
 	
-	//TODO: TIMER (??) !!!!! reconsider this busy loop design !!
-	
 	//time_t startTimeSec = time(NULL);
 	time_t currentTimeSec = 0;
 	
-	
-	/*
-	// --- TEMPORARY ABANDONED THE USE OF SIGNALS...
-	struct sigaction sa;
-	struct itimerval timer;
+	//TODO: maybe instead of nanosleep implement a way using signals..
+	// see: http://stackoverflow.com/questions/36953010/using-signals-in-c-how-to-stop-and-continue-a-program-when-timer-ends?
 
-	sa.sa_handler = &timer_handler;
-
-	sigaction(SIGALRM, &sa, NULL);
-	printf("%d\n\n\n", SIGALRM);
-
-	timer.it_value.tv_sec = 0;
-	timer.it_value.tv_usec = 500000;
-
-	timer.it_interval.tv_sec = 0;
-	timer.it_interval.tv_usec = 500000;
-
-	//setitimer(ITIMER_REAL, &timer, NULL);
-	*/
-
-	/* TODO: wrapper around the nanosleep function !
-		- should handle errors thrown by it,
-		handle the second papameter (an event of pre-mature exit)
-		hide those ugly struct declarations somewhere..
-	*/
-	struct timespec ts;
-	ts.tv_sec = 1;
-	ts.tv_nsec = 100;
-
-	while (!nanosleep(&ts, NULL)) {
+	while (!suspend_loop(false)) {
 		
 		currentTimeSec = time(NULL);
-		//if ((currentTimeSec - startTimeSec) >= TIME_TO_WAIT_SEC) {
-			getGPSSample(&sample, true);
+		getGPSSample(&sample, true);
 
-			printf("lon: %f, lat %f\n", sample.latitude, sample.longitude);
+		printf("lon: %f, lat %f\n", sample.latitude, sample.longitude);
 
-			//printf("lat: %f, lon: %f, alt: %f, crs: %f, spd: %f\n", sample.latitude, 
-			//	sample.longitude, sample.altitude, sample.course, sample.speed);
+		//printf("lat: %f, lon: %f, alt: %f, crs: %f, spd: %f\n", sample.latitude, 
+		//	sample.longitude, sample.altitude, sample.course, sample.speed);
 
-			sprintf(logStr, "@(%ld) lat: %f, lon: %f, alt: %f, crs: %f, spd: %f |", 
-				(long)currentTimeSec, sample.latitude, sample.longitude, 
-				sample.altitude, sample.course, sample.speed);
+		sprintf(logStr, "@(%ld) lat: %f, lon: %f, alt: %f, crs: %f, spd: %f |", 
+			(long)currentTimeSec, sample.latitude, sample.longitude, 
+			sample.altitude, sample.course, sample.speed);
 
-			
-			// whether currently in border
-			if(isSampleInRangeGeneral(&sample, &zone)){
-				printf("Current pos - within border\n");
-			} else {
-				printf("Current pos - outside the border\n");
-			}
+		
+		// whether currently in border
+		if(isSampleInRangeGeneral(&sample, &zone)){
+			printf("Current pos - within border\n");
+		} else {
+			printf("Current pos - outside the border\n");
+		}
 
 #if 0
-			// whether estimated to go out in the next iteration of this loop.
-			if(isDroneGoingOffBorder(&sample, &zone)){
-				printf("Next estimated pos - outside of border\n");
-			} else {
-				printf("Next estimated pos - within border\n");
-			}
+		// whether estimated to go out in the next iteration of this loop.
+		if(isDroneGoingOffBorder(&sample, &zone)){
+			printf("Next estimated pos - outside of border\n");
+		} else {
+			printf("Next estimated pos - within border\n");
+		}
 #endif		
-			
-			//log the operation. (timestamp and the data of a GPSSamp)
-			logEvent(operationLogger, LOG4C_PRIORITY_INFO, logStr);
-			//startTimeSec = currentTimeSec;
+		
+		//log the operation. (timestamp and the data of a GPSSamp)
+		logEvent(logMaster.operationLogger.logObj, LOG4C_PRIORITY_INFO, logStr);
 
-			//log the NMEA sentence from GPS. FIXME: TEMPORARELY DOESN'T LOG THE SENTENCES.
-			//sprintf(logStr, "@(%ld), <temporary: nmea sentence place holder>", (long)currentTimeSec);
-			//logEvent(nmeaLogger, LOG4C_PRIORITY_INFO, logStr);
-			printf("******************************\n");
-		//}
+		//log the NMEA sentence from GPS. FIXME: TEMPORARELY DOESN'T LOG THE SENTENCES.
+		//sprintf(logStr, "@(%ld), <temporary: nmea sentence place holder>", (long)currentTimeSec);
+		//logEvent(nmeaLogger, LOG4C_PRIORITY_INFO, logStr);
+		printf("******************************\n");
 	}
 
-	fclose(fp);
-	//fclose(fp2);
+	fclose(logMaster.operationLogger.logFile);
+	fclose(logMaster.errorLogger.logFile);
 	finiLogSystem();
 	
 	return (0);
+}
+
+/* function wraps the use of nanosleep() function and does error handling 
+	if toleratesInterrupt is true, then the nanosleep function will be checked
+	for a premature stop, and will be resumed to finish the planned time (the remainder) 
+	NOTE: should this function be in a separate file for such things ?
+	*/
+int suspend_loop(bool toleratesInterrupt){
+	/* TODO: consider the use of clock_nanosleep() */
+	/* FIXME: maybe this function should call itself recursively
+	 to make sure that the pause is fully ended, instead of checking only once.. */
+	// NOTE: this struct declaration should maybe be somewhere else
+	struct timespec ts = { .tv_sec = 1, .tv_nsec = 100 };
+	int errCode = 0;
+
+	if(toleratesInterrupt){
+		struct timespec remainingTime;
+		errCode = nanosleep(&ts, &remainingTime);
+		// if EINTR then the pause has been interrupted
+		if(errCode == EINTR) {
+			//TODO: log this !
+			nanosleep(&remainingTime, NULL);
+		}
+	}
+	return nanosleep(&ts, NULL);
 }
