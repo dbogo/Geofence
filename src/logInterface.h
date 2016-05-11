@@ -19,7 +19,7 @@ LOG4C_PRIORITY_UNKNOWN 	unknown
 #include "../log4c/include/log4c.h"
 // <stdio.h> is already included in log4c 
 
-/* All the different log files are places in a special 'logs' folder that is
+/* All the different log files are placed in a special 'logs' folder that is
 	at the top of the project directory (same level as src/) */
 
 /* TODO: consider redesigning the logEvent() function to require only the log message,
@@ -47,6 +47,7 @@ int initLogSystem(Log_Master* logMaster);
 //int initLogSystem(log4c_category_t** logObj, const char* instanceName, const char* appenderName);
 int finiLogSystem(void);
 void logEvent(log4c_category_t* logObj, int logPriority, const char* format);
+//void logEvent(char* str, int prioritry, int logType);
 
 
 

@@ -3,12 +3,20 @@
 //NOTE: why did I have to make it a pointer to a pointer in order to make it work ??
 //apender name is actually the stream - e.g a specific file, stdout, etc...
 int initLogSystem(Log_Master* logMaster){
+
+	logMaster->operationLogger.logFile = fopen(OPERATION_LOG_FILE, "w");
+	logMaster->operationLogger.logObj = NULL;
+	logMaster->operationLogger.logInstanceName = "operationlog";
+
+	logMaster->errorLogger.logFile = fopen(ERROR_LOG_FILE, "w");
+	logMaster->errorLogger.logObj = NULL;
+	logMaster->errorLogger.logInstanceName = "errorlog";
+
 	int errCode = log4c_init();
 	if(errCode){
 		printf("log4c_init() failed.\n");
 	} else {
 		//FIXME: when doing Logger l = logMaster->operationLogger; everything breaks... why ??
-		Logger l;// = logMaster->operationLogger;
 
 		//Instantiate a log4c_category_t with name instanceName
 		logMaster->operationLogger.logObj = log4c_category_get(logMaster->operationLogger.logInstanceName);
@@ -28,6 +36,7 @@ int initLogSystem(Log_Master* logMaster){
 void logEvent(log4c_category_t* logObj, int logPriority, const char* format){
 	log4c_category_log(logObj, logPriority, format);
 }
+
 
 int finiLogSystem(void){
 	int errCode = log4c_fini();

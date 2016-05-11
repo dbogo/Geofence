@@ -22,13 +22,12 @@ void timer_handler(int signum){
 }
 #endif
 
-int main(int argc, char** argv) {
-	init();
-	finish();
+//TODO: error checking and return values...
+void init(Zone_general* zone, Log_Master* logMaster){
+
 	// hardcode some zone data for a quick test !
-	Zone_general zone;
-	zone.numVertices = 6;
-	zone.altitude = 285.0f;
+	zone->numVertices = 6;
+	zone->altitude = 285.0f;
 	GEO_Point p0 = { .latitude = 0.0f, .longitude = 0.0f};
 	GEO_Point p1 = { .latitude = 10.0f, .longitude = 0.0f};
 	GEO_Point p2 = { .latitude = 17.0f, .longitude = 7.5f};
@@ -36,39 +35,31 @@ int main(int argc, char** argv) {
 	GEO_Point p4 = { .latitude = 11.0f, .longitude = 21.0f};
 	GEO_Point p5 = { .latitude = 0.0f, .longitude = 22.0f};
 	
-	zone.vertices[0] = p0;
-	zone.vertices[1] = p1;
-	zone.vertices[2] = p2;
-	zone.vertices[3] = p3;
-	zone.vertices[3] = p3;
-	zone.vertices[4] = p4;
-	zone.vertices[5] = p5;
-	
-	Log_Master logMaster = {
-		.operationLogger = {
-			.logFile = fopen(OPERATION_LOG_FILE, "w"),
-			.logObj = NULL,
-			.logInstanceName = "operationlog"
-		} , 
-		.errorLogger = {
-			.logFile = fopen(ERROR_LOG_FILE, "w"),
-			.logObj = NULL,
-			.logInstanceName = "errorlog"
-		}
-	};
+	zone->vertices[0] = p0;
+	zone->vertices[1] = p1;
+	zone->vertices[2] = p2;
+	zone->vertices[3] = p3;
+	zone->vertices[3] = p3;
+	zone->vertices[4] = p4;
+	zone->vertices[5] = p5;
 
-	initLogSystem(&logMaster);
+	initLogSystem(logMaster);
+}
 
+int main(int argc, char** argv) {
+
+	Zone_general zone;
+	Log_Master logMaster;
 	GPSSamp sample;
 	char logStr[80];
-	//int sampleStatus = 0; // invalid(9), gga(2), rmc(3), or full(1).
-	
-	//time_t startTimeSec = time(NULL);
 	time_t currentTimeSec = 0;
+
+	init(&zone, &logMaster);
+	
+	//int sampleStatus = 0; // invalid(9), gga(2), rmc(3), or full(1).
 	
 	//TODO: maybe instead of nanosleep implement a way using signals..
 	// see: http://stackoverflow.com/questions/36953010/using-signals-in-c-how-to-stop-and-continue-a-program-when-timer-ends?
-
 	while (!suspend_loop(false)) {
 		
 		currentTimeSec = time(NULL);
@@ -83,7 +74,6 @@ int main(int argc, char** argv) {
 			(long)currentTimeSec, sample.latitude, sample.longitude, 
 			sample.altitude, sample.course, sample.speed);
 
-		
 		// whether currently in border
 		if(isSampleInRangeGeneral(&sample, &zone)){
 			printf("Current pos - within border\n");
@@ -103,9 +93,6 @@ int main(int argc, char** argv) {
 		//log the operation. (timestamp and the data of a GPSSamp)
 		logEvent(logMaster.operationLogger.logObj, LOG4C_PRIORITY_INFO, logStr);
 
-		//log the NMEA sentence from GPS. FIXME: TEMPORARELY DOESN'T LOG THE SENTENCES.
-		//sprintf(logStr, "@(%ld), <temporary: nmea sentence place holder>", (long)currentTimeSec);
-		//logEvent(nmeaLogger, LOG4C_PRIORITY_INFO, logStr);
 		printf("******************************\n");
 	}
 
@@ -134,7 +121,7 @@ int suspend_loop(bool toleratesInterrupt){
 		errCode = nanosleep(&ts, &remainingTime);
 		// if EINTR then the pause has been interrupted
 		if(errCode == EINTR) {
-			//TODO: log this !
+			//TODO: implement logging here !
 			nanosleep(&remainingTime, NULL);
 		}
 	}
