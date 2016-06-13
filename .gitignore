@@ -9,6 +9,8 @@ log4c/bin/
 log4c/lib/
 log4c/share/
 
+*.o
+
 build/
 dist/
 

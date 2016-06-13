@@ -11,6 +11,8 @@ extern "C" {
 typedef enum { false, true } bool;
 typedef unsigned char uint8_t;
 
+#define OUTSIDE 0
+#define INSIDE 1
 
 /* NOTE: Pay attention to to calculations where course is in radians or in degrees ! */
 typedef struct {

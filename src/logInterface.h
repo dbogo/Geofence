@@ -31,6 +31,9 @@ LOG4C_PRIORITY_UNKNOWN 	unknown
 #define NMEA_LOG_FILE "logs/nmea_signals.log"
 #define ERROR_LOG_FILE "logs/errors.log"
 
+#define INFO 0
+#define ERROR 1
+
 typedef struct Logger{
 	FILE* logFile;
 	log4c_category_t* logObj;
@@ -43,14 +46,33 @@ typedef struct Log_Master{
 	Logger errorLogger;
 } Log_Master;
 
+extern Log_Master logMaster;
+
+/**
+ * @brief      initializes the Loggers from log4c library
+ * @param      logMaster  LogMaster struct that contains all loggers
+ * @return     errCode
+ */
 int initLogSystem(Log_Master* logMaster);
+
 //int initLogSystem(log4c_category_t** logObj, const char* instanceName, const char* appenderName);
+
+/**
+ * @brief      close and stop the logging system
+ * @return     errCode
+ */
 int finiLogSystem(void);
-void logEvent(log4c_category_t* logObj, int logPriority, const char* format);
-//void logEvent(char* str, int prioritry, int logType);
 
+//void logEvent(log4c_category_t* logObj, int logPriority, const char* format);
 
-
-
+/**
+ * @brief      logs the message into the specified stream, using 
+ *             the specifeied logger.
+ *
+ * @param      str       the log message
+ * @param[in]  priority  priority of the log. see LOG4C_PRIORITY enums. (log4c_priority_level_t)
+ * @param[in]  logType   The log type
+ */
+void logEvent(char* str, int priority, int logType, Log_Master* logMaster);
 
 #endif /* LOGINTERFACE_H */

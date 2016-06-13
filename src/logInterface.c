@@ -32,11 +32,26 @@ int initLogSystem(Log_Master* logMaster){
 	return errCode;
 }
 
+#if 0
 // format - may be just the string we want to log (the message itself)
 void logEvent(log4c_category_t* logObj, int logPriority, const char* format){
 	log4c_category_log(logObj, logPriority, format);
 }
+#endif
 
+void logEvent(char* str, int priority, int logType, Log_Master* logMaster){
+	switch(logType){
+		case ERROR:
+			log4c_category_log(logMaster->errorLogger.logObj, priority, str);
+			break;
+		case INFO:
+			log4c_category_log(logMaster->operationLogger.logObj, priority, str);
+			break;
+		default:
+			printf("unrecognized logType. \n");
+			break;
+	}
+}
 
 int finiLogSystem(void){
 	int errCode = log4c_fini();

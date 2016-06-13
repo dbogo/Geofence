@@ -55,6 +55,7 @@ int main(int argc, char** argv) {
 	time_t currentTimeSec = 0;
 
 	init(&zone, &logMaster);
+	printf("%s\n", logMaster.operationLogger.logInstanceName);
 	
 	//int sampleStatus = 0; // invalid(9), gga(2), rmc(3), or full(1).
 	
@@ -75,7 +76,8 @@ int main(int argc, char** argv) {
 			sample.altitude, sample.course, sample.speed);
 
 		// whether currently in border
-		if(isSampleInRangeGeneral(&sample, &zone)){
+		GEO_Point p = {  .longitude = sample.longitude, .latitude = sample.latitude};
+		if(isSampleInRangeGeneral1(&zone, zone.numVertices, p)){
 			printf("Current pos - within border\n");
 		} else {
 			printf("Current pos - outside the border\n");
@@ -91,7 +93,8 @@ int main(int argc, char** argv) {
 #endif		
 		
 		//log the operation. (timestamp and the data of a GPSSamp)
-		logEvent(logMaster.operationLogger.logObj, LOG4C_PRIORITY_INFO, logStr);
+		//logEvent(logMaster.operationLogger.logObj, LOG4C_PRIORITY_INFO, logStr);
+		logEvent(logStr, LOG4C_PRIORITY_INFO, INFO, &logMaster);
 
 		printf("******************************\n");
 	}
@@ -115,13 +118,17 @@ int suspend_loop(bool toleratesInterrupt){
 	// NOTE: this struct declaration should maybe be somewhere else
 	struct timespec ts = { .tv_sec = 1, .tv_nsec = 100 };
 	int errCode = 0;
+	
+	//TODO: this should stay commented out until I figure out how to globalize logMaster
+	// or something..
+	//logEvent("suspend loop", LOG4C_PRIORITY_INFO, ERROR, &logMaster);
 
 	if(toleratesInterrupt){
 		struct timespec remainingTime;
 		errCode = nanosleep(&ts, &remainingTime);
 		// if EINTR then the pause has been interrupted
 		if(errCode == EINTR) {
-			//TODO: implement logging here !
+			//logEvent("");
 			nanosleep(&remainingTime, NULL);
 		}
 	}

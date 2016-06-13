@@ -36,6 +36,7 @@
 */
 extern int getGPSSample(GPSSamp* samp, bool passToLog);
 
+int isSampleInRangeGeneral1(Zone_general* zone, int numVertices, GEO_Point p);
 bool isSampleInRangeGeneral(GPSSamp* samp, Zone_general* zone_gen);
 bool isSampleInRange(GPSSamp* samp, Zone* zone);
 int pnpoly(int nvert, double *vertx, double *verty, double testx, double testy);
