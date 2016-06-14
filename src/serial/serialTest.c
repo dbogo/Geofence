@@ -17,23 +17,25 @@ int open_port(void){
 	return(fileDescriptor);
 }
 
-void get_sentence(int fd, char* buffer){
-	char* c;
-	while(*c != '\n'){
-		if(read(fd, c, 1) < 0){
+void fetch_sentence_from_gps(int fd, char* buffer){
+	char c;
+	int i = 0; // index of end of string
+	while(c != '\n'){
+		if(read(fd, &c, 1) < 0){
 			perror("Error: ");
 		} else {
-			strcat(buffer, c);
+			buffer[i] = c;
+			i++;
 		}
 	}
 }
 
-
 int main(int argc, char** argv){
 	int fd = open_port();
 
-	char* buffer = malloc(100 * sizeof(char));
-	memset(buffer, '\0', sizeof(buffer));
+	//char* buffer = malloc(100 * sizeof(char));
+	char buffer[100];
+	memset(buffer, '\0', 100);
 
 #if 0
 	int n = 0;
@@ -47,7 +49,20 @@ int main(int argc, char** argv){
 		memset(buffer, '\0', 500);
 	//}
 #endif
-	get_sentence(fd, buffer);
+
+	//get_sentence(fd, buffer);
+	/*char c;// = NULL;
+	int i = 0;
+	while(c != '\n'){
+		//printf("in the loop\n");
+		if(read(fd, &c, 1) < 0){
+			perror("Error: ");
+		} else {
+			buffer[i] = c;
+			i++;
+		}
+	}*/
+	fetch_sentence_from_gps(fd, buffer);
 	printf("%s\n", buffer);
 	
 	return 0;
