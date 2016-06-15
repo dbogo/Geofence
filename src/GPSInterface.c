@@ -79,7 +79,9 @@ bool isDroneGoingOffBorder(GPSSamp* samp, Zone_general* zone_gen){
 
 
 	// check if the drone's next estimated position is within the borders 
-	if(isSampleInRangeGeneral(&estimatedNextSamp, zone_gen)){	
+	GEO_Point p = { .latitude = estimatedNextSamp.latitude,
+					.longitude = estimatedNextSamp.longitude };
+	if(isSampleInRangeGeneral1(zone_gen, zone_gen->numVertices, p)){	
 		return false;
 	}
 
