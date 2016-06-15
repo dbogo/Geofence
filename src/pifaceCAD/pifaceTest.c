@@ -1,11 +1,8 @@
-#include "../../libpifacecad/src/pifacecad.h"
+#include "cad_utils.h"
 
 int main(int argc, char** argv){
-	pifacecad_open();
-	
-	pifacecad_lcd_backlight_on();
-	pifacecad_lcd_write("RPI CAD TEST\nMULTI LINE");
-
-	pifacecad_close();
+	init_cad();
+	print_to_cad("CAD TEST\ncad_test");
+	close_cad();
 	return 0;
 }
