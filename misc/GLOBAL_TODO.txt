@@ -1,0 +1,3 @@
+
+1. the log4c library that's in this project contains binaries that were NOT created on the RPi. (were built on an Ubuntu64)
+	probably will need to make some script to rebuild the library for every new installation of the project.

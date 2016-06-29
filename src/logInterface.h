@@ -16,7 +16,7 @@ LOG4C_PRIORITY_UNKNOWN 	unknown
 #ifndef LOGINTERFACE_H
 #define LOGINTERFACE_H
 
-#include "../log4c/include/log4c.h"
+#include "../../log4c/include/log4c.h"
 // <stdio.h> is already included in log4c 
 
 /* All the different log files are placed in a special 'logs' folder that is

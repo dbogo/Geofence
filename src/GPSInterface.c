@@ -1,9 +1,9 @@
 // NOTE: maybe this file should be named differently !
 
 #include "GPSInterface.h"
+#include "utils.h"
 #include <math.h>
 #include <stdio.h>
-#include "utils.h"
 
 int isSampleInRangeGeneral1(Zone_general* zone, int numVertices, GEO_Point p){
 	//TODO: understand this stuff, delete the comment and commit

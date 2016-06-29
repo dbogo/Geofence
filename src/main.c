@@ -14,6 +14,8 @@
 #include "GPSInterface.h" // TODO: reconsider this hierarcy !!
 #include "../GPSDemo/src/gps_demo.h"
 //#include "../RPiGPSDemo/src/rpi_gps_demo.h"
+#include "serial/serialInterface.h"
+#include "pifaceCAD/cad_utils.h"
 
 #if 0
 void timer_handler(int signum){
@@ -44,6 +46,9 @@ void init(Zone_general* zone, Log_Master* logMaster){
 	zone->vertices[5] = p5;
 
 	initLogSystem(logMaster);
+
+	//init the Piface Control & Display 
+	init_cad();	
 }
 
 int main(int argc, char** argv) {
@@ -61,11 +66,21 @@ int main(int argc, char** argv) {
 	
 	//TODO: maybe instead of nanosleep implement a way using signals..
 	// see: http://stackoverflow.com/questions/36953010/using-signals-in-c-how-to-stop-and-continue-a-program-when-timer-ends?
+	
+	int fd = open_port();
+	char buffer[100];
+	memset(buffer, '\0', 100);
+	
+
 	while (!suspend_loop(false)) {
 		
 		currentTimeSec = time(NULL);
 		getGPSSample(&sample, true);
-
+		
+		fetch_sentence_from_gps(fd, buffer);
+		
+		printf("%s", buffer);
+		print_to_cad(buffer);
 		printf("lon: %f, lat %f\n", sample.latitude, sample.longitude);
 
 		//printf("lat: %f, lon: %f, alt: %f, crs: %f, spd: %f\n", sample.latitude, 
@@ -96,6 +111,7 @@ int main(int argc, char** argv) {
 		//logEvent(logMaster.operationLogger.logObj, LOG4C_PRIORITY_INFO, logStr);
 		logEvent(logStr, LOG4C_PRIORITY_INFO, INFO, &logMaster);
 
+		memset(buffer, '\0', 100);
 		printf("******************************\n");
 	}
 
@@ -116,7 +132,7 @@ int suspend_loop(bool toleratesInterrupt){
 	/* FIXME: maybe this function should call itself recursively
 	 to make sure that the pause is fully ended, instead of checking only once.. */
 	// NOTE: this struct declaration should maybe be somewhere else
-	struct timespec ts = { .tv_sec = 1, .tv_nsec = 100 };
+	struct timespec ts = { .tv_sec = 1 , .tv_nsec = 0 };
 	int errCode = 0;
 	
 	//TODO: this should stay commented out until I figure out how to globalize logMaster

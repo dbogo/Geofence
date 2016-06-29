@@ -10,6 +10,7 @@ log4c/lib/
 log4c/share/
 
 *.o
+*.a
 
 build/
 dist/

@@ -1,4 +1,4 @@
-prefix=/home/pi/Desktop/geofence/log4c
+prefix=/home/bogo/Desktop/Geofence/log4c
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

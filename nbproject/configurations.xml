@@ -18,6 +18,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>JavaApplication2/src/javaapplication2/JavaApplication2.java</itemPath>
   </logicalFolder>
   <sourceRootList>
     <Elem>src</Elem>
@@ -56,6 +57,11 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="JavaApplication2/src/javaapplication2/JavaApplication2.java"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/GPSInterface.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/main.c" ex="false" tool="0" flavor2="0">
@@ -86,6 +92,11 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="JavaApplication2/src/javaapplication2/JavaApplication2.java"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/GPSInterface.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/main.c" ex="false" tool="0" flavor2="0">
