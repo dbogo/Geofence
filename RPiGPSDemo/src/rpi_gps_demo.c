@@ -1,5 +1,5 @@
 #include "rpi_gps_demo.h"
-
+#include "../../src/serial/serialInterface.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -47,11 +47,16 @@ char* generate_nmea_sentence(void){
 }
 
 //NOTE: passToLog
-int getGPSSample(GPSSamp* samp, bool passToLog){
+int getGPSSample(int fd, GPSSamp* samp, bool passToLog){
 	//TODO: somehow make this nmea sentence be passed outside,
     // where I need it to be looged in a file.
-    char* nmea = generate_nmea_sentence();
     
+	//char* nmea = generate_nmea_sentence();
+
+    char nmea[100];
+	memset(nmea, '\0', 100);
+	fetch_sentence_from_gps(fd, nmea);
+
 	if((strstr(nmea, "$GPGGA") != NULL)){
 		gga ggaSamp;
 		parse_gga(&ggaSamp, nmea);
@@ -70,7 +75,7 @@ int getGPSSample(GPSSamp* samp, bool passToLog){
 		samp->altitude = 0.0f; // temporary solution
 		return REGISTERED_RMC;
 	}
-	free(nmea);
+	
 	return UNRECOGNIZED_NMEA_FORMAT;	
 }
 

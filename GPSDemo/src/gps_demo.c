@@ -9,7 +9,7 @@
  directly sets samp value rather than generate a cusom NMEA sentence
  ** for that see RPiGPSDemo
 */
-int getGPSSample(GPSSamp* samp, bool passToLog){
+int getGPSSample(int fd, GPSSamp* samp, bool passToLog){
 	//TODO: introduce some randomizing factor
 	samp->speed = 2.5f;
 	samp->course = 50.0f;

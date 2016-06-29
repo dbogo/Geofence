@@ -34,7 +34,7 @@
 	TODO: review the purpose of passToLog.. either find a way to use it 
 	or remove it for now..
 */
-extern int getGPSSample(GPSSamp* samp, bool passToLog);
+extern int getGPSSample(int fd, GPSSamp* samp, bool passToLog);
 
 int isSampleInRangeGeneral1(Zone_general* zone, int numVertices, GEO_Point p);
 bool isSampleInRangeGeneral(GPSSamp* samp, Zone_general* zone_gen);

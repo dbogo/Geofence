@@ -12,3 +12,7 @@ void print_to_cad(char* str){
 void close_cad(){
 	pifacecad_close();
 }
+
+void clear_cad(){
+	pifacecad_lcd_clear();
+}

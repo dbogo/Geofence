@@ -4,6 +4,8 @@ RPiGPSDemo/dist/
 GPSDemo/build/
 GPSDemo/dist/
 
+log4c-1.2.4
+
 log4c/etc/
 log4c/bin/
 log4c/lib/

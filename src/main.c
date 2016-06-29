@@ -12,8 +12,8 @@
 #include "utils.h"
 #include "logInterface.h"
 #include "GPSInterface.h" // TODO: reconsider this hierarcy !!
-#include "../GPSDemo/src/gps_demo.h"
-//#include "../RPiGPSDemo/src/rpi_gps_demo.h"
+//#include "../GPSDemo/src/gps_demo.h"
+#include "../RPiGPSDemo/src/rpi_gps_demo.h"
 #include "serial/serialInterface.h"
 #include "pifaceCAD/cad_utils.h"
 
@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
 	init(&zone, &logMaster);
 	printf("%s\n", logMaster.operationLogger.logInstanceName);
 	
-	//int sampleStatus = 0; // invalid(9), gga(2), rmc(3), or full(1).
+	int sampleStatus = 0; // invalid(9), gga(2), rmc(3), or full(1).
 	
 	//TODO: maybe instead of nanosleep implement a way using signals..
 	// see: http://stackoverflow.com/questions/36953010/using-signals-in-c-how-to-stop-and-continue-a-program-when-timer-ends?
@@ -73,13 +73,21 @@ int main(int argc, char** argv) {
 	
 
 	while (!suspend_loop(false)) {
-		
 		currentTimeSec = time(NULL);
-		getGPSSample(&sample, true);
+		sampleStatus = getGPSSample(fd, &sample, true);
 		
-		fetch_sentence_from_gps(fd, buffer);
+		//fetch_sentence_from_gps(fd, buffer);
 		
-		printf("%s", buffer);
+		//printf("%s", buffer);
+		
+		if(sampleStatus == REGISTERED_GGA){
+			sprintf(buffer, "GGA, %f,\n%f", sample.latitude, sample.longitude);
+			clear_cad();		
+		} else if(sampleStatus == REGISTERED_RMC){
+			sprintf(buffer, "RMC, %f,\n%f", sample.latitude, sample.longitude);
+			clear_cad();		
+		}
+
 		print_to_cad(buffer);
 		printf("lon: %f, lat %f\n", sample.latitude, sample.longitude);
 

@@ -1,6 +1,6 @@
 #! /bin/sh
 
-prefix=/home/bogo/Desktop/Geofence/log4c
+prefix=/home/pi/Desktop/geofence/log4c
 exec_prefix=$prefix
 libdir=${exec_prefix}/lib
 libexecdir=${exec_prefix}/libexec
