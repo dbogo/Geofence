@@ -14,4 +14,5 @@ ______________________________________
 An emphasis is put on keeping the use of third-party libraries to a minimum. However, a few libraries are used:
 - **log4c** - A logging library ([link](http://log4c.sourceforge.net/))
 - **pifacecad** - A library for the 'Piface Control & Display', used for debugging/development. ([library](https://github.com/piface/libpifacecad)) and ([device](http://www.piface.org.uk/products/piface_control_and_display/))
+- **wiringPi** - this is a GPIO access library for the BCM2835 cpu that's on the Raspberry-Pi. It's uncertain whether this library will be used later on. ([link](http://wiringpi.com/)).
 
