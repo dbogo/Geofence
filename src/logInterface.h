@@ -46,7 +46,7 @@ typedef struct Log_Master{
 	Logger errorLogger;
 } Log_Master;
 
-extern Log_Master logMaster;
+Log_Master logMaster;
 
 /**
  * @brief      initializes the Loggers from log4c library
@@ -72,6 +72,7 @@ int finiLogSystem(void);
  * @param      str       the log message
  * @param[in]  priority  priority of the log. see LOG4C_PRIORITY enums. (log4c_priority_level_t)
  * @param[in]  logType   The log type
+ * @param logMaster a pointer to the Log_Master struct that contains log objects
  */
 void logEvent(char* str, int priority, int logType, Log_Master* logMaster);
 

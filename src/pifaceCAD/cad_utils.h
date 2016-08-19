@@ -8,7 +8,7 @@
  * 
  */
 
-void init_cad();
-void print_to_cad(char* str);
+int init_cad();
+int print_to_cad(char* str);
 void close_cad();
 void clear_cad();

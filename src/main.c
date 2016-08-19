@@ -28,41 +28,37 @@ void timer_handler(int signum){
 void init(Zone_general* zone, Log_Master* logMaster){
 
 	// hardcode some zone data for a quick test !
-	zone->numVertices = 6;
+	zone->numVertices = 4;
 	zone->altitude = 285.0f;
-	GEO_Point p0 = { .latitude = 0.0f, .longitude = 0.0f};
-	GEO_Point p1 = { .latitude = 10.0f, .longitude = 0.0f};
-	GEO_Point p2 = { .latitude = 17.0f, .longitude = 7.5f};
-	GEO_Point p3 = { .latitude = 17.0f, .longitude = 17.0f};
-	GEO_Point p4 = { .latitude = 11.0f, .longitude = 21.0f};
-	GEO_Point p5 = { .latitude = 0.0f, .longitude = 22.0f};
+	GEO_Point p0 = { .longitude = 0.0f, .latitude = 0.0f};
+	GEO_Point p1 = { .longitude = 10.0f, .latitude = 0.0f};
+	GEO_Point p2 = { .longitude = 10.0f, .latitude = 10.0f};
+	GEO_Point p3 = { .longitude = 0.0f, .latitude = 10.0f};
 	
-	zone->vertices[0] = p0;
-	zone->vertices[1] = p1;
-	zone->vertices[2] = p2;
-	zone->vertices[3] = p3;
-	zone->vertices[3] = p3;
-	zone->vertices[4] = p4;
-	zone->vertices[5] = p5;
+	//TODO: look for a neater/faster way to do this...
+	GEO_Point verts[4] = { p0, p1, p2, p3 };
+	zone->vertices = malloc(sizeof(verts));
+	memcpy(zone->vertices, verts, 4 * sizeof(GEO_Point));
+
+	//create_segments_of_zone(zone);
 
 	initLogSystem(logMaster);
 
 	//init the Piface Control & Display 
-	init_cad();	
+	//if(init_cad() == -1)
+	//	printf("init cad: pifacecad_open() hasn't yielded a file descriptor for SPI transactions.\n");
 }
 
 int main(int argc, char** argv) {
 
-	Zone_general zone;
-	Log_Master logMaster;
-	GPSSamp sample;
+	init(&zone, &logMaster);
+
 	char logStr[80];
 	time_t currentTimeSec = 0;
 
-	init(&zone, &logMaster);
-	printf("%s\n", logMaster.operationLogger.logInstanceName);
-	
 	int sampleStatus = 0; // invalid(9), gga(2), rmc(3), or full(1).
+
+	//int sampleStatus = 0; // invalid(9), gga(2), rmc(3), or full(1).
 	
 	//TODO: maybe instead of nanosleep implement a way using signals..
 	// see: http://stackoverflow.com/questions/36953010/using-signals-in-c-how-to-stop-and-continue-a-program-when-timer-ends?
@@ -70,9 +66,9 @@ int main(int argc, char** argv) {
 	int fd = open_port();
 	char buffer[100];
 	memset(buffer, '\0', 100);
-	
 
 	while (!suspend_loop(false)) {
+
 		currentTimeSec = time(NULL);
 		sampleStatus = getGPSSample(fd, &sample, true);
 		
@@ -80,6 +76,7 @@ int main(int argc, char** argv) {
 		
 		//printf("%s", buffer);
 		
+		/*
 		if(sampleStatus == REGISTERED_GGA){
 			sprintf(buffer, "GGA, %f,\n%f", sample.latitude, sample.longitude);
 			clear_cad();		
@@ -89,6 +86,7 @@ int main(int argc, char** argv) {
 		}
 
 		print_to_cad(buffer);
+		*/
 		printf("lon: %f, lat %f\n", sample.latitude, sample.longitude);
 
 		//printf("lat: %f, lon: %f, alt: %f, crs: %f, spd: %f\n", sample.latitude, 
@@ -98,9 +96,10 @@ int main(int argc, char** argv) {
 			(long)currentTimeSec, sample.latitude, sample.longitude, 
 			sample.altitude, sample.course, sample.speed);
 
+
+
 		// whether currently in border
-		GEO_Point p = {  .longitude = sample.longitude, .latitude = sample.latitude};
-		if(isSampleInRangeGeneral1(&zone, zone.numVertices, p)){
+		if(isSampleInRangeGeneral1(&zone, &sample)){
 			printf("Current pos - within border\n");
 		} else {
 			printf("Current pos - outside the border\n");
@@ -108,7 +107,7 @@ int main(int argc, char** argv) {
 
 #if 0
 		// whether estimated to go out in the next iteration of this loop.
-		if(isDroneGoingOffBorder(&sample, &zone)){
+		if(isDroneGoingOffBorder(&sample, &zone)){	
 			printf("Next estimated pos - outside of border\n");
 		} else {
 			printf("Next estimated pos - within border\n");
@@ -116,7 +115,6 @@ int main(int argc, char** argv) {
 #endif		
 		
 		//log the operation. (timestamp and the data of a GPSSamp)
-		//logEvent(logMaster.operationLogger.logObj, LOG4C_PRIORITY_INFO, logStr);
 		logEvent(logStr, LOG4C_PRIORITY_INFO, INFO, &logMaster);
 
 		memset(buffer, '\0', 100);
@@ -152,7 +150,8 @@ int suspend_loop(bool toleratesInterrupt){
 		errCode = nanosleep(&ts, &remainingTime);
 		// if EINTR then the pause has been interrupted
 		if(errCode == EINTR) {
-			//logEvent("");
+			logEvent("suspend_loop: nanosleep() has been interrupted and will now continue.",
+						LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
 			nanosleep(&remainingTime, NULL);
 		}
 	}

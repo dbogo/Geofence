@@ -28,6 +28,20 @@
 #define REGISTERED_RMC 3
 #define UNRECOGNIZED_NMEA_FORMAT 9
 
+typedef struct {
+	double Xmin;
+	double Xmax;
+	double Ymin;
+	double Ymax;
+} Zone_Limits;
+
+Segment ray;
+Zone_general zone;
+//Zone_Limits zone_limits;
+GPSSamp sample;
+Segment* sides;
+
+
 
 /* 
 'generic' function of a GPS sample, implemented by different libraries
@@ -36,7 +50,9 @@
 */
 extern int getGPSSample(int fd, GPSSamp* samp, bool passToLog);
 
-int isSampleInRangeGeneral1(Zone_general* zone, int numVertices, GEO_Point p);
+void create_segments_of_zone(void);
+
+//int isSampleInRangeGeneral1(Zone_general* zone, int numVertices, GPSSamp* sample);
 bool isSampleInRangeGeneral(GPSSamp* samp, Zone_general* zone_gen);
 bool isSampleInRange(GPSSamp* samp, Zone* zone);
 int pnpoly(int nvert, double *vertx, double *verty, double testx, double testy);

@@ -48,7 +48,7 @@ typedef struct {
 typedef struct {
 	size_t numVertices;
 	float altitude;
-	GEO_Point vertices[];
+	GEO_Point* vertices;
 } Zone_general;
 
 typedef struct {
