@@ -33,11 +33,12 @@ typedef struct {
 	double Xmax;
 	double Ymin;
 	double Ymax;
+	double e;
 } Zone_Limits;
 
 Segment ray;
 Zone_general zone;
-//Zone_Limits zone_limits;
+Zone_Limits zone_limits;
 GPSSamp sample;
 Segment* sides;
 
@@ -50,9 +51,11 @@ Segment* sides;
 */
 extern int getGPSSample(int fd, GPSSamp* samp, bool passToLog);
 
-void create_segments_of_zone(void);
+void create_segments_of_zone(Zone_general* zone);
 
-//int isSampleInRangeGeneral1(Zone_general* zone, int numVertices, GPSSamp* sample);
+void update_ray_location(GPSSamp* samp);
+
+int isSampleInRangeGeneral1(Zone_general* zone, GPSSamp* sample);
 bool isSampleInRangeGeneral(GPSSamp* samp, Zone_general* zone_gen);
 bool isSampleInRange(GPSSamp* samp, Zone* zone);
 int pnpoly(int nvert, double *vertx, double *verty, double testx, double testy);

@@ -6,9 +6,10 @@
 #include <stdio.h>
 #include <time.h>
 
+#if 0
 int areIntersecting(Segment side1, Segment side2){
-    float d1, d2;
-    float a1, a2, b1, b2, c1, c2;
+    double d1, d2;
+    double a1, a2, b1, b2, c1, c2;
 
     // Convert vector 1 to a line (line 1) of infinite length.
     // We want the line in linear equation standard form: A*x + B*y + C = 0
@@ -64,79 +65,86 @@ int areIntersecting(Segment side1, Segment side2){
 //TODO: ray, and sides like (x1/y1)-(x2/y2)
 //TODO: all the sides should be precomputed and stores in memory rather than here.
 
-void create_segments_of_zone(void){
+void create_segments_of_zone(Zone_general* zone){
+
 	double Xmin = 190, Xmax = -1;
 	double Ymin = 100, Ymax = -1;
 
+	//printf("%d", zone->numVertices);
+	
 	int i;
-	for(i = 0; i < zone.numVertices; i++){
-		//printf("x%d: %f, y%d: %f || ", i, zone.vertices[i].longitude, i, zone.vertices[i].latitude);
-		if(zone.vertices[i].longitude < Xmin)
-			Xmin = zone.vertices[i].longitude;
-		if(zone.vertices[i].latitude < Ymin)
-			Ymin = zone.vertices[i].latitude; 
+	for(i = 0; i < zone->numVertices; i++){
+		//printf("x%d: %f, y%d: %f || ", i, zone->vertices[i].longitude, i, zone->vertices[i].latitude);
+		if(zone->vertices[i].longitude < Xmin)
+			Xmin = zone->vertices[i].longitude;
+		if(zone->vertices[i].latitude < Ymin)
+			Ymin = zone->vertices[i].latitude; 
 	}
-	for(i = 0; i < zone.numVertices; i++){
-		if(zone.vertices[i].longitude > Xmax)
-			Xmax = zone.vertices[i].longitude;
-		if(zone.vertices[i].latitude > Ymax)
-			Ymax = zone.vertices[i].latitude; 
+
+	for(i = 0; i < zone->numVertices; i++){
+		if(zone->vertices[i].longitude > Xmax)
+			Xmax = zone->vertices[i].longitude;
+		if(zone->vertices[i].latitude > Ymax)
+			Ymax = zone->vertices[i].latitude; 
 	}
+
 	//printf("xmin: %f, xmax: %f, ymin: %f, ymax: %f\n", Xmin, Xmax, Ymin, Ymax);
 	double e = ((Xmax - Xmin) / 100);
 
-	//Segment sides[zone.numVertices];
-	//double sidesCalc[zone.numVertices];
-	for(i = 0; i < zone.numVertices-1; i++){
-		sides[i].p1.longitude = zone.vertices[i].longitude;
-		sides[i].p1.latitude = zone.vertices[i].latitude;
+	//Segment sides[zone->numVertices];
+	//double sidesCalc[zone->numVertices];
+	
+	sides = (Segment*)malloc((zone->numVertices) * sizeof(Segment));
 
-		sides[i].p2.longitude = zone.vertices[i+1].longitude;
-		sides[i].p2.latitude = zone.vertices[i+1].latitude;
+	for(i = 0; i < zone->numVertices-1; i++){
+		sides[i].p1.longitude = zone->vertices[i].longitude;
+		sides[i].p1.latitude = zone->vertices[i].latitude;
+
+		sides[i].p2.longitude = zone->vertices[i+1].longitude;
+		sides[i].p2.latitude = zone->vertices[i+1].latitude;
 		//sidesCalc[i] = (sides[i].p1.longitude/sides[i].p1.latitude) - 
 		//(sides[i].p2.longitude/sides[i].p2.latitude);
 	}
+	
 
-	sides[zone.numVertices-1].p1.longitude = zone.vertices[zone.numVertices-1].longitude;
-	sides[zone.numVertices-1].p1.latitude = zone.vertices[zone.numVertices-1].latitude;
+	sides[zone->numVertices-1].p1.longitude = zone->vertices[zone->numVertices-1].longitude;
+	sides[zone->numVertices-1].p1.latitude = zone->vertices[zone->numVertices-1].latitude;
 
-	sides[zone.numVertices-1].p2.longitude = zone.vertices[0].longitude;
-	sides[zone.numVertices-1].p2.latitude = zone.vertices[0].latitude;
+	sides[zone->numVertices-1].p2.longitude = zone->vertices[0].longitude;
+	sides[zone->numVertices-1].p2.latitude = zone->vertices[0].latitude;
 	//sidesCalc[zone->numVertices-1] = (sides[zone->numVertices-1].p1.longitude/sides[zone->numVertices-1].p1.latitude) - 
 	//	(sides[0].p2.longitude/sides[0].p2.latitude);
 
-	Segment ray1 = { .p1.longitude = sample.longitude, .p1.latitude = sample.latitude,
+	//Segment ray;
+	Segment ray = { .p1.longitude = sample.longitude, .p1.latitude = sample.latitude,
 					.p2.longitude = Xmax + e, .p2.latitude = sample.latitude };
-	printf("%d\n", &ray1);
+
+	printf("%f, %f\n", ray.p1.longitude, ray.p2.longitude);
+	//printf("%d\n", &tmpRay);
 
 	//ray = tmpRay;
-
+	
+	zone_limits.Xmin = Xmin; zone_limits.Xmax = Xmax; zone_limits.Ymin = Ymin; zone_limits.Ymax = Ymax; zone_limits.e = e;
 
 }
 
+void update_ray_location(GPSSamp* samp){
+	ray.p1.latitude = samp->latitude;
+					ray.p2.latitude = samp->latitude;
+}
+
 bool isSampleInRangeGeneral(GPSSamp* samp, Zone_general* zone_gen){
+	update_ray_location(samp);
+
 	clock_t start, end;
 	double cpu_time_used;
 	start = clock();
 
-	// find X,Y min and max each.
-
-	/*printf("1: (%f, %f), 2: (%f, %f), 3: (%f, %f), 4: (%f, %f)\n", zone_gen->vertices[0].longitude, 
-										zone_gen->vertices[0].latitude,
-										zone_gen->vertices[1].longitude, zone_gen->vertices[1].latitude,
-										zone_gen->vertices[2].longitude, zone_gen->vertices[2].latitude,
-										zone_gen->vertices[3].longitude, zone_gen->vertices[3].latitude
-			);*/
-
-	
-
-	//double rayCalc = ( ray.p1.longitude/ray.p1.latitude) - (ray.p2.longitude + ray.p2.latitude);
-	
 	/* test intersections */
 	int intersections = 0;
 	int i = 0;
 	for(i = 0; i < zone_gen->numVertices; i++){
-		//if(areIntersecting(ray, sides[i]))
+		if(areIntersecting(ray, sides[i]))
 			intersections++;
 	}
 
@@ -149,13 +157,13 @@ bool isSampleInRangeGeneral(GPSSamp* samp, Zone_general* zone_gen){
 	return false; //outside
 }	
 
+#endif
 
 
 
 
-#if 0
 
-int isSampleInRangeGeneral1(Zone_general* zone, int numVertices, GPSSamp* sample){
+int isSampleInRangeGeneral1(Zone_general* zone, GPSSamp* sample){
 	//TODO: understand this stuff, delete the comment and commit
 	int counter = 0;
 	int i;
@@ -165,8 +173,8 @@ int isSampleInRangeGeneral1(Zone_general* zone, int numVertices, GPSSamp* sample
 	GEO_Point p = {  .longitude = sample->longitude, .latitude = sample->latitude};
 	
 	p1 = zone->vertices[0];
-	for (i = 1; i <= numVertices; i++) {
-		p2 = zone->vertices[i % numVertices];
+	for (i = 1; i <= zone->numVertices; i++) {
+		p2 = zone->vertices[i % zone->numVertices];
 		if (p.latitude > min(p1.latitude, p2.latitude)){
 			if(p.latitude <= max(p1.latitude, p2.latitude)) {
     			if (p.longitude <= min(p1.longitude,p2.longitude)) {
@@ -174,9 +182,9 @@ int isSampleInRangeGeneral1(Zone_general* zone, int numVertices, GPSSamp* sample
         				xinters = (p.latitude-p1.latitude) * (p2.longitude-p1.longitude) / (p2.latitude-p1.latitude) + p1.longitude;
         				if (p1.longitude == p2.longitude || p.longitude <= xinters)
           					counter++;
-      			}
-    		}
-	  	}
+      				}
+    			}
+	  		}
 		}
 		p1 = p2;
 	}
@@ -215,7 +223,7 @@ int pnpoly(int nvert, double *vertx, double *verty, double testx, double testy){
   	}
   	return c;
 }
-#endif
+
 
 bool isDroneGoingOffBorder(GPSSamp* samp, Zone_general* zone_gen){
 
