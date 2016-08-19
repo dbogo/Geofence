@@ -1,4 +1,4 @@
-/*
+
 #include "led.h"
 
 int init_wiringPi(){
@@ -18,4 +18,4 @@ int light_led(int p){
 int led_off(int p){
 	digitalWrite(p, LOW);
 	return 0;
-}*/
+}
