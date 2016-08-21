@@ -18,30 +18,30 @@ logs_dir=logs
 
 #create dist directory for main executable
 if [ ! -d ${geofence_dist_dir} ]; then
-	mkdir ${geofence_dist_dir}
+	mkdir -p ${geofence_dist_dir}
 fi
 
 #create logs directory
 if [ ! -d ${logs_dir} ]; then
-	mkdir ${logs_dir}
+	mkdir -p ${logs_dir}
 fi
 
 # create build directories (for obj files) if they dont exist yet
 if [ ! -d ${RPiGPSDemo_build_dir} ]; then
-	mkdir ${RPiGPSDemo_build_dir}
+	mkdir -p ${RPiGPSDemo_build_dir}
 fi
 
 if [ ! -d ${GPSDemo_build_dir} ]; then
-	mkdir ${GPSDemo_build_dir}
+	mkdir -p ${GPSDemo_build_dir}
 fi
 
 #create dist directories (for shared libraries) if they dont exist yet
 if [ ! -d ${RPiGPSDemo_dist_dir} ]; then
-	mkdir ${RPiGPSDemo_dist_dir}
+	mkdir -p ${RPiGPSDemo_dist_dir}
 fi
 
 if [ ! -d ${GPSDemo_dist_dir} ]; then
-	mkdir ${GPSDemo_dist_dir}
+	mkdir -p ${GPSDemo_dist_dir}
 fi
 
 #=============================================
