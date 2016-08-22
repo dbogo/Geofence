@@ -1,5 +1,15 @@
 #include "rpi_gps_demo.h"
 #include "../../src/serial/serialInterface.h"
+
+/*TODO: There's a very nasty problem with the library building 
+ and this inclusion.
+ logInterface.h includes log4c/log4c.h . this lib is built already and is linked 
+ (see build script). every program that uses it has to specify it in the linking,
+ this libRPiGPSDemo cant build, until it links to it properly.
+ find a way to build it no matter what I include. it shouldnt be case specific.*/
+
+//#include "../../src/logInterface.h"
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,10 +58,9 @@ char* generate_nmea_sentence(void){
 
 //NOTE: passToLog
 int getGPSSample(int fd, GPSSamp* samp, bool passToLog){
-	//TODO: somehow make this nmea sentence be passed outside,
-    // where I need it to be looged in a file.
     
-	//char* nmea = generate_nmea_sentence();
+	//char* nmea = fetch_sentence_from_gps(fd, nmea);
+    //logEvent(nmea, LOG4C_PRIORITY_INFO, INFO, &logMaster);    
 
     char nmea[100];
 	memset(nmea, '\0', 100);
