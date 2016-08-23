@@ -5,10 +5,7 @@
 #include "../wiringPi/wiringPi/wiringPi.h"
 
 int init_wiringPi();
-int set_pin(int p);
-
-int light_led(int p);
-int led_off(int p);
-
+int set_led_output(int p);
+int led(int p, int mode);
 
 #endif /* LED_H */	
