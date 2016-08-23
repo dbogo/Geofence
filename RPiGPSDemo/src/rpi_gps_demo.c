@@ -8,14 +8,15 @@
  this libRPiGPSDemo cant build, until it links to it properly.
  find a way to build it no matter what I include. it shouldnt be case specific.*/
 
-//#include "../../src/logInterface.h"
+#include "../../src/logInterface.h"
 
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-
+// @deprecated 
+#if 0
 char* generate_nmea_sentence(void){
 	srand(time(NULL));
 	
@@ -55,16 +56,17 @@ char* generate_nmea_sentence(void){
 	//free(nmea); NOTE: should be freed or not ?
 	return nmea;
 }
+#endif
 
 //NOTE: passToLog
 int getGPSSample(int fd, GPSSamp* samp, bool passToLog){
-    
-	//char* nmea = fetch_sentence_from_gps(fd, nmea);
-    //logEvent(nmea, LOG4C_PRIORITY_INFO, INFO, &logMaster);    
 
     char nmea[100];
 	memset(nmea, '\0', 100);
 	fetch_sentence_from_gps(fd, nmea);
+    if(passToLog)
+        logEvent(nmea, LOG4C_PRIORITY_INFO, INFO, &logMaster);    
+
 
 	if((strstr(nmea, "$GPGGA") != NULL)){
 		gga ggaSamp;
