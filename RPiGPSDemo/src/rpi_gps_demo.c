@@ -1,13 +1,5 @@
 #include "rpi_gps_demo.h"
 #include "../../src/serial/serialInterface.h"
-
-/*TODO: There's a very nasty problem with the library building 
- and this inclusion.
- logInterface.h includes log4c/log4c.h . this lib is built already and is linked 
- (see build script). every program that uses it has to specify it in the linking,
- this libRPiGPSDemo cant build, until it links to it properly.
- find a way to build it no matter what I include. it shouldnt be case specific.*/
-
 #include "../../src/logInterface.h"
 
 #include <string.h>
@@ -15,7 +7,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-// @deprecated 
 #if 0
 char* generate_nmea_sentence(void){
 	srand(time(NULL));
@@ -58,7 +49,6 @@ char* generate_nmea_sentence(void){
 }
 #endif
 
-//NOTE: passToLog
 int getGPSSample(int fd, GPSSamp* samp, bool passToLog){
 
     char nmea[100];
@@ -66,7 +56,6 @@ int getGPSSample(int fd, GPSSamp* samp, bool passToLog){
 	fetch_sentence_from_gps(fd, nmea);
     if(passToLog)
         logEvent(nmea, LOG4C_PRIORITY_INFO, INFO, &logMaster);    
-
 
 	if((strstr(nmea, "$GPGGA") != NULL)){
 		gga ggaSamp;
@@ -89,12 +78,6 @@ int getGPSSample(int fd, GPSSamp* samp, bool passToLog){
 	
 	return UNRECOGNIZED_NMEA_FORMAT;	
 }
-
-#if 0
-char* saveNMEAforLog(void){
-    return nmea;
-}
-#endif
 
 //registers lat, lon, quality, satellites, altitude
 void parse_gga(gga* samp, char *nmea){
