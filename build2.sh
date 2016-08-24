@@ -49,12 +49,14 @@ fi
 #TODO: maybe rpath can store the neccessary log4c locations so I dont need -I -L
 
 #compile libraries with position independant code
-gcc -c -fpic RPiGPSDemo/src/*.c -Ilog4c/include -o ${RPiGPSDemo_build_dir}/rpi_gps_demo.o 
-gcc -c -fpic GPSDemo/src/*.c -o ${GPSDemo_build_dir}/gps_demo.o
+pushd > /dev/null ${RPiGPSDemo_build_dir}/ #go to the place where -o will put all obj files. SUPRESS THE OUTPUT OF pushd !
+gcc -c -fpic ../../RPiGPSDemo/src/*.c -I../../log4c/include 
+gcc -c -fpic ../../GPSDemo/src/*.c -o ../../${GPSDemo_build_dir}/gps_demo.o
+popd > /dev/null #return to the root dir of the project. 
 
 #create shared libraries from object files
 #RPiGPSDemo
-gcc -shared ${RPiGPSDemo_build_dir}/rpi_gps_demo.o -Llog4c/lib -llog4c -o ${RPiGPSDemo_dist_dir}/libRPiGPSDemo.so
+gcc -shared ${RPiGPSDemo_build_dir}/*.o -Llog4c/lib -llog4c -o ${RPiGPSDemo_dist_dir}/libRPiGPSDemo.so
 
 #GPSDemo
 gcc -shared -o ${GPSDemo_dist_dir}/libGPSDemo.so ${GPSDemo_build_dir}/gps_demo.o
