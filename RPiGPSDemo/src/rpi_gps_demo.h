@@ -13,6 +13,7 @@
  * an NMEA sentence is parsed and converted to custom data type, then returned.
  */
 
+int parse_nmea(char* sentence, GPSSamp* samp);
 void parse_gga(gga* samp, char *nmea);
 void parse_rmc(rmc* samp, char *nmea);
 

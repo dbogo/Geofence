@@ -57,26 +57,29 @@ int getGPSSample(int fd, GPSSamp* samp, bool passToLog){
     if(passToLog)
         logEvent(nmea, LOG4C_PRIORITY_INFO, INFO, &logMaster);    
 
-	if((strstr(nmea, "$GPGGA") != NULL)){
-		gga ggaSamp;
-		parse_gga(&ggaSamp, nmea);
-		samp->altitude = ggaSamp.altitude;
-		samp->longitude = ggaSamp.longitude;
-		samp->latitude = ggaSamp.latitude;
-		samp->course = samp->speed = 0.0f; // temporary solution
-		return REGISTERED_GGA;
-	} else if((strstr(nmea, "$GPRMC") != NULL)){
-		rmc rmcSamp;
-		parse_rmc(&rmcSamp, nmea);
-		samp->longitude = rmcSamp.longitude;
-		samp->latitude = rmcSamp.latitude;
-		samp->course = rmcSamp.course;
-		samp->speed = rmcSamp.speed;
-		samp->altitude = 0.0f; // temporary solution
-		return REGISTERED_RMC;
-	}
-	
-	return UNRECOGNIZED_NMEA_FORMAT;	
+	return parse_nmea(nmea, samp);	
+}
+
+int parse_nmea(char* sentence, GPSSamp* samp){
+    if((strstr(sentence, "$GPGGA") != NULL)){
+        gga ggaSamp;
+        parse_gga(&ggaSamp, sentence);
+        samp->altitude = ggaSamp.altitude;
+        samp->longitude = ggaSamp.longitude;
+        samp->latitude = ggaSamp.latitude;
+        samp->course = samp->speed = 0.0f; // temporary solution
+        return REGISTERED_GGA;
+    } else if((strstr(sentence, "$GPRMC") != NULL)){
+        rmc rmcSamp;
+        parse_rmc(&rmcSamp, sentence);
+        samp->longitude = rmcSamp.longitude;
+        samp->latitude = rmcSamp.latitude;
+        samp->course = rmcSamp.course;
+        samp->speed = rmcSamp.speed;
+        samp->altitude = 0.0f; // temporary solution
+        return REGISTERED_RMC;
+    }
+    return UNRECOGNIZED_NMEA_FORMAT;    
 }
 
 //registers lat, lon, quality, satellites, altitude
