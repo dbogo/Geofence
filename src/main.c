@@ -9,13 +9,13 @@
 #include <signal.h>
 
 #include "main.h"
-#include "utils.h"
 #include "logInterface.h"
 #include "GPSInterface.h" // TODO: reconsider this hierarcy !!
 //#include "../GPSDemo/src/gps_demo.h"
 #include "../RPiGPSDemo/src/rpi_gps_demo.h"
 #include "serial/serialInterface.h"
 #include "pifaceCAD/cad_utils.h"
+#include "led.h"
 
 #if 0
 void timer_handler(int signum){
@@ -44,9 +44,15 @@ void init(Zone_general* zone, Log_Master* logMaster){
 
 	initLogSystem(logMaster);
 
-	//init the Piface Control & Display 
-	//if(init_cad() == -1)
-	//	printf("init cad: pifacecad_open() hasn't yielded a file descriptor for SPI transactions.\n");
+	if(identify_platform() == ARM){
+		init_wiringPi();
+		set_led_output(STATUSLED);
+		set_led_output(GEOFENCE_OK_LED);
+
+		//init the Piface Control & Display 
+		//if(init_cad() == -1)
+		//	printf("init cad: pifacecad_open() hasn't yielded a file descriptor for SPI transactions.\n");
+	}
 }
 
 int main(int argc, char** argv) {
@@ -57,46 +63,23 @@ int main(int argc, char** argv) {
 	time_t currentTimeSec = 0;
 
 	int sampleStatus = 0; // invalid(9), gga(2), rmc(3), or full(1).
-
-	//int sampleStatus = 0; // invalid(9), gga(2), rmc(3), or full(1).
 	
 	//TODO: maybe instead of nanosleep implement a way using signals..
 	// see: http://stackoverflow.com/questions/36953010/using-signals-in-c-how-to-stop-and-continue-a-program-when-timer-ends?
 	
 	int fd = open_port();
-	char buffer[100];
-	memset(buffer, '\0', 100);
+	//char buffer[100]; //NOTE: remember to uncomment the memset at the end of the loop when using the buffer
+	//memset(buffer, '\0', 100);
 
-	while (!suspend_loop(false)) {
+	while (!suspend_loop(TIME_TO_WAIT_SEC, TIME_TO_WAIT_NSEC)) {
 
 		currentTimeSec = time(NULL);
 		sampleStatus = getGPSSample(fd, &sample, true);
 		
-		//fetch_sentence_from_gps(fd, buffer);
-		
-		//printf("%s", buffer);
-		
-		/*
-		if(sampleStatus == REGISTERED_GGA){
-			sprintf(buffer, "GGA, %f,\n%f", sample.latitude, sample.longitude);
-			clear_cad();		
-		} else if(sampleStatus == REGISTERED_RMC){
-			sprintf(buffer, "RMC, %f,\n%f", sample.latitude, sample.longitude);
-			clear_cad();		
-		}
-
-		print_to_cad(buffer);
-		*/
 		printf("lon: %f, lat %f\n", sample.latitude, sample.longitude);
 
-		//printf("lat: %f, lon: %f, alt: %f, crs: %f, spd: %f\n", sample.latitude, 
-		//	sample.longitude, sample.altitude, sample.course, sample.speed);
-
-		sprintf(logStr, "@(%ld) lat: %f, lon: %f, alt: %f, crs: %f, spd: %f |", 
-			(long)currentTimeSec, sample.latitude, sample.longitude, 
+		sprintf(logStr, "@(%ld) lat: %f, lon: %f, alt: %f, crs: %f, spd: %f |",(long)currentTimeSec, sample.latitude, sample.longitude, 
 			sample.altitude, sample.course, sample.speed);
-
-
 
 		// whether currently in border
 		if(isSampleInRangeGeneral1(&zone, &sample)){
@@ -117,12 +100,10 @@ int main(int argc, char** argv) {
 		//log the operation. (timestamp and the data of a GPSSamp)
 		logEvent(logStr, LOG4C_PRIORITY_INFO, INFO, &logMaster);
 
-		memset(buffer, '\0', 100);
+		//memset(buffer, '\0', 100); // clear the buffer that contains gps data
 		printf("******************************\n");
 	}
 
-	fclose(logMaster.operationLogger.logFile);
-	fclose(logMaster.errorLogger.logFile);
 	finiLogSystem();
 	
 	return (0);
@@ -133,19 +114,15 @@ int main(int argc, char** argv) {
 	for a premature stop, and will be resumed to finish the planned time (the remainder) 
 	NOTE: should this function be in a separate file for such things ?
 	*/
-int suspend_loop(bool toleratesInterrupt){
+int suspend_loop(time_t tv_sec, long nsec){
 	/* TODO: consider the use of clock_nanosleep() */
 	/* FIXME: maybe this function should call itself recursively
 	 to make sure that the pause is fully ended, instead of checking only once.. */
 	// NOTE: this struct declaration should maybe be somewhere else
-	struct timespec ts = { .tv_sec = 1 , .tv_nsec = 0 };
+	struct timespec ts = { .tv_sec = tv_sec , .tv_nsec = nsec };
 	int errCode = 0;
-	
-	//TODO: this should stay commented out until I figure out how to globalize logMaster
-	// or something..
-	//logEvent("suspend loop", LOG4C_PRIORITY_INFO, ERROR, &logMaster);
 
-	if(toleratesInterrupt){
+	if(TOLERATES_INTERRUPT){
 		struct timespec remainingTime;
 		errCode = nanosleep(&ts, &remainingTime);
 		// if EINTR then the pause has been interrupted
@@ -156,4 +133,15 @@ int suspend_loop(bool toleratesInterrupt){
 		}
 	}
 	return nanosleep(&ts, NULL);
+}
+
+platform identify_platform(void){
+	struct utsname name;
+	uname(&name);
+	if(strstr(name.machine, "x86"))
+		return X86;
+	else if(strstr(name.machine, "arm"))
+		return ARM;
+
+	return UNKNOWN_PLATFORM;
 }

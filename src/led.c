@@ -1,8 +1,12 @@
 
 #include "led.h"
 
-int init_wiringPi(){
-	return wiringPiSetup();
+int init_wiringPi(void){
+	//TODO: figure out a neat way to do something like
+	// a try/catch on the wiringPiSetup(). it screws the program.
+	if(wiringPiSetup() != 0)
+		return -1;
+	return 0;
 }
 
 int set_led_output(int p){

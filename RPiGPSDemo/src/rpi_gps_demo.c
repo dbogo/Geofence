@@ -54,10 +54,11 @@ char* generate_nmea_sentence(void){
 int getGPSSample(int fd, GPSSamp* samp, bool passToLog){
 
     char nmea[100];
-	memset(nmea, '\0', 100);
-	fetch_sentence_from_gps(fd, nmea);
+    memset(nmea, '\0', 100);
+    fetch_sentence_from_gps(fd, nmea);
+    printf("%s", nmea);
     if(passToLog)
         logEvent(nmea, LOG4C_PRIORITY_INFO, INFO, &logMaster);    
 
-	return parse_nmea(nmea, samp);	
+    return parse_nmea(nmea, samp);	
 }

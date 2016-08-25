@@ -4,7 +4,10 @@
 
 #include "../wiringPi/wiringPi/wiringPi.h"
 
-int init_wiringPi();
+#define STATUSLED 0
+#define GEOFENCE_OK_LED 6
+
+int init_wiringPi(void);
 int set_led_output(int p);
 int led(int p, int mode);
 
