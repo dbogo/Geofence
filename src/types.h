@@ -53,19 +53,40 @@ typedef struct {
 
 typedef struct {
 	double latitude; // Latitude e.g: 4124.8963 (XXYY.ZZKK.. DEG, MIN, SEC.SS)
-	char lat; // Latitude e.g: N
+	unsigned char lat; // Latitude e.g: N
 	double longitude; // Longitude e.g: 08151.6838 (XXXYY.ZZKK.. DEG, MIN, SEC.SS)
-	char lon; // Longitude e.g: W
+	unsigned char lon; // Longitude e.g: W
 	uint8_t quality;  // Quality 0, 1, 2
 	uint8_t satellites; // Number of satellites: 1,2,3,4,5...
 	float altitude; // Altitude e.g: 280.2 (Meters above mean sea level)
 } gga;
 
 typedef struct {
+	unsigned char fixType; // 1 = no fix; 2 = 2D fix; 3 = 3D fix
+	float pdop;
+	float hdop;
+	float vdop;
+} gsa;
+
+typedef struct {
+	float spdKnots;
+	float spdKph;
+} vtg;
+
+typedef struct {
 	double latitude;
-	char lat;
+	unsigned char lat;
 	double longitude;
-	char lon;
+	unsigned char lon;
+	unsigned long fixTime;
+	bool status; // A (activce) or V (void)  as true/false
+} gll;
+
+typedef struct {
+	double latitude;
+	unsigned char lat;
+	double longitude;
+	unsigned char lon;
 	float speed;
 	double course;
 } rmc;

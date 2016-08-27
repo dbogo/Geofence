@@ -13,6 +13,8 @@
 #define TIME_TO_WAIT_SEC 1
 #define TIME_TO_WAIT_NSEC 0
 
+#define MAX_NMEA_MSG_SIZE 83
+
 #define TOLERATES_INTERRUPT 1 //NOTE: may need to NOT be constant later..
 
 #define EINTR -1

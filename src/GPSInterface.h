@@ -26,7 +26,11 @@
 #define FULL_SAMPLE	1
 #define REGISTERED_GGA 2
 #define REGISTERED_RMC 3
-#define UNRECOGNIZED_NMEA_FORMAT 9
+#define REGISTERED_GSA 4
+#define REGISTERED_VTG 5
+#define REGISTERED_GLL 6
+#define IGNORED_TXT 9
+#define UNRECOGNIZED_NMEA_FORMAT -1
 
 typedef struct {
 	double Xmin;

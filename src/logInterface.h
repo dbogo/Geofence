@@ -16,16 +16,10 @@ LOG4C_PRIORITY_UNKNOWN 	unknown
 #ifndef LOGINTERFACE_H
 #define LOGINTERFACE_H
 
-#include "../../log4c/include/log4c.h"
-// <stdio.h> is already included in log4c 
+#include "../log4c/include/log4c.h"
 
 /* All the different log files are placed in a special 'logs' folder that is
 	at the top of the project directory (same level as src/) */
-
-/* TODO: consider redesigning the logEvent() function to require only the log message,
-	prioritry, and the program will figure out on its own which logger to use for that.
-	error/operation etc.. 
-*/
 
 #define OPERATION_LOG_FILE "logs/operation.log"
 #define NMEA_LOG_FILE "logs/nmea_signals.log"

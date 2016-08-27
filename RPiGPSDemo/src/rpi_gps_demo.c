@@ -53,9 +53,12 @@ char* generate_nmea_sentence(void){
 /* defined as extern in GPSInterface.h */
 int getGPSSample(int fd, GPSSamp* samp, bool passToLog){
 
-    char nmea[100];
-    memset(nmea, '\0', 100);
+    char nmea[MAX_NMEA_MSG_SIZE];
+    memset(nmea, '\0', MAX_NMEA_MSG_SIZE);
     fetch_sentence_from_gps(fd, nmea);
+    //if(is_nmea_txt(nmea))
+     //   return IGNORED_TXT;
+
     printf("%s", nmea);
     if(passToLog)
         logEvent(nmea, LOG4C_PRIORITY_INFO, INFO, &logMaster);    

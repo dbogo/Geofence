@@ -159,12 +159,7 @@ bool isSampleInRangeGeneral(GPSSamp* samp, Zone_general* zone_gen){
 
 #endif
 
-
-
-
-
 int isSampleInRangeGeneral1(Zone_general* zone, GPSSamp* sample){
-	//TODO: understand this stuff, delete the comment and commit
 	int counter = 0;
 	int i;
 	double xinters;

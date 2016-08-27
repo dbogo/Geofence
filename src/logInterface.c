@@ -54,6 +54,8 @@ void logEvent(char* str, int priority, int logType, Log_Master* logMaster){
 }
 
 int finiLogSystem(void){
+	fclose(logMaster.operationLogger.logFile);
+	fclose(logMaster.errorLogger.logFile);
 	int errCode = log4c_fini();
 	if(errCode)
 		printf("log4c_fini() failed.\n");

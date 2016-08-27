@@ -31,7 +31,8 @@ int open_port(void){
  * sentence, and places them into the dedicated buffer.
  */
 int fetch_sentence_from_gps(int fd, char* buffer){
-	char c;
+	// TODO: benchmark and look for a fester way.
+	char c = '\0';
 	int i = 0; // index of the current end of the string
 	while(c != '\n'){
 		if(read(fd, &c, 1) < 0){

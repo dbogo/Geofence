@@ -3,7 +3,7 @@
 
 #include "../../src/GPSInterface.h"
 
-/* This library gets raw NMEA sentences from GPS module. */
+/* This library gets raw NMEA sentences from the GPS module. */
 
  #if 0 
  char* generate_nmea_sentence(void); 
