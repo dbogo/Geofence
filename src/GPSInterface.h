@@ -30,7 +30,7 @@
 #define REGISTERED_VTG 5
 #define REGISTERED_GLL 6
 #define IGNORED_TXT 9
-#define UNRECOGNIZED_NMEA_FORMAT -1
+#define UNRECOGNIZED_NMEA -1
 
 typedef struct {
 	double Xmin;
@@ -48,23 +48,27 @@ Segment* sides;
 
 
 
-/* 
-'generic' function of a GPS sample, implemented by different libraries
-	TODO: review the purpose of passToLog.. either find a way to use it 
-	or remove it for now..
-*/
-extern int getGPSSample(int fd, GPSSamp* samp, bool passToLog);
+/**
+ * @brief      basically gets GPS data
+ *
+ * @param[in]  fd         file descriptor of the port that's outputting NMEA
+ * @param      samp       struct with neccessary data
+ * @param[in]  passToLog  true if we want to log the stuff
+ *
+ * @return     the ID of the sentence we got on this call.
+ */
+extern int getGPSSample(int fd, FullGPSData* samp, bool passToLog);
 
 void create_segments_of_zone(Zone_general* zone);
 
 void update_ray_location(GPSSamp* samp);
 
-int isSampleInRangeGeneral1(Zone_general* zone, GPSSamp* sample);
-bool isSampleInRangeGeneral(GPSSamp* samp, Zone_general* zone_gen);
-bool isSampleInRange(GPSSamp* samp, Zone* zone);
+int isDroneInRangeGeneral1(Zone_general* zone, FullGPSData* location);
+bool isDroneInRangeGeneral(FullGPSData* location, Zone_general* zone_gen);
+bool isDroneInRange(FullGPSData* location, Zone* zone);
 int pnpoly(int nvert, double *vertx, double *verty, double testx, double testy);
 //int areIntersecting(Segment side1, Segment side2);
-bool isDroneGoingOffBorder(GPSSamp* samp, Zone_general* zone_gen);
+bool isDroneGoingOffBorder(FullGPSData* location, Zone_general* zone_gen);
 
 #endif /* GPSINTERFACE_H */
 

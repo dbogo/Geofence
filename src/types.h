@@ -52,6 +52,27 @@ typedef struct {
 } Zone_general;
 
 typedef struct {
+	double latitude;
+	double longitude;
+	unsigned char lat;
+	unsigned char lon;
+	float altitude;
+	double course;
+	float spdKph;
+
+	uint8_t quality;
+	uint8_t satellites;
+	unsigned char fixType;
+	long fixTime;
+
+	float pdop;
+	float hdop;
+	float vdop;
+	float spdKnots;
+	bool status; 
+} FullGPSData;
+
+typedef struct {
 	double latitude; // Latitude e.g: 4124.8963 (XXYY.ZZKK.. DEG, MIN, SEC.SS)
 	unsigned char lat; // Latitude e.g: N
 	double longitude; // Longitude e.g: 08151.6838 (XXXYY.ZZKK.. DEG, MIN, SEC.SS)

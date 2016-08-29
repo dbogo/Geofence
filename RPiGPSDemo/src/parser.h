@@ -3,7 +3,8 @@
 
 #include "../../src/GPSInterface.h"
 
-NMEA_id parse_nmea(char* sentence, GPSSamp* samp);
+int parse_nmea(char* sentence, FullGPSData* samp);
+
 bool is_nmea_txt(char* nmea);
 
 static void parse_gga(gga* samp, char *nmea);

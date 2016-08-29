@@ -3,14 +3,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int parse_nmea(char* sentence, GPSSamp* samp){
+
+
+int parse_nmea(char* sentence, FullGPSData* samp){
     if((strstr(sentence, "$GPGGA") != NULL)){
         gga ggaSamp;
         parse_gga(&ggaSamp, sentence);
         samp->altitude = ggaSamp.altitude;
         samp->longitude = ggaSamp.longitude;
         samp->latitude = ggaSamp.latitude;
-        samp->course = samp->speed = 0.0f; // temporary solution
+        samp->satellites = ggaSamp.quality;
+        samp->satellites = ggaSamp.satellites;
         return REGISTERED_GGA;
     } else if((strstr(sentence, "$GPRMC") != NULL)){
         rmc rmcSamp;
@@ -18,24 +21,38 @@ int parse_nmea(char* sentence, GPSSamp* samp){
         samp->longitude = rmcSamp.longitude;
         samp->latitude = rmcSamp.latitude;
         samp->course = rmcSamp.course;
-        samp->speed = rmcSamp.speed;
+        samp->spdKnots = rmcSamp.speed; //rmc gives Knots
         samp->altitude = 0.0f; // temporary solution
         return REGISTERED_RMC;
     } else if((strstr(sentence, "$GPGSA") != NULL)){
     	gsa gsaSamp;
     	parse_gsa(&gsaSamp, sentence);
+    	samp->fixType = gsaSamp.fixType;
+    	samp->pdop = gsaSamp.pdop;
+    	samp->hdop = gsaSamp.hdop;
+    	samp->vdop = gsaSamp.vdop;
     	return REGISTERED_GSA;
     } else if((strstr(sentence, "$GPGLL") != NULL)){
     	gll gllSamp;
-    	parse_gsa(&gllSamp, sentence);
+    	parse_gll(&gllSamp, sentence);
+    	samp->latitude = gllSamp.latitude;
+    	samp->lat = gllSamp.lat;
+    	samp->longitude = gllSamp.longitude;
+    	samp->lon = gllSamp.lon;
+    	samp->fixTime = gllSamp.fixTime;
+    	samp->status = gllSamp.status;
     	return REGISTERED_GLL;
     } else if((strstr(sentence, "$GPVTG") != NULL)){
     	vtg vtgSamp;
-    	parse_gsa(&vtgSamp, sentence);
+    	parse_vtg(&vtgSamp, sentence);
+    	samp->spdKnots = vtgSamp.spdKnots;
+    	samp->spdKph = vtgSamp.spdKph;
     	return REGISTERED_VTG;
-    
+    }
+
     return UNRECOGNIZED_NMEA;    
 }
+
 
 static void parse_gsa(gsa* gsa, char* nmea){
 	char* p = nmea;
@@ -96,7 +113,7 @@ static void parse_vtg(vtg* samp, char* nmea){
 }
 
 //registers lat, lon, quality, satellites, altitude
-static void parse_gga_new(gga* samp,cchar *nmea){
+static void parse_gga_new(gga* samp, char *nmea){
     char *p = nmea;
     p = strchr(p, ',')+1; //skip time
 	

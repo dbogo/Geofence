@@ -22,7 +22,7 @@ int suspend_loop(time_t tv_sec, long nsec);
  * @param      zone       pointer to Zone_general strcut
  * @param      logMaster  pointer to Log_Master struct
  */
-void init(Zone_general* zone, Log_Master* logMaster);
+void init(FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster);
 
 platform identify_platform(void);
 

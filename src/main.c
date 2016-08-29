@@ -25,12 +25,33 @@ void timer_handler(int signum){
 #endif
 
 //TODO: error checking and return values...
-void init(Zone_general* zone, Log_Master* logMaster){
+void init(FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster){
+
+	FullGPSData tmp = {
+		.latitude = 0.0f,
+		.longitude = 0.0f,
+		.lat = '\0',
+		.lon = '\0',
+		.altitude = 0.0f,
+		.course = 0.0f,
+		.spdKph = 0.0f,
+		.quality = 0,
+		.satellites = 0,
+		.fixType = 0,
+		.fixTime = 0,
+		.pdop = 0.0f,
+		.hdop = 0.0f,
+		.vdop = 0.0f,
+		.spdKnots = 0.0f,
+		.status = false
+	};
+
+	gpsData = & tmp;
 
 	// hardcode some zone data for a quick test !
 	zone->numVertices = 4;
 	zone->altitude = 285.0f;
-	GEO_Point p0 = { .longitude = 0.0f, .latitude = 0.0f};
+	GEO_Point p0 = { .longitude = 0.10f, .latitude = 0.1f};
 	GEO_Point p1 = { .longitude = 10.0f, .latitude = 0.0f};
 	GEO_Point p2 = { .longitude = 10.0f, .latitude = 10.0f};
 	GEO_Point p3 = { .longitude = 0.0f, .latitude = 10.0f};
@@ -57,11 +78,12 @@ void init(Zone_general* zone, Log_Master* logMaster){
 
 int main(int argc, char** argv) {
 
-	init(&zone, &logMaster);
+	FullGPSData gpsData; /* stores every kind of data we may need that's possible to extract from NMEA */
+
+	init(&gpsData, &zone, &logMaster);
 
 	char logStr[80];
 	time_t currentTimeSec = 0;
-
 	int sampleStatus = 0; // invalid(9), gga(2), rmc(3), or full(1).
 	
 	//TODO: maybe instead of nanosleep implement a way using signals..
@@ -74,15 +96,15 @@ int main(int argc, char** argv) {
 	while (!suspend_loop(TIME_TO_WAIT_SEC, TIME_TO_WAIT_NSEC)) {
 
 		currentTimeSec = time(NULL);
-		sampleStatus = getGPSSample(fd, &sample, true);
+		sampleStatus = getGPSSample(fd, &gpsData, true);
 		
-		printf("lon: %f, lat %f\n", sample.latitude, sample.longitude);
+		printf("lon: %f, lat %f\n", gpsData.latitude, gpsData.longitude);
 
-		sprintf(logStr, "@(%ld) lat: %f, lon: %f, alt: %f, crs: %f, spd: %f |",(long)currentTimeSec, sample.latitude, sample.longitude, 
-			sample.altitude, sample.course, sample.speed);
+		sprintf(logStr, "@(%ld) lat: %f, lon: %f, alt: %f, crs: %f, spd(kph): %f |",(long)currentTimeSec, gpsData.latitude, gpsData.longitude, 
+			gpsData.altitude, gpsData.course, gpsData.spdKph);
 
 		// whether currently in border
-		if(isSampleInRangeGeneral1(&zone, &sample)){
+		if(isDroneInRangeGeneral1(&zone, &gpsData)){
 			printf("Current pos - within border\n");
 		} else {
 			printf("Current pos - outside the border\n");
@@ -90,7 +112,7 @@ int main(int argc, char** argv) {
 
 #if 0
 		// whether estimated to go out in the next iteration of this loop.
-		if(isDroneGoingOffBorder(&sample, &zone)){	
+		if(isDroneGoingOffBorder(&gpsData, &zone)){	
 			printf("Next estimated pos - outside of border\n");
 		} else {
 			printf("Next estimated pos - within border\n");

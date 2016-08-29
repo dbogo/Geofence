@@ -116,8 +116,8 @@ void create_segments_of_zone(Zone_general* zone){
 	//	(sides[0].p2.longitude/sides[0].p2.latitude);
 
 	//Segment ray;
-	Segment ray = { .p1.longitude = sample.longitude, .p1.latitude = sample.latitude,
-					.p2.longitude = Xmax + e, .p2.latitude = sample.latitude };
+	Segment ray = { .p1.longitude = location.longitude, .p1.latitude = location.latitude,
+					.p2.longitude = Xmax + e, .p2.latitude = location.latitude };
 
 	printf("%f, %f\n", ray.p1.longitude, ray.p2.longitude);
 	//printf("%d\n", &tmpRay);
@@ -133,7 +133,7 @@ void update_ray_location(GPSSamp* samp){
 					ray.p2.latitude = samp->latitude;
 }
 
-bool isSampleInRangeGeneral(GPSSamp* samp, Zone_general* zone_gen){
+bool isDroneInRangeGeneral(GPSSamp* samp, Zone_general* zone_gen){
 	update_ray_location(samp);
 
 	clock_t start, end;
@@ -159,13 +159,13 @@ bool isSampleInRangeGeneral(GPSSamp* samp, Zone_general* zone_gen){
 
 #endif
 
-int isSampleInRangeGeneral1(Zone_general* zone, GPSSamp* sample){
+int isDroneInRangeGeneral1(Zone_general* zone, FullGPSData* location){
 	int counter = 0;
 	int i;
 	double xinters;
 	GEO_Point p1,p2;
 	// the test point
-	GEO_Point p = {  .longitude = sample->longitude, .latitude = sample->latitude};
+	GEO_Point p = {  .longitude = location->longitude, .latitude = location->latitude};
 	
 	p1 = zone->vertices[0];
 	for (i = 1; i <= zone->numVertices; i++) {
@@ -194,7 +194,7 @@ int isSampleInRangeGeneral1(Zone_general* zone, GPSSamp* sample){
 /* This function checks whether a point is inside an N-sides, general
 	case polygon, using a version of the ray-casting algorithm.
 	see: https://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html */
-bool isSampleInRangeGeneral(GPSSamp* samp, Zone_general* zone_gen){
+bool isDroneInRangeGeneral(GPSSamp* samp, Zone_general* zone_gen){
 	double vertx[zone_gen->numVertices];
 	double verty[zone_gen->numVertices];
 	
@@ -237,7 +237,7 @@ bool isDroneGoingOffBorder(GPSSamp* samp, Zone_general* zone_gen){
 	// check if the drone's next estimated position is within the borders 
 	GEO_Point p = { .latitude = estimatedNextSamp.latitude,
 					.longitude = estimatedNextSamp.longitude };
-	if(isSampleInRangeGeneral1(zone_gen, zone_gen->numVertices, &estimatedNextSamp)){	
+	if(isDroneInRangeGeneral1(zone_gen, zone_gen->numVertices, &estimatedNextSamp)){	
 		return false;
 	}
 

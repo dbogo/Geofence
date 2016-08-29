@@ -51,7 +51,7 @@ char* generate_nmea_sentence(void){
 #endif
 
 /* defined as extern in GPSInterface.h */
-int getGPSSample(int fd, GPSSamp* samp, bool passToLog){
+int getGPSSample(int fd, FullGPSData* samp, bool passToLog){
 
     char nmea[MAX_NMEA_MSG_SIZE];
     memset(nmea, '\0', MAX_NMEA_MSG_SIZE);
