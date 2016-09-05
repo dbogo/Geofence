@@ -3,7 +3,11 @@
 
 #include "../../src/GPSInterface.h"
 
+#define CHECKSUM_OK 0
+#define CHECKSUM_ERR 1
+
 int parse_nmea(char* sentence, FullGPSData* samp);
+int validate_checksum(char* nmea);
 
 bool is_nmea_txt(char* nmea);
 

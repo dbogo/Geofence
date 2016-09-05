@@ -56,8 +56,10 @@ int getGPSSample(int fd, FullGPSData* samp, bool passToLog){
     char nmea[MAX_NMEA_MSG_SIZE];
     memset(nmea, '\0', MAX_NMEA_MSG_SIZE);
     fetch_sentence_from_gps(fd, nmea);
-    //if(is_nmea_txt(nmea))
-     //   return IGNORED_TXT;
+    if(validate_checksum(nmea) != CHECKSUM_OK){
+    	logEvent("checksum error. exiting getGPSSample() with: CHECKSUM_ERR", LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
+    	return CHECKSUM_ERR;
+    }
 
     printf("%s", nmea);
     if(passToLog)
