@@ -32,21 +32,6 @@
 #define IGNORED_TXT 9
 #define UNRECOGNIZED_NMEA -1
 
-typedef struct {
-	double Xmin;
-	double Xmax;
-	double Ymin;
-	double Ymax;
-	double e;
-} Zone_Limits;
-
-Segment ray;
-Zone_general zone;
-Zone_Limits zone_limits;
-GPSSamp sample;
-Segment* sides;
-
-
 
 /**
  * @brief      basically gets GPS data
@@ -59,16 +44,58 @@ Segment* sides;
  */
 extern int getGPSSample(int fd, FullGPSData* samp, bool passToLog);
 
-void create_segments_of_zone(Zone_general* zone);
+/**
+ * @brief      Determines if the test point is to the left of the vector,
+ *             accounting for the direction of the vector (up or down).
+ *
+ * @param[in]  p     The test point
+ * @param[in]  e     the vector, represented by a segment of it as an Edge. (two points)
+ *
+ * @return     return a positive integer if the point is on the left, and a negative otherwise.
+ *             A special case: 0, if the point is on the line.
+ */
+int isLeft(GEO_Point p, Edge e);
 
-void update_ray_location(GPSSamp* samp);
+/**
+ * @brief      checks if a polygon's segment crosses a ray in the upwards direction.
+ *
+ * @param      e     A polygons edge
+ * @param[in]  p     the test point
+ *
+ * @return     true if a upwards cross, false otherwise
+ */
+bool upwards_cross(Edge e, GEO_Point p);
 
-int isDroneInRangeGeneral1(Zone_general* zone, FullGPSData* location);
-bool isDroneInRangeGeneral(FullGPSData* location, Zone_general* zone_gen);
-bool isDroneInRange(FullGPSData* location, Zone* zone);
-int pnpoly(int nvert, double *vertx, double *verty, double testx, double testy);
-//int areIntersecting(Segment side1, Segment side2);
+/**
+ * @brief      see upwards_cross(). This is the opposite.
+ */
+bool downwards_cross(Edge e, GEO_Point p);
+
+/**
+ * @brief      Winding Number algorithm for test of Point-In-Polygon inclusion.
+ *             see http://geomalgorithms.com/a03-_inclusion.html
+ *
+ * @param      location  the location of the test points (coordinates)
+ * @param      zone      the Polygon - represented by its vertices
+ * @param      edges     the Edges of the polygon
+ *
+ * @return     returns true if the point is inside the polygon.
+ *             if the point is inside the polygon, the winding number is non-zero.
+ *             a detailed description of the algorithm is in the link.
+ */
+int wn_PnPoly(FullGPSData* location, Zone_general* zone, Edge* edges);
+
+/**
+ * @brief      Creates the edges of the polygon from its vertices.
+ *             Called once.
+ *
+ * @param      zone   The polygon - represented by its vertices
+ * @param      edges  A Edge pointer. points to an array of edges that is populated in this function
+ *
+ * @return     returns the number of edges. (Actually returnes the number of vertices).
+ */
+int create_edges(Zone_general* zone, Edge** edges);
+
 bool isDroneGoingOffBorder(FullGPSData* location, Zone_general* zone_gen);
 
 #endif /* GPSINTERFACE_H */
-

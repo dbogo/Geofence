@@ -6,7 +6,7 @@ int initLogSystem(Log_Master* logMaster){
 
 	logMaster->operationLogger.logFile = fopen(OPERATION_LOG_FILE, "w");
 	logMaster->operationLogger.logObj = NULL;
-	logMaster->operationLogger.logInstanceName = "operationlog";
+	logMaster->operationLogger.logInstanceName = "";
 
 	logMaster->errorLogger.logFile = fopen(ERROR_LOG_FILE, "w");
 	logMaster->errorLogger.logObj = NULL;

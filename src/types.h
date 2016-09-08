@@ -25,10 +25,12 @@ typedef struct {
 
 /* A representation of a single 2D point on the surface. */
 typedef struct {
-	double latitude;
 	double longitude;
+	double latitude;
 } GEO_Point;
 
+// deprecated
+#if 0
 /* A TEMPORARY implementaion of a Geo-zone.
 	implemented as a rectangle */
 typedef struct {
@@ -36,12 +38,13 @@ typedef struct {
 	GEO_Point p2;
 	float altitude; // NOTE: Zone is a 3D shape
 } Zone;
+#endif
 
 /* A straight line connectring two points in 2D */
 typedef struct {
 	GEO_Point p1;
 	GEO_Point p2;
-} Segment;
+} Edge;
 
 /* An arbitrary Geo-zone that is a simple polygon.
 	may consist of more than 2 vertices. */

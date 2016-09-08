@@ -10,6 +10,7 @@
 /* TODO: increase precision */
 #define PI 3.14159265
 #define E 2.71828182 
+
 #define TIME_TO_WAIT_SEC 1
 #define TIME_TO_WAIT_NSEC 0
 
@@ -22,6 +23,6 @@
 /* TODO: add more platforms (and a distinction between x86_32/64) ??? */
 typedef enum {  UNKNOWN_PLATFORM,
 				X86,
-				ARM } platform; 
+				ARM } platform_id; 
 
 #endif /* UTILS_H */

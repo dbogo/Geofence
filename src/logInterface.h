@@ -49,7 +49,11 @@ Log_Master logMaster;
  */
 int initLogSystem(Log_Master* logMaster);
 
-//int initLogSystem(log4c_category_t** logObj, const char* instanceName, const char* appenderName);
+/* DEPRECATED */
+#if 0
+int initLogSystem(log4c_category_t** logObj, const char* instanceName, const char* appenderName);
+void logEvent(log4c_category_t* logObj, int logPriority, const char* format);
+#endif
 
 /**
  * @brief      close and stop the logging system
@@ -57,7 +61,6 @@ int initLogSystem(Log_Master* logMaster);
  */
 int finiLogSystem(void);
 
-//void logEvent(log4c_category_t* logObj, int logPriority, const char* format);
 
 /**
  * @brief      logs the message into the specified stream, using 
