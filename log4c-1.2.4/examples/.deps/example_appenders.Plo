@@ -6,7 +6,7 @@ example_appenders.lo: example_appenders.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
  /usr/include/x86_64-linux-gnu/bits/types.h \
  /usr/include/x86_64-linux-gnu/bits/typesizes.h /usr/include/time.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h /usr/include/endian.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/stddef.h /usr/include/endian.h \
  /usr/include/x86_64-linux-gnu/bits/endian.h \
  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
  /usr/include/x86_64-linux-gnu/bits/byteswap-16.h \
@@ -24,7 +24,7 @@ example_appenders.lo: example_appenders.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h /usr/include/getopt.h \
  /usr/include/x86_64-linux-gnu/bits/unistd.h /usr/include/syslog.h \
  /usr/include/x86_64-linux-gnu/sys/syslog.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/syslog-path.h \
  /usr/include/x86_64-linux-gnu/bits/syslog.h \
  /usr/include/x86_64-linux-gnu/bits/timex.h /usr/include/xlocale.h \
@@ -63,7 +63,7 @@ example_appenders.lo: example_appenders.c /usr/include/stdc-predef.h \
 
 /usr/include/time.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h:
+/usr/lib/gcc/x86_64-linux-gnu/5/include/stddef.h:
 
 /usr/include/endian.h:
 
@@ -107,7 +107,7 @@ example_appenders.lo: example_appenders.c /usr/include/stdc-predef.h \
 
 /usr/include/x86_64-linux-gnu/sys/syslog.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h:
+/usr/lib/gcc/x86_64-linux-gnu/5/include/stdarg.h:
 
 /usr/include/x86_64-linux-gnu/bits/syslog-path.h:
 
