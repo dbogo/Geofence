@@ -4,7 +4,7 @@ RPiGPSDemo/dist/
 GPSDemo/build/
 GPSDemo/dist/
 
-log4c-1.2.4
+log4c
 
 log4c/etc/
 log4c/bin/
@@ -13,6 +13,9 @@ log4c/share/
 
 *.o
 *.a
+
+geofence.sublime-project
+geofence.sublime-workspace
 
 build1.sh
 
