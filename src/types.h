@@ -16,17 +16,17 @@ typedef unsigned char uint8_t;
 
 /* NOTE: Pay attention to to calculations where course is in radians or in degrees ! */
 typedef struct {
-	double latitude; // value from 0.0 to 90.0
-	double longitude; // value from 0.0 to 180.0 NOTE:east/west !
+	float latitude; // value from 0.0 to 90.0
+	float longitude; // value from 0.0 to 180.0 NOTE:east/west !
 	float speed;
 	float altitude;
-	double course;
+	float course;
 } GPSSamp;
 
 /* A representation of a single 2D point on the surface. */
 typedef struct {
-	double longitude;
-	double latitude;
+	float longitude;
+	float latitude;
 } GEO_Point;
 
 // deprecated
@@ -55,12 +55,12 @@ typedef struct {
 } Zone_general;
 
 typedef struct {
-	double latitude;
-	double longitude;
+	float latitude;
+	float longitude;
 	unsigned char lat;
 	unsigned char lon;
 	float altitude;
-	double course;
+	float course;
 	float spdKph;
 
 	uint8_t quality;
@@ -76,9 +76,9 @@ typedef struct {
 } FullGPSData;
 
 typedef struct {
-	double latitude; // Latitude e.g: 4124.8963 (XXYY.ZZKK.. DEG, MIN, SEC.SS)
+	float latitude; // Latitude e.g: 4124.8963 (XXYY.ZZKK.. DEG, MIN, SEC.SS)
 	unsigned char lat; // Latitude e.g: N
-	double longitude; // Longitude e.g: 08151.6838 (XXXYY.ZZKK.. DEG, MIN, SEC.SS)
+	float longitude; // Longitude e.g: 08151.6838 (XXXYY.ZZKK.. DEG, MIN, SEC.SS)
 	unsigned char lon; // Longitude e.g: W
 	uint8_t quality;  // Quality 0, 1, 2
 	uint8_t satellites; // Number of satellites: 1,2,3,4,5...
@@ -98,21 +98,21 @@ typedef struct {
 } vtg;
 
 typedef struct {
-	double latitude;
+	float latitude;
 	unsigned char lat;
-	double longitude;
+	float longitude;
 	unsigned char lon;
 	unsigned long fixTime;
 	bool status; // A (activce) or V (void)  as true/false
 } gll;
 
 typedef struct {
-	double latitude;
+	float latitude;
 	unsigned char lat;
-	double longitude;
+	float longitude;
 	unsigned char lon;
 	float speed;
-	double course;
+	float course;
 } rmc;
 
 #ifdef __cplusplus
