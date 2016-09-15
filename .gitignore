@@ -1,8 +1,14 @@
 RPiGPSDemo/build/
 RPiGPSDemo/dist/
+RPiGPSDemo/nbproject/
+RPiGPSDemo/Makefile
+RPiGPSDemo/.dep.inc
 
 GPSDemo/build/
 GPSDemo/dist/
+GPSDemo/nbproject/
+GPSDemo/Makefile
+GPSDemo/.dep.inc
 
 log4c
 
@@ -23,10 +29,14 @@ misc/GLOBAL_TODO.txt
 
 build/
 dist/
-
+nbproject/
 logs/
 
 log.txt
 operation.log
+Makefile
+.dep.inc
+
 /build/
 /dist/
+
