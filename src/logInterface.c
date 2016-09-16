@@ -6,11 +6,11 @@ int initLogSystem(Log_Master* logMaster){
 
 	logMaster->operationLogger.logFile = fopen(OPERATION_LOG_FILE, "w");
 	logMaster->operationLogger.logObj = NULL;
-	logMaster->operationLogger.logInstanceName = "";
+	logMaster->operationLogger.logInstanceName = ""; 
 
 	logMaster->errorLogger.logFile = fopen(ERROR_LOG_FILE, "w");
 	logMaster->errorLogger.logObj = NULL;
-	logMaster->errorLogger.logInstanceName = "errorlog";
+	logMaster->errorLogger.logInstanceName = "errorlog"; // e.g. 'errorlog' etc.
 
 	int errCode = log4c_init();
 	if(errCode){

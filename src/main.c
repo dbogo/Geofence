@@ -9,9 +9,8 @@
 #include <signal.h>
 
 #include "main.h"
-#include "logInterface.h"
 #include "GPSInterface.h" // TODO: reconsider this hierarchy !!
-//#include "../GPSDemo/src/gps_demo.h"
+#include "../GPSDemo/src/gps_demo.h"
 #include "../RPiGPSDemo/src/rpi_gps_demo.h"
 #include "serial/serialInterface.h"
 #include "pifaceCAD/cad_utils.h"
@@ -62,6 +61,7 @@ void init(FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge*
 	memcpy(zone->vertices, verts, sizeof(verts));
 
 	create_edges(zone, edges);
+	find_mbr(zone);
 
 /* An arbitrary, somewhat close estimation of a standard line that describes the vertices in the log. */
 #define ZONE_STR_LINE_LENGTH 65
@@ -94,6 +94,9 @@ void init(FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge*
 
 int main(int argc, char** argv) {
 
+	parse_input_args(argc, argv);
+
+
 	FullGPSData gpsData; /* stores every kind of data we may need that's possible to extract from NMEA */
 	Zone_general zone;
 	Edge* edges = NULL;
@@ -120,7 +123,7 @@ int main(int argc, char** argv) {
 
 		
 		// whether currently in border
-		if(wn_PnPoly(&gpsData, &zone, edges)){
+		if(wn_PnPoly(&gpsData, &zone, edges) > 0){
 			printf("Current pos - within border\n");
 		} else {
 			printf("Current pos - outside the border\n");
@@ -139,7 +142,7 @@ int main(int argc, char** argv) {
 		//log the operation. (timestamp and the data of a GPSSamp)
 		logEvent(logStr, LOG4C_PRIORITY_INFO, INFO, &logMaster);
 
-		printf("******************************\n");
+		printf("-------------------------------\n");
 	}
 
 	finiLogSystem();
@@ -147,39 +150,20 @@ int main(int argc, char** argv) {
 	return (0);
 }
 
-/* function wraps the use of nanosleep() function and does error handling 
-	if toleratesInterrupt is true, then the nanosleep function will be checked
-	for a premature stop, and will be resumed to finish the planned time (the remainder) 
-	NOTE: should this function be in a separate file for such things ?
-	*/
-int suspend_loop(time_t tv_sec, long nsec){
-	/* TODO: consider the use of clock_nanosleep() */
-	/* FIXME: maybe this function should call itself recursively
-	 to make sure that the pause is fully ended, instead of checking only once.. */
-	// NOTE: this struct declaration should maybe be somewhere else
-	struct timespec ts = { .tv_sec = tv_sec , .tv_nsec = nsec };
-	int errCode = 0;
+int parse_input_args(int argc, char** args){
+	if(argc == 1){
+		printf("Error: No arguments were provided for geofence creation and no input files are listed.\n");
+		logEvent("Error: No arguments were provided for geofence creation and no input files are listed.", 
+					LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
+		return NO_ARGS;
+	}
 
-	if(TOLERATES_INTERRUPT){
-		struct timespec remainingTime;
-		errCode = nanosleep(&ts, &remainingTime);
-		// if EINTR then the pause has been interrupted
-		if(errCode == EINTR) {
-			logEvent("suspend_loop: nanosleep() has been interrupted and will now continue.",
-						LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
-			nanosleep(&remainingTime, NULL);
+	if()
+
+	int ch = 0;
+	for(int i = 1; i < argc; i++){
+		while(args[i][ch] != '\0'){
+			
 		}
 	}
-	return nanosleep(&ts, NULL);
-}
-
-platform_id identify_platform(void){
-	struct utsname name;
-	uname(&name);
-	if(strstr(name.machine, "x86"))
-		return X86;
-	else if(strstr(name.machine, "arm"))
-		return ARM;
-
-	return UNKNOWN_PLATFORM;
 }

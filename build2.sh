@@ -2,6 +2,16 @@
 clear
 clear
 
+# Get the commad-line arguments for what library to link.
+# Either GPSDemo or RPiGPSDemo. val ("pi" or "demo")
+link_option=$1
+if [ $link_option != "pi" ] || [ $link_option != "demo" ] || [ $link_option != "" ]; then
+	echo -e "build_script: uncerocnized option '${link_option}'"
+	printf "build_script: default linking will be done with GPSDemo.\n\n"
+	link_option=demo
+fi
+
+
 RPiGPSDemo_build_dir=RPiGPSDemo/build
 GPSDemo_build_dir=GPSDemo/build
 
@@ -51,15 +61,19 @@ fi
 #compile libraries with position independant code
 pushd > /dev/null ${RPiGPSDemo_build_dir}/ #go to the place where -o will put all obj files. SUPRESS THE OUTPUT OF pushd !
 gcc -c -fpic ../../RPiGPSDemo/src/*.c -I../../log4c/include 
-gcc -c -fpic ../../GPSDemo/src/*.c -o ../../${GPSDemo_build_dir}/gps_demo.o
 popd > /dev/null #return to the root dir of the project. 
 
+pushd > /dev/null ${GPSDemo_build_dir}/
+gcc -c -fpic ../../GPSDemo/src/*.c -I../../log4c/include
+popd > /dev/null #return to the root dir of the project. 
+          
 #create shared libraries from object files
 #RPiGPSDemo
 gcc -shared ${RPiGPSDemo_build_dir}/*.o -Llog4c/lib -llog4c -o ${RPiGPSDemo_dist_dir}/libRPiGPSDemo.so
 
 #GPSDemo
-gcc -shared -o ${GPSDemo_dist_dir}/libGPSDemo.so ${GPSDemo_build_dir}/gps_demo.o
+# NOTE: GPSDemo uses <math.h>, hence -lm
+gcc -shared ${GPSDemo_build_dir}/*.o -lm -o ${GPSDemo_dist_dir}/libGPSDemo.so 
 
 main_exec_location=${geofence_dist_dir}/${geofence_exec}
 
@@ -105,5 +119,15 @@ LOG4C_rpath=-rpath=./log4c/lib
 #=============================================
 
 #libraries' names:
-libnames="-lRPiGPSDemo -llog4c -lm -lpifacecad -lmcp23s17 -lwiringPi"
-gcc -o ${main_exec_location} ${ALL_SRC} ${ALL_LIBS} ${ALL_LIBS_SRC} -Wl,${RPiGPSDemo_rpath} -Wl,${LOG4C_rpath} -Wall ${libnames}
+libnames="-llog4c -lm -lpifacecad -lmcp23s17 -lwiringPi"
+
+if [ ${link_option} == "pi" ]; then
+	libnames="${libnames} -lRPiGPSDemo"
+	echo -e "libnames: $libnames\n"
+	gcc -g -o ${main_exec_location} ${ALL_SRC} ${ALL_LIBS} ${ALL_LIBS_SRC} -Wl,${RPiGPSDemo_rpath} -Wl,${LOG4C_rpath} -Wall ${libnames}
+else
+	libnames="${libnames} -lGPSDemo"
+	echo -e "libnames: $libnames\n"
+	ALL_LIBS="${GPSDemo_so} ${LOG4C_so} ${PIFACECAD_so} ${WiringPi_o}"
+	gcc -g -o ${main_exec_location} ${ALL_SRC} ${ALL_LIBS} ${ALL_LIBS_SRC} -Wl,${GPSDemo_rpath} -Wl,${LOG4C_rpath} -Wall ${libnames}
+fi
