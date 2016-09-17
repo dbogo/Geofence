@@ -86,11 +86,14 @@ int wn_PnPoly(FullGPSData* location, Zone_general* zone, Edge* edges);
  */
 int create_edges(Zone_general* zone, Edge** edges);
 
+/* TODO */
+#if 0
 /**
  * @brief      computes the minimun bounding rectangle of the polygon. (aka MBR)
  * @param      polygon  a struct with the polygon's points.
  */
 void find_mbr(Zone_general* polygon);
+#endif 
 
 bool isDroneGoingOffBorder(FullGPSData* location, Zone_general* zone_gen);
 

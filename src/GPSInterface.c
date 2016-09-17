@@ -47,23 +47,28 @@ inline bool downwards_cross(Edge e, GEO_Point p){
 }
 
 int wn_PnPoly(FullGPSData* location, Zone_general* zone, Edge* edges){
+	//FIXME: check if both cc & ccw points' order, works.
 	GEO_Point p = { .longitude = location->longitude, .latitude = location->latitude };
 	int w = 0; // the winding number
 
-	// NOTE: amount of edges = amount of vertices ! hence zone->numvertices
+	// NOTE: amount of edges = amount of vertices! hence zone->numvertices
 	for(int i = 0; i < zone->numVertices; i++){
 		if(upwards_cross(edges[i], p)){
-				if(isLeft(p, edges[i]) > 0)
+				if(isLeft(p, edges[i]) > 0){
 					w++;
+				}
 		} else if(downwards_cross(edges[i], p)){ 
-			if(isLeft(p, edges[i]) < 0)
+			if(isLeft(p, edges[i]) < 0){
 				w--;
+			}
 		}
 	}
 	
 	return w;
 }
 
+/* TODO */
+#if 0
 void find_mbr(Zone_general* polygon){
 	float Xmin, Xmax;
 	Xmin = Xmax = polygon->vertices[0].longitude;
@@ -84,3 +89,4 @@ void find_mbr(Zone_general* polygon){
 	//TODO: log.
 	printf("xmin:%f xmax%f\nYmin:%f Ymax:%f\n\n", Xmin, Xmax, Ymin, Ymax);
 }
+#endif

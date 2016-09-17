@@ -12,7 +12,7 @@
 */
 int getGPSSample(int fd, FullGPSData* samp, bool passToLog){
 	//TODO: introduce some randomizing factor
-	samp->spdKph = 2.5f;
+	samp->spdKph = 1.34f;
 	samp->course = 50.0f;
 
 	samp->latitude = samp->latitude +  samp->spdKph * sin(samp->course * PI/180);
