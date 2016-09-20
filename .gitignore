@@ -1,21 +1,26 @@
-RPiGPSDemo/build/
-RPiGPSDemo/dist/
-RPiGPSDemo/nbproject/
-RPiGPSDemo/Makefile
-RPiGPSDemo/.dep.inc
+libs/RPiGPSDemo/build/
+libs/RPiGPSDemo/dist/
+libs/RPiGPSDemo/nbproject/
+libs/RPiGPSDemo/Makefile
+libs/RPiGPSDemo/.dep.inc
 
-GPSDemo/build/
-GPSDemo/dist/
-GPSDemo/nbproject/
-GPSDemo/Makefile
-GPSDemo/.dep.inc
+libs/GPSDemo/build/
+libs/GPSDemo/dist/
+libs/GPSDemo/nbproject/
+libs/GPSDemo/Makefile
+libs/GPSDemo/.dep.inc
 
-log4c
+libs/log4c
 
-log4c/etc/
-log4c/bin/
-log4c/lib/
-log4c/share/
+libs/log4c/etc/
+libs/log4c/bin/
+libs/log4c/lib/
+libs/log4c/share/
+
+libs/libpifacecad/*.a
+libs/libpifacecad/src/*.o
+libs/libmcp23s17/*.a
+libs/libmcp23s17/src/*.o
 
 *.o
 *.a
@@ -36,7 +41,3 @@ log.txt
 operation.log
 Makefile
 .dep.inc
-
-/build/
-/dist/
-

@@ -3,8 +3,8 @@
 # NOTE 2: for now, in order for this srcipt to work, the log4c-1.2.4 should be in the
 # 		  root directory of the project (the top directory [..../geofence/]
 
-cd ${PWD}/log4c-1.2.4/
-.configure --prefix=${PWD}/log4c/
+cd ${PWD}/external/log4c-1.2.4/
+./configure --prefix=${PWD}/../../libs/log4c/
 make
 make install
 

@@ -9,7 +9,7 @@
 #define ALL_ARGV_INIT_OK 0
 
 /**
- * @brief      initialize some important stuff
+ * @brief      Initialize some important stuff
  * @param      zone       pointer to Zone_general strcut
  * @param      logMaster  pointer to Log_Master struct
  * @param      edges      double pointer to the Edge struct. pointer to the array of edges 
@@ -33,4 +33,4 @@ int parse_input_args(Zone_general* zone, int argc, char** args);
  */
 GEO_Point parse_line(char* str);
 
-#endif /* INIT_h */
+#endif /* INIT_H */

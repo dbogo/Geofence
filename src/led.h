@@ -2,7 +2,7 @@
 #ifndef LED_H
 #define LED_H
 
-#include "../wiringPi/wiringPi/wiringPi.h"
+#include "../libs/wiringPi/wiringPi/wiringPi.h"
 
 #define STATUSLED 0
 #define GEOFENCE_OK_LED 6

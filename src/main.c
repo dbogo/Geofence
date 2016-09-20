@@ -13,15 +13,18 @@
 #include "logInterface.h"
 #include "GPSInterface.h" // TODO: reconsider this hierarchy !!
 
-#include "../GPSDemo/src/gps_demo.h"
-#include "../RPiGPSDemo/src/rpi_gps_demo.h"
+#include "../libs/GPSDemo/src/gps_demo.h"
+#include "../libs/RPiGPSDemo/src/rpi_gps_demo.h"
 #include "serial/serialInterface.h"
-#include "pifaceCAD/cad_utils.h"
-#include "led.h"
+
+#ifdef HARDWARE_RPI
+	#include "pifaceCAD/cad_utils.h"
+	#include "led.h"
+	//printf("Including RPi-specific modules.\n");
+#endif
 
 
 int main(int argc, char** argv) {
-
 	FullGPSData gpsData; /* stores every kind of data we may need that's possible to extract from NMEA */
 	Zone_general zone;
 	Edge* edges = NULL;

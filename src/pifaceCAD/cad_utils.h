@@ -1,4 +1,4 @@
-#include "../../pifacecad/libpifacecad/src/pifacecad.h"
+#include "../../libs/libpifacecad/src/pifacecad.h"
 
 /* cad means CONTROL AND DISPLAY. this abbreaviation will be used throughout 
  * the files containing code related to the Piface Control & Display module.
