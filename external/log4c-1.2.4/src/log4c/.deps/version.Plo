@@ -1,0 +1,10 @@
+version.lo: version.c /usr/include/stdc-predef.h ../../src/config.h \
+ ../../src/log4c/version.h ../../src/log4c/defs.h
+
+/usr/include/stdc-predef.h:
+
+../../src/config.h:
+
+../../src/log4c/version.h:
+
+../../src/log4c/defs.h:

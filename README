@@ -8,7 +8,7 @@ ______________________________________
 ______________________________________
 
 This project is developed on an Ubuntu 64-bit machine, and then ported and tested on the Raspberry-Pi 2.
-Mikroelctronica's 'gps click' module is used for the gps. ([available here] (http://www.mikroe.com/click/gps/))
+Mikroelctronica's 'gps click' module is used for the gps. ([available here](http://www.mikroe.com/click/gps/))
 ______________________________________
 
 An emphasis is put on keeping the use of third-party libraries to a minimum. However, a few libraries are used:

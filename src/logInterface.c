@@ -29,6 +29,9 @@ int initLogSystem(Log_Master* logMaster){
 		//log4c_category_set_appender(*logObj, log4c_appender_get(appenderName));
 		
 	}
+	/* first log message to each of the files */
+	logEvent("operation log ready to use.", LOG4C_PRIORITY_INFO, INFO, logMaster);
+	logEvent("error log ready to use.", LOG4C_PRIORITY_ERROR, ERROR, logMaster);
 	return errCode;
 }
 

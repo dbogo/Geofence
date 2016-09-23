@@ -9,12 +9,12 @@ int init_wiringPi(void){
 	return 0;
 }
 
-int set_led_output(int p){
+int set_led_output(unsigned short p){
 	pinMode(p, OUTPUT);
 	return 0;
 }
 
-int led(int p, int mode){
+int led(unsigned char p, int mode){
 	//mode can be HIGH/LOW defined in wiringPi.h as 1, 0
 	digitalWrite(p, mode);
 	return 0;

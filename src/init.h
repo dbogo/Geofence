@@ -4,9 +4,12 @@
 #include "types.h"
 #include "logInterface.h"
 
-#define NO_ARGS -1
+#define NO_ARGS 1
 #define FOPEN_FAIL 2
+#define AMBIGUOUS_ARGV 3
 #define ALL_ARGV_INIT_OK 0
+
+extern FILE* argvInputFile;
 
 /**
  * @brief      Initialize some important stuff

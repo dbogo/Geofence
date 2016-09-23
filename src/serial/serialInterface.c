@@ -8,22 +8,25 @@
 
 #include "serialInterface.h"
 
+int streamFD = 0;
+
 int open_port(void){
 	char* fileName = "/dev/ttyACM0";
-	int fileDescriptor = open(fileName, O_RDWR | O_NOCTTY | O_NDELAY);
-	if(fileDescriptor < 0){
+	streamFD = open(fileName, O_RDWR | O_NOCTTY | O_NDELAY);
+	printf("%d -\n", streamFD);
+	if(streamFD < 0){
 		printf("open_port: Unable to open %s.\n", fileName);
 		fileName = "/dev/ttyAMA0";
 		printf("trying to open %s instead...\n", fileName);
-		fileDescriptor = open(fileName, O_RDWR | O_NOCTTY | O_NDELAY);
-		if(fileDescriptor < 0)
+		streamFD = open(fileName, O_RDWR | O_NOCTTY | O_NDELAY);
+		if(streamFD < 0)
 			printf("open_port: Unable to open %s.\n", fileName);
 		else 
-			fcntl(fileDescriptor, F_SETFL, 0);
+			fcntl(streamFD, F_SETFL, 0);
 	}else
-		fcntl(fileDescriptor, F_SETFL, 0);
+		fcntl(streamFD, F_SETFL, 0);
 	
-	return(fileDescriptor);
+	return(streamFD);
 }
 
 /* Using the fileDescriptor that's obtained from open_port(), this function
@@ -44,4 +47,8 @@ int fetch_sentence_from_gps(int fd, char* buffer){
 		}
 	}
 	return i;
+}
+
+int get_streamFD(void){
+	return streamFD;
 }

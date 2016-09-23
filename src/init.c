@@ -34,7 +34,7 @@ void init(FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge*
 
 	char zone_str[ZONE_STR_LINE_LENGTH];
 	logEvent("Initialized the following zone vertices: ", LOG4C_PRIORITY_INFO, INFO, logMaster);
-	for(int i = 0; i < zone->numVertices; i++){
+	for(unsigned int i = 0; i < zone->numVertices; i++){
 		sprintf(zone_str, "V%d: (%lf, %f)", (int)(i%zone->numVertices), 
 					zone->vertices[i].longitude, zone->vertices[i].latitude);
 		logEvent(zone_str, LOG4C_PRIORITY_INFO, INFO, logMaster);
@@ -57,16 +57,27 @@ int parse_input_args(Zone_general* zone, int argc, char** args){
 	/**
 	 * TODO: Various error cheking and rv
 	 */
-	if(argc == 1){
-		printf("Error: No files for were specified on input.\n");
-		logEvent("Error: No files for were specified on input.\n", LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
-		return NO_ARGS;
-	}
+	char errStr[60];
+	FILE* argvInputFile = NULL;
 
-	FILE* fp = fopen(args[1], "r");
-	if(fp == NULL){
-		perror("fopen() has failed");
-		return FOPEN_FAIL;
+	if(argc == 1){
+		strcpy(errStr,"Error: No files were specified on input.");
+		printf("%s\n", errStr);
+		logEvent(errStr, LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
+		return NO_ARGS;
+	} else if(argc > 2){
+		sprintf(errStr, "Error: no more arguments are expected after '%s'.", args[1]);
+		printf("%s\n", errStr);
+		logEvent(errStr, LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
+		return AMBIGUOUS_ARGV;
+	} else { // = 2
+		argvInputFile = fopen(args[1], "r"); // declared aextern in init.h
+		if(argvInputFile == NULL){
+			perror("fopen() has failed");
+			sprintf(errStr, "Error: fopen() has failed. Couldn't find '%s'.", args[1]);
+			logEvent(errStr, LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
+			return FOPEN_FAIL;
+		}
 	}
 
 	const int MAX_LINE_LEN = 25;
@@ -75,7 +86,7 @@ int parse_input_args(Zone_general* zone, int argc, char** args){
 	int lineNumber = 0;
 	
 	// get the first line with the number of verts.
-	fgets(line, MAX_LINE_LEN, fp);
+	fgets(line, MAX_LINE_LEN, argvInputFile);
 	char* p = line;
 	p = strchr(p, '=')+1; // skip the '='
 	zone->numVertices = atoi(p);
@@ -84,7 +95,7 @@ int parse_input_args(Zone_general* zone, int argc, char** args){
 	GEO_Point tmp[(const unsigned int)zone->numVertices];
 	lineNumber++;
 
-	while(fgets(line, MAX_LINE_LEN, fp) != NULL){
+	while(fgets(line, MAX_LINE_LEN, argvInputFile) != NULL){
 		lineNumber++;
 		switch(lineNumber){
 			case 2: {
@@ -100,7 +111,7 @@ int parse_input_args(Zone_general* zone, int argc, char** args){
 	}
 
 	memcpy(zone->vertices, tmp, sizeof tmp);
-	fclose(fp);
+	fclose(argvInputFile);
 	return ALL_ARGV_INIT_OK;
 }
 

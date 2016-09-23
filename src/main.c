@@ -1,3 +1,12 @@
+/**
+ * TODO: im implementing function pointers that point to the getGPSSample functions either of the
+ * 		demo version or of the RPi library (depending on what is defined to gcc at compile time.)
+ * 		then this pointer is init by #ifdefing, to the appropriate function.
+ * 		
+ * 		the problem is that the getGPSSample() function that was in GPSInterface.h, is now whithout
+ * 		the file descriptor parameter. how can I get the fd in getGPSSample_RPI ?
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -12,36 +21,34 @@
 #include "utils.h"
 #include "logInterface.h"
 #include "GPSInterface.h" // TODO: reconsider this hierarchy !!
+#include "serial/serialInterface.h"
 
 #include "../libs/GPSDemo/src/gps_demo.h"
 #include "../libs/RPiGPSDemo/src/rpi_gps_demo.h"
-#include "serial/serialInterface.h"
 
 #ifdef HARDWARE_RPI
 	#include "pifaceCAD/cad_utils.h"
 	#include "led.h"
-	//printf("Including RPi-specific modules.\n");
 #endif
 
 
 int main(int argc, char** argv) {
-	FullGPSData gpsData; /* stores every kind of data we may need that's possible to extract from NMEA */
-	Zone_general zone;
+	FullGPSData gpsData; /* stores every kind of data we may need, that's possible to extract from NMEA */
+	Zone_general zone; 
 	Edge* edges = NULL;
+	int (*getGPS)(FullGPSData*, bool) = NULL;
 
 	if(parse_input_args(&zone, argc, argv) != ALL_ARGV_INIT_OK){
 		return -1;
 	}
+	
+	GPS_init(&getGPS);
 	init(&gpsData, &zone, &logMaster, &edges);
-	
-	//TODO: maybe instead of nanosleep implement a way using signals..
-	// see: http://stackoverflow.com/questions/36953010/using-signals-in-c-how-to-stop-and-continue-a-program-when-timer-ends?
-	
-	int fd = open_port();
+	open_port();
 
 	while (!suspend_loop(TIME_TO_WAIT_SEC, TIME_TO_WAIT_NSEC)) {
 
-		getGPSSample(fd, &gpsData, true);
+		getGPS(&gpsData, true);
 		
 		printf("lon: %f, lat %f\n", gpsData.latitude, gpsData.longitude);
 		

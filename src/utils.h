@@ -28,15 +28,16 @@ typedef enum {  UNKNOWN_PLATFORM,
 
 
 /**
- * @brief      checks what platform the current machine.
- * @return     returns the id of the platform.
+ * @brief      checks what platform we are on.
+ * @return     returns the id of the platform. one if the values of the platform_id enum.
  */
 platform_id identify_platform(void);
 
 /**
- * @brief      manages the pause of loop for a certain time. for now
- *             using the nanosleep() function. 		
- * @return     value returned by nanosleep() upon successful of failed sleep/
+ * @brief      suspends the main loop for a specific time period, using nanosleep().
+ * @param[in]  tv_sec  first value of 'struct timespec', storing the seconds.
+ * @param[in]  nsec    second value of 'struct timespec' storing the nanoseconds.
+ * @return     returns the rv of nanosleep()
  */
 int suspend_loop(time_t tv_sec, long nsec);
 

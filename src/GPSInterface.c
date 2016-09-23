@@ -1,14 +1,30 @@
 // NOTE: maybe this file should be named differently !
 
-#include "GPSInterface.h"
 #include <math.h>
 #include <string.h>
+
+#include "GPSInterface.h"
+#include "../libs/RPiGPSDemo/src/rpi_gps_demo.h"
+#include "../libs/GPSDemo/src/gps_demo.h"
+
+
+int GPS_init(int (**getGPS)(FullGPSData*, bool)){
+	#ifdef GPS_RPI
+		*getGPS = getGPSSample_RPI;
+		printf("uses RPi implementation.\n");
+	#else
+		*getGPS = getGPSSample_DEMO;
+		printf("uses DEMO implementation\n");
+	#endif
+
+	return 0;
+}
 
 int create_edges(Zone_general* zone, Edge** edges){
 
 	Edge tmp[zone->numVertices]; //dummy
 
-	for(int i = 0; i < zone->numVertices; i++){
+	for(unsigned int i = 0; i < zone->numVertices; i++){
 		tmp[i].p1 = zone->vertices[i % zone->numVertices];
 		tmp[i].p2 = zone->vertices[(i+1) % zone->numVertices];
 	}												
@@ -17,7 +33,7 @@ int create_edges(Zone_general* zone, Edge** edges){
 	*edges = malloc(sizeof(tmp));
 	memcpy(*edges, tmp, sizeof(tmp));
 
-	for(int i = 0; i < zone->numVertices; i++){
+	for(unsigned int i = 0; i < zone->numVertices; i++){
 		printf("E%d: (%lf, %lf), (%lf,%lf)\n", (int)(i % zone->numVertices), (*edges)[i].p1.longitude,
 						(*edges)[i].p1.latitude, (*edges)[i].p2.longitude, (*edges)[i].p2.latitude);
 	}	
@@ -52,7 +68,7 @@ int wn_PnPoly(FullGPSData* location, Zone_general* zone, Edge* edges){
 	int w = 0; // the winding number
 
 	// NOTE: amount of edges = amount of vertices! hence zone->numvertices
-	for(int i = 0; i < zone->numVertices; i++){
+	for(unsigned int i = 0; i < zone->numVertices; i++){
 		if(upwards_cross(edges[i], p)){
 				if(isLeft(p, edges[i]) > 0){
 					w++;

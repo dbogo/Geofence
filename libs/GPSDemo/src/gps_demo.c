@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 
 #include "gps_demo.h"
@@ -10,7 +9,7 @@
  directly sets samp value rather than generate a cusom NMEA sentence
  ** for that see RPiGPSDemo
 */
-int getGPSSample(int fd, FullGPSData* samp, bool passToLog){
+int getGPSSample_DEMO(FullGPSData* samp, bool passToLog){
 	//TODO: introduce some randomizing factor
 	samp->spdKph = 1.34f;
 	samp->course = 50.0f;

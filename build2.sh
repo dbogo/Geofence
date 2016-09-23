@@ -129,7 +129,7 @@ if [ ${link_option} == "pi" ]; then
 	libnames="${libnames} -lRPiGPSDemo"
 	#echo -e "libnames: $libnames\n"
 	echo -e "linking RPiGPSDemo."
-	gcc -o ${main_exec_location} ${ALL_SRC} ${ALL_LIBS} ${ALL_LIBS_SRC} -Wl,${RPiGPSDemo_rpath} -Wl,${LOG4C_rpath} ${libnames} ${flags}
+	gcc -o ${main_exec_location} ${ALL_SRC} ${ALL_LIBS} ${ALL_LIBS_SRC} -Wl,${RPiGPSDemo_rpath} -Wl,${LOG4C_rpath} ${libnames} ${flags} -DGPS_RPI
 else
 	libnames="${libnames} -lGPSDemo"
 	#echo -e "libnames: $libnames\n"

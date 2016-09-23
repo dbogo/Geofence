@@ -32,15 +32,15 @@
 #define IGNORED_TXT 9
 #define UNRECOGNIZED_NMEA -1
 
+extern int (*getGPS)(FullGPSData*, bool);
+
 
 /**
- * @brief      basically gets GPS data
- * @param[in]  fd         file descriptor of the port that's outputting NMEA
- * @param      samp       struct with neccessary data
- * @param[in]  passToLog  true if we want to log the stuff
- * @return     the ID of the sentence we got on this call.
+ * @brief      assignes the correct library for the getGPS function pointer.
+ *             either an RPi or a demo implementation of the getGPSSample() will be used.
+ * @return     0 on success.
  */
-extern int getGPSSample(int fd, FullGPSData* samp, bool passToLog);
+int GPS_init(int (**getGPS)(FullGPSData*, bool));
 
 /**
  * @brief      Determines if the test point is to the left of the vector,

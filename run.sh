@@ -3,6 +3,6 @@
 #./build_debug.sh
 #./launch_debug.sh
 clear
-./build1.sh
+./build2.sh
 ./launch.sh
 clear

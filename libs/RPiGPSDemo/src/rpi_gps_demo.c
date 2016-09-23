@@ -1,12 +1,11 @@
+#include <string.h>
+#include <stdio.h>
+
 #include "rpi_gps_demo.h"
 #include "parser.h"
 #include "../../../src/serial/serialInterface.h"
 #include "../../../src/logInterface.h"
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
 #if 0
 char* generate_nmea_sentence(void){
@@ -50,18 +49,15 @@ char* generate_nmea_sentence(void){
 }
 #endif
 
-/* defined as extern in GPSInterface.h */
-int getGPSSample(int fd, FullGPSData* samp, bool passToLog){
-
+int getGPSSample_RPI(FullGPSData* samp, bool passToLog){
     char nmea[MAX_NMEA_MSG_SIZE];
     memset(nmea, '\0', MAX_NMEA_MSG_SIZE);
-    fetch_sentence_from_gps(fd, nmea);
+    fetch_sentence_from_gps(get_streamFD(), nmea);
     if(validate_checksum(nmea) != CHECKSUM_OK){
-    	logEvent("checksum error. exiting getGPSSample() with: CHECKSUM_ERR", LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
+    	logEvent("checksum error. exiting getGPSSample_RPI() with CHECKSUM_ERR", LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
     	return CHECKSUM_ERR;
     }
 
-    printf("%s", nmea);
     if(passToLog)
         logEvent(nmea, LOG4C_PRIORITY_INFO, INFO, &logMaster);    
 

@@ -9,5 +9,13 @@
  char* generate_nmea_sentence(void); 
  #endif
 
+/**
+ * @brief      basically gets GPS data
+ * @param      samp       struct with neccessary data
+ * @param[in]  passToLog  true if we want to log the stuff
+ * @return     the ID of the sentence we got on this call.
+ */
+ int getGPSSample_RPI(FullGPSData* samp, bool passToLog);
+
 #endif /* RPI_GPS_DEMO_H */
 
