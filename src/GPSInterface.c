@@ -8,12 +8,12 @@
 #include "../libs/GPSDemo/src/gps_demo.h"
 
 
-int GPS_init(int (**getGPS)(FullGPSData*, bool)){
+int GPS_init(GPS_Actions* gpsHandler){
 	#ifdef GPS_RPI
-		*getGPS = getGPSSample_RPI;
+		gpsHandler->getGPS = getGPSSample_RPI;
 		printf("uses RPi implementation.\n");
 	#else
-		*getGPS = getGPSSample_DEMO;
+		gpsHandler->getGPS = getGPSSample_DEMO;
 		printf("uses DEMO implementation\n");
 	#endif
 

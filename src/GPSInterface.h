@@ -32,15 +32,22 @@
 #define IGNORED_TXT 9
 #define UNRECOGNIZED_NMEA -1
 
-extern int (*getGPS)(FullGPSData*, bool);
+/**
+ * @brief      This struct contains function pointers to functions that
+ *             GPSInterface provides for handling gps stuff.
+ */
+struct GPS_Actions{
+	int (*getGPS)(FullGPSData*, bool);
+};
 
+typedef struct GPS_Actions GPS_Actions;
 
 /**
  * @brief      assignes the correct library for the getGPS function pointer.
  *             either an RPi or a demo implementation of the getGPSSample() will be used.
  * @return     0 on success.
  */
-int GPS_init(int (**getGPS)(FullGPSData*, bool));
+int GPS_init(GPS_Actions* gpsHandler);
 
 /**
  * @brief      Determines if the test point is to the left of the vector,

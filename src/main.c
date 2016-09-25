@@ -36,19 +36,19 @@ int main(int argc, char** argv) {
 	FullGPSData gpsData; /* stores every kind of data we may need, that's possible to extract from NMEA */
 	Zone_general zone; 
 	Edge* edges = NULL;
-	int (*getGPS)(FullGPSData*, bool) = NULL;
+	GPS_Actions GPSHandler;
 
 	if(parse_input_args(&zone, argc, argv) != ALL_ARGV_INIT_OK){
 		return -1;
 	}
 	
-	GPS_init(&getGPS);
+	GPS_init(&GPSHandler);
 	init(&gpsData, &zone, &logMaster, &edges);
 	open_port();
 
 	while (!suspend_loop(TIME_TO_WAIT_SEC, TIME_TO_WAIT_NSEC)) {
 
-		getGPS(&gpsData, true);
+		GPSHandler.getGPS(&gpsData, true);
 		
 		printf("lon: %f, lat %f\n", gpsData.latitude, gpsData.longitude);
 		
