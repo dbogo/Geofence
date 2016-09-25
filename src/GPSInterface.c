@@ -4,8 +4,8 @@
 #include <string.h>
 
 #include "GPSInterface.h"
-#include "../libs/RPiGPSDemo/src/rpi_gps_demo.h"
-#include "../libs/GPSDemo/src/gps_demo.h"
+#include "libs/RPiGPSDemo/src/rpi_gps_demo.h"
+#include "libs/GPSDemo/src/gps_demo.h"
 
 
 int GPS_init(GPS_Actions* gpsHandler){
@@ -68,7 +68,7 @@ int wn_PnPoly(FullGPSData* location, Zone_general* zone, Edge* edges){
 	int w = 0; // the winding number
 
 	// NOTE: amount of edges = amount of vertices! hence zone->numvertices
-	for(unsigned int i = 0; i < zone->numVertices; i++){
+	for(size_t i = 0; i < zone->numVertices; i++){
 		if(upwards_cross(edges[i], p)){
 				if(isLeft(p, edges[i]) > 0){
 					w++;
@@ -84,25 +84,24 @@ int wn_PnPoly(FullGPSData* location, Zone_general* zone, Edge* edges){
 }
 
 /* TODO */
-#if 0
-void find_mbr(Zone_general* polygon){
-	float Xmin, Xmax;
-	Xmin = Xmax = polygon->vertices[0].longitude;
-	float Ymin, Ymax;
-	Ymin = Ymax = polygon->vertices[0].latitude;
-	for(int i = 1; i < polygon->numVertices; i++){
-		if (polygon->vertices[i].longitude < Xmin)
-			Xmin = (polygon->vertices[i]).longitude;
-		else if(polygon->vertices[i].longitude > Xmax)
-			Xmax = (polygon->vertices[i]).longitude;
 
-		if (polygon->vertices[i].latitude < Ymin)
-			Ymin = (polygon->vertices[i]).latitude;
-		else if(polygon->vertices[i].latitude > Ymax)
-			Ymax = (polygon->vertices[i]).latitude;
+void find_mbr(Zone_general* polygon){
+	polygon->mbr.p1.longitude = polygon->mbr.p2.longitude = polygon->vertices[0].longitude;
+	polygon->mbr.p1.latitude = (polygon->mbr.p1.latitude = polygon->vertices[0].latitude);
+
+	for(size_t i = 0; i < polygon->numVertices; i++){
+		if (polygon->vertices[i].longitude < polygon->mbr.p1.longitude)
+			polygon->mbr.p1.longitude = (polygon->vertices[i]).longitude;
+		else if(polygon->vertices[i].longitude > polygon->mbr.p2.longitude)
+			polygon->mbr.p2.longitude = (polygon->vertices[i]).longitude;
+
+		if (polygon->vertices[i].latitude < polygon->mbr.p1.latitude)
+			polygon->mbr.p1.latitude = (polygon->vertices[i]).latitude;
+		else if(polygon->vertices[i].latitude > polygon->mbr.p2.latitude)
+			polygon->mbr.p2.latitude = (polygon->vertices[i]).latitude;
 	}
 
 	//TODO: log.
-	printf("xmin:%f xmax%f\nYmin:%f Ymax:%f\n\n", Xmin, Xmax, Ymin, Ymax);
+	printf("xmin:%f xmax%f\nYmin:%f Ymax:%f\n\n", polygon->mbr.p1.longitude, polygon->mbr.p2.longitude,
+												 polygon->mbr.p1.latitude, polygon->mbr.p2.latitude);
 }
-#endif

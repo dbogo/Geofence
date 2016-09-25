@@ -12,6 +12,10 @@ void init(FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge*
 
 	initLogSystem(logMaster);
 
+	/* execute the script that makes NMEA output cleaner - without empty lines 
+		after the sentence. same effect for NMEA log files. */
+	system("./misc/serial_config.sh && cd ..");
+
 	FullGPSData tmp = {
 		.latitude = 0.0f, .longitude = 0.0f,
 		.lat = '\0', .lon = '\0',
@@ -26,8 +30,8 @@ void init(FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge*
 
 	gpsData = &tmp;
 
+	find_mbr(zone);
 	create_edges(zone, edges);
-	//find_mbr(zone);
 
 	/* An arbitrary, somewhat close estimation of a standard line that describes a vertex in the log. */
 	#define ZONE_STR_LINE_LENGTH 40

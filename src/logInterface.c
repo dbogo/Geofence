@@ -4,13 +4,24 @@
 //apender name is actually the stream - e.g a specific file, stdout, etc...
 int initLogSystem(Log_Master* logMaster){
 
+	/**
+	 * FIXME: if the logInstanceName attribute of the Logger struct, is set to "" in 
+	 * all of the loggers, they stop working and only one logger works with only one log stream 
+	 * (be it ERROR, NMEA or INFO). 
+	 * find a way to get rid of this string AND keep the logs on.
+	 */
+	
 	logMaster->operationLogger.logFile = fopen(OPERATION_LOG_FILE, "w");
 	logMaster->operationLogger.logObj = NULL;
-	logMaster->operationLogger.logInstanceName = ""; 
+	logMaster->operationLogger.logInstanceName = "operation"; 
 
 	logMaster->errorLogger.logFile = fopen(ERROR_LOG_FILE, "w");
 	logMaster->errorLogger.logObj = NULL;
 	logMaster->errorLogger.logInstanceName = "errorlog"; // e.g. 'errorlog' etc.
+	                                                     // 
+	logMaster->nmeaLogger.logFile = fopen(NMEA_LOG_FILE, "w");
+	logMaster->nmeaLogger.logObj = NULL;
+	logMaster->nmeaLogger.logInstanceName = "nmealog"; // e.g. 'nmealog' etc.
 
 	int errCode = log4c_init();
 	if(errCode){
@@ -25,6 +36,9 @@ int initLogSystem(Log_Master* logMaster){
 		logMaster->errorLogger.logObj = log4c_category_get(logMaster->errorLogger.logInstanceName);
 		log4c_category_set_appender(logMaster->errorLogger.logObj, log4c_appender_get(ERROR_LOG_FILE));
 
+		logMaster->nmeaLogger.logObj = log4c_category_get(logMaster->nmeaLogger.logInstanceName);
+		log4c_category_set_appender(logMaster->nmeaLogger.logObj, log4c_appender_get(NMEA_LOG_FILE));
+
 		//*logObj = log4c_category_get(instanceName);
 		//log4c_category_set_appender(*logObj, log4c_appender_get(appenderName));
 		
@@ -32,6 +46,8 @@ int initLogSystem(Log_Master* logMaster){
 	/* first log message to each of the files */
 	logEvent("operation log ready to use.", LOG4C_PRIORITY_INFO, INFO, logMaster);
 	logEvent("error log ready to use.", LOG4C_PRIORITY_ERROR, ERROR, logMaster);
+	logEvent("nmea log ready to use.", LOG4C_PRIORITY_INFO , NMEA, logMaster);
+
 	return errCode;
 }
 
@@ -49,6 +65,9 @@ void logEvent(char* str, int priority, int logType, Log_Master* logMaster){
 			break;
 		case INFO:
 			log4c_category_log(logMaster->operationLogger.logObj, priority, str);
+			break;
+		case NMEA:
+			log4c_category_log(logMaster->nmeaLogger.logObj, priority, str);
 			break;
 		default:
 			printf("unrecognized logType. \n");

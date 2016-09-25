@@ -29,6 +29,12 @@ typedef struct {
 	float latitude;
 } GEO_Point;
 
+/* minimum bounding rectangle of a certain polygon (Zone) */
+typedef struct {
+	GEO_Point p1;
+	GEO_Point p2;
+} MBR;
+
 // deprecated
 #if 0
 /* A TEMPORARY implementaion of a Geo-zone.
@@ -51,6 +57,7 @@ typedef struct {
 typedef struct {
 	size_t numVertices;
 	float altitude;
+	MBR mbr;
 	GEO_Point* vertices;
 } Zone_general;
 

@@ -23,8 +23,8 @@
 #include "GPSInterface.h" // TODO: reconsider this hierarchy !!
 #include "serial/serialInterface.h"
 
-#include "../libs/GPSDemo/src/gps_demo.h"
-#include "../libs/RPiGPSDemo/src/rpi_gps_demo.h"
+#include "libs/GPSDemo/src/gps_demo.h"
+#include "libs/RPiGPSDemo/src/rpi_gps_demo.h"
 
 #ifdef HARDWARE_RPI
 	#include "pifaceCAD/cad_utils.h"

@@ -3,8 +3,8 @@
 
 #include "rpi_gps_demo.h"
 #include "parser.h"
-#include "../../../src/serial/serialInterface.h"
-#include "../../../src/logInterface.h"
+#include "src/serial/serialInterface.h"
+#include "src/logInterface.h"
 
 
 #if 0
@@ -58,8 +58,9 @@ int getGPSSample_RPI(FullGPSData* samp, bool passToLog){
     	return CHECKSUM_ERR;
     }
 
-    if(passToLog)
-        logEvent(nmea, LOG4C_PRIORITY_INFO, INFO, &logMaster);    
+    if(passToLog){
+        logEvent(nmea, LOG4C_PRIORITY_INFO, NMEA, &logMaster);    
+    }
 
     return parse_nmea(nmea, samp);	
 }

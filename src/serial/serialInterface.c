@@ -13,7 +13,6 @@ int streamFD = 0;
 int open_port(void){
 	char* fileName = "/dev/ttyACM0";
 	streamFD = open(fileName, O_RDWR | O_NOCTTY | O_NDELAY);
-	printf("%d -\n", streamFD);
 	if(streamFD < 0){
 		printf("open_port: Unable to open %s.\n", fileName);
 		fileName = "/dev/ttyAMA0";
@@ -37,14 +36,9 @@ int fetch_sentence_from_gps(int fd, char* buffer){
 	// TODO: benchmark and look for a fester way.
 	char c = '\0';
 	int i = 0; // index of the current end of the string
-	while(c != '\n'){
-		if(read(fd, &c, 1) < 0){
-			perror("Error: fetch_sentence_from_gps()");
-			return -1;
-		} else {
+	while(read(fd, &c, 1) > 0 && c != '\n'){
 			buffer[i] = c;
 			i++;
-		}
 	}
 	return i;
 }

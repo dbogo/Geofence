@@ -16,17 +16,18 @@ LOG4C_PRIORITY_UNKNOWN 	unknown
 #ifndef LOGINTERFACE_H
 #define LOGINTERFACE_H
 
-#include "../libs/log4c/include/log4c.h"
+#include "libs/log4c/include/log4c.h"
 
 /* All the different log files are placed in a special 'logs' folder that is
 	at the top of the project directory (same level as src/) */
 
 #define OPERATION_LOG_FILE "logs/operation.log"
-#define NMEA_LOG_FILE "logs/nmea_signals.log"
+#define NMEA_LOG_FILE "logs/nmea.log"
 #define ERROR_LOG_FILE "logs/errors.log"
 
 #define INFO 0
 #define ERROR 1
+#define NMEA 2
 
 typedef struct Logger{
 	FILE* logFile;
@@ -36,8 +37,8 @@ typedef struct Logger{
 
 typedef struct Log_Master{
 	Logger operationLogger;
-	Logger nmeaLogger;
 	Logger errorLogger;
+	Logger nmeaLogger;
 } Log_Master;
 
 Log_Master logMaster;

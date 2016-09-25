@@ -25,7 +25,7 @@ void init(FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge*
  * @param      zone  A struct with the geofence information (polygon, count, etc.)
  * @param[in]  argc  argc
  * @param      args  argv. should contain the name of the file with the inputs.
- * @return     return different exit codes depending on the situatio.
+ * @return     returns different exit codes (defined in init.h) depending on the situation. 
  */
 int parse_input_args(Zone_general* zone, int argc, char** args);
 

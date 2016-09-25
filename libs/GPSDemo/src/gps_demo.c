@@ -2,8 +2,8 @@
 #include <math.h>
 
 #include "gps_demo.h"
-#include "../../../src/utils.h"
-#include "../../../src/logInterface.h"
+#include "src/utils.h"
+#include "src/logInterface.h"
   
 /* creates random GPSSamp data for simulation. 
  directly sets samp value rather than generate a cusom NMEA sentence

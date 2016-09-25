@@ -1,7 +1,7 @@
 #ifndef GPS_DEMO_H
 #define GPS_DEMO_H
 
-#include "../../../src/GPSInterface.h"
+#include "src/GPSInterface.h"
 
 /**
  * @brief      basically gets GPS data

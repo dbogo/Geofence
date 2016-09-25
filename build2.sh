@@ -61,11 +61,11 @@ fi
 
 #compile libraries with position independant code
 pushd > /dev/null ${RPiGPSDemo_build_dir}/ #go to the place where -o will put all obj files. SUPRESS THE OUTPUT OF pushd !
-gcc -c -fpic ../src/*.c -I../../log4c/include 
+gcc -c -fpic ../src/*.c -I../../log4c/include  -I../../../
 popd > /dev/null #return to the root dir of the project. 
 
 pushd > /dev/null ${GPSDemo_build_dir}/
-gcc -c -fpic ../src/*.c -I../../log4c/include
+gcc -c -fpic ../src/*.c -I../../log4c/include -I../../../
 popd > /dev/null #return to the root dir of the project. 
           
 #create shared libraries from object files
@@ -106,7 +106,7 @@ wiringPi_src=-Ilibs/wiringPi/wiringPi/
 #=============================================
 
 #now combine all:
-ALL_SRC="${main_src} ${more_sources1} ${more_sources2}"
+ALL_SRC="${main_src} ${more_sources1} ${more_sources2} -I."
 ALL_LIBS="${RPiGPSDemo_so} ${LOG4C_so} ${PIFACECAD_so} ${WiringPi_o}"
 ALL_LIBS_SRC="${LOG4C_src} ${PIFACECAD_src} ${WiringPi_src}"
 

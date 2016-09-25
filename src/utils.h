@@ -22,9 +22,11 @@
 #define EINTR -1
 
 /* TODO: add more platforms (and a distinction between x86_32/64) ??? */
-typedef enum {  UNKNOWN_PLATFORM,
-				X86,
-				ARM } platform_id; 
+typedef enum {  
+	UNKNOWN_PLATFORM,
+	X86,
+	ARM 
+} platform_id; 
 
 
 /**

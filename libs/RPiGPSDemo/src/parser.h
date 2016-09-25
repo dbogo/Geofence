@@ -1,7 +1,7 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "../../../src/GPSInterface.h"
+#include "src/GPSInterface.h"
 
 #define CHECKSUM_OK 0
 #define CHECKSUM_ERR 1

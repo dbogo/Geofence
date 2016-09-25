@@ -1,7 +1,7 @@
 #ifndef RPI_GPS_DEMO_H
 #define RPI_GPS_DEMO_H
 
-#include "../../../src/GPSInterface.h"
+#include "src/GPSInterface.h"
 
 /* This library gets raw NMEA sentences from the GPS module. */
 
