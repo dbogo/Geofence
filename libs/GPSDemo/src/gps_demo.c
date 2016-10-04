@@ -14,8 +14,10 @@ int getGPSSample_DEMO(FullGPSData* samp, bool passToLog){
 	samp->spdKph = 1.34f;
 	samp->course = 50.0f;
 
-	samp->latitude = samp->latitude +  samp->spdKph * sin(samp->course * PI/180);
-	samp->longitude = samp->latitude +  samp->spdKph * cos(samp->course * PI/180);
+	samp->longitude = 6.7f;
+	samp->latitude += 0.5f;
+	//samp->latitude = samp->latitude +  samp->spdKph * sin(samp->course * PI/180);
+	//samp->longitude = samp->latitude +  samp->spdKph * cos(samp->course * PI/180);
 	samp->altitude = 280.0f;
 
 	char logStr[120];

@@ -42,6 +42,18 @@ struct GPS_Actions{
 
 typedef struct GPS_Actions GPS_Actions;
 
+
+/**
+ * @brief      the signed area of the triangle loc,P1,P2
+ *
+ * @param[in]  p1        Polygon's first point
+ * @param[in]  p2        Polygon's second point
+ * @param      location  The query point
+ *
+ * @return     the determinant
+ */
+float det(GEO_Point p1, GEO_Point p2, FullGPSData* location);
+
 /**
  * @brief      assignes the correct library for the getGPS function pointer.
  *             either an RPi or a demo implementation of the getGPSSample() will be used.

@@ -11,15 +11,15 @@ int initLogSystem(Log_Master* logMaster){
 	 * find a way to get rid of this string AND keep the logs on.
 	 */
 	
-	logMaster->operationLogger.logFile = fopen(OPERATION_LOG_FILE, "w");
+	logMaster->operationLogger.logFile = fopen(OPERATION_LOG_FILE, "a");
 	logMaster->operationLogger.logObj = NULL;
 	logMaster->operationLogger.logInstanceName = "operation"; 
 
-	logMaster->errorLogger.logFile = fopen(ERROR_LOG_FILE, "w");
+	logMaster->errorLogger.logFile = fopen(ERROR_LOG_FILE, "a");
 	logMaster->errorLogger.logObj = NULL;
 	logMaster->errorLogger.logInstanceName = "errorlog"; // e.g. 'errorlog' etc.
 	                                                     // 
-	logMaster->nmeaLogger.logFile = fopen(NMEA_LOG_FILE, "w");
+	logMaster->nmeaLogger.logFile = fopen(NMEA_LOG_FILE, "a");
 	logMaster->nmeaLogger.logObj = NULL;
 	logMaster->nmeaLogger.logInstanceName = "nmealog"; // e.g. 'nmealog' etc.
 
@@ -44,9 +44,9 @@ int initLogSystem(Log_Master* logMaster){
 		
 	}
 	/* first log message to each of the files */
-	logEvent("operation log ready to use.", LOG4C_PRIORITY_INFO, INFO, logMaster);
-	logEvent("error log ready to use.", LOG4C_PRIORITY_ERROR, ERROR, logMaster);
-	logEvent("nmea log ready to use.", LOG4C_PRIORITY_INFO , NMEA, logMaster);
+	logEvent("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\noperation log ready to use.", LOG4C_PRIORITY_INFO, INFO, logMaster);
+	logEvent("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nerror log ready to use.", LOG4C_PRIORITY_ERROR, ERROR, logMaster);
+	logEvent("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nnmea log ready to use.", LOG4C_PRIORITY_INFO , NMEA, logMaster);
 
 	return errCode;
 }

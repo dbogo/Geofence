@@ -94,9 +94,9 @@ int parse_input_args(Zone_general* zone, int argc, char** args){
 	char* p = line;
 	p = strchr(p, '=')+1; // skip the '='
 	zone->numVertices = atoi(p);
-	zone->vertices = malloc(zone->numVertices * sizeof(GEO_Point));
+	zone->vertices = malloc((zone->numVertices + 1) * sizeof(GEO_Point));
 	//memset(zone->vertices, 0.0f, zone->numVertices * sizeof(GEO_Point)); NOTE: should memset ?
-	GEO_Point tmp[(const unsigned int)zone->numVertices];
+	GEO_Point tmp[(const unsigned int)zone->numVertices + 1];
 	lineNumber++;
 
 	while(fgets(line, MAX_LINE_LEN, argvInputFile) != NULL){
@@ -113,6 +113,7 @@ int parse_input_args(Zone_general* zone, int argc, char** args){
 			}
 		}
 	}
+	tmp[zone->numVertices] = tmp[0]; // close the circle.
 
 	memcpy(zone->vertices, tmp, sizeof tmp);
 	fclose(argvInputFile);

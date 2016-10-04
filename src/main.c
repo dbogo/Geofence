@@ -46,14 +46,16 @@ int main(int argc, char** argv) {
 	init(&gpsData, &zone, &logMaster, &edges);
 	open_port();
 
+	//gpsData.latitude = 13.0f;
+
 	while (!suspend_loop(TIME_TO_WAIT_SEC, TIME_TO_WAIT_NSEC)) {
 
 		GPSHandler.getGPS(&gpsData, true);
 		
-		printf("lon: %f, lat %f\n", gpsData.latitude, gpsData.longitude);
+		printf("lon: %f, lat %f\n", gpsData.longitude, gpsData.latitude);
 		
 		// whether currently in border
-		if(wn_PnPoly(&gpsData, &zone, edges) > 0){
+		if(wn_PnPoly(&gpsData, &zone, edges) != 0){
 			printf("Current pos - within border\n");
 		} else {
 			printf("Current pos - outside the border\n");
