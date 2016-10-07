@@ -4,12 +4,14 @@
 #include <string.h>
 
 #include "GPSInterface.h"
+#include "serial/serialInterface.h"
 #include "libs/RPiGPSDemo/src/rpi_gps_demo.h"
 #include "libs/GPSDemo/src/gps_demo.h"
 
 int GPS_init(GPS_Actions* gpsHandler){
 	#ifdef GPS_RPI
 		gpsHandler->getGPS = getGPSSample_RPI;
+		open_port(); // inits the file descriptor for gps serial communication
 		printf("uses RPi implementation.\n");
 	#else
 		gpsHandler->getGPS = getGPSSample_DEMO;
@@ -24,7 +26,7 @@ int wn_PnPoly(FullGPSData* location, Zone_general* zone, Edge* edges){
 	GEO_Point p = { .longitude = location->longitude, .latitude = location->latitude };
 	float w = 0; // the winding number
 	
-	for(int i = 0; i < zone->numVertices; i++){
+	for(size_t i = 0; i < zone->numVertices; i++){
 		if((zone->vertices[i].latitude < p.latitude && zone->vertices[i+1].latitude >=p.latitude) ||
 			(zone->vertices[i].latitude >= p.latitude && zone->vertices[i+1].latitude < p.latitude)){
 				if(((det(zone->vertices[i], zone->vertices[i+1], location) > 0) && zone->vertices[i+1].latitude > zone->vertices[i].latitude) ||
@@ -47,13 +49,6 @@ float det(GEO_Point p1, GEO_Point p2, FullGPSData* location){
 	return (p1.longitude - location->longitude)*(p2.latitude - location->latitude)
 		- (p2.longitude - location->longitude)*(p1.latitude - location->latitude);
 }
-
-#if 0
-float det(Edge* e, FullGPSData* location){
-	return (e->p1.longitude - location->longitude)*(e->p2.latitude - location->latitude)
-		- (e->p2.longitude - location->longitude)*(e->p1.latitude - location->latitude);
-}
-#endif
 
 int create_edges(Zone_general* zone, Edge** edges){
 
@@ -79,8 +74,10 @@ int create_edges(Zone_general* zone, Edge** edges){
 
 /* TODO */
 void find_mbr(Zone_general* polygon){
-	polygon->mbr.p1.longitude = polygon->mbr.p2.longitude = polygon->vertices[0].longitude;
-	polygon->mbr.p1.latitude = (polygon->mbr.p1.latitude = polygon->vertices[0].latitude);
+	polygon->mbr.p1.longitude =  polygon->vertices[0].longitude;
+	polygon->mbr.p2.longitude = polygon->vertices[0].longitude;
+	polygon->mbr.p1.latitude = polygon->vertices[0].latitude;
+	polygon->mbr.p1.latitude = polygon->vertices[0].latitude;
 
 	for(size_t i = 0; i < polygon->numVertices; i++){
 		if (polygon->vertices[i].longitude < polygon->mbr.p1.longitude)

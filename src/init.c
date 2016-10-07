@@ -4,13 +4,19 @@
 
 #include "init.h"
 #include "utils.h"
-#include "GPSInterface.h"
-#include "led.h" //TODO: include this only if on RPi.
+#ifdef WIRINGPI
+	#include "led.h" //NOTE: include this only if on RPi.
+#endif
+
+/* An arbitrary, somewhat close estimation of a standard line that describes a vertex in the log. */
+#define ZONE_STR_LINE_LENGTH 40
 
 //TODO: error checking and return values...
-void init(FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge** edges){
+void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge** edges){
 
 	initLogSystem(logMaster);
+	
+	GPS_init(GPSHandler);
 
 	/* execute the script that makes NMEA output cleaner - without empty lines 
 		after the sentence. same effect for NMEA log files. */
@@ -27,34 +33,30 @@ void init(FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge*
 		.spdKnots = 0.0f,
 		.status = false
 	};
-
 	gpsData = &tmp;
 
 	find_mbr(zone);
 	create_edges(zone, edges);
 
-	/* An arbitrary, somewhat close estimation of a standard line that describes a vertex in the log. */
-	#define ZONE_STR_LINE_LENGTH 40
-
 	char zone_str[ZONE_STR_LINE_LENGTH];
 	logEvent("Initialized the following zone vertices: ", LOG4C_PRIORITY_INFO, INFO, logMaster);
-	for(unsigned int i = 0; i < zone->numVertices; i++){
+	for(size_t i = 0; i < zone->numVertices; i++){
 		sprintf(zone_str, "V%d: (%lf, %f)", (int)(i%zone->numVertices), 
 					zone->vertices[i].longitude, zone->vertices[i].latitude);
 		logEvent(zone_str, LOG4C_PRIORITY_INFO, INFO, logMaster);
 		//memset(zone_str, '\0', ZONE_STR_LINE_LENGTH); NOTE: should memset ???
 	}	
 
-	if(identify_platform() == ARM){
+	//if(identify_platform() == ARM){
+	#ifdef WIRINGPI
 		logEvent("Program detected to be run on ARM.", LOG4C_PRIORITY_INFO, INFO, logMaster);
 		init_wiringPi();
 		set_led_output(STATUSLED);
 		set_led_output(GEOFENCE_OK_LED);
-
 		//init the Piface Control & Display 
 		//if(init_cad() == -1)
 		//	printf("init cad: pifacecad_open() hasn't yielded a file descriptor for SPI transactions.\n");
-	}
+	#endif
 }
 
 int parse_input_args(Zone_general* zone, int argc, char** args){
@@ -75,7 +77,7 @@ int parse_input_args(Zone_general* zone, int argc, char** args){
 		logEvent(errStr, LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
 		return AMBIGUOUS_ARGV;
 	} else { // = 2
-		argvInputFile = fopen(args[1], "r"); // declared aextern in init.h
+		argvInputFile = fopen(args[1], "r"); // declared extern in init.h
 		if(argvInputFile == NULL){
 			perror("fopen() has failed");
 			sprintf(errStr, "Error: fopen() has failed. Couldn't find '%s'.", args[1]);

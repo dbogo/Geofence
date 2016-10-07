@@ -1,12 +1,3 @@
-/**
- * TODO: im implementing function pointers that point to the getGPSSample functions either of the
- * 		demo version or of the RPi library (depending on what is defined to gcc at compile time.)
- * 		then this pointer is init by #ifdefing, to the appropriate function.
- * 		
- * 		the problem is that the getGPSSample() function that was in GPSInterface.h, is now whithout
- * 		the file descriptor parameter. how can I get the fd in getGPSSample_RPI ?
- */
-
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -42,15 +33,16 @@ int main(int argc, char** argv) {
 		return -1;
 	}
 	
-	GPS_init(&GPSHandler);
-	init(&gpsData, &zone, &logMaster, &edges);
-	open_port();
-
+	init(&GPSHandler, &gpsData, &zone, &logMaster, &edges);
+	
 	//gpsData.latitude = 13.0f;
 
-	while (!suspend_loop(TIME_TO_WAIT_SEC, TIME_TO_WAIT_NSEC)) {
+	double start, end, dt;
 
-		GPSHandler.getGPS(&gpsData, true);
+	while (!suspend_loop(TIME_TO_WAIT_SEC, TIME_TO_WAIT_NSEC)) {
+		start = (float)clock()/CLOCKS_PER_SEC;
+
+		GPSHandler.getGPS(&gpsData, true, NULL);
 		
 		printf("lon: %f, lat %f\n", gpsData.longitude, gpsData.latitude);
 		
@@ -61,7 +53,10 @@ int main(int argc, char** argv) {
 			printf("Current pos - outside the border\n");
 		}	
 
-		printf("-------------------------------\n");
+		end = (float)clock()/CLOCKS_PER_SEC;
+		dt = end - start;
+		printf("--------------%f----------------\n", dt);
+
 	}
 
 	finiLogSystem();

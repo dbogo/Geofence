@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #include "serialInterface.h"
+#include "../logInterface.h"
 
 int streamFD = 0;
 
@@ -14,12 +15,16 @@ int open_port(void){
 	char* fileName = "/dev/ttyACM0";
 	streamFD = open(fileName, O_RDWR | O_NOCTTY | O_NDELAY);
 	if(streamFD < 0){
-		printf("open_port: Unable to open %s.\n", fileName);
+		logEvent("open_port: Unable to open /dev/ttyACM0.", LOG4C_PRIORITY_INFO, INFO, &logMaster);
+		//printf("open_port: Unable to open %s.\n", fileName);
 		fileName = "/dev/ttyAMA0";
-		printf("trying to open %s instead...\n", fileName);
+		logEvent("trying to open /dev/ttyAMA0 instead...", LOG4C_PRIORITY_INFO, INFO, &logMaster);
+		//printf("trying to open %s instead...\n", fileName);
 		streamFD = open(fileName, O_RDWR | O_NOCTTY | O_NDELAY);
-		if(streamFD < 0)
-			printf("open_port: Unable to open %s.\n", fileName);
+		if(streamFD < 0){
+			logEvent("open_port: Unable to open /dev/ttyAMA0.", LOG4C_PRIORITY_INFO, INFO, &logMaster);
+			//printf("open_port: Unable to open %s.\n", fileName);
+		}
 		else 
 			fcntl(streamFD, F_SETFL, 0);
 	}else

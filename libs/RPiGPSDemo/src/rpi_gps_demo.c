@@ -49,8 +49,8 @@ char* generate_nmea_sentence(void){
 }
 #endif
 
-int getGPSSample_RPI(FullGPSData* samp, bool passToLog){
-    char nmea[MAX_NMEA_MSG_SIZE];
+int getGPSSample_RPI(FullGPSData* samp, bool passToLog, void* userData){
+	char nmea[MAX_NMEA_MSG_SIZE];
     memset(nmea, '\0', MAX_NMEA_MSG_SIZE);
     fetch_sentence_from_gps(get_streamFD(), nmea);
     if(validate_checksum(nmea) != CHECKSUM_OK){

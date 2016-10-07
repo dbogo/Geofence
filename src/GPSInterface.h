@@ -37,9 +37,8 @@
  *             GPSInterface provides for handling gps stuff.
  */
 struct GPS_Actions{
-	int (*getGPS)(FullGPSData*, bool);
+	int (*getGPS)(FullGPSData*, bool, void*);
 };
-
 typedef struct GPS_Actions GPS_Actions;
 
 
@@ -112,6 +111,8 @@ int create_edges(Zone_general* zone, Edge** edges);
  */
 void find_mbr(Zone_general* polygon);
 
+#if 0
 bool isDroneGoingOffBorder(FullGPSData* location, Zone_general* zone_gen);
+#endif
 
 #endif /* GPSINTERFACE_H */

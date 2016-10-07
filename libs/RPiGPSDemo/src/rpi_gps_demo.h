@@ -15,7 +15,7 @@
  * @param[in]  passToLog  true if we want to log the stuff
  * @return     the ID of the sentence we got on this call.
  */
- int getGPSSample_RPI(FullGPSData* samp, bool passToLog);
+ int getGPSSample_RPI(FullGPSData* samp, bool passToLog, void* userData);
 
 #endif /* RPI_GPS_DEMO_H */
 

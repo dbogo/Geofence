@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "logInterface.h"
+#include "GPSInterface.h"
 
 #define NO_ARGS 1
 #define FOPEN_FAIL 2
@@ -13,12 +14,13 @@ extern FILE* argvInputFile;
 
 /**
  * @brief      Initialize some important stuff
+ * @param 	   GPSHandler a pointer to a struct with function pointers to gps related functions.
  * @param      zone       pointer to Zone_general strcut
  * @param      logMaster  pointer to Log_Master struct
  * @param      edges      double pointer to the Edge struct. pointer to the array of edges 
  * 						  of the polygon represented by zone.
  */
-void init(FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge** edges);
+void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge** edges);
 
 /**
  * @brief      Recieves argc, argv from main and parses that input
