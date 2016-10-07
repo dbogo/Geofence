@@ -1,0 +1,15 @@
+[submodule "libs/libpifacecad"]
+	path = libs/libpifacecad
+	url = https://github.com/piface/libpifacecad
+[submodule "libs/libmcp23s17"]
+	path = libs/libmcp23s17
+	url = https://github.com/piface/libmcp23s17
+[submodule "external/libmcp23s17"]
+	path = external/libmcp23s17
+	url = https://github.com/piface/libmcp23s17
+[submodule "external/libpifacecad"]
+	path = external/libpifacecad
+	url = https://github.com/piface/libpifacecad
+[submodule "external/wiringPi"]
+	path = external/wiringPi
+	url = git://git.drogon.net/wiringPi
