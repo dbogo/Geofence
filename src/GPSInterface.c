@@ -21,9 +21,23 @@ int GPS_init(GPS_Actions* gpsHandler){
 	return 0;
 }
 
+double to_deg(double x){
+    double deg = 0.0f;
+    double l = (int)x/100; // the whole part, floored 
+    double rem = x/100 - l; // what's to the right of the dot after flooring
+    double rem_deg = rem*100/60; // convert that to degrees.
+    deg = l + rem_deg;
+    printf("orig: %lf; floored: %lf; rem: %lf; rem_deg: %lf; res: %lf\n", x, l, rem, rem_deg, deg);
+    return deg;
+}
+
 int wn_PnPoly(FullGPSData* location, Zone_general* zone, Edge* edges){
-	
 	GEO_Point p = { .longitude = location->longitude, .latitude = location->latitude };
+	#ifdef HARDWARE_RPI // convert for use with real world coordinates. (deg)
+		p.longitude = to_deg(location->longitude); 
+		p.latitude = to_deg(location->latitude);
+	#endif
+
 	float w = 0; // the winding number
 	
 	for(size_t i = 0; i < zone->numVertices; i++){

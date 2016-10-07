@@ -11,22 +11,23 @@ extern "C" {
 typedef enum { false, true } bool;
 typedef unsigned char uint8_t;
 
+/* 	TODO: deprecated ?? */
 #define OUTSIDE 0
 #define INSIDE 1
 
 /* NOTE: Pay attention to to calculations where course is in radians or in degrees ! */
 typedef struct {
-	float latitude; // value from 0.0 to 90.0
-	float longitude; // value from 0.0 to 180.0 NOTE:east/west !
-	float speed;
-	float altitude;
-	float course;
+	double latitude; // value from 0.0 to 90.0
+	double longitude; // value from 0.0 to 180.0 NOTE:east/west !
+	double speed;
+	double altitude;
+	double course;
 } GPSSamp;
 
 /* A representation of a single 2D point on the surface. */
 typedef struct {
-	float longitude;
-	float latitude;
+	double longitude;
+	double latitude;
 } GEO_Point;
 
 /* minimum bounding rectangle of a certain polygon (Zone) */
@@ -42,7 +43,7 @@ typedef struct {
 typedef struct {
 	GEO_Point p1;
 	GEO_Point p2;
-	float altitude; // NOTE: Zone is a 3D shape
+	double altitude; // NOTE: Zone is a 3D shape
 } Zone;
 #endif
 
@@ -56,70 +57,76 @@ typedef struct {
 	may consist of more than 2 vertices. */
 typedef struct {
 	size_t numVertices;
-	float altitude;
+	double altitude;
 	MBR mbr;
 	GEO_Point* vertices;
 } Zone_general;
 
 typedef struct {
-	float latitude;
-	float longitude;
+	double latitude;
+	double longitude;
+
+	// lat_deg and lon_deg is the point where google maps shows you.
+	// since NMEA data is decimal and not degrees, a conversion is needed.
+	double lat_deg; 
+	double lon_deg;
+
 	unsigned char lat;
 	unsigned char lon;
-	float altitude;
-	float course;
-	float spdKph;
+	double altitude;
+	double course;
+	double spdKph;
 
 	uint8_t quality;
 	uint8_t satellites;
 	unsigned char fixType;
 	long fixTime;
 
-	float pdop;
-	float hdop;
-	float vdop;
-	float spdKnots;
+	double pdop;
+	double hdop;
+	double vdop;
+	double spdKnots;
 	bool status; 
 } FullGPSData;
 
 typedef struct {
-	float latitude; // Latitude e.g: 4124.8963 (XXYY.ZZKK.. DEG, MIN, SEC.SS)
+	double latitude; // Latitude e.g: 4124.8963 (XXYY.ZZKK.. DEG, MIN, SEC.SS)
 	unsigned char lat; // Latitude e.g: N
-	float longitude; // Longitude e.g: 08151.6838 (XXXYY.ZZKK.. DEG, MIN, SEC.SS)
+	double longitude; // Longitude e.g: 08151.6838 (XXXYY.ZZKK.. DEG, MIN, SEC.SS)
 	unsigned char lon; // Longitude e.g: W
 	uint8_t quality;  // Quality 0, 1, 2
 	uint8_t satellites; // Number of satellites: 1,2,3,4,5...
-	float altitude; // Altitude e.g: 280.2 (Meters above mean sea level)
+	double altitude; // Altitude e.g: 280.2 (Meters above mean sea level)
 } gga;
 
 typedef struct {
 	unsigned char fixType; // 1 = no fix; 2 = 2D fix; 3 = 3D fix
-	float pdop;
-	float hdop;
-	float vdop;
+	double pdop;
+	double hdop;
+	double vdop;
 } gsa;
 
 typedef struct {
-	float spdKnots;
-	float spdKph;
+	double spdKnots;
+	double spdKph;
 } vtg;
 
 typedef struct {
-	float latitude;
+	double latitude;
 	unsigned char lat;
-	float longitude;
+	double longitude;
 	unsigned char lon;
 	unsigned long fixTime;
 	bool status; // A (activce) or V (void)  as true/false
 } gll;
 
 typedef struct {
-	float latitude;
+	double latitude;
 	unsigned char lat;
-	float longitude;
+	double longitude;
 	unsigned char lon;
-	float speed;
-	float course;
+	double speed;
+	double course;
 } rmc;
 
 #ifdef __cplusplus

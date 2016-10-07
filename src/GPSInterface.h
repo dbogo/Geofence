@@ -42,6 +42,9 @@ struct GPS_Actions{
 typedef struct GPS_Actions GPS_Actions;
 
 
+double to_deg(double x);
+
+
 /**
  * @brief      the signed area of the triangle loc,P1,P2
  *

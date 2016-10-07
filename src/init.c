@@ -52,7 +52,7 @@ void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log
 		logEvent("Program detected to be run on ARM.", LOG4C_PRIORITY_INFO, INFO, logMaster);
 		init_wiringPi();
 		set_led_output(STATUSLED);
-		set_led_output(GEOFENCE_OK_LED);
+		spet_led_output(GEOFENCE_OK_LED);
 		//init the Piface Control & Display 
 		//if(init_cad() == -1)
 		//	printf("init cad: pifacecad_open() hasn't yielded a file descriptor for SPI transactions.\n");

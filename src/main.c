@@ -49,8 +49,14 @@ int main(int argc, char** argv) {
 		// whether currently in border
 		if(wn_PnPoly(&gpsData, &zone, edges) != 0){
 			printf("Current pos - within border\n");
+			#ifdef WIRINGPI
+				led(GEOFENCE_OK_LED, HIGH);
+			#endif
 		} else {
 			printf("Current pos - outside the border\n");
+			#ifdef WIRINGPI
+				led(GEOFENCE_OK_LED, LOW);
+			#endif
 		}	
 
 		end = (float)clock()/CLOCKS_PER_SEC;
