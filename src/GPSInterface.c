@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "GPSInterface.h"
+#include "logInterface.h"
 #include "serial/serialInterface.h"
 #include "libs/RPiGPSDemo/src/rpi_gps_demo.h"
 #include "libs/GPSDemo/src/gps_demo.h"
@@ -21,9 +22,11 @@ int GPS_init(GPS_Actions* gpsHandler){
 	return 0;
 }
 
+/*  FIXME: should work for every value (inc. < 1 etc). */
 double to_deg(double x){
     double deg = 0.0f;
-    double l = (int)x/100; // the whole part, floored 
+    double l = 0.0f;
+    l = (int)x/100; // the whole part, floored 
     double rem = x/100 - l; // what's to the right of the dot after flooring
     double rem_deg = rem*100/60; // convert that to degrees.
     deg = l + rem_deg;
@@ -77,6 +80,18 @@ int create_edges(Zone_general* zone, Edge** edges){
 	// move the dummy edges to the actual pointer.
 	*edges = malloc(sizeof(tmp));
 	memcpy(*edges, tmp, sizeof(tmp));
+
+	/* An arbitrary, somewhat close estimation of a standard line that describes a vertex in the log. */
+	const unsigned char ZONE_STR_LINE_LENGTH = 40;
+
+	char zone_str[ZONE_STR_LINE_LENGTH];
+	logEvent("Initialized the following zone vertices: ", LOG4C_PRIORITY_INFO, INFO, &logMaster);
+	for(size_t i = 0; i < zone->numVertices; i++){
+		sprintf(zone_str, "V%d: (%lf, %f)", (int)(i%zone->numVertices), 
+					zone->vertices[i].longitude, zone->vertices[i].latitude);
+		logEvent(zone_str, LOG4C_PRIORITY_INFO, INFO, &logMaster);
+		//memset(zone_str, '\0', ZONE_STR_LINE_LENGTH); NOTE: should memset ???
+	}	
 
 	for(size_t i = 0; i < zone->numVertices; i++){
 		printf("E%d: (%1.3lf, %1.3lf), (%1.3lf,%1.3lf)\n", (int)(i % zone->numVertices), (*edges)[i].p1.longitude,

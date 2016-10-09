@@ -10,6 +10,8 @@ libs/GPSDemo/nbproject/
 libs/GPSDemo/Makefile
 libs/GPSDemo/.dep.inc
 
+data/
+
 libs/log4c/etc/
 libs/log4c/bin/
 libs/log4c/lib/

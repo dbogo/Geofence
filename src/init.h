@@ -23,6 +23,19 @@ extern FILE* argvInputFile;
 void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge** edges);
 
 /**
+ * @brief      calls function to initialize some stuff that works only on the Raspberry-Pi
+ *             e.g the WiringPi library or PiFace-cad
+ *             exists only if #ifdef WIRINGPI
+ */
+void init_platform_specific_modules(void);
+
+/**
+ * @brief      initializes the data pointed to by the @p struct pointer
+ * @param      gpsData  double pointer to the data
+ */
+void init_gps_data(FullGPSData** gpsData);
+
+/**
  * @brief      Recieves argc, argv from main and parses that input
  * @param      zone  A struct with the geofence information (polygon, count, etc.)
  * @param[in]  argc  argc
@@ -30,6 +43,29 @@ void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log
  * @return     returns different exit codes (defined in init.h) depending on the situation. 
  */
 int parse_input_args(Zone_general* zone, int argc, char** args);
+
+/**
+ * @brief      initializes the geofence vertices etc from the argv.
+ *             the format is xx.xxx,xx.xxx xx.xxx,xx.xxx ... etc
+ *
+ * @param      zone  pointer to a Zone_general struct
+ * @param  	   argc  argc
+ * @param 	   args  argv
+ *
+ * @return     one of the error/success codes defined in init.h
+ */
+int init_geofence_from_argv(Zone_general* zone, int argc, char** args);
+
+/**
+ * @brief      initializes the geofence vertices from the data that's user-made file which is specified in argv
+ *
+ * @param      zone           pointer to a Zone_general struct
+ * @param      args           argv
+ *
+ * @return     one of the error/success codes defined in init.h
+ */
+int init_geofence_from_file(Zone_general* zone, char** args);
+
 
 /**
  * @brief      Parses a single line that contains vertex coordinates.

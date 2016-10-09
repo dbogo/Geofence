@@ -8,20 +8,37 @@
 	#include "led.h" //NOTE: include this only if on RPi.
 #endif
 
-/* An arbitrary, somewhat close estimation of a standard line that describes a vertex in the log. */
-#define ZONE_STR_LINE_LENGTH 40
-
 //TODO: error checking and return values...
 void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge** edges){
-
-	initLogSystem(logMaster);
 	
-	GPS_init(GPSHandler);
-
 	/* execute the script that makes NMEA output cleaner - without empty lines 
 		after the sentence. same effect for NMEA log files. */
 	system("./misc/serial_config.sh && cd ..");
 
+	initLogSystem(logMaster);
+	GPS_init(GPSHandler);
+	init_gps_data(&gpsData);
+	find_mbr(zone);
+	create_edges(zone, edges);
+
+	#ifdef WIRINGPI
+	init_platform_specific_modules();
+	#endif
+}
+
+#ifdef WIRINGPI
+void init_platform_specific_modules(void){
+	logEvent("Program detected to be run on ARM.", LOG4C_PRIORITY_INFO, INFO, &logMaster);
+	init_wiringPi();
+	set_led_output(STATUSLED);
+	spet_led_output(GEOFENCE_OK_LED);
+	//init the Piface Control & Display 
+	//if(init_cad() == -1)
+	//	printf("init cad: pifacecad_open() hasn't yielded a file descriptor for SPI transactions.\n");
+}
+#endif
+
+void init_gps_data(FullGPSData** gpsData){
 	FullGPSData tmp = {
 		.latitude = 0.0f, .longitude = 0.0f,
 		.lat = '\0', .lon = '\0',
@@ -33,57 +50,61 @@ void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log
 		.spdKnots = 0.0f,
 		.status = false
 	};
-	gpsData = &tmp;
 
-	find_mbr(zone);
-	create_edges(zone, edges);
-
-	char zone_str[ZONE_STR_LINE_LENGTH];
-	logEvent("Initialized the following zone vertices: ", LOG4C_PRIORITY_INFO, INFO, logMaster);
-	for(size_t i = 0; i < zone->numVertices; i++){
-		sprintf(zone_str, "V%d: (%lf, %f)", (int)(i%zone->numVertices), 
-					zone->vertices[i].longitude, zone->vertices[i].latitude);
-		logEvent(zone_str, LOG4C_PRIORITY_INFO, INFO, logMaster);
-		//memset(zone_str, '\0', ZONE_STR_LINE_LENGTH); NOTE: should memset ???
-	}	
-
-	//if(identify_platform() == ARM){
-	#ifdef WIRINGPI
-		logEvent("Program detected to be run on ARM.", LOG4C_PRIORITY_INFO, INFO, logMaster);
-		init_wiringPi();
-		set_led_output(STATUSLED);
-		spet_led_output(GEOFENCE_OK_LED);
-		//init the Piface Control & Display 
-		//if(init_cad() == -1)
-		//	printf("init cad: pifacecad_open() hasn't yielded a file descriptor for SPI transactions.\n");
-	#endif
+	*gpsData = &tmp;
 }
 
 int parse_input_args(Zone_general* zone, int argc, char** args){
 	/**
-	 * TODO: Various error cheking and rv
+	 * TODO: error cheking
 	 */
-	char errStr[60];
-	FILE* argvInputFile = NULL;
-
 	if(argc == 1){
+		char errStr[60];
 		strcpy(errStr,"Error: No files were specified on input.");
 		printf("%s\n", errStr);
 		logEvent(errStr, LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
 		return NO_ARGS;
-	} else if(argc > 2){
-		sprintf(errStr, "Error: no more arguments are expected after '%s'.", args[1]);
-		printf("%s\n", errStr);
-		logEvent(errStr, LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
-		return AMBIGUOUS_ARGV;
-	} else { // = 2
-		argvInputFile = fopen(args[1], "r"); // declared extern in init.h
-		if(argvInputFile == NULL){
+	}else if(argc == 2)
+		return init_geofence_from_file(zone, args);
+	else // > 2
+		return init_geofence_from_argv(zone, argc, args);
+	
+
+	return ALL_ARGV_INIT_OK;
+}
+
+int init_geofence_from_argv(Zone_general* zone, int argc, char** args){ 	
+	/**
+	 * TODO: error checking
+	 * altitude is entered first. then the points.
+	 */
+	zone->altitude = atof(args[1]);
+	zone->numVertices = argc - 2;
+	zone->vertices = malloc((zone->numVertices + 1) * sizeof(GEO_Point));
+	for(int i = 2; i < argc; ++i){
+		char* pa = strchr(args[i], ',') + 1; // go to second number of the pair (lat,lon)
+		zone->vertices[i-2].longitude = atof(args[i]);
+		zone->vertices[i-2].latitude = atof(pa);
+	}
+	zone->vertices[zone->numVertices] = zone->vertices[0];
+
+	return ALL_ARGV_INIT_OK;
+}
+
+int init_geofence_from_file(Zone_general* zone, char** args){
+
+	/**
+	 * TODO: proper error checking
+	 */
+
+	FILE* argvInputFile = fopen(args[1], "r"); // declared extern in init.h
+	
+	if(argvInputFile == NULL){
+			char errStr[60];
 			perror("fopen() has failed");
 			sprintf(errStr, "Error: fopen() has failed. Couldn't find '%s'.", args[1]);
 			logEvent(errStr, LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
 			return FOPEN_FAIL;
-		}
 	}
 
 	const int MAX_LINE_LEN = 25;
@@ -123,9 +144,6 @@ int parse_input_args(Zone_general* zone, int argc, char** args){
 }
 
 GEO_Point parse_line(char* str){
-	GEO_Point p;
-	p.longitude = atof(str);
-	str = strchr(str, ',')+1;
-	p.latitude = atof(str);
+	GEO_Point p = { .longitude = atof(str), .latitude = atof(strchr(str, ',') + 1) };
 	return p;
 }

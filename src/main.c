@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
 
 	while (!suspend_loop(TIME_TO_WAIT_SEC, TIME_TO_WAIT_NSEC)) {
 		start = (float)clock()/CLOCKS_PER_SEC;
-
+ 
 		GPSHandler.getGPS(&gpsData, true, NULL);
 		
 		printf("lon: %f, lat %f\n", gpsData.longitude, gpsData.latitude);
