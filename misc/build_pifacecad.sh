@@ -4,8 +4,10 @@
 #use this for first time installation of the project, as the libraries should
 #be recompiled on every platform !
 
-cd ${PWD}/pifacecad/libbmcp23s17/ && make && cd -
+cd ${PWD}/external/libmcp23s17/ && make && cd -
 echo -e "\tbuild_pifacecad.sh finished buildng bcmp23s17. now at ${PWD}"
-cd ${PWD}/pifacecad/libpifacecad/ && make
+cd ${PWD}/external/libpifacecad/ && make && cd -
 echo -e "\tbuild_pifacecad.sh finished buildng libpifacecad. now at ${PWD}"
 
+cp -r external/libmcp23s17/ libs/libmcp23s17
+cp -r external/libpifacecad/ libs/libpifacecad
