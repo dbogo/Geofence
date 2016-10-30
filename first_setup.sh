@@ -15,11 +15,15 @@
 
 echo -e "first_setup.sh invoked: performing first time installation.\n"
 
-./misc/build_log4c.sh
-./misc/build_pifacecad.sh
-./misc/build_wiringPi.sh
-./misc/serial_config.sh
-./misc/wiringPi_env_setup.sh
+cd libs/
+sudo rm -rf libmcp23s17 libpifacecad log4c wiringPi
+cd ..
+
+sudo ./misc/build_log4c.sh
+sudo ./misc/build_pifacecad.sh
+sudo ./misc/build_wiringPi.sh
+sudo ./misc/serial_config.sh
+sudo ./misc/wiringPi_env_setup.sh
 
 echo -e "\nfirst_setup.sh done. Setup scripts (see misc/ ) done.\n"
 echo -e "now at: ${PWD}"
