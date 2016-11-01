@@ -66,7 +66,7 @@ typedef struct {
 	double latitude;
 	double longitude;
 
-	// lat_deg and lon_deg is the point where google maps shows you.
+	// lat_deg and lon_deg is the point where google maps shows a point.
 	// since NMEA data is decimal and not degrees, a conversion is needed.
 	double lat_deg; 
 	double lon_deg;

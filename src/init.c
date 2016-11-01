@@ -8,9 +8,10 @@
 	#include "led.h" //NOTE: include this only if on RPi.
 #endif
 
-//TODO: error checking and return values...
 void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge** edges){
-	
+	/**
+	 * TODO: Error cheking and rv
+	 */
 	/* execute the script that makes NMEA output cleaner - without empty lines 
 		after the sentence. same effect for NMEA log files. */
 	system("./misc/serial_config.sh && cd ..");
@@ -24,6 +25,25 @@ void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log
 	#ifdef WIRINGPI
 	init_platform_specific_modules();
 	#endif
+}
+
+int parse_input_args(Zone_general* zone, int argc, char** args){
+	/**
+	 * TODO: error cheking
+	 */
+	if(argc == 1){
+		char errStr[60];
+		strcpy(errStr,"Error: No files were specified on input.");
+		printf("%s\n", errStr);
+		logEvent(errStr, LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
+		return NO_ARGS;
+	}else if(argc == 2)
+		return init_geofence_from_file(zone, args);
+	else // > 2
+		return init_geofence_from_argv(zone, argc, args);
+	
+
+	return ALL_ARGV_INIT_OK;
 }
 
 #ifdef WIRINGPI
@@ -54,30 +74,15 @@ void init_gps_data(FullGPSData** gpsData){
 	*gpsData = &tmp;
 }
 
-int parse_input_args(Zone_general* zone, int argc, char** args){
-	/**
-	 * TODO: error cheking
-	 */
-	if(argc == 1){
-		char errStr[60];
-		strcpy(errStr,"Error: No files were specified on input.");
-		printf("%s\n", errStr);
-		logEvent(errStr, LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
-		return NO_ARGS;
-	}else if(argc == 2)
-		return init_geofence_from_file(zone, args);
-	else // > 2
-		return init_geofence_from_argv(zone, argc, args);
-	
-
-	return ALL_ARGV_INIT_OK;
-}
-
 int init_geofence_from_argv(Zone_general* zone, int argc, char** args){ 	
 	/**
 	 * TODO: error checking
 	 * altitude is entered first. then the points.
 	 */
+	
+
+	//FILE* argvStorageFile = fopen("data/geofence-argv.txt", 'w'); // file stores the parameters entered by the user.
+
 	zone->altitude = atof(args[1]);
 	zone->numVertices = argc - 2;
 	zone->vertices = malloc((zone->numVertices + 1) * sizeof(GEO_Point));
@@ -95,6 +100,8 @@ int init_geofence_from_file(Zone_general* zone, char** args){
 
 	/**
 	 * TODO: proper error checking
+	 * TODO: throw an error if geofence in file consists of less than 3 polygons.
+	 * 		Add support for a circle geofence (essentialy a cylinder cuz height).
 	 */
 
 	FILE* argvInputFile = fopen(args[1], "r"); // declared extern in init.h

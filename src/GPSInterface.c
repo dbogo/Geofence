@@ -34,20 +34,44 @@ double to_deg(double x){
     return deg;
 }
 
-int wn_PnPoly(FullGPSData* location, Zone_general* zone, Edge* edges){
+bool geofence_breached(FullGPSData* location, Zone_general* zone, Edge* edges){
 	GEO_Point p = { .longitude = location->longitude, .latitude = location->latitude };
+
 	#ifdef HARDWARE_RPI // convert for use with real world coordinates. (deg)
 		p.longitude = to_deg(location->longitude); 
 		p.latitude = to_deg(location->latitude);
 	#endif
 
+	/**
+	 * TODO: differentiate between WGS and MSL.
+	 * TODO: check for minimum altitude ?
+	 */
+	if(geofecnce_alt_check(zone, location->altitude) == GEOFENCE_ALT_BREACH){
+		return true;
+	}
+
+	if(geofence_polygon_check(zone, p) == GEOFENCE_POLYGON_BREACH){
+		return true;
+	}
+
+	return false;
+}
+
+int geofecnce_alt_check(Zone_general* zone, double altitude){
+	if(altitude > zone->altitude){
+		return GEOFENCE_ALT_BREACH;
+	}
+	return GEOFENCE_ALT_OK;
+}
+
+int geofence_polygon_check(Zone_general* zone, GEO_Point p){
 	float w = 0; // the winding number
 	
 	for(size_t i = 0; i < zone->numVertices; i++){
 		if((zone->vertices[i].latitude < p.latitude && zone->vertices[i+1].latitude >=p.latitude) ||
 			(zone->vertices[i].latitude >= p.latitude && zone->vertices[i+1].latitude < p.latitude)){
-				if(((det(zone->vertices[i], zone->vertices[i+1], location) > 0) && zone->vertices[i+1].latitude > zone->vertices[i].latitude) ||
-					((det(zone->vertices[i], zone->vertices[i+1], location) < 0) && zone->vertices[i+1].latitude < zone->vertices[i].latitude)){
+				if(((det(zone->vertices[i], zone->vertices[i+1], p) > 0) && zone->vertices[i+1].latitude > zone->vertices[i].latitude) ||
+					((det(zone->vertices[i], zone->vertices[i+1], p) < 0) && zone->vertices[i+1].latitude < zone->vertices[i].latitude)){
 					if(zone->vertices[i+1].latitude > zone->vertices[i].latitude){
 						w++;
 					} else {
@@ -57,14 +81,15 @@ int wn_PnPoly(FullGPSData* location, Zone_general* zone, Edge* edges){
 			}
 	}
 
-	printf("wn: %f\n", w);
-	return w;
+	if (w == 0){
+		return GEOFENCE_POLYGON_BREACH;
+	}
+	return GEOFENCE_POLYGON_OK;
 }
 
-
-float det(GEO_Point p1, GEO_Point p2, FullGPSData* location){
-	return (p1.longitude - location->longitude)*(p2.latitude - location->latitude)
-		- (p2.longitude - location->longitude)*(p1.latitude - location->latitude);
+inline float det(GEO_Point p1, GEO_Point p2, GEO_Point location){
+	return (p1.longitude - location.longitude)*(p2.latitude - location.latitude)
+		- (p2.longitude - location.longitude)*(p1.latitude - location.latitude);
 }
 
 int create_edges(Zone_general* zone, Edge** edges){
@@ -94,14 +119,14 @@ int create_edges(Zone_general* zone, Edge** edges){
 	}	
 
 	for(size_t i = 0; i < zone->numVertices; i++){
-		printf("E%d: (%1.3lf, %1.3lf), (%1.3lf,%1.3lf)\n", (int)(i % zone->numVertices), (*edges)[i].p1.longitude,
+		printf("E%d: (%1.6lf, %1.6lf), (%1.6lf,%1.6lf)\n", (int)(i % zone->numVertices), (*edges)[i].p1.longitude,
 						(*edges)[i].p1.latitude, (*edges)[i].p2.longitude, (*edges)[i].p2.latitude);
 	}	
 
 	return zone->numVertices;
 }
 
-/* TODO */
+/* NOTE: still relevant ? */
 void find_mbr(Zone_general* polygon){
 	polygon->mbr.p1.longitude =  polygon->vertices[0].longitude;
 	polygon->mbr.p2.longitude = polygon->vertices[0].longitude;

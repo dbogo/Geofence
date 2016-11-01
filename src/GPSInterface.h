@@ -33,6 +33,14 @@
 #define UNRECOGNIZED_NMEA -1
 
 /**
+ * the GEOFENCE_ macros are used for denoting the status of different geofence checks
+ */
+#define GEOFENCE_ALT_OK 10
+#define GEOFENCE_ALT_BREACH 100
+#define GEOFENCE_POLYGON_OK 20
+#define GEOFENCE_POLYGON_BREACH 200
+
+/**
  * @brief      This struct contains function pointers to functions that
  *             GPSInterface provides for handling gps stuff.
  */
@@ -42,10 +50,8 @@ struct GPS_Actions{
 typedef struct GPS_Actions GPS_Actions;
 
 
-double to_deg(double x);
-
-
 /**
+ * TODO: inline ?
  * @brief      the signed area of the triangle loc,P1,P2
  *
  * @param[in]  p1        Polygon's first point
@@ -54,7 +60,7 @@ double to_deg(double x);
  *
  * @return     the determinant
  */
-float det(GEO_Point p1, GEO_Point p2, FullGPSData* location);
+float det(GEO_Point p1, GEO_Point p2, GEO_Point location);
 
 /**
  * @brief      assignes the correct library for the getGPS function pointer.
@@ -63,6 +69,7 @@ float det(GEO_Point p1, GEO_Point p2, FullGPSData* location);
  */
 int GPS_init(GPS_Actions* gpsHandler);
 
+#if 0 /* DEPRECATED ?? */
 /**
  * @brief      Determines if the test point is to the left of the vector,
  *             accounting for the direction of the vector (up or down).
@@ -85,9 +92,13 @@ bool upwards_cross(Edge e, GEO_Point p);
  * @brief      see upwards_cross(). This is the opposite.
  */
 bool downwards_cross(Edge e, GEO_Point p);
+#endif 
 
 /**
- * @brief      Winding Number algorithm for test of Point-In-Polygon inclusion.
+ * @brief      runs tests for different kinds of possible geofence violations,
+ *             if one of the tests is failed (i.e some kind of violation has occured), 
+ *             there's a breach.
+ * Winding Number algorithm for test of Point-In-Polygon inclusion.
  *             see http://geomalgorithms.com/a03-_inclusion.html
  * @param      location  the location of the test points (coordinates)
  * @param      zone      the Polygon - represented by its vertices
@@ -96,7 +107,28 @@ bool downwards_cross(Edge e, GEO_Point p);
  *             if the point is inside the polygon, the winding number is non-zero.
  *             a detailed description of the algorithm is in the link.
  */
-int wn_PnPoly(FullGPSData* location, Zone_general* zone, Edge* edges);
+bool geofence_breached(FullGPSData* location, Zone_general* zone, Edge* edges);
+
+/**
+ * TODO: min and max alt.
+ * @brief      checks if the altitude in question is within the geofence's height.
+ *
+ * @param      zone      The Polygon. the Zone_general struct contains the limit altitude	
+ * @param[in]  altitude  The altitude of the point in question.
+ *
+ * @return     one of the constants describing the status, according to the outcome of the height test.
+ */
+int geofecnce_alt_check(Zone_general* zone, double altitude);
+
+/**
+ * @brief      checks if the point in question is inside or outside the geofence polygon.
+ *             uses the Winding-Number algorithm for test of Point-In-Polygon inclusion.
+ *             see http://geomalgorithms.com/a03-_inclusion.html
+ * @param      zone  The geofence polygon
+ * @param[in]  p     the POI
+ * @return     one of the constants describing the status, according to the outcome of the PiP test.
+ */
+int geofence_polygon_check(Zone_general* zone, GEO_Point p);
 
 /**
  * @brief      Creates the edges of the polygon from its vertices.
@@ -113,6 +145,14 @@ int create_edges(Zone_general* zone, Edge** edges);
  * @param      polygon  a struct with the polygon's points.
  */
 void find_mbr(Zone_general* polygon);
+
+/**
+ * @brief      converts NMEA decimal value to degrees
+ *             (used for conversion of lat lon values)
+ * @param[in]  x     the decimal value extracted as-is from NMEA
+ * @return     a value converted from dec to deg
+ */
+double to_deg(double x);
 
 #if 0
 bool isDroneGoingOffBorder(FullGPSData* location, Zone_general* zone_gen);

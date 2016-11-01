@@ -29,6 +29,7 @@ int main(int argc, char** argv) {
 	Edge* edges = NULL;
 	GPS_Actions GPSHandler;
 
+	// deal with argv
 	if(parse_input_args(&zone, argc, argv) != ALL_ARGV_INIT_OK){
 		return -1;
 	}
@@ -37,17 +38,18 @@ int main(int argc, char** argv) {
 	
 	//gpsData.latitude = 13.0f;
 
-	double start, end, dt;
+	clock_t start, end;
+	double dt;
 
 	while (!suspend_loop(TIME_TO_WAIT_SEC, TIME_TO_WAIT_NSEC)) {
-		start = (float)clock()/CLOCKS_PER_SEC;
+		start = clock();
  
 		GPSHandler.getGPS(&gpsData, true, NULL);
 		
 		printf("lon: %f, lat %f\n", gpsData.longitude, gpsData.latitude);
 		
 		// whether currently in border
-		if(wn_PnPoly(&gpsData, &zone, edges) != 0){
+		if(!geofence_breached(&gpsData, &zone, edges)){
 			printf("Current pos - within border\n");
 			#ifdef WIRINGPI
 				led(GEOFENCE_OK_LED, HIGH);
@@ -59,8 +61,8 @@ int main(int argc, char** argv) {
 			#endif
 		}	
 
-		end = (float)clock()/CLOCKS_PER_SEC;
-		dt = end - start;
+		end = clock();
+		dt = (double)(end - start)/CLOCKS_PER_SEC;
 		printf("--------------%f----------------\n", dt);
 
 	}
