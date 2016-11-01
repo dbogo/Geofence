@@ -1,7 +1,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <string.h>
 
 
 typedef struct Point {
@@ -33,18 +33,26 @@ int wn_PnPoly(Point R, Point* zone, int n){
 int main(int argc, char** argv){
 	srand(time(NULL)); //seed
 
-	Point p[200][30];
-	Point R = { rand()%40000, rand()%40000 };
+	const int polygons = 1000;
+	const int verts_per_poly = 100;
+
+
+	//Point (*p)[verts_per_poly] = malloc(polygons*verts_per_poly);
+	//memset(p, 0, polygons*verts_per_poly);
+
+	Point p[polygons][verts_per_poly];
+
+	Point R = { rand()%1000000, rand()%1000000 };
 	printf("R: {%d,%d} \n", R.x, R.y);
 
 	printf("random polygon:");
-	for(int i = 0; i < 200; i++){
-		for(int j = 0; j < 29; j++){
-			p[i][j].x = (rand()%(200 * (i+1))) + (200*i); // n%0 is undefined (floating point exeption)
-			p[i][j].y = (rand()%(200 * (i+1))) + (200*i);
+	for(int i = 0; i < polygons; i++){
+		for(int j = 0; j < verts_per_poly; j++){
+			p[i][j].x = (rand()%(polygons * (i+1))) + (polygons*i); // n%0 is undefined (floating point exeption)
+			p[i][j].y = (rand()%(polygons * (i+1))) + (polygons*i);
 			//printf("P[%d,%d] = (%d,%d)\n", i, j, p[i][j].x, p[i][j].y);
 		}
-		p[i][29] = p[i][0];
+		p[i][verts_per_poly-1] = p[i][0];
 	}
 
 	printf("done\n");
@@ -55,8 +63,8 @@ int main(int argc, char** argv){
 	start = clock();
 
 	int count = 0;
-	for(int i = 0; i < 200; i++){
-		if(wn_PnPoly(R, p[i], 30) != 0)
+	for(int i = 0; i < polygons; i++){
+		if(wn_PnPoly(R, p[i], verts_per_poly) != 0)
 			count++;
 	}
 
