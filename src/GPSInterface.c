@@ -22,16 +22,11 @@ int GPS_init(GPS_Actions* gpsHandler){
 	return 0;
 }
 
-/*  FIXME: should work for every value (inc. < 1 etc). */
 double to_deg(double x){
-    double deg = 0.0f;
-    double l = 0.0f;
-    l = (int)x/100; // the whole part, floored 
-    double rem = x/100 - l; // what's to the right of the dot after flooring
-    double rem_deg = rem*100/60; // convert that to degrees.
-    deg = l + rem_deg;
-    printf("orig: %lf; floored: %lf; rem: %lf; rem_deg: %lf; res: %lf\n", x, l, rem, rem_deg, deg);
-    return deg;
+	int rounded_x = x/100; // get the 2 most significant numbers of the value
+	double right_of_point = x/100 - rounded_deg_x; //get the value to the right of the decimal point.
+	double deg = rounded_deg_x + (right_of_point * 100 / 60);
+	return deg;	                                              	        
 }
 
 bool geofence_breached(FullGPSData* location, Zone_general* zone, Edge* edges){
