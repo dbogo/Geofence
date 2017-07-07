@@ -1,10 +1,10 @@
-#Geofence
-===============
+# Geofence
+
 Geofence is a software that provides drones with Geo-fencing capabilities, (in addition to other things in the future).
 It's initially designed and aimed for the Raspberry-Pi series of SBC's
 (development for other boards/flight-controllers is possible in the future).
 ______________________________________
-####The software is not ready for use on real equipment yet!
+### The software is not ready for use on real hardware yet!
 ______________________________________
 
 This project is developed on an Ubuntu 64-bit machine, and then ported and tested on the Raspberry-Pi 2.
