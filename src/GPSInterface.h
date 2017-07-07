@@ -52,7 +52,7 @@ typedef struct GPS_Actions GPS_Actions;
 
 /**
  * TODO: inline ?
- * @brief      the signed area of the triangle loc,P1,P2
+ * @brief the signed area of the triangle loc,P1,P2
  *
  * @param[in]  p1        Polygon's first point
  * @param[in]  p2        Polygon's second point
@@ -102,12 +102,11 @@ bool downwards_cross(Edge e, GEO_Point p);
  *             see http://geomalgorithms.com/a03-_inclusion.html
  * @param      location  the location of the test points (coordinates)
  * @param      zone      the Polygon - represented by its vertices
- * @param      edges     the Edges of the polygon
  * @return     returns true if the point is inside the polygon.
  *             if the point is inside the polygon, the winding number is non-zero.
  *             a detailed description of the algorithm is in the link.
  */
-bool geofence_breached(FullGPSData* location, Zone_general* zone, Edge* edges);
+bool geofence_breached(FullGPSData* location, Zone_general* zone);
 
 /**
  * TODO: min and max alt.

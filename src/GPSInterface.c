@@ -6,33 +6,37 @@
 #include "GPSInterface.h"
 #include "logInterface.h"
 #include "serial/serialInterface.h"
-#include "libs/RPiGPSDemo/src/rpi_gps_demo.h"
-#include "libs/GPSDemo/src/gps_demo.h"
+#include <libs/RPiGPSDemo/src/rpi_gps_demo.h>
+#include <libs/GPSDemo/src/gps_demo.h>
+
 
 int GPS_init(GPS_Actions* gpsHandler){
 	#ifdef GPS_RPI
 		gpsHandler->getGPS = getGPSSample_RPI;
+		logEvent("Running code for the RPi implementation.", LOG4C_PRIORITY_INFO, INFO, &logMaster);
 		open_port(); // inits the file descriptor for gps serial communication
-		printf("uses RPi implementation.\n");
 	#else
-		gpsHandler->getGPS = getGPSSample_DEMO;
-		printf("uses DEMO implementation\n");
+		// gpsHandler->getGPS = getGPSSample_DEMO;
+		logEvent("Running code for the Demo implementation.", LOG4C_PRIORITY_INFO, INFO, &logMaster);
 	#endif
 
 	return 0;
 }
 
 double to_deg(double x){
-	int rounded_x = x/100; // get the 2 most significant numbers of the value
+	int rounded_deg_x = x/100; // get the 2 most significant numbers of the value
 	double right_of_point = x/100 - rounded_deg_x; //get the value to the right of the decimal point.
 	double deg = rounded_deg_x + (right_of_point * 100 / 60);
+	printf("deg: %f ", deg);
 	return deg;	                                              	        
 }
 
-bool geofence_breached(FullGPSData* location, Zone_general* zone, Edge* edges){
+bool geofence_breached(FullGPSData* location, Zone_general* zone){
 	GEO_Point p = { .longitude = location->longitude, .latitude = location->latitude };
 
-	#ifdef HARDWARE_RPI // convert for use with real world coordinates. (deg)
+
+	#ifdef GPS_RPI // convert for use with real world coordinates. (deg)
+		printf("HARDWARE - RPi.\n");
 		p.longitude = to_deg(location->longitude); 
 		p.latitude = to_deg(location->latitude);
 	#endif
@@ -105,11 +109,11 @@ int create_edges(Zone_general* zone, Edge** edges){
 	const unsigned char ZONE_STR_LINE_LENGTH = 40;
 
 	char zone_str[ZONE_STR_LINE_LENGTH];
-	logEvent("Initialized the following zone vertices: ", LOG4C_PRIORITY_INFO, INFO, &logMaster);
+	// logEvent("Initialized the following zone vertices: ", LOG4C_PRIORITY_INFO, INFO, &logMaster);
 	for(size_t i = 0; i < zone->numVertices; i++){
 		sprintf(zone_str, "V%d: (%lf, %f)", (int)(i%zone->numVertices), 
 					zone->vertices[i].longitude, zone->vertices[i].latitude);
-		logEvent(zone_str, LOG4C_PRIORITY_INFO, INFO, &logMaster);
+		// logEvent(zone_str, LOG4C_PRIORITY_INFO, INFO, &logMaster);
 		//memset(zone_str, '\0', ZONE_STR_LINE_LENGTH); NOTE: should memset ???
 	}	
 

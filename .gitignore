@@ -1,13 +1,11 @@
 libs/RPiGPSDemo/build/
 libs/RPiGPSDemo/dist/
 libs/RPiGPSDemo/nbproject/
-libs/RPiGPSDemo/Makefile
 libs/RPiGPSDemo/.dep.inc
 
 libs/GPSDemo/build/
 libs/GPSDemo/dist/
 libs/GPSDemo/nbproject/
-libs/GPSDemo/Makefile
 libs/GPSDemo/.dep.inc
 
 data/
@@ -22,13 +20,18 @@ libs/libpifacecad/src/*.o
 libs/libmcp23s17/*.a
 libs/libmcp23s17/src/*.o
 
+
+
 *.o
 *.a
+*.d
+*.so
 
 geofence.sublime-project
 geofence.sublime-workspace
 
 build1.sh
+build2.sh
 
 misc/GLOBAL_TODO.txt
 
@@ -36,8 +39,8 @@ build/
 dist/
 nbproject/
 logs/
+dump/
 
 log.txt
 operation.log
-Makefile
 .dep.inc

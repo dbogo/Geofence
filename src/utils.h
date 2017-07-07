@@ -4,9 +4,11 @@
 #include <sys/utsname.h>
 #include <time.h>
 #include <stdio.h>
+#include <ctype.h>
 
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 #define min(a, b) (((a) < (b)) ? (a) : (b))
+#define range_valid(x, lo, hi) ( ((x >= lo) && (x <= hi)) ) ? 1 : 0
 
 /* TODO: increase precision? */
 #define PI 3.14159265
@@ -28,6 +30,24 @@ typedef enum {
 	ARM 
 } platform_id; 
 
+/*
+int has_letters_or_symb(const char* str){
+	char* s = str;
+	while(*s){
+		if(!isdigit(*s++)) return 1;
+	}
+	return 0;
+}
+
+int is_string_clear(const char* str){
+	char* s = str;
+	int dotCount = 0;
+	while(*s){
+		if((*s != '.') && !isdigit(*s++)) return 0;
+	}
+	return 1; // true - the string has only numbers and dots.
+}
+*/
 
 /**
  * @brief      checks what platform we are on.

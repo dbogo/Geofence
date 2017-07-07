@@ -5,7 +5,7 @@
 #include "init.h"
 #include "utils.h"
 #ifdef WIRINGPI
-	#include "led.h" //NOTE: include this only if on RPi.
+	// #include "led.h" //NOTE: include this only if on RPi.
 #endif
 
 void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge** edges){
@@ -16,7 +16,7 @@ void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log
 		after the sentence. same effect for NMEA log files. */
 	system("./misc/serial_config.sh && cd ..");
 
-	initLogSystem(logMaster);
+	// initLogSystem(logMaster);
 	GPS_init(GPSHandler);
 	init_gps_data(&gpsData);
 	find_mbr(zone);
@@ -31,19 +31,46 @@ int parse_input_args(Zone_general* zone, int argc, char** args){
 	/**
 	 * TODO: error cheking
 	 */
-	if(argc == 1){
-		char errStr[60];
-		strcpy(errStr,"Error: No files were specified on input.");
-		printf("%s\n", errStr);
-		logEvent(errStr, LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
-		return NO_ARGS;
-	}else if(argc == 2)
-		return init_geofence_from_file(zone, args);
-	else // > 2
-		return init_geofence_from_argv(zone, argc, args);
-	
+	if(argc < 2 || strstr(args [1], "-h") != NULL){
+		display_help_message();
+		return ARGV_ERROR;
+	} else if (argc == 2){
+		printf("Not enough arguments were given. %s\n", COMMON_ERR_STR);
+		return ARGV_ERROR; // not enough args
+	} else {
+		if (strstr(args[1], "-i") != NULL){
+			return init_geofence_from_argv(zone, argc, args);
+		} else if (strstr(args[1], "-f") != NULL){
+			return init_geofence_from_file(zone, args);
+		} else {
+			printf("Unknown argument \"%s\". %s\n", args[1], COMMON_ERR_STR);
+			return ARGV_ERROR; // any other option is invalid.
+		}
+	}
 
-	return ALL_ARGV_INIT_OK;
+	return ARGV_OK;
+}
+
+void display_help_message(void){
+	printf("\n");
+	printf("Usage: geofence [options] -i | -f [arguments] | [filename]\n\n");
+	printf(" Note that the arguments should follow the specified order.\n\n");
+	printf(" options:\n");
+	printf("\t-h              Display this help message. This flag can't be used with other options\n\n");
+	printf(" Valid Arguments:\n");
+	printf("\t-i              Input of geofence coordinates will be inline,\n");
+	printf("\t                i.e the coordinates will be in the [arguments] list,\n");
+	printf("\t                and must follow the following format: \n");
+	printf("\t                \t1st value - a floating point value for the height\n");
+	printf("\t                \tof the geofence.\n");
+	printf("\t                \tFollowing values - space separated lat,lon paires,\n");
+	printf("\t                \t(with a ',' between the values). Up to a precision of 6 digits.\n");
+
+	printf("\t-f              Input of geofence coordinates will be from a user-made file,\n");
+	printf("\t                the file path (with name) should be passed in [filename].\n");
+	printf("\t                See the geofence_input_instructions file instructions on\n");
+	printf("\t                writing the file.\n");
+	printf("\n");
 }
 
 #ifdef WIRINGPI
@@ -75,26 +102,35 @@ void init_gps_data(FullGPSData** gpsData){
 }
 
 int init_geofence_from_argv(Zone_general* zone, int argc, char** args){ 	
-	/**
-	 * TODO: error checking
-	 * altitude is entered first. then the points.
-	 */
-	
 
-	//FILE* argvStorageFile = fopen("data/geofence-argv.txt", 'w'); // file stores the parameters entered by the user.
+	if(!range_valid(atof(args[2]), MIN_ALT, MAX_ALT)){
+		printf("Illegal geofence altitude value. %s\n", COMMON_ERR_STR);
+		return ARGV_ERROR;
+	} else if( argc <= 5){
+		printf("Not enough data for geofence initialisation. %s\n", COMMON_ERR_STR);
+		return ARGV_ERROR;
+	} else {
+		for(int i = 3; i < argc; i++){
+			if(strchr(args[i], ',') == NULL){
+				printf("Unexpected argument \"%s\". %s\n", args[i], COMMON_ERR_STR);
+				return ARGV_ERROR;
+			}
+		}
+	}
 
-	zone->altitude = atof(args[1]);
-	zone->numVertices = argc - 2;
+	zone->altitude = atof(args[2]);
+	zone->numVertices = argc - 3;
 	zone->vertices = malloc((zone->numVertices + 1) * sizeof(GEO_Point));
-	for(int i = 2; i < argc; ++i){
+	for(int i = 3; i < argc; ++i){
 		char* pa = strchr(args[i], ',') + 1; // go to second number of the pair (lat,lon)
-		zone->vertices[i-2].longitude = atof(args[i]);
-		zone->vertices[i-2].latitude = atof(pa);
+		zone->vertices[i-3].longitude = atof(args[i]);
+		zone->vertices[i-3].latitude = atof(pa);
 	}
 	zone->vertices[zone->numVertices] = zone->vertices[0];
 
-	return ALL_ARGV_INIT_OK;
+	return ARGV_OK;
 }
+
 
 int init_geofence_from_file(Zone_general* zone, char** args){
 
@@ -104,14 +140,14 @@ int init_geofence_from_file(Zone_general* zone, char** args){
 	 * 		Add support for a circle geofence (essentialy a cylinder cuz height).
 	 */
 
-	FILE* argvInputFile = fopen(args[1], "r"); // declared extern in init.h
+	FILE* argvInputFile = fopen(args[2], "r"); // declared extern in init.h
 	
 	if(argvInputFile == NULL){
-			char errStr[60];
-			perror("fopen() has failed");
-			sprintf(errStr, "Error: fopen() has failed. Couldn't find '%s'.", args[1]);
-			logEvent(errStr, LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
-			return FOPEN_FAIL;
+		char errStr[60];
+		perror("fopen() has failed");
+		sprintf(errStr, "Error: fopen() has failed. Couldn't find '%s'.", args[2]);
+		logEvent(errStr, LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
+		return FOPEN_FAIL;
 	}
 
 	const int MAX_LINE_LEN = 25;
@@ -147,7 +183,7 @@ int init_geofence_from_file(Zone_general* zone, char** args){
 
 	memcpy(zone->vertices, tmp, sizeof tmp);
 	fclose(argvInputFile);
-	return ALL_ARGV_INIT_OK;
+	return ARGV_OK;
 }
 
 GEO_Point parse_line(char* str){

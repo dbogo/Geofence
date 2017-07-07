@@ -10,7 +10,7 @@
 	
 	//TODO: maybe instead of nanosleep implement a way using signals..
 	// see: http://stackoverflow.com/questions/36953010/using-signals-in-c-how-to-stop-and-continue-a-program-when-timer-ends?
-	*/
+*/
 int suspend_loop(time_t tv_sec, long nsec){
 	/* TODO: consider the use of clock_nanosleep() */
 	/* FIXME: maybe this function should call itself recursively

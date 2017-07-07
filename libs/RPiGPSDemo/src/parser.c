@@ -22,7 +22,6 @@ int parse_nmea(char* sentence, FullGPSData* samp){
         samp->latitude = rmcSamp.latitude;
         samp->course = rmcSamp.course;
         samp->spdKnots = rmcSamp.speed; //rmc gives Knots
-        samp->altitude = 0.0f; // temporary solution
         return REGISTERED_RMC;
     } else if((strstr(sentence, "$GPGSA") != NULL)){
     	gsa gsaSamp;

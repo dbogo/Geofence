@@ -5,14 +5,16 @@
 #include "logInterface.h"
 #include "GPSInterface.h"
 
-#define NO_ARGS 1
+
+#define COMMON_ERR_STR "Try geofence -h for help.\n"
+
+#define ARGV_ERROR 1
 #define FOPEN_FAIL 2
-#define AMBIGUOUS_ARGV 3
-#define ALL_ARGV_INIT_OK 0
+#define ARGV_OK 0
 
 extern FILE* argvInputFile;
 
-/**
+/*!
  * @brief      Initialize some important stuff
  * @param 	   GPSHandler a pointer to a struct with function pointers to gps related functions.
  * @param      zone       pointer to Zone_general strcut
@@ -65,6 +67,11 @@ int init_geofence_from_argv(Zone_general* zone, int argc, char** args);
  * @return     one of the error/success codes defined in init.h
  */
 int init_geofence_from_file(Zone_general* zone, char** args);
+
+/**
+ * @brief      Display the command-line usage statement
+ */
+void display_help_message(void);
 
 
 /**

@@ -15,7 +15,16 @@ typedef unsigned char uint8_t;
 #define OUTSIDE 0
 #define INSIDE 1
 
+/* min & max values (meters), that are valid for geofence altitude boundaries */
+#define MIN_ALT -500
+#define MAX_ALT  10000
+
 /* NOTE: Pay attention to to calculations where course is in radians or in degrees ! */
+/**
+ * \brief Represents a smaller, truncated verion of the data gathered from GPS.
+ * 
+ * This struct contains only the most frequently used parameters.
+ */
 typedef struct {
 	double latitude; // value from 0.0 to 90.0
 	double longitude; // value from 0.0 to 180.0 NOTE:east/west !
@@ -24,13 +33,18 @@ typedef struct {
 	double course;
 } GPSSamp;
 
-/* A representation of a single 2D point on the surface. */
+
+/**
+ * \brief Represents a single 2D point
+ */
 typedef struct {
 	double longitude;
 	double latitude;
 } GEO_Point;
 
-/* minimum bounding rectangle of a certain polygon (Zone) */
+/**
+ * \brief Minimum bounding rectangle of a certain polygon
+ */
 typedef struct {
 	GEO_Point p1;
 	GEO_Point p2;
@@ -47,7 +61,10 @@ typedef struct {
 } Zone;
 #endif
 
-/* A straight line connectring two points in 2D */
+
+/**
+ * \brief A straight line between two points
+ */
 typedef struct {
 	GEO_Point p1;
 	GEO_Point p2;
@@ -55,6 +72,10 @@ typedef struct {
 
 /* An arbitrary Geo-zone that is a simple polygon.
 	may consist of more than 2 vertices. */
+
+/**
+ * \brief Represents a single polygon
+ */
 typedef struct {
 	size_t numVertices;
 	double altitude;
@@ -62,6 +83,15 @@ typedef struct {
 	GEO_Point* vertices;
 } Zone_general;
 
+
+/**
+ * \brief The entire collection of relevant data, gathered from GPS
+ * 
+ * lat_deg and lon_deg are the values of a point on the map whre google map
+ * would show a point.
+ * lat/lon data that's recieved from NMEA sentences is in deciamal, and not
+ * in degrees, hence the need for a defferenciation.
+ */
 typedef struct {
 	double latitude;
 	double longitude;
@@ -78,7 +108,7 @@ typedef struct {
 	double spdKph;
 
 	uint8_t quality;
-	uint8_t satellites;
+	uint8_t satellites; /*!< number of satellites being tracked currently */
 	unsigned char fixType;
 	long fixTime;
 
@@ -89,6 +119,10 @@ typedef struct {
 	bool status; 
 } FullGPSData;
 
+
+/**
+ * \brief Used to hold relevant data from $GPGGA NMEA sentences from GPS
+ */
 typedef struct {
 	double latitude; // Latitude e.g: 4124.8963 (XXYY.ZZKK.. DEG, MIN, SEC.SS)
 	unsigned char lat; // Latitude e.g: N
@@ -99,6 +133,10 @@ typedef struct {
 	double altitude; // Altitude e.g: 280.2 (Meters above mean sea level)
 } gga;
 
+
+/**
+ * \brief Used to hold relevant data from $GPGSA NMEA sentences from GPS
+ */
 typedef struct {
 	unsigned char fixType; // 1 = no fix; 2 = 2D fix; 3 = 3D fix
 	double pdop;
@@ -106,11 +144,19 @@ typedef struct {
 	double vdop;
 } gsa;
 
+
+/**
+ * \brief Used to hold relevant data from $GPVTG NMEA sentences from GPS
+ */
 typedef struct {
 	double spdKnots;
 	double spdKph;
 } vtg;
 
+
+/**
+ * \brief Used to hold relevant data from $GPGLL NMEA sentences from GPS
+ */
 typedef struct {
 	double latitude;
 	unsigned char lat;
@@ -120,6 +166,10 @@ typedef struct {
 	bool status; // A (activce) or V (void)  as true/false
 } gll;
 
+
+/**
+ * \brief Used to hold relevant data from $GPRMC NMEA sentences from GPS
+ */
 typedef struct {
 	double latitude;
 	unsigned char lat;

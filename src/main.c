@@ -10,16 +10,17 @@
 #include "init.h"
 #include "types.h"
 #include "utils.h"
-#include "logInterface.h"
+#include "autopilot_controller.h"
+// #include "logInterface.h"
 #include "GPSInterface.h" // TODO: reconsider this hierarchy !!
 #include "serial/serialInterface.h"
 
-#include "libs/GPSDemo/src/gps_demo.h"
-#include "libs/RPiGPSDemo/src/rpi_gps_demo.h"
+#include <libs/GPSDemo/src/gps_demo.h>
+#include <libs/RPiGPSDemo/src/rpi_gps_demo.h>
 
-#ifdef HARDWARE_RPI
-	#include "pifaceCAD/cad_utils.h"
-	#include "led.h"
+#ifdef RPI_ADDONS
+	// #include "pifaceCAD/cad_utils.h"
+	// #include "led.h"
 #endif
 
 
@@ -30,11 +31,11 @@ int main(int argc, char** argv) {
 	GPS_Actions GPSHandler;
 
 	// deal with argv
-	if(parse_input_args(&zone, argc, argv) != ALL_ARGV_INIT_OK){
-		return -1;
+	if(parse_input_args(&zone, argc, argv) != ARGV_OK){
+		return -1; 
 	}
 	
-	init(&GPSHandler, &gpsData, &zone, &logMaster, &edges);
+	init(&GPSHandler, &gpsData, &zone, NULL, &edges);
 	
 	//gpsData.latitude = 13.0f;
 
@@ -49,7 +50,7 @@ int main(int argc, char** argv) {
 		printf("lon: %f, lat %f\n", gpsData.longitude, gpsData.latitude);
 		
 		// whether currently in border
-		if(!geofence_breached(&gpsData, &zone, edges)){
+		if(!geofence_breached(&gpsData, &zone)){
 			printf("Current pos - within border\n");
 			#ifdef WIRINGPI
 				led(GEOFENCE_OK_LED, HIGH);

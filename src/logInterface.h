@@ -16,7 +16,7 @@ LOG4C_PRIORITY_UNKNOWN 	unknown
 #ifndef LOGINTERFACE_H
 #define LOGINTERFACE_H
 
-#include "libs/log4c/include/log4c.h"
+#include <log4c.h>
 
 /* All the different log files are placed in a special 'logs' folder that is
 	at the top of the project directory (same level as src/) */
@@ -29,12 +29,19 @@ LOG4C_PRIORITY_UNKNOWN 	unknown
 #define ERROR 1
 #define NMEA 2
 
+/**
+ * \brief Represents a single type of logger (e.g. one for error, one for info, etc.)
+ */
 typedef struct Logger{
 	FILE* logFile;
 	log4c_category_t* logObj;
 	char* logInstanceName;
 } Logger;
 
+
+/**
+ * \brief Holds all the loggers that are used to record different types of logs.
+ */
 typedef struct Log_Master{
 	Logger operationLogger;
 	Logger errorLogger;
