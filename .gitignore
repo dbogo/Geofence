@@ -20,8 +20,6 @@ libs/libpifacecad/src/*.o
 libs/libmcp23s17/*.a
 libs/libmcp23s17/src/*.o
 
-
-
 *.o
 *.a
 *.d

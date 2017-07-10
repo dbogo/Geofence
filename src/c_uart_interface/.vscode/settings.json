@@ -1,0 +1,22 @@
+{
+	"files.associations": {
+		"serial_port_pc.c": "cpp",
+		"serial_port_stm32.c": "cpp",
+		"interface.c": "cpp",
+		"mavlink_msg_set_position_target_local_ned.h": "c",
+		"basic_string.h": "c",
+		"range_access.h": "c",
+		"initializer_list": "c",
+		"base.h": "c",
+		"mavlink_msg_test_types.h": "c",
+		"time.h": "c",
+		"fcntl.h": "c",
+		"sched.h": "c",
+		"termios.h": "c",
+		"unistd.h": "c",
+		"commands.h": "c",
+		"interface.h": "c",
+		"serial_port.h": "c",
+		"mavlink_control.h": "c"
+	}
+}
