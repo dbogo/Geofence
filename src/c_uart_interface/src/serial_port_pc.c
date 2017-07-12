@@ -1,4 +1,4 @@
-#include "serial_port.h"
+#include <inc/serial_port.h>
 
 mavlink_status_t status;
 uint8_t msgReceived = false;
@@ -58,7 +58,7 @@ int serial_write_message(const mavlink_message_t* message)
 	int bytesWritten;
 	unsigned len = mavlink_msg_to_send_buffer((uint8_t *)buff, message);
 
-	for (int i = 0; i < sizeof(buff); i++)	{
+	for (unsigned short i = 0; i < sizeof(buff); i++)	{
 		write(fd, &buff[i], 1);
 	}
 
@@ -71,5 +71,5 @@ int serial_write_message(const mavlink_message_t* message)
 
 int get_time_sec(struct timeval *tv, struct timezone *tz)
 {
-	gettimeofday(tv, tz);
+	return gettimeofday(tv, tz);
 }

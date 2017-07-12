@@ -7,8 +7,8 @@
 #include <unistd.h>
 #include <string.h>
 
-#include <interface.h>
-#include <commands.h>
+#include "interface.h"
+#include "commands.h"
 
 int main(int argc, char** argv);
 

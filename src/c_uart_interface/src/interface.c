@@ -48,7 +48,7 @@
  *
  */
 
-#include "interface.h"
+#include "../inc/interface.h"
 
 char control_status;
 char arm_status;
@@ -478,8 +478,8 @@ int check_arm_disarm(void){
 
 
 int check_message(uint16_t COMMAND_ID){
-	if(current_messages.command_ack.command = COMMAND_ID &&
-	   current_messages.command_ack.result == MAV_RESULT_ACCEPTED){
+	if((current_messages.command_ack.command = COMMAND_ID) &&
+	   (current_messages.command_ack.result == MAV_RESULT_ACCEPTED)){
 		return 1;
 	}
 	else {

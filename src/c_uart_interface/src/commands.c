@@ -564,6 +564,6 @@ void program_counter_sequence(float timer, time_t* begin){
 
 void autopilot_write_helper(void){
 	if (!lock_)
-			autopilot_write();		
+		autopilot_write();		
 	lock_ = true;
 }
