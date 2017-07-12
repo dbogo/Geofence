@@ -1,63 +1,40 @@
-NAME=mavlink_control
+NAME = mavlink_control
+CC = gcc
 
-# Toolchain 
-TC = arm-none-eabi-
-CC = $(TC)gcc
-CXX = $(TC)g++
-OC = $(TC)objcopy
+CFLAGS = -std=gnu11 -g -Wall -Wextra
+DEPS_OPTS = -MM
 
-# Includes
-MAVLIB=mavlink/include/mavlink/v1.0
-INCLUDE = inc/ 
-LIBS = -lopencm3_stm32f4 -lc -lgcc -lnosys
+INCLUDE = -Iinc/ -Imavlink/include/mavlink/v1.0/ -I.
+# MAVLIB = mavlink/include/mavlink/v1.0/
 
-# Sources 
-SRC = src/
+SRC 	= $(foreach d, src/, $(wildcard $(d)*.c))
+OBJS 	= $(patsubst %.c, %.o, $(SRC))
+DEPS	= $(patsubst %.c, %.d, $(SRC))
 
-# Compiler flags
-CFLAGS = -Wno-write-strings -fno-common
-CFLAGS += -fdump-rtl-expand
 
-# Architecture specific flags
-ARCH_FLAGS = -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
-SPECIFIC_FLAGS = -MD -DSTM32F4
+%.d: %.c
+	$(CC) $(DEPS_OPTS) $< -MT "$*.o $*.d" -MF $*.d
 
-LDSTM32F4 = linker/stm32f4-discovery.ld 
+all: $(DEPS) $(NAME)
 
-# Linker object
-OBJS = $(NAME).o serial_port_stm32.o syscalls.o interface.o lis3dsh.o mfunctions.o commands.o
+$(NAME): $(OBJS)
+	$(CC) -o $@ $^ $(CFLAGS) 
 
-# Linker flags 
-LD_FLAGS= -Wl,--start-group $(CFLAGS) $(ARCH_FLAGS) $(SPECIFIC_FLAGS) -I$(MAVLIB) $(OBJS) \
--Wl,--end-group -Wl,--print-gc-sections -T$(LDSTM32F4) -nostartfiles 
+# Include dependencies (if there are any)
+ifneq "$(strip $(DEPS))" ""
+  include $(DEPS)
+endif
 
-all: $(NAME).bin
+%.o: %.c
+	$(CC) -c $(CFLAGS) -o $@ $< $(INCLUDE)
 
-$(NAME).bin: $(NAME).elf
-	$(OC) -Obinary $(NAME).elf $(NAME).bin
-
-$(NAME).elf: $(SRC)/$(NAME).cpp
-	$(CC) $(CFLAGS) $(ARCH_FLAGS) $(SPECIFIC_FLAGS) -c $(SRC)/syscalls.c 
-	$(CC) -I$(INCLUDE) $(CFLAGS) $(ARCH_FLAGS) $(SPECIFIC_FLAGS) -c $(SRC)/lis3dsh.c 
-
-	$(CXX) -I$(MAVLIB) -I$(INCLUDE) $(CFLAGS) $(ARCH_FLAGS) $(SPECIFIC_FLAGS) -c $(SRC)/$(NAME).cpp
-	$(CXX) -I$(MAVLIB) -I$(INCLUDE) $(CFLAGS) $(ARCH_FLAGS) $(SPECIFIC_FLAGS) -c $(SRC)/interface.cpp
-	$(CXX) -I$(MAVLIB) -I$(INCLUDE) $(CFLAGS) $(ARCH_FLAGS) $(SPECIFIC_FLAGS) -c $(SRC)/serial_port_stm32.cpp
-	$(CXX) -I$(MAVLIB) -I$(INCLUDE) $(CFLAGS) $(ARCH_FLAGS) $(SPECIFIC_FLAGS) -c $(SRC)/commands.cpp
-	$(CXX) -I$(MAVLIB) -I$(INCLUDE) $(CFLAGS) $(ARCH_FLAGS) $(SPECIFIC_FLAGS) -c $(SRC)/mfunctions.cpp
-	$(CXX) $(LD_FLAGS) $(LIBS) -o $(NAME).elf
-
-#	$(CXX) -I$(MAVLIB) $(NAME).cpp serial_port.cpp autopilot_interface.cpp -o $(NAME) -lpthread
-
-flash: $(NAME).bin
-	#st-flash erase v2 0x8000000
-	st-flash write $(NAME).bin 0x8000000
-
-graph: $(NAME).bin
+.PHONY: graph
+graph: $(NAME)
 	mkdir Graphs
 	mv *.expand Graphs/
 	egypt Graphs/*.expand | dot -Tsvg -Grankdir=LR -o Graphs/$(NAME).svg
 	eog Graphs/$(NAME).svg
 
+.PHONY: clean
 clean:
-	 rm -rf *.o $(NAME).elf *.d Graphs/ *.expand *.bin
+	rm -rf src/*.o src/*d $(NAME) Graphs/ *.expand
