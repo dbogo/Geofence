@@ -27,11 +27,11 @@ LIBS 	= -Llibs/RPiGPSDemo \
 DEPENDENCY_OPTIONS = -MM
 
 # Subdirs to search for additional source files
-SUBDIRS = src/ src/pifaceCAD/ src/serial/ #$(shell ls -F src/ | grep "\/" )
-DIRS 	= $(SUBDIRS)
-SOURCE_FILES = $(foreach d, $(DIRS), $(wildcard $(d)*.c) )
-OBJECTS	= $(patsubst %.c, %.o, $(SOURCE_FILES))
-DEPENDENCIES = $(patsubst %.c, %.d, $(SOURCE_FILES))
+SUBDIRS 		= src/ src/pifaceCAD/ src/serial/ #$(shell ls -F src/ | grep "\/" )
+DIRS 			= $(SUBDIRS)
+SOURCE_FILES 	= $(foreach d, $(DIRS), $(wildcard $(d)*.c) )
+OBJECTS			= $(patsubst %.c, %.o, $(SOURCE_FILES))
+DEPENDENCIES 	= $(patsubst %.c, %.d, $(SOURCE_FILES))
 
 
 %.d: %.c
