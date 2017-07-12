@@ -153,10 +153,7 @@ void read_messages(void){
 
 				case MAVLINK_MSG_ID_COMMAND_ACK:{
 					// Acknowledgement check for pc version
-					#ifndef STM32F4
-						printf("Command acknowledgement recieved\n");
-					#endif 
-
+					printf("Command acknowledgement recieved\n");
 					mavlink_msg_command_ack_decode(&message, &(current_messages.command_ack));
 					current_messages.time_stamps.command_ack = get_time_usec();
 					this_timestamps.command_ack = current_messages.time_stamps.command_ack;
@@ -164,17 +161,9 @@ void read_messages(void){
 					}
 
 				case MAVLINK_MSG_ID_HEARTBEAT:{
-
-					#ifdef STM32F4
-						gpio_toggle(GPIOD, GPIO12);
-					#endif
-
 					mavlink_msg_heartbeat_decode(&message, &(current_messages.heartbeat));
 					// Verification of current autopilot state from heartbeat base_mode on PC version
-					#ifndef STM32F4
-						printf("\n MAV mode = %u \n", current_messages.heartbeat.base_mode);
-					#endif 
-
+					printf("\n MAV mode = %u \n", current_messages.heartbeat.base_mode);
 					current_messages.time_stamps.heartbeat = get_time_usec();
 					this_timestamps.heartbeat = current_messages.time_stamps.heartbeat;	
 					break;
@@ -202,11 +191,6 @@ void read_messages(void){
 					}
 
 				case MAVLINK_MSG_ID_LOCAL_POSITION_NED:{
-
-					#ifdef STM32F4
-					   gpio_toggle(GPIOD, GPIO14);
-					#endif
-					
 					mavlink_msg_local_position_ned_decode(&message, &(current_messages.local_position_ned));
 					current_messages.time_stamps.local_position_ned = get_time_usec();
 					this_timestamps.local_position_ned = current_messages.time_stamps.local_position_ned;
@@ -357,9 +341,7 @@ void disable_offboard_control(void){
 	// Should only send this command once
 	if ( control_status == true ){
 		
-		// ----------------------------------------------------------------------
 		//   TOGGLE OFF-BOARD MODE
-		// ----------------------------------------------------------------------
 
 		// Sends the command to stop off-board
 		int success = toggle_offboard_control( false );
@@ -440,21 +422,16 @@ int toggle_arm_disarm( bool flag ){
 // MAVLink messages acknowledgement
 
 // NEEDS PX4 Master version or stable v1.4 
-// Not yet implemented
 int check_offboard_control(void){
 	// check offboard control message reception
 	int success = check_message(MAV_CMD_NAV_GUIDED_ENABLE);
 
 	if (success){
-		#ifndef STM32F4
-			printf("Offboard control checked\n");
-		#endif
-			return 1;
+		printf("Offboard control checked\n");
+		return 1;
 	} else {
-		#ifndef STM32F4
-			printf("Offboard control check failed\n");
-		#endif
-			return 0;
+		printf("Offboard control check failed\n");
+		return 0;
 	}
 }
 
@@ -464,25 +441,20 @@ int check_arm_disarm(void){
 	int success = check_message(MAV_CMD_COMPONENT_ARM_DISARM);
 
 	if (success){
-		#ifndef STM32F4
 		printf("Arm/disarm checked\n");
-		#endif
 		return 1;
 	} else {
-		#ifndef STM32F4
 		printf("Arm/disarm check failed\n");
-		#endif
 		return 0;
 	}
 }
 
 
 int check_message(uint16_t COMMAND_ID){
-	if((current_messages.command_ack.command = COMMAND_ID) &&
+	if((current_messages.command_ack.command == COMMAND_ID) &&
 	   (current_messages.command_ack.result == MAV_RESULT_ACCEPTED)){
 		return 1;
-	}
-	else {
+	} else {
 		return 0;
 	}
 }
@@ -522,10 +494,6 @@ void set__(float x, float y, float z, mavlink_set_position_target_local_ned_t* f
 	set_position(x, y, z, final_set_point);
 	autopilot_update_setpoint(*final_set_point);
 	autopilot_write_setpoint();
-
-	#ifdef STM32F4
-		gpio_toggle(GPIOD, GPIO13);
-	#endif
 }
 
 
@@ -535,10 +503,6 @@ void position_and_speed_set(float x, float y, float z ,float vx, float vy, float
 	set_velocity(vx, vy, vz, final_set_point);
 	autopilot_update_setpoint(*final_set_point);
 	autopilot_write_setpoint();
-
-	#ifdef STM32F4
-		gpio_toggle(GPIOD, GPIO13);
-	#endif
 }
 
 
