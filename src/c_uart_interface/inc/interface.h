@@ -143,8 +143,8 @@ void autopilot_update_setpoint(mavlink_set_position_target_local_ned_t setpoint)
 
 // Offboard Control
 
-void disable_offboard_control(void);
-void enable_offboard_control(void);
+bool disable_offboard_control(void);
+bool enable_offboard_control(void);
 int toggle_offboard_control(bool flag);
 
 // Arm/Disarm Control

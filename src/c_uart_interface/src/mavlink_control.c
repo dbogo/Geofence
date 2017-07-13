@@ -4,10 +4,12 @@ int main(int argc, char** argv){
 
 	if (check_offboard_control()){
 		printf("Offboard Control Enabled\n");
+		enable_offboard_control();
 	} else {
 		printf("Offboard Cont. disabled.\n");
+		disable_offboard_control();
 	}
-	
+
 	autopilot_intialize();
 
 	serial_start(argv[1]);

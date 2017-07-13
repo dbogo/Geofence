@@ -321,7 +321,7 @@ void autopilot_update_setpoint(mavlink_set_position_target_local_ned_t setpoint)
 
 // Offboard Control
 
-void enable_offboard_control(void){
+bool enable_offboard_control(void){
 	// Should only send this command once
 	if ( control_status == false ){
 		//   TOGGLE OFF-BOARD MODE
@@ -330,14 +330,17 @@ void enable_offboard_control(void){
 		int success = toggle_offboard_control( true );
 
 		// Check the command was written
-		if ( success )
+		if ( success ){
 			control_status = true;
-	
+			printf("Offb Cont Enabled\n");
+		}
 	} // end: if not offboard_status
+	printf("offb cont already enabled");
+	return control_status;
 }
 
 
-void disable_offboard_control(void){
+bool disable_offboard_control(void){
 	// Should only send this command once
 	if ( control_status == true ){
 		
@@ -347,9 +350,13 @@ void disable_offboard_control(void){
 		int success = toggle_offboard_control( false );
 
 		// Check the command was written
-		if ( success )
+		if ( success ){
 			control_status = false;
+			printf("Offb Cont disabled\n");
+		}
 	} // end: if offboard_status
+	printf("offb cont already disabled")
+	return control_status; 
 }
 
 
