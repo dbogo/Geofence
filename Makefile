@@ -44,7 +44,7 @@ $(PROJECT): $(OBJECTS)
 
 # Include dependencies (if there are any)
 ifneq "$(strip $(DEPENDENCIES))" ""
-  include$(DEPENDENCIES)
+  include $(DEPENDENCIES)
 endif
 
 
