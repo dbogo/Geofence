@@ -42,3 +42,4 @@ dump/
 log.txt
 operation.log
 .dep.inc
+.vscode
