@@ -173,7 +173,8 @@ int init_geofence_from_file(Zone_general* zone, char** args){
 				p = strchr(p, '=')+1;
 				zone->altitude = atof(p);
 				break;
-			}default: {
+			}
+			default: {
 				tmp[lineNumber-3] = parse_line(line); // TODO: its TEMPORARY, that the points' data starts on line 3.
 				break;
 			}
