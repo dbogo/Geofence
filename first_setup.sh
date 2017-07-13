@@ -59,17 +59,3 @@ echo -e "Configuring serial port settings"
 sudo stty -F /dev/ttyAMA0 raw 9600 cs8 clocal -cstopb
 sudo stty -F /dev/ttyACM0 raw 9600 cs8 clocal -cstopb
 echo -e "Done\n"
-
-
-# cd libs/
-# sudo rm -rf libmcp23s17 libpifacecad log4c wiringPi
-# cd ..
-
-# sudo ./misc/build_log4c.sh
-# sudo ./misc/build_pifacecad.sh
-# sudo ./misc/build_wiringPi.sh
-# sudo ./misc/serial_config.sh
-# sudo ./misc/wiringPi_env_setup.sh
-
-# echo -e "\nfirst_setup.sh done. Setup scripts (see misc/ ) done.\n"
-# echo -e "now at: ${PWD}"
