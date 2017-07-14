@@ -3,8 +3,8 @@
 
 #include "rpi_gps_demo.h"
 #include "parser.h"
-#include "src/serial/serialInterface.h"
-// #include "src/logInterface.h"
+#include <src/serial/serialInterface.h>
+#include <src/logInterface.h>
 
 
 #if 0

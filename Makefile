@@ -48,18 +48,11 @@ ifneq "$(strip $(DEPENDENCIES))" ""
 endif
 
 
-
-# Compile every с file to an object
 %.o: %.c
 	$(CC) -c $(COMPILE_OPTIONS) -o $@ $< $(HEADERS)
 
-# Build & Run Project
 run: $(PROJECT)
 	./$(PROJECT) $(COMMANDLINE_OPTIONS)
-
-# Clean & Debug
-# .PHONY: makefile-debug
-# makefile-debug:
 
 .PHONY: clean
 clean:

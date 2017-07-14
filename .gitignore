@@ -1,12 +1,8 @@
 libs/RPiGPSDemo/build/
 libs/RPiGPSDemo/dist/
-libs/RPiGPSDemo/nbproject/
-libs/RPiGPSDemo/.dep.inc
 
 libs/GPSDemo/build/
 libs/GPSDemo/dist/
-libs/GPSDemo/nbproject/
-libs/GPSDemo/.dep.inc
 
 data/
 
@@ -19,6 +15,15 @@ libs/libpifacecad/*.a
 libs/libpifacecad/src/*.o
 libs/libmcp23s17/*.a
 libs/libmcp23s17/src/*.o
+
+libs/libpifacecad
+libs/libmcp23s17
+libs/log4c
+libs/wiringPi
+
+geofence
+mavlink_control
+external/log4c-1.2.4
 
 *.o
 *.a

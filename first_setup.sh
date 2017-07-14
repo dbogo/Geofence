@@ -1,16 +1,7 @@
 #!/bin/bash
 
-# this script should be executed when the Geofence project is
-# installed for the first time on any machine. It sets neccessary 
-# variables and builds the needed libraries.
-
-# TODO:
-# 1. install log4c
-# 2. install wiringPi
-# 3. install pifacecad
-# 4. set all environment variables
-# 5. place start-up scripts if on a Raspberry-Pi
-# 6. (*) build first-time and gather errors ?
+# this script should be executed when the Geofence project is installed 
+# for the first time. It builds the dependencies and sets thing up.
 
 
 echo -e "first_setup.sh: performing first time installation.\n"
@@ -31,10 +22,10 @@ cd ..
 echo -e "Installing log4c"
 cd external/
 echo -e "Unpacking"
-tar -zxvf log4c-1.2.4.tar.gz
+tar -zxvf log4c-1.2.4.tar.gz > /dev/null
 mkdir build && cd build
 echo -e "running ./configure"
-../log4c-1.2.4/configure --prefix=$PWD/../../libs/log4c/
+../log4c-1.2.4/configure --prefix=$PWD/../../libs/log4c/ > /dev/null
 echo -e "building"
 make > /dev/null
 make install > /dev/null

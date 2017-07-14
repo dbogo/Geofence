@@ -79,7 +79,7 @@ int validate_checksum(char* nmea){
 }
 
 
-static void parse_gsa(gsa* gsa, char* nmea){
+void parse_gsa(gsa* gsa, char* nmea){
 	char* p = nmea;
 	p = strchr(p, ',')+1; 
 	p = strchr(p, ',')+1;
@@ -102,7 +102,7 @@ static void parse_gsa(gsa* gsa, char* nmea){
 }
 
 
-static void parse_gll(gll* samp, char* nmea){
+void parse_gll(gll* samp, char* nmea){
 	char* p = nmea;
 	p = strchr(p, ',')+1;
 
@@ -121,7 +121,7 @@ static void parse_gll(gll* samp, char* nmea){
 	samp->fixTime = atol(p);
 }
 
-static void parse_vtg(vtg* samp, char* nmea){
+void parse_vtg(vtg* samp, char* nmea){
 	char* p = nmea;
 	p = strchr(p, ',')+1;
 	p = strchr(p, ',')+1;
@@ -138,7 +138,7 @@ static void parse_vtg(vtg* samp, char* nmea){
 }
 
 //registers lat, lon, quality, satellites, altitude
-static void parse_gga_new(gga* samp, char *nmea){
+void parse_gga_new(gga* samp, char *nmea){
     char *p = nmea;
     p = strchr(p, ',')+1; //skip time
 	
@@ -167,7 +167,7 @@ static void parse_gga_new(gga* samp, char *nmea){
 }
 
 //registers lat, lon, spd, course
-static void parse_rmc_new(rmc* samp, char *nmea){
+void parse_rmc_new(rmc* samp, char *nmea){
     char *p = nmea;
 
     p = strchr(p, ',')+1; //skip time
@@ -193,7 +193,7 @@ static void parse_rmc_new(rmc* samp, char *nmea){
 }
 
 //registers lat, lon, quality, satellites, altitude
-static void parse_gga(gga* samp, char *nmea){
+void parse_gga(gga* samp, char *nmea){
     char *p = nmea;
     p = strchr(p, ',')+1; //skip time
 	
@@ -242,7 +242,7 @@ static void parse_gga(gga* samp, char *nmea){
 }
 
 //registers lat, lon, spd, course
-static void parse_rmc(rmc* samp, char *nmea){
+void parse_rmc(rmc* samp, char *nmea){
     char *p = nmea;
 
     p = strchr(p, ',')+1; //skip time
