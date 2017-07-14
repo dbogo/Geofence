@@ -1,7 +1,7 @@
 #ifndef COMMANDS_H_
 #define COMMANDS_H_
 
-#include <interface.h>
+#include "interface.h"
 
 
 extern mavlink_set_position_target_local_ned_t initial_position;

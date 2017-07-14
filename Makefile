@@ -15,19 +15,21 @@ HEADERS = -Ilibs/log4c/include \
 			-Ilibs/wiringPi/wiringPi/ \
 			-Ilibs/RPiGPSDemo/src \
 			-Ilibs/GPSDemo/src \
+			-Ilibs/mavlink \
+			-Isrc/mavlink_interface/inc \
 			-I.
-LIBS 	= -Llibs/RPiGPSDemo \
+LIBS 	= -Llibs/GPSDemo \
 			-Llibs/libpifacecad \
 			-Llibs/libmcp23s17 \
 			-Llibs/wiringPi/wiringPi \
 			-Llibs/log4c/lib \
 			-Wl,-rpath=./libs/log4c/lib/ \
-			-llog4c -lm -lpifacecad -lmcp23s17 -lwiringPi -lRPiGPSDemo
+			-llog4c -lm -lpifacecad -lmcp23s17 -lwiringPi -lGPSDemo
 
 DEPENDENCY_OPTIONS = -MM
 
 # Subdirs to search for additional source files
-SUBDIRS 		= src/ src/pifaceCAD/ src/serial/ #$(shell ls -F src/ | grep "\/" )
+SUBDIRS 		= src/ src/pifaceCAD/ src/serial/ src/mavlink_interface/src #$(shell ls -F src/ | grep "\/" )
 DIRS 			= $(SUBDIRS)
 SOURCE_FILES 	= $(foreach d, $(DIRS), $(wildcard $(d)*.c) )
 OBJECTS			= $(patsubst %.c, %.o, $(SOURCE_FILES))
