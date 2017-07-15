@@ -29,7 +29,7 @@
  * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
  * OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
@@ -48,7 +48,7 @@
  *
  */
 
-#include "../inc/interface.h"
+#include <inc/interface.h>
 
 char control_status;
 char arm_status;
@@ -157,15 +157,19 @@ void read_messages(void){
 					mavlink_msg_command_ack_decode(&message, &(current_messages.command_ack));
 					current_messages.time_stamps.command_ack = get_time_usec();
 					this_timestamps.command_ack = current_messages.time_stamps.command_ack;
+					printf("> Command ID: %d, result: %d\n",
+								current_messages.command_ack.command,
+								current_messages.command_ack.result);
 					break;
 					}
 
 				case MAVLINK_MSG_ID_HEARTBEAT:{
 					mavlink_msg_heartbeat_decode(&message, &(current_messages.heartbeat));
 					// Verification of current autopilot state from heartbeat base_mode on PC version
-					printf("\n MAV mode = %u \n", current_messages.heartbeat.base_mode);
+					// printf("\n MAV mode = %u \n", current_messages.heartbeat.base_mode);
 					current_messages.time_stamps.heartbeat = get_time_usec();
 					this_timestamps.heartbeat = current_messages.time_stamps.heartbeat;	
+					// printf("MAVLink version: %d\n", current_messages.heartbeat.mavlink_version);
 					break;
 					}
 
@@ -240,10 +244,10 @@ void read_messages(void){
 
 		// Loop untill the full reception of the first heartbeat and local_position_ned
 		// for the first time, then depend on the highres MAVLink message for the rest
-		if (lock_read_messages == 0){
+		// if (lock_read_messages == 0){
 			// Check for receipt of all items
 			received_all =
-					this_timestamps.heartbeat                  &&
+					// this_timestamps.heartbeat                  &&
 					this_timestamps.command_ack 
 			//				this_timestamps.battery_status             &&
 			//				this_timestamps.radio_status               &&
@@ -254,12 +258,12 @@ void read_messages(void){
 			//				this_timestamps.highres_imu                &&
 			//				this_timestamps.attitude                   &&
 						;		
-			} else {
-				received_all = this_timestamps.highres_imu;	
-				if (highres_flag == 0) break;
-			}
-		} 
-		lock_read_messages = 1;		
+		// } else {
+		// 	received_all = this_timestamps.highres_imu;	
+		// 	if (highres_flag == 0) break;
+		// }
+	} 
+		// lock_read_messages = 1;		
 	return;
 }
 
@@ -349,20 +353,21 @@ bool disable_offboard_control(void){
 		//   TOGGLE OFF-BOARD MODE
 
 		// Sends the command to stop off-board
-		int success = toggle_offboard_control( false );
+		int success = toggle_offboard_control(false);
 
 		// Check the command was written
 		if ( success ){
 			control_status = false;
 			printf("Offb Cont disabled\n");
 		}
-	} // end: if offboard_status
-	printf("offb cont already disabled\n");
+	} else {
+		printf("offb cont already disabled\n");
+	}
 	return control_status; 
 }
 
 
-int toggle_offboard_control( bool flag ){
+int toggle_offboard_control(bool flag){
 	// Prepare command for off-board mode
 	mavlink_command_long_t com = { 0 };
 	com.target_system    = system_id;
@@ -385,15 +390,15 @@ int toggle_offboard_control( bool flag ){
 // Arm/disarm Control
 void autopilot_arm(void){
 	// Should only send this command once
-	if ( arm_status == false ){
+	// if ( arm_status == false ){
 		// ARM 
-		int success = toggle_arm_disarm( true );
+		int success = toggle_arm_disarm( 1 );
 		// Check the command was written
 		if ( success ) {
 			arm_status = true;
-			printf("Autopilot successfuly armed\n");
+			printf("Autopilot sucessfully armed\n");
 		}
-	} 
+	// } 
 }
 
 
@@ -401,11 +406,11 @@ void autopilot_disarm(void){
 	// Should only send this command once
 	if ( arm_status == true ){
 		// DISARM 
-		int success = toggle_arm_disarm( false );
+		int success = toggle_arm_disarm( 0 );
 		// Check the command was written
 		if ( success ){
 			arm_status = false;
-			printf("Autopilot successfuly disarmed\n");
+			printf("Autopilot sucessfully disarmed\n");
 		}
 	} 
 }
@@ -426,7 +431,6 @@ int toggle_arm_disarm( bool flag ){
 
 	// Send the message
 	int len = serial_write_message(&message);
-
 	return len;
 }
 
