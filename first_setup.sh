@@ -11,7 +11,7 @@ echo -e "cloning mavlink library to libs/mavlink"
 cd libs/
 git clone https://github.com/mavlink/c_library_v1.git
 mv c_library_v1 mavlink
-
+cd ../
 
 echo -e "cloning pifacecad and mcp23s17 libraries to libs/"
 cd libs/
