@@ -6,3 +6,9 @@ void update_autopilot(void){
 	 */
 	return;
 }
+
+int takeover_control(){
+	enable_offboard_control();
+	return 0;
+	// drone_stop();
+}

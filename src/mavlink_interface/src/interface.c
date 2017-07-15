@@ -98,7 +98,7 @@ void reset_timestamps(Time_Stamps* time_stamps){
 
 
 // Initialisation
-void autopilot_intialize(void){
+void autopilot_initialize(void){
 	// initialize attributes
 
 	control_status = 0;      // whether the autopilot is in offboard control mode
@@ -334,8 +334,9 @@ bool enable_offboard_control(void){
 			control_status = true;
 			printf("Offb Cont Enabled\n");
 		}
-	} // end: if not offboard_status
-	printf("offb cont already enabled");
+	} else { 
+		printf("offb cont already enabled\n");
+	}
 	return control_status;
 }
 
@@ -355,7 +356,7 @@ bool disable_offboard_control(void){
 			printf("Offb Cont disabled\n");
 		}
 	} // end: if offboard_status
-	printf("offb cont already disabled")
+	printf("offb cont already disabled\n");
 	return control_status; 
 }
 
@@ -389,6 +390,7 @@ void autopilot_arm(void){
 		// Check the command was written
 		if ( success ) {
 			arm_status = true;
+			printf("Autopilot successfuly armed\n");
 		}
 	} 
 }
@@ -402,6 +404,7 @@ void autopilot_disarm(void){
 		// Check the command was written
 		if ( success ){
 			arm_status = false;
+			printf("Autopilot successfuly disarmed\n");
 		}
 	} 
 }

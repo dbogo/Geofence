@@ -10,9 +10,9 @@
 #include "interface.h"
 #include "commands.h"
 
-int main(int argc, char** argv);
+// int main(int argc, char** argv);
 
 // Scheduler
-void commands(void);
+// void commands(void);
 
 #endif

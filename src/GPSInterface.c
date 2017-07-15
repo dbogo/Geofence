@@ -16,7 +16,7 @@ int GPS_init(GPS_Actions* gpsHandler){
 		logEvent("Running code for the RPi implementation.", LOG4C_PRIORITY_INFO, INFO, &logMaster);
 		open_port(); // inits the file descriptor for gps serial communication
 	#else
-		// gpsHandler->getGPS = getGPSSample_DEMO;
+		gpsHandler->getGPS = getGPSSample_DEMO;
 		logEvent("Running code for the Demo implementation.", LOG4C_PRIORITY_INFO, INFO, &logMaster);
 	#endif
 

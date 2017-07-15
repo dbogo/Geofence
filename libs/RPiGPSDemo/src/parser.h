@@ -1,15 +1,15 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "src/GPSInterface.h"
+#include <src/GPSInterface.h>
 
 #define CHECKSUM_OK 0
 #define CHECKSUM_ERR 1
 
-int parse_nmea(char* sentence, FullGPSData* samp);
-int validate_checksum(char* nmea);
+int parse_nmea(char *sentence, FullGPSData* samp);
+int validate_checksum(char *nmea);
 
-bool is_nmea_txt(char* nmea);
+bool is_nmea_txt(char *nmea);
 
 void parse_gga(gga* samp, char *nmea);
 void parse_rmc(rmc* samp, char *nmea);

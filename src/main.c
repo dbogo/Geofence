@@ -11,12 +11,13 @@
 #include "types.h"
 #include "utils.h"
 #include "autopilot_controller.h"
-// #include "logInterface.h"
+#include "logInterface.h"
 #include "GPSInterface.h" // TODO: reconsider this hierarchy !!
 #include "serial/serialInterface.h"
 
-#include <libs/GPSDemo/src/gps_demo.h>
-#include <libs/RPiGPSDemo/src/rpi_gps_demo.h>
+#include <mavlink_interface/inc/interface.h>
+#include <GPSDemo/src/gps_demo.h>
+// #include <RPiGPSDemo/src/rpi_gps_demo.h>
 
 #ifdef RPI_ADDONS
 	// #include "pifaceCAD/cad_utils.h"
@@ -32,11 +33,18 @@ int main(int argc, char** argv) {
 
 	// deal with argv
 	if(parse_input_args(&zone, argc, argv) != ARGV_OK){
+		printf("error parsing argumnts.\n");
 		return -1; 
 	}
 	
-	init(&GPSHandler, &gpsData, &zone, NULL, &edges);
+	init(&GPSHandler, &gpsData, &zone, &logMaster, &edges);
 	
+	//autopilot stuff
+	// autopilot_initialize();
+	// serial_start("/dev/ttyUSB0"); // TODO: receive from argv ?
+	// read_messages();
+	// autopilot_start();
+
 	//gpsData.latitude = 13.0f;
 
 	clock_t start, end;
@@ -57,6 +65,7 @@ int main(int argc, char** argv) {
 			#endif
 		} else {
 			printf("Current pos - outside the border\n");
+			takeover_control();
 			#ifdef WIRINGPI
 				led(GEOFENCE_OK_LED, LOW);
 			#endif

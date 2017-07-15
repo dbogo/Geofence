@@ -12,11 +12,8 @@ void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log
 	/**
 	 * TODO: Error cheking and rv
 	 */
-	/* execute the script that makes NMEA output cleaner - without empty lines 
-		after the sentence. same effect for NMEA log files. */
-	system("./misc/serial_config.sh && cd ..");
 
-	// initLogSystem(logMaster);
+	initLogSystem(logMaster);
 	GPS_init(GPSHandler);
 	init_gps_data(&gpsData);
 	find_mbr(zone);
@@ -31,7 +28,7 @@ int parse_input_args(Zone_general* zone, int argc, char** args){
 	/**
 	 * TODO: error cheking
 	 */
-	if(argc < 2 || strstr(args [1], "-h") != NULL){
+	if(argc < 2 || strstr(args[1], "-h") != NULL){
 		display_help_message();
 		return ARGV_ERROR;
 	} else if (argc == 2){
@@ -87,13 +84,20 @@ void init_platform_specific_modules(void){
 
 void init_gps_data(FullGPSData** gpsData){
 	FullGPSData tmp = {
-		.latitude = 0.0f, .longitude = 0.0f,
-		.lat = '\0', .lon = '\0',
+		.latitude = 0.0f,
+		.longitude = 0.0f,
+		.lat = '\0',
+		.lon = '\0',
 		.altitude = 0.0f,
-		.course = 0.0f, .spdKph = 0.0f,
-		.quality = 0, .satellites = 0,
-		.fixType = 0, .fixTime = 0,
-		.pdop = 0.0f, .hdop = 0.0f, .vdop = 0.0f,
+		.course = 0.0f,
+		.spdKph = 0.0f,
+		.quality = 0,
+		.satellites = 0,
+		.fixType = 0,
+		.fixTime = 0,
+		.pdop = 0.0f,
+		.hdop = 0.0f,
+		.vdop = 0.0f,
 		.spdKnots = 0.0f,
 		.status = false
 	};

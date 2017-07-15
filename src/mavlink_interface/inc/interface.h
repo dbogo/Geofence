@@ -80,47 +80,20 @@ typedef struct Time_Stamps{
 
 
 typedef struct Mavlink_Messages {
-
 	int sysid;
 	int compid;
-
-	// Heartbeat
-	mavlink_heartbeat_t heartbeat;
-
-	// System Status
-	mavlink_sys_status_t sys_status;
-
-	// Battery Status
-	mavlink_battery_status_t battery_status;
-
-	// Radio Status
-	mavlink_radio_status_t radio_status;
-
-	// Local Position
-	mavlink_local_position_ned_t local_position_ned;
-
-	// Global Position
-	mavlink_global_position_int_t global_position_int;
-
-	// Local Position Target
-	mavlink_position_target_local_ned_t position_target_local_ned;
-
-	// Global Position Target
-	mavlink_position_target_global_int_t position_target_global_int;
-
-	// HiRes IMU
-	mavlink_highres_imu_t highres_imu;
-
-	// Attitude
-	mavlink_attitude_t attitude;
-
-	// System Parameters?
-
-	// Command acknowledgement
-	mavlink_command_ack_t command_ack;
-
-	// Time Stamps
-	Time_Stamps time_stamps;
+	mavlink_heartbeat_t heartbeat; // Heartbeat
+	mavlink_sys_status_t sys_status; // System Status
+	mavlink_battery_status_t battery_status; // Battery Status
+	mavlink_radio_status_t radio_status; // Radio Status
+	mavlink_local_position_ned_t local_position_ned; // Local Position
+	mavlink_global_position_int_t global_position_int; // Global Position
+	mavlink_position_target_local_ned_t position_target_local_ned; // Local Position Target
+	mavlink_position_target_global_int_t position_target_global_int; // Global Position Target
+	mavlink_highres_imu_t highres_imu; // HiRes IMU
+	mavlink_attitude_t attitude; // Attitude
+	mavlink_command_ack_t command_ack; // Command acknowledgement
+	Time_Stamps time_stamps; // Time Stamps
 } Mavlink_Messages;
 
 

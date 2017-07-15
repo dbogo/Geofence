@@ -5,7 +5,6 @@ uint8_t msgReceived = false;
 
 extern volatile float seconds;
 
-//extern struct termios oldtio,newtio;
 struct termios oldtio, newtio;
 static int fd;
 const char* RS232_DEVICE_const;

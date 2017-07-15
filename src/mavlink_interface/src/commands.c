@@ -15,6 +15,11 @@ volatile float omega = 0;
 time_t end;
 // time_t begin = time(NULL);
 
+
+int drone_stop(){
+
+}
+
 void operation (float timer){
 	time_t begin = time(NULL);
 	read_messages();
@@ -361,7 +366,7 @@ void disable_offboard_control_sequence(void){
 } 
 
 
-void disarm_sequence (void){
+void disarm_sequence(void){
 	printf("Disarmed \n");
 	autopilot_disarm();
 
@@ -373,7 +378,7 @@ void disarm_sequence (void){
 
 void program_counter_sequence(float timer, time_t* begin){
 	end = time(NULL);
-	
+
 	if ((end - *begin) >= timer){
 		*begin = time(NULL);
 		printf("Operation : %d \n", Program_counter);
