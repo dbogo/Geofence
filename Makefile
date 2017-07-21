@@ -14,6 +14,7 @@ HEADERS = -Ilibs/log4c/include \
 			-Ilibs/libpifacecad/src \
 			-Ilibs/wiringPi/wiringPi/ \
 			-Ilibs/GPSDemo/src \
+			-Ilibs/RPiGPSDemo/src \
 			-Ilibs/mavlink \
 			-Isrc/ \
 			-Isrc/mavlink_interface/ \
@@ -22,13 +23,15 @@ HEADERS = -Ilibs/log4c/include \
 			-I.
 			
 LIBS 	= -Llibs/GPSDemo \
+			-Llibs/RPiGPSDemo \
 			-Llibs/libpifacecad \
 			-Llibs/libmcp23s17 \
 			-Llibs/wiringPi/wiringPi \
 			-Llibs/log4c/lib \
 			-Wl,-rpath=./libs/log4c/lib/ \
 			-Wl,-rpath=./libs/GPSDemo/ \
-			-llog4c -lm -lpifacecad -lmcp23s17 -lwiringPi -lGPSDemo
+			-Wl,-rpath=./libs/RPiGPSDemo/ \
+			-llog4c -lm -lpifacecad -lmcp23s17 -lwiringPi -lGPSDemo -lRPiGPSDemo
 
 DEPENDENCY_OPTIONS = -MM
 
@@ -55,7 +58,7 @@ endif
 
 
 %.o: %.c
-	$(CC) -c $(COMPILE_OPTIONS) -o $@ $< $(HEADERS)
+	$(CC) -DRPI_GPS -c $(COMPILE_OPTIONS) -o $@ $< $(HEADERS)
 
 run: $(PROJECT)
 	./$(PROJECT) $(COMMANDLINE_OPTIONS)

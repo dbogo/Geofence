@@ -96,7 +96,6 @@ void reset_timestamps(Time_Stamps* time_stamps){
 	time_stamps->command_ack = 0;
 }
 
-
 // Initialisation
 void autopilot_initialize(void){
 	// initialize attributes
@@ -244,10 +243,10 @@ void read_messages(void){
 			// Check for receipt of all items
 			received_all =
 					this_timestamps.heartbeat                  &&
-					this_timestamps.command_ack 
+					// this_timestamps.command_ack 
 			//				this_timestamps.battery_status             &&
 			//				this_timestamps.radio_status               &&
-							// this_timestamps.local_position_ned         
+							this_timestamps.local_position_ned         
 			//				this_timestamps.global_position_int        &&
 			//				this_timestamps.position_target_local_ned  &&
 			//				this_timestamps.position_target_global_int &&
@@ -281,8 +280,6 @@ void autopilot_write(void){
 	current_setpoint = set_point;
 
 	autopilot_write_setpoint();
-
-	return;
 }
 
 
@@ -303,14 +300,12 @@ void autopilot_write_setpoint(void){
 
 	//   WRITE
 	autopilot_write_message(message);
-	return;
 }
 
 
 void autopilot_write_message(mavlink_message_t message){
 	// Write the message to serial port
 	serial_write_message(&message);
-	return;
 }
 
 

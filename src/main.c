@@ -16,8 +16,11 @@
 #include "serial/serialInterface.h"
 
 #include <mavlink_interface/inc/interface.h>
+#ifdef RPI_GPS
+#include <RPiGPSDemo/src/rpi_gps_demo.h>
+#else
 #include <GPSDemo/src/gps_demo.h>
-// #include <RPiGPSDemo/src/rpi_gps_demo.h>
+#endif
 
 #ifdef RPI_ADDONS
 	// #include "pifaceCAD/cad_utils.h"
@@ -36,20 +39,21 @@ int main(int argc, char** argv) {
 		printf("error parsing argumnts.\n");
 		return -1; 
 	}
-	
+
 	init(&GPSHandler, &gpsData, &zone, &logMaster, &edges);
 	
 	//autopilot stuff
-	// autopilot_initialize();
-	// serial_start("/dev/ttyUSB0"); // TODO: receive from argv ?
+	autopilot_initialize();
+	serial_start("/dev/ttyUSB0"); // TODO: receive from argv ?
 	// read_messages();
 	// autopilot_start();
+	// autopilot_write_helper();
 
 	//gpsData.latitude = 13.0f;
-
+	// takeover_control();
 	clock_t start, end;
 	double dt;
-
+	time_t commanderTimestamp;
 	while (!suspend_loop(TIME_TO_WAIT_SEC, TIME_TO_WAIT_NSEC)) {
 		start = clock();
  
@@ -65,7 +69,8 @@ int main(int argc, char** argv) {
 			#endif
 		} else {
 			printf("Current pos - outside the border\n");
-			takeover_control();
+			commanderTimestamp = time(NULL);
+			takeover_control(&commanderTimestamp);
 			#ifdef WIRINGPI
 				led(GEOFENCE_OK_LED, LOW);
 			#endif

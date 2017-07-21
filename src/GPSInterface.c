@@ -6,12 +6,14 @@
 #include "GPSInterface.h"
 #include "logInterface.h"
 #include "serial/serialInterface.h"
+#ifdef RPI_GPS
 #include <libs/RPiGPSDemo/src/rpi_gps_demo.h>
+#else
 #include <libs/GPSDemo/src/gps_demo.h>
-
+#endif
 
 int GPS_init(GPS_Actions* gpsHandler){
-	#ifdef GPS_RPI
+	#ifdef RPI_GPS
 		gpsHandler->getGPS = getGPSSample_RPI;
 		logEvent("Running code for the RPi implementation.", LOG4C_PRIORITY_INFO, INFO, &logMaster);
 		open_port(); // inits the file descriptor for gps serial communication
@@ -35,10 +37,11 @@ bool geofence_breached(FullGPSData* location, Zone_general* zone){
 	GEO_Point p = { .longitude = location->longitude, .latitude = location->latitude };
 
 
-	#ifdef GPS_RPI // convert for use with real world coordinates. (deg)
-		printf("HARDWARE - RPi.\n");
+	#ifdef RPI_GPS // convert for use with real world coordinates. (deg)
+		// printf("HARDWARE - RPi.\n");
 		p.longitude = to_deg(location->longitude); 
 		p.latitude = to_deg(location->latitude);
+		printf("\n");
 	#endif
 
 	/**

@@ -74,7 +74,7 @@ void operation (float timer){
 	program_counter_sequence(timer, &begin);
 
 	if (Program_counter == 9) { 
-		Program_counter = 9;
+		Program_counter = 0;
 	}
 }
 
@@ -203,8 +203,8 @@ void circle_operation (float timer){
 }
 
 
-void automatic_takeoff (float timer){
-	time_t begin = time(NULL);
+void automatic_takeoff (float timer, time_t *begin){
+	// time_t begin = time(NULL);
 	read_messages();
 	autopilot_start();
 	autopilot_write_helper();
@@ -257,7 +257,7 @@ void automatic_takeoff (float timer){
 			break;
 		}
 		
-		program_counter_sequence(timer, &begin);
+		program_counter_sequence(timer, begin);
 
 		if (Program_counter == 9) { Program_counter = 9;}
 }
@@ -331,12 +331,11 @@ void flight_control_sequence (float timer){
 
 // Flight functions 
 void arm_sequence (void){
-	if (current_messages.heartbeat.base_mode != ARMED_BASE_MODE && arm_lock == 0){
+	if (current_messages.heartbeat.base_mode != ARMED_BASE_MODE && !arm_lock){
 		printf("Arming\n");
 		autopilot_arm();
 		arm_lock = 1;
 	}
-
 	usleep(100);
 }
 

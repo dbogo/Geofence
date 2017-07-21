@@ -19,7 +19,7 @@ void operation (float timer);
 void operation_extended (float timer);
 void square_operation (float timer);
 void circle_operation (float timer);
-void automatic_takeoff(float timer);
+void automatic_takeoff(float timer, time_t *begin);
 void flight_control_sequence(float timer);
 
 // Flight Functions

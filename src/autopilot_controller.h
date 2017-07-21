@@ -1,12 +1,13 @@
-#ifndef AUTOPILOT_CONTROLLER
-#define AUTOPILOT_CONTROLLER
+#ifndef AUTOPILOT_CONTROLLER_H
+#define AUTOPILOT_CONTROLLER_H
 
-#include <mavlink_interface/inc/interface.h>
+#include <time.h>
+#include <mavlink_interface/inc/commands.h>
 
 
 void update_autopilot(void);
 
-int takeover_control();
+int takeover_control(time_t *commanderTimestamp);
 
 
-#endif /* AUTOPILOT_CONTROLLER */
+#endif /* AUTOPILOT_CONTROLLER_H */
