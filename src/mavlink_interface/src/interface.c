@@ -48,7 +48,9 @@
  *
  */
 
+#include <stdio.h>
 #include "../inc/interface.h"
+
 
 char control_status;
 char arm_status;

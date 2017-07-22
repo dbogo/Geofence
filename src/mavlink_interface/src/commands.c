@@ -1,4 +1,7 @@
-#include <commands.h>
+#include <stdio.h>
+#include <time.h>
+#include <unistd.h>
+#include "../inc/commands.h"
 
 int arm_lock = 0;
 int offboard_control_lock = 0;
@@ -15,10 +18,6 @@ volatile float omega = 0;
 time_t end;
 // time_t begin = time(NULL);
 
-
-int drone_stop(){
-
-}
 
 void operation (float timer){
 	time_t begin = time(NULL);

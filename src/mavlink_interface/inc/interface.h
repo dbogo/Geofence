@@ -52,7 +52,7 @@
 #define _INTERFACE_H_
 
 #include <stdbool.h>
-#include "serial_port.h"
+#include <src/serial/serialInterface.h>
 
                                                 // bit number  876543210987654321
 #define MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION     0b0000110111111000
