@@ -1,0 +1,81 @@
+\hypertarget{log_interface_8c}{}\section{src/log\+Interface.c File Reference}
+\label{log_interface_8c}\index{src/log\+Interface.\+c@{src/log\+Interface.\+c}}
+{\ttfamily \#include \char`\"{}log\+Interface.\+h\char`\"{}}\\*
+Include dependency graph for log\+Interface.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=172pt]{log_interface_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{log_interface_8c_a00bc922ef3d55d2d8b5f9457c1dcc0b1}{init\+Log\+System} (\hyperlink{struct_log___master}{Log\+\_\+\+Master} $\ast$\hyperlink{log_interface_8h_a8970fde3bc8decf8d30eaf4f3c2ce4ed}{log\+Master})
+\begin{DoxyCompactList}\small\item\em initializes the Loggers from log4c library \end{DoxyCompactList}\item 
+void \hyperlink{log_interface_8c_a36b40dbd7b238cda6c595cf4c364ee3b}{log\+Event} (char $\ast$str, int priority, int log\+Type, \hyperlink{struct_log___master}{Log\+\_\+\+Master} $\ast$\hyperlink{log_interface_8h_a8970fde3bc8decf8d30eaf4f3c2ce4ed}{log\+Master})
+\begin{DoxyCompactList}\small\item\em logs the message into the specified stream, using the specifeied logger. \end{DoxyCompactList}\item 
+int \hyperlink{log_interface_8c_a76fb3b7c139c9d2ec85c565cc48e4b7a}{fini\+Log\+System} (void)
+\begin{DoxyCompactList}\small\item\em close and stop the logging system \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{log\+Interface.\+c@{log\+Interface.\+c}!fini\+Log\+System@{fini\+Log\+System}}
+\index{fini\+Log\+System@{fini\+Log\+System}!log\+Interface.\+c@{log\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{fini\+Log\+System(void)}{finiLogSystem(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int fini\+Log\+System (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{log_interface_8c_a76fb3b7c139c9d2ec85c565cc48e4b7a}{}\label{log_interface_8c_a76fb3b7c139c9d2ec85c565cc48e4b7a}
+
+
+close and stop the logging system 
+
+\begin{DoxyReturn}{Returns}
+err\+Code 
+\end{DoxyReturn}
+\index{log\+Interface.\+c@{log\+Interface.\+c}!init\+Log\+System@{init\+Log\+System}}
+\index{init\+Log\+System@{init\+Log\+System}!log\+Interface.\+c@{log\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{init\+Log\+System(\+Log\+\_\+\+Master $\ast$log\+Master)}{initLogSystem(Log_Master *logMaster)}}]{\setlength{\rightskip}{0pt plus 5cm}int init\+Log\+System (
+\begin{DoxyParamCaption}
+\item[{{\bf Log\+\_\+\+Master} $\ast$}]{log\+Master}
+\end{DoxyParamCaption}
+)}\hypertarget{log_interface_8c_a00bc922ef3d55d2d8b5f9457c1dcc0b1}{}\label{log_interface_8c_a00bc922ef3d55d2d8b5f9457c1dcc0b1}
+
+
+initializes the Loggers from log4c library 
+
+
+\begin{DoxyParams}{Parameters}
+{\em log\+Master} & Log\+Master struct that contains all loggers \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+err\+Code 
+\end{DoxyReturn}
+F\+I\+X\+ME\+: if the log\+Instance\+Name attribute of the \hyperlink{struct_logger}{Logger} struct, is set to \char`\"{}\char`\"{} in all of the loggers, they stop working and only one logger works with only one log stream (be it E\+R\+R\+OR, N\+M\+EA or I\+N\+FO). find a way to get rid of this string A\+ND keep the logs on.\index{log\+Interface.\+c@{log\+Interface.\+c}!log\+Event@{log\+Event}}
+\index{log\+Event@{log\+Event}!log\+Interface.\+c@{log\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{log\+Event(char $\ast$str, int priority, int log\+Type, Log\+\_\+\+Master $\ast$log\+Master)}{logEvent(char *str, int priority, int logType, Log_Master *logMaster)}}]{\setlength{\rightskip}{0pt plus 5cm}void log\+Event (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{str, }
+\item[{int}]{priority, }
+\item[{int}]{log\+Type, }
+\item[{{\bf Log\+\_\+\+Master} $\ast$}]{log\+Master}
+\end{DoxyParamCaption}
+)}\hypertarget{log_interface_8c_a36b40dbd7b238cda6c595cf4c364ee3b}{}\label{log_interface_8c_a36b40dbd7b238cda6c595cf4c364ee3b}
+
+
+logs the message into the specified stream, using the specifeied logger. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em str} & the log message \\
+\hline
+\mbox{\tt in}  & {\em priority} & priority of the log. see L\+O\+G4\+C\+\_\+\+P\+R\+I\+O\+R\+I\+TY enums. (log4c\+\_\+priority\+\_\+level\+\_\+t) \\
+\hline
+\mbox{\tt in}  & {\em log\+Type} & The log type \\
+\hline
+ & {\em log\+Master} & a pointer to the \hyperlink{struct_log___master}{Log\+\_\+\+Master} struct that contains log objects \\
+\hline
+\end{DoxyParams}

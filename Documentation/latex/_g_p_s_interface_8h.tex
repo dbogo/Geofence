@@ -1,0 +1,286 @@
+\hypertarget{_g_p_s_interface_8h}{}\section{src/\+G\+P\+S\+Interface.h File Reference}
+\label{_g_p_s_interface_8h}\index{src/\+G\+P\+S\+Interface.\+h@{src/\+G\+P\+S\+Interface.\+h}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils.\+h\char`\"{}}\\*
+Include dependency graph for G\+P\+S\+Interface.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_g_p_s_interface_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_g_p_s_interface_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_g_p_s___actions}{G\+P\+S\+\_\+\+Actions}
+\begin{DoxyCompactList}\small\item\em This struct contains function pointers to functions that G\+P\+S\+Interface provides for handling gps stuff. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_g_p_s_interface_8h_a4692f468d85af5af46c57358e7ecc272}{F\+U\+L\+L\+\_\+\+S\+A\+M\+P\+LE}~1
+\item 
+\#define \hyperlink{_g_p_s_interface_8h_a619035b765bd6e42c8da0e4c9250b111}{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+GA}~2
+\item 
+\#define \hyperlink{_g_p_s_interface_8h_addbe2e6252c0483adc9c7bcd70d971d6}{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+R\+MC}~3
+\item 
+\#define \hyperlink{_g_p_s_interface_8h_aa7df72ae29c9dd2729846155947f7011}{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+SA}~4
+\item 
+\#define \hyperlink{_g_p_s_interface_8h_a72557c85b2538ada64995745db824b83}{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+V\+TG}~5
+\item 
+\#define \hyperlink{_g_p_s_interface_8h_a03369e09065b63a074c1003ec9f6c285}{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+LL}~6
+\item 
+\#define \hyperlink{_g_p_s_interface_8h_a04b5c325e478a8ac711eace85fd7e25d}{I\+G\+N\+O\+R\+E\+D\+\_\+\+T\+XT}~9
+\item 
+\#define \hyperlink{_g_p_s_interface_8h_a8e14dc82616e2c50a182cb83ba5cd8b0}{U\+N\+R\+E\+C\+O\+G\+N\+I\+Z\+E\+D\+\_\+\+N\+M\+EA}~-\/1
+\item 
+\#define \hyperlink{_g_p_s_interface_8h_a4519bcd8e318aa939aebe4633f4e90f0}{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+A\+L\+T\+\_\+\+OK}~10
+\item 
+\#define \hyperlink{_g_p_s_interface_8h_ab39428244337fd6085198cc6a9d8db14}{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+A\+L\+T\+\_\+\+B\+R\+E\+A\+CH}~100
+\item 
+\#define \hyperlink{_g_p_s_interface_8h_a962c38fae72cbb5bae7a59ec71645c15}{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+P\+O\+L\+Y\+G\+O\+N\+\_\+\+OK}~20
+\item 
+\#define \hyperlink{_g_p_s_interface_8h_a542c590073b5d5a0af9d6d72931cd835}{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+P\+O\+L\+Y\+G\+O\+N\+\_\+\+B\+R\+E\+A\+CH}~200
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_g_p_s___actions}{G\+P\+S\+\_\+\+Actions} \hyperlink{_g_p_s_interface_8h_abe4803ce5a9fadb1eb6eaa06414d4b83}{G\+P\+S\+\_\+\+Actions}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{_g_p_s_interface_8h_a22f27d68e1909aff8c3d3f8f19be4d02}{det} (\hyperlink{struct_g_e_o___point}{G\+E\+O\+\_\+\+Point} p1, \hyperlink{struct_g_e_o___point}{G\+E\+O\+\_\+\+Point} p2, \hyperlink{struct_g_e_o___point}{G\+E\+O\+\_\+\+Point} location)
+\begin{DoxyCompactList}\small\item\em the signed area of the triangle loc,P1,P2 \end{DoxyCompactList}\item 
+int \hyperlink{_g_p_s_interface_8h_a2a940fd545a524efc707bf883f5be6a9}{G\+P\+S\+\_\+init} (\hyperlink{struct_g_p_s___actions}{G\+P\+S\+\_\+\+Actions} $\ast$gps\+Handler)
+\begin{DoxyCompactList}\small\item\em assignes the correct library for the get\+G\+PS function pointer. either an R\+Pi or a demo implementation of the get\+G\+P\+S\+Sample() will be used. \end{DoxyCompactList}\item 
+\hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1}{bool} \hyperlink{_g_p_s_interface_8h_ac71865e68cf32819594bdcd0c4244f8d}{geofence\+\_\+breached} (\hyperlink{struct_full_g_p_s_data}{Full\+G\+P\+S\+Data} $\ast$location, \hyperlink{struct_zone__general}{Zone\+\_\+general} $\ast$zone)
+\begin{DoxyCompactList}\small\item\em runs tests for different kinds of possible geofence violations, if one of the tests is failed (i.\+e some kind of violation has occured), there\textquotesingle{}s a breach. Winding Number algorithm for test of Point-\/\+In-\/\+Polygon inclusion. see \href{http://geomalgorithms.com/a03-_inclusion.html}{\tt http\+://geomalgorithms.\+com/a03-\/\+\_\+inclusion.\+html} \end{DoxyCompactList}\item 
+int \hyperlink{_g_p_s_interface_8h_ac6b4d89308a2b0eab06656a5dd3d5858}{geofecnce\+\_\+alt\+\_\+check} (\hyperlink{struct_zone__general}{Zone\+\_\+general} $\ast$zone, double altitude)
+\begin{DoxyCompactList}\small\item\em checks if the altitude in question is within the geofence\textquotesingle{}s height. \end{DoxyCompactList}\item 
+int \hyperlink{_g_p_s_interface_8h_a74f9c1235487a3808df665a9bb7334b5}{geofence\+\_\+polygon\+\_\+check} (\hyperlink{struct_zone__general}{Zone\+\_\+general} $\ast$zone, \hyperlink{struct_g_e_o___point}{G\+E\+O\+\_\+\+Point} p)
+\begin{DoxyCompactList}\small\item\em checks if the point in question is inside or outside the geofence polygon. uses the Winding-\/\+Number algorithm for test of Point-\/\+In-\/\+Polygon inclusion. see \href{http://geomalgorithms.com/a03-_inclusion.html}{\tt http\+://geomalgorithms.\+com/a03-\/\+\_\+inclusion.\+html} \end{DoxyCompactList}\item 
+int \hyperlink{_g_p_s_interface_8h_aa6cdb7200af7d74a9c583d5c00a50e35}{create\+\_\+edges} (\hyperlink{struct_zone__general}{Zone\+\_\+general} $\ast$zone, \hyperlink{struct_edge}{Edge} $\ast$$\ast$edges)
+\begin{DoxyCompactList}\small\item\em Creates the edges of the polygon from its vertices. Called once. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_s_interface_8h_a8e93b5c352c25afd3fa2aa27ae411e3a}{find\+\_\+mbr} (\hyperlink{struct_zone__general}{Zone\+\_\+general} $\ast$polygon)
+\begin{DoxyCompactList}\small\item\em computes the minimun bounding rectangle of the polygon. (aka \hyperlink{struct_m_b_r}{M\+BR}) \end{DoxyCompactList}\item 
+double \hyperlink{_g_p_s_interface_8h_a6b2e7c4d2b3a08fa15ebb18365a9264c}{to\+\_\+deg} (double x)
+\begin{DoxyCompactList}\small\item\em converts N\+M\+EA decimal value to degrees (used for conversion of lat lon values) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!F\+U\+L\+L\+\_\+\+S\+A\+M\+P\+LE@{F\+U\+L\+L\+\_\+\+S\+A\+M\+P\+LE}}
+\index{F\+U\+L\+L\+\_\+\+S\+A\+M\+P\+LE@{F\+U\+L\+L\+\_\+\+S\+A\+M\+P\+LE}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{F\+U\+L\+L\+\_\+\+S\+A\+M\+P\+LE}{FULL_SAMPLE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+U\+L\+L\+\_\+\+S\+A\+M\+P\+LE~1}\hypertarget{_g_p_s_interface_8h_a4692f468d85af5af46c57358e7ecc272}{}\label{_g_p_s_interface_8h_a4692f468d85af5af46c57358e7ecc272}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+A\+L\+T\+\_\+\+B\+R\+E\+A\+CH@{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+A\+L\+T\+\_\+\+B\+R\+E\+A\+CH}}
+\index{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+A\+L\+T\+\_\+\+B\+R\+E\+A\+CH@{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+A\+L\+T\+\_\+\+B\+R\+E\+A\+CH}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+A\+L\+T\+\_\+\+B\+R\+E\+A\+CH}{GEOFENCE_ALT_BREACH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+A\+L\+T\+\_\+\+B\+R\+E\+A\+CH~100}\hypertarget{_g_p_s_interface_8h_ab39428244337fd6085198cc6a9d8db14}{}\label{_g_p_s_interface_8h_ab39428244337fd6085198cc6a9d8db14}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+A\+L\+T\+\_\+\+OK@{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+A\+L\+T\+\_\+\+OK}}
+\index{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+A\+L\+T\+\_\+\+OK@{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+A\+L\+T\+\_\+\+OK}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+A\+L\+T\+\_\+\+OK}{GEOFENCE_ALT_OK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+A\+L\+T\+\_\+\+OK~10}\hypertarget{_g_p_s_interface_8h_a4519bcd8e318aa939aebe4633f4e90f0}{}\label{_g_p_s_interface_8h_a4519bcd8e318aa939aebe4633f4e90f0}
+the G\+E\+O\+F\+E\+N\+C\+E\+\_\+ macros are used for denoting the status of different geofence checks \index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+P\+O\+L\+Y\+G\+O\+N\+\_\+\+B\+R\+E\+A\+CH@{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+P\+O\+L\+Y\+G\+O\+N\+\_\+\+B\+R\+E\+A\+CH}}
+\index{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+P\+O\+L\+Y\+G\+O\+N\+\_\+\+B\+R\+E\+A\+CH@{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+P\+O\+L\+Y\+G\+O\+N\+\_\+\+B\+R\+E\+A\+CH}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+P\+O\+L\+Y\+G\+O\+N\+\_\+\+B\+R\+E\+A\+CH}{GEOFENCE_POLYGON_BREACH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+P\+O\+L\+Y\+G\+O\+N\+\_\+\+B\+R\+E\+A\+CH~200}\hypertarget{_g_p_s_interface_8h_a542c590073b5d5a0af9d6d72931cd835}{}\label{_g_p_s_interface_8h_a542c590073b5d5a0af9d6d72931cd835}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+P\+O\+L\+Y\+G\+O\+N\+\_\+\+OK@{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+P\+O\+L\+Y\+G\+O\+N\+\_\+\+OK}}
+\index{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+P\+O\+L\+Y\+G\+O\+N\+\_\+\+OK@{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+P\+O\+L\+Y\+G\+O\+N\+\_\+\+OK}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+P\+O\+L\+Y\+G\+O\+N\+\_\+\+OK}{GEOFENCE_POLYGON_OK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+E\+O\+F\+E\+N\+C\+E\+\_\+\+P\+O\+L\+Y\+G\+O\+N\+\_\+\+OK~20}\hypertarget{_g_p_s_interface_8h_a962c38fae72cbb5bae7a59ec71645c15}{}\label{_g_p_s_interface_8h_a962c38fae72cbb5bae7a59ec71645c15}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!I\+G\+N\+O\+R\+E\+D\+\_\+\+T\+XT@{I\+G\+N\+O\+R\+E\+D\+\_\+\+T\+XT}}
+\index{I\+G\+N\+O\+R\+E\+D\+\_\+\+T\+XT@{I\+G\+N\+O\+R\+E\+D\+\_\+\+T\+XT}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{I\+G\+N\+O\+R\+E\+D\+\_\+\+T\+XT}{IGNORED_TXT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\+G\+N\+O\+R\+E\+D\+\_\+\+T\+XT~9}\hypertarget{_g_p_s_interface_8h_a04b5c325e478a8ac711eace85fd7e25d}{}\label{_g_p_s_interface_8h_a04b5c325e478a8ac711eace85fd7e25d}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+GA@{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+GA}}
+\index{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+GA@{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+GA}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+GA}{REGISTERED_GGA}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+GA~2}\hypertarget{_g_p_s_interface_8h_a619035b765bd6e42c8da0e4c9250b111}{}\label{_g_p_s_interface_8h_a619035b765bd6e42c8da0e4c9250b111}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+LL@{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+LL}}
+\index{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+LL@{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+LL}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+LL}{REGISTERED_GLL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+LL~6}\hypertarget{_g_p_s_interface_8h_a03369e09065b63a074c1003ec9f6c285}{}\label{_g_p_s_interface_8h_a03369e09065b63a074c1003ec9f6c285}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+SA@{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+SA}}
+\index{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+SA@{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+SA}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+SA}{REGISTERED_GSA}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+G\+SA~4}\hypertarget{_g_p_s_interface_8h_aa7df72ae29c9dd2729846155947f7011}{}\label{_g_p_s_interface_8h_aa7df72ae29c9dd2729846155947f7011}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+R\+MC@{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+R\+MC}}
+\index{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+R\+MC@{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+R\+MC}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+R\+MC}{REGISTERED_RMC}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+R\+MC~3}\hypertarget{_g_p_s_interface_8h_addbe2e6252c0483adc9c7bcd70d971d6}{}\label{_g_p_s_interface_8h_addbe2e6252c0483adc9c7bcd70d971d6}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+V\+TG@{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+V\+TG}}
+\index{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+V\+TG@{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+V\+TG}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+V\+TG}{REGISTERED_VTG}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+E\+G\+I\+S\+T\+E\+R\+E\+D\+\_\+\+V\+TG~5}\hypertarget{_g_p_s_interface_8h_a72557c85b2538ada64995745db824b83}{}\label{_g_p_s_interface_8h_a72557c85b2538ada64995745db824b83}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!U\+N\+R\+E\+C\+O\+G\+N\+I\+Z\+E\+D\+\_\+\+N\+M\+EA@{U\+N\+R\+E\+C\+O\+G\+N\+I\+Z\+E\+D\+\_\+\+N\+M\+EA}}
+\index{U\+N\+R\+E\+C\+O\+G\+N\+I\+Z\+E\+D\+\_\+\+N\+M\+EA@{U\+N\+R\+E\+C\+O\+G\+N\+I\+Z\+E\+D\+\_\+\+N\+M\+EA}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{U\+N\+R\+E\+C\+O\+G\+N\+I\+Z\+E\+D\+\_\+\+N\+M\+EA}{UNRECOGNIZED_NMEA}}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+N\+R\+E\+C\+O\+G\+N\+I\+Z\+E\+D\+\_\+\+N\+M\+EA~-\/1}\hypertarget{_g_p_s_interface_8h_a8e14dc82616e2c50a182cb83ba5cd8b0}{}\label{_g_p_s_interface_8h_a8e14dc82616e2c50a182cb83ba5cd8b0}
+
+
+\subsection{Typedef Documentation}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!G\+P\+S\+\_\+\+Actions@{G\+P\+S\+\_\+\+Actions}}
+\index{G\+P\+S\+\_\+\+Actions@{G\+P\+S\+\_\+\+Actions}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{G\+P\+S\+\_\+\+Actions}{GPS_Actions}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf G\+P\+S\+\_\+\+Actions} {\bf G\+P\+S\+\_\+\+Actions}}\hypertarget{_g_p_s_interface_8h_abe4803ce5a9fadb1eb6eaa06414d4b83}{}\label{_g_p_s_interface_8h_abe4803ce5a9fadb1eb6eaa06414d4b83}
+
+
+\subsection{Function Documentation}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!create\+\_\+edges@{create\+\_\+edges}}
+\index{create\+\_\+edges@{create\+\_\+edges}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{create\+\_\+edges(\+Zone\+\_\+general $\ast$zone, Edge $\ast$$\ast$edges)}{create_edges(Zone_general *zone, Edge **edges)}}]{\setlength{\rightskip}{0pt plus 5cm}int create\+\_\+edges (
+\begin{DoxyParamCaption}
+\item[{{\bf Zone\+\_\+general} $\ast$}]{zone, }
+\item[{{\bf Edge} $\ast$$\ast$}]{edges}
+\end{DoxyParamCaption}
+)}\hypertarget{_g_p_s_interface_8h_aa6cdb7200af7d74a9c583d5c00a50e35}{}\label{_g_p_s_interface_8h_aa6cdb7200af7d74a9c583d5c00a50e35}
+
+
+Creates the edges of the polygon from its vertices. Called once. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em zone} & The polygon -\/ represented by its vertices \\
+\hline
+{\em edges} & A \hyperlink{struct_edge}{Edge} pointer. points to an array of edges that is populated in this function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns the number of edges. (Actually returnes the number of vertices). 
+\end{DoxyReturn}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!det@{det}}
+\index{det@{det}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{det(\+G\+E\+O\+\_\+\+Point p1, G\+E\+O\+\_\+\+Point p2, G\+E\+O\+\_\+\+Point location)}{det(GEO_Point p1, GEO_Point p2, GEO_Point location)}}]{\setlength{\rightskip}{0pt plus 5cm}float det (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+E\+O\+\_\+\+Point}}]{p1, }
+\item[{{\bf G\+E\+O\+\_\+\+Point}}]{p2, }
+\item[{{\bf G\+E\+O\+\_\+\+Point}}]{location}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{_g_p_s_interface_8h_a22f27d68e1909aff8c3d3f8f19be4d02}{}\label{_g_p_s_interface_8h_a22f27d68e1909aff8c3d3f8f19be4d02}
+
+
+the signed area of the triangle loc,P1,P2 
+
+T\+O\+DO\+: inline ? 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p1} & Polygon\textquotesingle{}s first point \\
+\hline
+\mbox{\tt in}  & {\em p2} & Polygon\textquotesingle{}s second point \\
+\hline
+ & {\em location} & The query point\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the determinant 
+\end{DoxyReturn}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!find\+\_\+mbr@{find\+\_\+mbr}}
+\index{find\+\_\+mbr@{find\+\_\+mbr}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{find\+\_\+mbr(\+Zone\+\_\+general $\ast$polygon)}{find_mbr(Zone_general *polygon)}}]{\setlength{\rightskip}{0pt plus 5cm}void find\+\_\+mbr (
+\begin{DoxyParamCaption}
+\item[{{\bf Zone\+\_\+general} $\ast$}]{polygon}
+\end{DoxyParamCaption}
+)}\hypertarget{_g_p_s_interface_8h_a8e93b5c352c25afd3fa2aa27ae411e3a}{}\label{_g_p_s_interface_8h_a8e93b5c352c25afd3fa2aa27ae411e3a}
+
+
+computes the minimun bounding rectangle of the polygon. (aka \hyperlink{struct_m_b_r}{M\+BR}) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em polygon} & a struct with the polygon\textquotesingle{}s points. \\
+\hline
+\end{DoxyParams}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!geofecnce\+\_\+alt\+\_\+check@{geofecnce\+\_\+alt\+\_\+check}}
+\index{geofecnce\+\_\+alt\+\_\+check@{geofecnce\+\_\+alt\+\_\+check}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{geofecnce\+\_\+alt\+\_\+check(\+Zone\+\_\+general $\ast$zone, double altitude)}{geofecnce_alt_check(Zone_general *zone, double altitude)}}]{\setlength{\rightskip}{0pt plus 5cm}int geofecnce\+\_\+alt\+\_\+check (
+\begin{DoxyParamCaption}
+\item[{{\bf Zone\+\_\+general} $\ast$}]{zone, }
+\item[{double}]{altitude}
+\end{DoxyParamCaption}
+)}\hypertarget{_g_p_s_interface_8h_ac6b4d89308a2b0eab06656a5dd3d5858}{}\label{_g_p_s_interface_8h_ac6b4d89308a2b0eab06656a5dd3d5858}
+
+
+checks if the altitude in question is within the geofence\textquotesingle{}s height. 
+
+T\+O\+DO\+: min and max alt. 
+\begin{DoxyParams}[1]{Parameters}
+ & {\em zone} & The Polygon. the \hyperlink{struct_zone__general}{Zone\+\_\+general} struct contains the limit altitude \\
+\hline
+\mbox{\tt in}  & {\em altitude} & The altitude of the point in question.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+one of the constants describing the status, according to the outcome of the height test. 
+\end{DoxyReturn}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!geofence\+\_\+breached@{geofence\+\_\+breached}}
+\index{geofence\+\_\+breached@{geofence\+\_\+breached}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{geofence\+\_\+breached(\+Full\+G\+P\+S\+Data $\ast$location, Zone\+\_\+general $\ast$zone)}{geofence_breached(FullGPSData *location, Zone_general *zone)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bool} geofence\+\_\+breached (
+\begin{DoxyParamCaption}
+\item[{{\bf Full\+G\+P\+S\+Data} $\ast$}]{location, }
+\item[{{\bf Zone\+\_\+general} $\ast$}]{zone}
+\end{DoxyParamCaption}
+)}\hypertarget{_g_p_s_interface_8h_ac71865e68cf32819594bdcd0c4244f8d}{}\label{_g_p_s_interface_8h_ac71865e68cf32819594bdcd0c4244f8d}
+
+
+runs tests for different kinds of possible geofence violations, if one of the tests is failed (i.\+e some kind of violation has occured), there\textquotesingle{}s a breach. Winding Number algorithm for test of Point-\/\+In-\/\+Polygon inclusion. see \href{http://geomalgorithms.com/a03-_inclusion.html}{\tt http\+://geomalgorithms.\+com/a03-\/\+\_\+inclusion.\+html} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em location} & the location of the test points (coordinates) \\
+\hline
+{\em zone} & the Polygon -\/ represented by its vertices \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns true if the point is inside the polygon. if the point is inside the polygon, the winding number is non-\/zero. a detailed description of the algorithm is in the link. 
+\end{DoxyReturn}
+T\+O\+DO\+: differentiate between W\+GS and M\+SL. T\+O\+DO\+: check for minimum altitude ?\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!geofence\+\_\+polygon\+\_\+check@{geofence\+\_\+polygon\+\_\+check}}
+\index{geofence\+\_\+polygon\+\_\+check@{geofence\+\_\+polygon\+\_\+check}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{geofence\+\_\+polygon\+\_\+check(\+Zone\+\_\+general $\ast$zone, G\+E\+O\+\_\+\+Point p)}{geofence_polygon_check(Zone_general *zone, GEO_Point p)}}]{\setlength{\rightskip}{0pt plus 5cm}int geofence\+\_\+polygon\+\_\+check (
+\begin{DoxyParamCaption}
+\item[{{\bf Zone\+\_\+general} $\ast$}]{zone, }
+\item[{{\bf G\+E\+O\+\_\+\+Point}}]{p}
+\end{DoxyParamCaption}
+)}\hypertarget{_g_p_s_interface_8h_a74f9c1235487a3808df665a9bb7334b5}{}\label{_g_p_s_interface_8h_a74f9c1235487a3808df665a9bb7334b5}
+
+
+checks if the point in question is inside or outside the geofence polygon. uses the Winding-\/\+Number algorithm for test of Point-\/\+In-\/\+Polygon inclusion. see \href{http://geomalgorithms.com/a03-_inclusion.html}{\tt http\+://geomalgorithms.\+com/a03-\/\+\_\+inclusion.\+html} 
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em zone} & The geofence polygon \\
+\hline
+\mbox{\tt in}  & {\em p} & the P\+OI \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+one of the constants describing the status, according to the outcome of the PiP test. 
+\end{DoxyReturn}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!G\+P\+S\+\_\+init@{G\+P\+S\+\_\+init}}
+\index{G\+P\+S\+\_\+init@{G\+P\+S\+\_\+init}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{G\+P\+S\+\_\+init(\+G\+P\+S\+\_\+\+Actions $\ast$gps\+Handler)}{GPS_init(GPS_Actions *gpsHandler)}}]{\setlength{\rightskip}{0pt plus 5cm}int G\+P\+S\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+P\+S\+\_\+\+Actions} $\ast$}]{gps\+Handler}
+\end{DoxyParamCaption}
+)}\hypertarget{_g_p_s_interface_8h_a2a940fd545a524efc707bf883f5be6a9}{}\label{_g_p_s_interface_8h_a2a940fd545a524efc707bf883f5be6a9}
+
+
+assignes the correct library for the get\+G\+PS function pointer. either an R\+Pi or a demo implementation of the get\+G\+P\+S\+Sample() will be used. 
+
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!to\+\_\+deg@{to\+\_\+deg}}
+\index{to\+\_\+deg@{to\+\_\+deg}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
+\subsubsection[{\texorpdfstring{to\+\_\+deg(double x)}{to_deg(double x)}}]{\setlength{\rightskip}{0pt plus 5cm}double to\+\_\+deg (
+\begin{DoxyParamCaption}
+\item[{double}]{x}
+\end{DoxyParamCaption}
+)}\hypertarget{_g_p_s_interface_8h_a6b2e7c4d2b3a08fa15ebb18365a9264c}{}\label{_g_p_s_interface_8h_a6b2e7c4d2b3a08fa15ebb18365a9264c}
+
+
+converts N\+M\+EA decimal value to degrees (used for conversion of lat lon values) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & the decimal value extracted as-\/is from N\+M\+EA \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a value converted from dec to deg 
+\end{DoxyReturn}

@@ -1,0 +1,221 @@
+\hypertarget{serial_interface_8c}{}\section{src/serial/serial\+Interface.c File Reference}
+\label{serial_interface_8c}\index{src/serial/serial\+Interface.\+c@{src/serial/serial\+Interface.\+c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$fcntl.\+h$>$}\\*
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$termios.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}serial\+Interface.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$src/log\+Interface.\+h$>$}\\*
+Include dependency graph for serial\+Interface.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{serial_interface_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{serial_interface_8c_a0f6c661829d74ed8dc7a5256e6ce7f8a}{open\+\_\+port} (void)
+\begin{DoxyCompactList}\small\item\em Opens a port for serial communication. \end{DoxyCompactList}\item 
+int \hyperlink{serial_interface_8c_a00c4e146d0eac524e06a95ee43472ff7}{fetch\+\_\+sentence\+\_\+from\+\_\+gps} (int fd, char $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em gets one complete N\+M\+EA message from the G\+PS, through the serial port that its on. \end{DoxyCompactList}\item 
+void \hyperlink{serial_interface_8c_af0a54246c3213f8835daeebce5e83b0c}{serial\+\_\+start} (const char $\ast$portname)
+\begin{DoxyCompactList}\small\item\em Open a serial connection on a specified port. \end{DoxyCompactList}\item 
+int \hyperlink{serial_interface_8c_af13dbfaf23b6064cc504fa4bbd81c4ea}{serial\+\_\+read\+\_\+message} (mavlink\+\_\+message\+\_\+t $\ast$message)
+\begin{DoxyCompactList}\small\item\em Read one byte at a time from the M\+A\+V\+Link stream on the serial port and populate the mavlink message struct as new bytes arrive. \end{DoxyCompactList}\item 
+int \hyperlink{serial_interface_8c_ad9b54717f7dba8da115aa84b94a8c3a2}{usart\+\_\+recv\+\_\+blocking} (int i)
+\begin{DoxyCompactList}\small\item\em Blocking read of one byte from the serial port. \end{DoxyCompactList}\item 
+int \hyperlink{serial_interface_8c_a363618b75ca75efe669e4a9223e546b9}{serial\+\_\+write\+\_\+message} (const mavlink\+\_\+message\+\_\+t $\ast$message)
+\begin{DoxyCompactList}\small\item\em Write a mavlink message to the serial port. \end{DoxyCompactList}\item 
+int \hyperlink{serial_interface_8c_a9a535380c30c260dc88af0d5bd48540e}{get\+\_\+time\+\_\+sec} (struct timeval $\ast$tv, struct timezone $\ast$tz)
+\begin{DoxyCompactList}\small\item\em Gets the nubmer of seconds and milliseconds since epoch. \end{DoxyCompactList}\item 
+int \hyperlink{serial_interface_8c_abe6133ac999c4ce5f06e760aa3ba1827}{get\+\_\+stream\+FD} (void)
+\begin{DoxyCompactList}\small\item\em returns stream\+FD. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{serial_interface_8c_a13869b414e88f5f13a1b32c488e06490}{stream\+FD} = 0
+\item 
+mavlink\+\_\+status\+\_\+t \hyperlink{serial_interface_8c_acdef7b92239f1e607ef6caa33a16d2ed}{status}
+\item 
+\hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1}{bool} \hyperlink{serial_interface_8c_a0c0196118cf8dc54df66d79e21a975c7}{msg\+Received} = \hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1ae9de385ef6fe9bf3360d1038396b884c}{false}
+\item 
+volatile float \hyperlink{serial_interface_8c_a6238cddccea71aca0723a82b1411dff6}{seconds}
+\item 
+struct termios oldtio \hyperlink{serial_interface_8c_abc97f5054a1b45039965e4ee787abc03}{newtio}
+\item 
+const char $\ast$ \hyperlink{serial_interface_8c_a7a9d64d1e83399aabec1d2b6b3ae6424}{R\+S232\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+const}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{serial\+Interface.\+c@{serial\+Interface.\+c}!fetch\+\_\+sentence\+\_\+from\+\_\+gps@{fetch\+\_\+sentence\+\_\+from\+\_\+gps}}
+\index{fetch\+\_\+sentence\+\_\+from\+\_\+gps@{fetch\+\_\+sentence\+\_\+from\+\_\+gps}!serial\+Interface.\+c@{serial\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{fetch\+\_\+sentence\+\_\+from\+\_\+gps(int fd, char $\ast$buffer)}{fetch_sentence_from_gps(int fd, char *buffer)}}]{\setlength{\rightskip}{0pt plus 5cm}int fetch\+\_\+sentence\+\_\+from\+\_\+gps (
+\begin{DoxyParamCaption}
+\item[{int}]{fd, }
+\item[{char $\ast$}]{buffer}
+\end{DoxyParamCaption}
+)}\hypertarget{serial_interface_8c_a00c4e146d0eac524e06a95ee43472ff7}{}\label{serial_interface_8c_a00c4e146d0eac524e06a95ee43472ff7}
+
+
+gets one complete N\+M\+EA message from the G\+PS, through the serial port that its on. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em fd} & the file descriptor of serial port used for communication with the G\+PS \\
+\hline
+ & {\em buffer} & the string buffer that the message will be written to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns the number of charachters that were read for this N\+M\+EA sentence. 
+\end{DoxyReturn}
+\index{serial\+Interface.\+c@{serial\+Interface.\+c}!get\+\_\+stream\+FD@{get\+\_\+stream\+FD}}
+\index{get\+\_\+stream\+FD@{get\+\_\+stream\+FD}!serial\+Interface.\+c@{serial\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{get\+\_\+stream\+F\+D(void)}{get_streamFD(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int get\+\_\+stream\+FD (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{serial_interface_8c_abe6133ac999c4ce5f06e760aa3ba1827}{}\label{serial_interface_8c_abe6133ac999c4ce5f06e760aa3ba1827}
+
+
+returns stream\+FD. 
+
+\index{serial\+Interface.\+c@{serial\+Interface.\+c}!get\+\_\+time\+\_\+sec@{get\+\_\+time\+\_\+sec}}
+\index{get\+\_\+time\+\_\+sec@{get\+\_\+time\+\_\+sec}!serial\+Interface.\+c@{serial\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{get\+\_\+time\+\_\+sec(struct timeval $\ast$tv, struct timezone $\ast$tz)}{get_time_sec(struct timeval *tv, struct timezone *tz)}}]{\setlength{\rightskip}{0pt plus 5cm}int get\+\_\+time\+\_\+sec (
+\begin{DoxyParamCaption}
+\item[{struct timeval $\ast$}]{tv, }
+\item[{struct timezone $\ast$}]{tz}
+\end{DoxyParamCaption}
+)}\hypertarget{serial_interface_8c_a9a535380c30c260dc88af0d5bd48540e}{}\label{serial_interface_8c_a9a535380c30c260dc88af0d5bd48540e}
+
+
+Gets the nubmer of seconds and milliseconds since epoch. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tv} & the timeval struct (sys/time.\+h) \\
+\hline
+{\em tz} & the timezone struct\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 for successful write to structs and -\/1 for failure. 
+\end{DoxyReturn}
+\index{serial\+Interface.\+c@{serial\+Interface.\+c}!open\+\_\+port@{open\+\_\+port}}
+\index{open\+\_\+port@{open\+\_\+port}!serial\+Interface.\+c@{serial\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{open\+\_\+port(void)}{open_port(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int open\+\_\+port (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{serial_interface_8c_a0f6c661829d74ed8dc7a5256e6ce7f8a}{}\label{serial_interface_8c_a0f6c661829d74ed8dc7a5256e6ce7f8a}
+
+
+Opens a port for serial communication. 
+
+\begin{DoxyReturn}{Returns}
+returns an int that\textquotesingle{}s the file descriptor of the opened port. 
+\end{DoxyReturn}
+\index{serial\+Interface.\+c@{serial\+Interface.\+c}!serial\+\_\+read\+\_\+message@{serial\+\_\+read\+\_\+message}}
+\index{serial\+\_\+read\+\_\+message@{serial\+\_\+read\+\_\+message}!serial\+Interface.\+c@{serial\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{serial\+\_\+read\+\_\+message(mavlink\+\_\+message\+\_\+t $\ast$message)}{serial_read_message(mavlink_message_t *message)}}]{\setlength{\rightskip}{0pt plus 5cm}int serial\+\_\+read\+\_\+message (
+\begin{DoxyParamCaption}
+\item[{mavlink\+\_\+message\+\_\+t $\ast$}]{message}
+\end{DoxyParamCaption}
+)}\hypertarget{serial_interface_8c_af13dbfaf23b6064cc504fa4bbd81c4ea}{}\label{serial_interface_8c_af13dbfaf23b6064cc504fa4bbd81c4ea}
+
+
+Read one byte at a time from the M\+A\+V\+Link stream on the serial port and populate the mavlink message struct as new bytes arrive. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The M\+A\+V\+Link message struct which is populated with the parse data that\textquotesingle{}s received fom the serial port.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if a complete M\+A\+V\+Link message could be read, 0 otherwise. 
+\end{DoxyReturn}
+\index{serial\+Interface.\+c@{serial\+Interface.\+c}!serial\+\_\+start@{serial\+\_\+start}}
+\index{serial\+\_\+start@{serial\+\_\+start}!serial\+Interface.\+c@{serial\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{serial\+\_\+start(const char $\ast$portname)}{serial_start(const char *portname)}}]{\setlength{\rightskip}{0pt plus 5cm}void serial\+\_\+start (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{portname}
+\end{DoxyParamCaption}
+)}\hypertarget{serial_interface_8c_af0a54246c3213f8835daeebce5e83b0c}{}\label{serial_interface_8c_af0a54246c3213f8835daeebce5e83b0c}
+
+
+Open a serial connection on a specified port. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em portname} & The name of the serial port \\
+\hline
+\end{DoxyParams}
+\index{serial\+Interface.\+c@{serial\+Interface.\+c}!serial\+\_\+write\+\_\+message@{serial\+\_\+write\+\_\+message}}
+\index{serial\+\_\+write\+\_\+message@{serial\+\_\+write\+\_\+message}!serial\+Interface.\+c@{serial\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{serial\+\_\+write\+\_\+message(const mavlink\+\_\+message\+\_\+t $\ast$message)}{serial_write_message(const mavlink_message_t *message)}}]{\setlength{\rightskip}{0pt plus 5cm}int serial\+\_\+write\+\_\+message (
+\begin{DoxyParamCaption}
+\item[{const mavlink\+\_\+message\+\_\+t $\ast$}]{message}
+\end{DoxyParamCaption}
+)}\hypertarget{serial_interface_8c_a363618b75ca75efe669e4a9223e546b9}{}\label{serial_interface_8c_a363618b75ca75efe669e4a9223e546b9}
+
+
+Write a mavlink message to the serial port. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em message} & The M\+A\+V\+Link message to be written.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of bytes written to the serial port (the size of the message). 
+\end{DoxyReturn}
+\index{serial\+Interface.\+c@{serial\+Interface.\+c}!usart\+\_\+recv\+\_\+blocking@{usart\+\_\+recv\+\_\+blocking}}
+\index{usart\+\_\+recv\+\_\+blocking@{usart\+\_\+recv\+\_\+blocking}!serial\+Interface.\+c@{serial\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{usart\+\_\+recv\+\_\+blocking(int i)}{usart_recv_blocking(int i)}}]{\setlength{\rightskip}{0pt plus 5cm}int usart\+\_\+recv\+\_\+blocking (
+\begin{DoxyParamCaption}
+\item[{int}]{i}
+\end{DoxyParamCaption}
+)}\hypertarget{serial_interface_8c_ad9b54717f7dba8da115aa84b94a8c3a2}{}\label{serial_interface_8c_ad9b54717f7dba8da115aa84b94a8c3a2}
+
+
+Blocking read of one byte from the serial port. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em i} & Unused\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The read byte. 
+\end{DoxyReturn}
+
+
+\subsection{Variable Documentation}
+\index{serial\+Interface.\+c@{serial\+Interface.\+c}!msg\+Received@{msg\+Received}}
+\index{msg\+Received@{msg\+Received}!serial\+Interface.\+c@{serial\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{msg\+Received}{msgReceived}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bool} msg\+Received = {\bf false}}\hypertarget{serial_interface_8c_a0c0196118cf8dc54df66d79e21a975c7}{}\label{serial_interface_8c_a0c0196118cf8dc54df66d79e21a975c7}
+\index{serial\+Interface.\+c@{serial\+Interface.\+c}!newtio@{newtio}}
+\index{newtio@{newtio}!serial\+Interface.\+c@{serial\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{newtio}{newtio}}]{\setlength{\rightskip}{0pt plus 5cm}struct termios oldtio newtio}\hypertarget{serial_interface_8c_abc97f5054a1b45039965e4ee787abc03}{}\label{serial_interface_8c_abc97f5054a1b45039965e4ee787abc03}
+\index{serial\+Interface.\+c@{serial\+Interface.\+c}!R\+S232\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+const@{R\+S232\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+const}}
+\index{R\+S232\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+const@{R\+S232\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+const}!serial\+Interface.\+c@{serial\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{R\+S232\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+const}{RS232_DEVICE_const}}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ R\+S232\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+const}\hypertarget{serial_interface_8c_a7a9d64d1e83399aabec1d2b6b3ae6424}{}\label{serial_interface_8c_a7a9d64d1e83399aabec1d2b6b3ae6424}
+\index{serial\+Interface.\+c@{serial\+Interface.\+c}!seconds@{seconds}}
+\index{seconds@{seconds}!serial\+Interface.\+c@{serial\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{seconds}{seconds}}]{\setlength{\rightskip}{0pt plus 5cm}volatile float seconds}\hypertarget{serial_interface_8c_a6238cddccea71aca0723a82b1411dff6}{}\label{serial_interface_8c_a6238cddccea71aca0723a82b1411dff6}
+\index{serial\+Interface.\+c@{serial\+Interface.\+c}!status@{status}}
+\index{status@{status}!serial\+Interface.\+c@{serial\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{status}{status}}]{\setlength{\rightskip}{0pt plus 5cm}mavlink\+\_\+status\+\_\+t status}\hypertarget{serial_interface_8c_acdef7b92239f1e607ef6caa33a16d2ed}{}\label{serial_interface_8c_acdef7b92239f1e607ef6caa33a16d2ed}
+\index{serial\+Interface.\+c@{serial\+Interface.\+c}!stream\+FD@{stream\+FD}}
+\index{stream\+FD@{stream\+FD}!serial\+Interface.\+c@{serial\+Interface.\+c}}
+\subsubsection[{\texorpdfstring{stream\+FD}{streamFD}}]{\setlength{\rightskip}{0pt plus 5cm}int stream\+FD = 0}\hypertarget{serial_interface_8c_a13869b414e88f5f13a1b32c488e06490}{}\label{serial_interface_8c_a13869b414e88f5f13a1b32c488e06490}
+the file descriptor of the port that will be opened using \hyperlink{serial_interface_8h_a0f6c661829d74ed8dc7a5256e6ce7f8a}{open\+\_\+port()}. 

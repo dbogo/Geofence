@@ -1,6 +1,7 @@
 # Geofence
 
-### Warning: The software is not ready for use in flight yet and some essential functionality is still developed.
+
+**Warning: The software is not ready for use in flight yet and some essential functionality is still developed.**
 
 --------------------------------------------------------------------------------------------------------
 
@@ -11,6 +12,12 @@ Users can feed custom geofences to the program, by specifying multiple coordinat
 
 Geofence communicates with a drone's flight controller via the [MAVLink Protocol](http://qgroundcontrol.org/mavlink/start) over a physical serial connection (e.g an FTDI cable etc.) and continuously receives flight data from the autopilot. In case of a geofence violation, based on location information from a GPS receiver that's connected to the Autopilot or the external computer itself, the program immediately takes over the control of the drone by switching the PX4 Autopilot to ['Offboard Mode'](https://dev.px4.io/en/concept/flight_modes.html) and executing the necessary commands to return to a safe area/land/get away from the border etc. In addition, the external computer will disarm the drone to prevent it from taking off if it's detected to be in a no-fly zone.
 ______________________________________
+
+- [Geofence](#geofence)
+	- [Pre-requisites](#pre-requisites)
+	- [Installation and Building](#installation-and-building)
+	- [Documentation](#documentation)
+	- [Hardware Setup](#hardware-setup)
 
 ## Pre-requisites
 The software is mainly intended for use with the Pixhawk Flight Controller running the [PX4 Autopilot](http://px4.io/), thus:
@@ -31,10 +38,15 @@ make
 ```
 The setup script downloads and installs the dependencies. The script may ask for the root password at one point.
 
+## Documentation
+**Note: the documentation is still incomplete and is a work in progress. code coverage will improve over time.**
+
+Documentation is included and updated on every build so it's always up-to-date. The documentation is generated with [Doxygen](www.doxygen.org/
+). The Doxyfile is also included you are interested in generating it yourself of changing the configuration. To view the documentation open index.html under Documentaion/html in a web browser.
 
 ## Hardware Setup
 
-1. If the GPS is intended to be connected to the Pixhawk, proceed to step 2. Else, Connect the GPS to the Raspberry Pi as shown [here](http://blog.whatgeek.com.pt/2015/03/connect-a-gps-to-the-raspberry-pi/). In general, the TX and RX pins of the GPS should be connected to the pairing RX,TX pins of the UART interface on the RaspberryPi's GPIO array (RX to TX and vice versa). ***Always*** connect the Ground (GND) first. Note that GPS modules differ in operating voltage. Check the manufacturer of your GPS to make sure what is the operating voltage (Commonly 3.3 or 5 Volts). A voltage regulator may be needed.
+1. If the GPS is intended to be connected to the Pixhawk, proceed to step 2. Else, connect the GPS to the RaspberryPi as shown [here](http://blog.whatgeek.com.pt/2015/03/connect-a-gps-to-the-raspberry-pi/). In general, the TX and RX pins of the GPS should be connected to the pairing RX,TX pins of the UART interface on the RaspberryPi's GPIO array (RX to TX and vice versa). ***Always*** connect the Ground (GND) first. Note that GPS modules differ in operating voltage. Check the manufacturer of your GPS to make sure what is the operating voltage (commonly 3.3 or 5 Volts). A voltage regulator may be needed.
 2. Connect the USB to FTDI cable to Pixhawks Telem2 according to this table:
 
 | TELEM2  | FTDI |

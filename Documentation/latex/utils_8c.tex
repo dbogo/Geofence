@@ -1,0 +1,59 @@
+\hypertarget{utils_8c}{}\section{src/utils.c File Reference}
+\label{utils_8c}\index{src/utils.\+c@{src/utils.\+c}}
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}utils.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}log\+Interface.\+h\char`\"{}}\\*
+Include dependency graph for utils.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{utils_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{utils_8c_aab4b0b78fc58f681cda908bc549e2eb3}{suspend\+\_\+loop} (time\+\_\+t tv\+\_\+sec, long nsec)
+\begin{DoxyCompactList}\small\item\em suspends the main loop for a specific time period, using nanosleep(). \end{DoxyCompactList}\item 
+\hyperlink{utils_8h_ac172b6ea96d5e5322771db859ad1e65f}{platform\+\_\+id} \hyperlink{utils_8c_aa7805dae582961f7ef57afd9a420cfc7}{identify\+\_\+platform} (void)
+\begin{DoxyCompactList}\small\item\em checks what platform we are on. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{utils.\+c@{utils.\+c}!identify\+\_\+platform@{identify\+\_\+platform}}
+\index{identify\+\_\+platform@{identify\+\_\+platform}!utils.\+c@{utils.\+c}}
+\subsubsection[{\texorpdfstring{identify\+\_\+platform(void)}{identify_platform(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf platform\+\_\+id} identify\+\_\+platform (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{utils_8c_aa7805dae582961f7ef57afd9a420cfc7}{}\label{utils_8c_aa7805dae582961f7ef57afd9a420cfc7}
+
+
+checks what platform we are on. 
+
+\begin{DoxyReturn}{Returns}
+returns the id of the platform. one if the values of the platform\+\_\+id enum. 
+\end{DoxyReturn}
+\index{utils.\+c@{utils.\+c}!suspend\+\_\+loop@{suspend\+\_\+loop}}
+\index{suspend\+\_\+loop@{suspend\+\_\+loop}!utils.\+c@{utils.\+c}}
+\subsubsection[{\texorpdfstring{suspend\+\_\+loop(time\+\_\+t tv\+\_\+sec, long nsec)}{suspend_loop(time_t tv_sec, long nsec)}}]{\setlength{\rightskip}{0pt plus 5cm}int suspend\+\_\+loop (
+\begin{DoxyParamCaption}
+\item[{time\+\_\+t}]{tv\+\_\+sec, }
+\item[{long}]{nsec}
+\end{DoxyParamCaption}
+)}\hypertarget{utils_8c_aab4b0b78fc58f681cda908bc549e2eb3}{}\label{utils_8c_aab4b0b78fc58f681cda908bc549e2eb3}
+
+
+suspends the main loop for a specific time period, using nanosleep(). 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em tv\+\_\+sec} & first value of \textquotesingle{}struct timespec\textquotesingle{}, storing the seconds. \\
+\hline
+\mbox{\tt in}  & {\em nsec} & second value of \textquotesingle{}struct timespec\textquotesingle{} storing the nanoseconds. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns the rv of nanosleep() 
+\end{DoxyReturn}

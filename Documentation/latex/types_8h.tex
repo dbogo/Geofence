@@ -1,0 +1,103 @@
+\hypertarget{types_8h}{}\section{src/types.h File Reference}
+\label{types_8h}\index{src/types.\+h@{src/types.\+h}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+Include dependency graph for types.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=145pt]{types_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{types_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_g_p_s_samp}{G\+P\+S\+Samp}
+\begin{DoxyCompactList}\small\item\em Represents a smaller, truncated verion of the data gathered from G\+PS. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_g_e_o___point}{G\+E\+O\+\_\+\+Point}
+\begin{DoxyCompactList}\small\item\em Represents a single 2D point. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_m_b_r}{M\+BR}
+\begin{DoxyCompactList}\small\item\em Minimum bounding rectangle of a certain polygon. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_edge}{Edge}
+\begin{DoxyCompactList}\small\item\em A straight line between two points. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_zone__general}{Zone\+\_\+general}
+\begin{DoxyCompactList}\small\item\em Represents a single polygon. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_full_g_p_s_data}{Full\+G\+P\+S\+Data}
+\begin{DoxyCompactList}\small\item\em The entire collection of relevant data, gathered from G\+PS. \end{DoxyCompactList}\item 
+struct \hyperlink{structgga}{gga}
+\begin{DoxyCompactList}\small\item\em Used to hold relevant data from \$\+G\+P\+G\+GA N\+M\+EA sentences from G\+PS. \end{DoxyCompactList}\item 
+struct \hyperlink{structgsa}{gsa}
+\begin{DoxyCompactList}\small\item\em Used to hold relevant data from \$\+G\+P\+G\+SA N\+M\+EA sentences from G\+PS. \end{DoxyCompactList}\item 
+struct \hyperlink{structvtg}{vtg}
+\begin{DoxyCompactList}\small\item\em Used to hold relevant data from \$\+G\+P\+V\+TG N\+M\+EA sentences from G\+PS. \end{DoxyCompactList}\item 
+struct \hyperlink{structgll}{gll}
+\begin{DoxyCompactList}\small\item\em Used to hold relevant data from \$\+G\+P\+G\+LL N\+M\+EA sentences from G\+PS. \end{DoxyCompactList}\item 
+struct \hyperlink{structrmc}{rmc}
+\begin{DoxyCompactList}\small\item\em Used to hold relevant data from \$\+G\+P\+R\+MC N\+M\+EA sentences from G\+PS. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{types_8h_a7e42e11a9434b785d263d129d887a36c}{O\+U\+T\+S\+I\+DE}~0
+\item 
+\#define \hyperlink{types_8h_a1a58ace3d61e5eddb10aaee57d9fcba9}{I\+N\+S\+I\+DE}~1
+\item 
+\#define \hyperlink{types_8h_ac4af596782111ed976bcf01f1f1027d3}{M\+I\+N\+\_\+\+A\+LT}~-\/500
+\item 
+\#define \hyperlink{types_8h_a93c97efc6e6ebd64ef14fefb0bbd9226}{M\+A\+X\+\_\+\+A\+LT}~10000
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef unsigned char \hyperlink{types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1}{bool} \{ \hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1ae9de385ef6fe9bf3360d1038396b884c}{false}, 
+\hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1a08f175a5505a10b9ed657defeb050e4b}{true}
+ \}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{types.\+h@{types.\+h}!I\+N\+S\+I\+DE@{I\+N\+S\+I\+DE}}
+\index{I\+N\+S\+I\+DE@{I\+N\+S\+I\+DE}!types.\+h@{types.\+h}}
+\subsubsection[{\texorpdfstring{I\+N\+S\+I\+DE}{INSIDE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\+N\+S\+I\+DE~1}\hypertarget{types_8h_a1a58ace3d61e5eddb10aaee57d9fcba9}{}\label{types_8h_a1a58ace3d61e5eddb10aaee57d9fcba9}
+\index{types.\+h@{types.\+h}!M\+A\+X\+\_\+\+A\+LT@{M\+A\+X\+\_\+\+A\+LT}}
+\index{M\+A\+X\+\_\+\+A\+LT@{M\+A\+X\+\_\+\+A\+LT}!types.\+h@{types.\+h}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+\_\+\+A\+LT}{MAX_ALT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+\_\+\+A\+LT~10000}\hypertarget{types_8h_a93c97efc6e6ebd64ef14fefb0bbd9226}{}\label{types_8h_a93c97efc6e6ebd64ef14fefb0bbd9226}
+\index{types.\+h@{types.\+h}!M\+I\+N\+\_\+\+A\+LT@{M\+I\+N\+\_\+\+A\+LT}}
+\index{M\+I\+N\+\_\+\+A\+LT@{M\+I\+N\+\_\+\+A\+LT}!types.\+h@{types.\+h}}
+\subsubsection[{\texorpdfstring{M\+I\+N\+\_\+\+A\+LT}{MIN_ALT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+I\+N\+\_\+\+A\+LT~-\/500}\hypertarget{types_8h_ac4af596782111ed976bcf01f1f1027d3}{}\label{types_8h_ac4af596782111ed976bcf01f1f1027d3}
+\index{types.\+h@{types.\+h}!O\+U\+T\+S\+I\+DE@{O\+U\+T\+S\+I\+DE}}
+\index{O\+U\+T\+S\+I\+DE@{O\+U\+T\+S\+I\+DE}!types.\+h@{types.\+h}}
+\subsubsection[{\texorpdfstring{O\+U\+T\+S\+I\+DE}{OUTSIDE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define O\+U\+T\+S\+I\+DE~0}\hypertarget{types_8h_a7e42e11a9434b785d263d129d887a36c}{}\label{types_8h_a7e42e11a9434b785d263d129d887a36c}
+
+
+\subsection{Typedef Documentation}
+\index{types.\+h@{types.\+h}!uint8\+\_\+t@{uint8\+\_\+t}}
+\index{uint8\+\_\+t@{uint8\+\_\+t}!types.\+h@{types.\+h}}
+\subsubsection[{\texorpdfstring{uint8\+\_\+t}{uint8_t}}]{\setlength{\rightskip}{0pt plus 5cm}typedef unsigned char {\bf uint8\+\_\+t}}\hypertarget{types_8h_aba7bc1797add20fe3efdf37ced1182c5}{}\label{types_8h_aba7bc1797add20fe3efdf37ced1182c5}
+
+
+\subsection{Enumeration Type Documentation}
+\index{types.\+h@{types.\+h}!bool@{bool}}
+\index{bool@{bool}!types.\+h@{types.\+h}}
+\subsubsection[{\texorpdfstring{bool}{bool}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf bool}}\hypertarget{types_8h_af6a258d8f3ee5206d682d799316314b1}{}\label{types_8h_af6a258d8f3ee5206d682d799316314b1}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{false@{false}!types.\+h@{types.\+h}}\index{types.\+h@{types.\+h}!false@{false}}\item[{\em 
+false\hypertarget{types_8h_af6a258d8f3ee5206d682d799316314b1ae9de385ef6fe9bf3360d1038396b884c}{}\label{types_8h_af6a258d8f3ee5206d682d799316314b1ae9de385ef6fe9bf3360d1038396b884c}
+}]\index{true@{true}!types.\+h@{types.\+h}}\index{types.\+h@{types.\+h}!true@{true}}\item[{\em 
+true\hypertarget{types_8h_af6a258d8f3ee5206d682d799316314b1a08f175a5505a10b9ed657defeb050e4b}{}\label{types_8h_af6a258d8f3ee5206d682d799316314b1a08f175a5505a10b9ed657defeb050e4b}
+}]\end{description}
+\end{Desc}

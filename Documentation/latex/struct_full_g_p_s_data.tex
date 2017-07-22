@@ -1,0 +1,117 @@
+\hypertarget{struct_full_g_p_s_data}{}\section{Full\+G\+P\+S\+Data Struct Reference}
+\label{struct_full_g_p_s_data}\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+
+
+The entire collection of relevant data, gathered from G\+PS.  
+
+
+
+
+{\ttfamily \#include $<$types.\+h$>$}
+
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{struct_full_g_p_s_data_a76714bdbc5c536fa77dfb14533ff82a9}{latitude}
+\item 
+double \hyperlink{struct_full_g_p_s_data_ac155e35fdeebafc89723a51520fb9fe6}{longitude}
+\item 
+double \hyperlink{struct_full_g_p_s_data_ae0cc66619a6d2bc3c26c6835d1165478}{lat\+\_\+deg}
+\item 
+double \hyperlink{struct_full_g_p_s_data_acfc9eaa9c7495fe6c9d0dae65db238a0}{lon\+\_\+deg}
+\item 
+unsigned char \hyperlink{struct_full_g_p_s_data_a6a2e4ad53afd61fcd716002fc2965220}{lat}
+\item 
+unsigned char \hyperlink{struct_full_g_p_s_data_a7e55b80071251dcef4239e60122980a4}{lon}
+\item 
+double \hyperlink{struct_full_g_p_s_data_a2b13d276aee0d9fd646c8fa3647e869b}{altitude}
+\item 
+double \hyperlink{struct_full_g_p_s_data_acaa2fde7e3fad7df8f5755347603d17b}{course}
+\item 
+double \hyperlink{struct_full_g_p_s_data_acdf277ddb345fbdb7ef861a9c37c290e}{spd\+Kph}
+\item 
+\hyperlink{types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t} \hyperlink{struct_full_g_p_s_data_a0b48c8041be823080e6346c1731a54ed}{quality}
+\item 
+\hyperlink{types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t} \hyperlink{struct_full_g_p_s_data_aa306fbda3e6f642c3668c299361d25d0}{satellites}
+\item 
+unsigned char \hyperlink{struct_full_g_p_s_data_a4217a0a41f1bf0012de0dd9daa1b8dfc}{fix\+Type}
+\item 
+long \hyperlink{struct_full_g_p_s_data_a820d96504a74d9f1ab7ae4d962a878ba}{fix\+Time}
+\item 
+double \hyperlink{struct_full_g_p_s_data_a387b6cbd184865365f92d29fd1ac32c1}{pdop}
+\item 
+double \hyperlink{struct_full_g_p_s_data_a7ede759392ed439219bdbac4c8ede827}{hdop}
+\item 
+double \hyperlink{struct_full_g_p_s_data_a4001a0f05d0c57ebdb066d738098bff7}{vdop}
+\item 
+double \hyperlink{struct_full_g_p_s_data_aafd79f80d0c8c393f4ddad96148f6175}{spd\+Knots}
+\item 
+\hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1}{bool} \hyperlink{struct_full_g_p_s_data_ad1f0bff7112206922c9d5a87adad6f2b}{status}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The entire collection of relevant data, gathered from G\+PS. 
+
+lat\+\_\+deg and lon\+\_\+deg are the values of a point on the map whre google map would show a point. lat/lon data that\textquotesingle{}s recieved from N\+M\+EA sentences is in deciamal, and not in degrees, hence the need for a defferenciation. 
+
+\subsection{Field Documentation}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!altitude@{altitude}}
+\index{altitude@{altitude}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{altitude}{altitude}}]{\setlength{\rightskip}{0pt plus 5cm}double altitude}\hypertarget{struct_full_g_p_s_data_a2b13d276aee0d9fd646c8fa3647e869b}{}\label{struct_full_g_p_s_data_a2b13d276aee0d9fd646c8fa3647e869b}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!course@{course}}
+\index{course@{course}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{course}{course}}]{\setlength{\rightskip}{0pt plus 5cm}double course}\hypertarget{struct_full_g_p_s_data_acaa2fde7e3fad7df8f5755347603d17b}{}\label{struct_full_g_p_s_data_acaa2fde7e3fad7df8f5755347603d17b}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!fix\+Time@{fix\+Time}}
+\index{fix\+Time@{fix\+Time}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{fix\+Time}{fixTime}}]{\setlength{\rightskip}{0pt plus 5cm}long fix\+Time}\hypertarget{struct_full_g_p_s_data_a820d96504a74d9f1ab7ae4d962a878ba}{}\label{struct_full_g_p_s_data_a820d96504a74d9f1ab7ae4d962a878ba}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!fix\+Type@{fix\+Type}}
+\index{fix\+Type@{fix\+Type}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{fix\+Type}{fixType}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char fix\+Type}\hypertarget{struct_full_g_p_s_data_a4217a0a41f1bf0012de0dd9daa1b8dfc}{}\label{struct_full_g_p_s_data_a4217a0a41f1bf0012de0dd9daa1b8dfc}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!hdop@{hdop}}
+\index{hdop@{hdop}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{hdop}{hdop}}]{\setlength{\rightskip}{0pt plus 5cm}double hdop}\hypertarget{struct_full_g_p_s_data_a7ede759392ed439219bdbac4c8ede827}{}\label{struct_full_g_p_s_data_a7ede759392ed439219bdbac4c8ede827}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!lat@{lat}}
+\index{lat@{lat}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{lat}{lat}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char lat}\hypertarget{struct_full_g_p_s_data_a6a2e4ad53afd61fcd716002fc2965220}{}\label{struct_full_g_p_s_data_a6a2e4ad53afd61fcd716002fc2965220}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!lat\+\_\+deg@{lat\+\_\+deg}}
+\index{lat\+\_\+deg@{lat\+\_\+deg}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{lat\+\_\+deg}{lat_deg}}]{\setlength{\rightskip}{0pt plus 5cm}double lat\+\_\+deg}\hypertarget{struct_full_g_p_s_data_ae0cc66619a6d2bc3c26c6835d1165478}{}\label{struct_full_g_p_s_data_ae0cc66619a6d2bc3c26c6835d1165478}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!latitude@{latitude}}
+\index{latitude@{latitude}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{latitude}{latitude}}]{\setlength{\rightskip}{0pt plus 5cm}double latitude}\hypertarget{struct_full_g_p_s_data_a76714bdbc5c536fa77dfb14533ff82a9}{}\label{struct_full_g_p_s_data_a76714bdbc5c536fa77dfb14533ff82a9}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!lon@{lon}}
+\index{lon@{lon}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{lon}{lon}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char lon}\hypertarget{struct_full_g_p_s_data_a7e55b80071251dcef4239e60122980a4}{}\label{struct_full_g_p_s_data_a7e55b80071251dcef4239e60122980a4}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!lon\+\_\+deg@{lon\+\_\+deg}}
+\index{lon\+\_\+deg@{lon\+\_\+deg}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{lon\+\_\+deg}{lon_deg}}]{\setlength{\rightskip}{0pt plus 5cm}double lon\+\_\+deg}\hypertarget{struct_full_g_p_s_data_acfc9eaa9c7495fe6c9d0dae65db238a0}{}\label{struct_full_g_p_s_data_acfc9eaa9c7495fe6c9d0dae65db238a0}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!longitude@{longitude}}
+\index{longitude@{longitude}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{longitude}{longitude}}]{\setlength{\rightskip}{0pt plus 5cm}double longitude}\hypertarget{struct_full_g_p_s_data_ac155e35fdeebafc89723a51520fb9fe6}{}\label{struct_full_g_p_s_data_ac155e35fdeebafc89723a51520fb9fe6}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!pdop@{pdop}}
+\index{pdop@{pdop}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{pdop}{pdop}}]{\setlength{\rightskip}{0pt plus 5cm}double pdop}\hypertarget{struct_full_g_p_s_data_a387b6cbd184865365f92d29fd1ac32c1}{}\label{struct_full_g_p_s_data_a387b6cbd184865365f92d29fd1ac32c1}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!quality@{quality}}
+\index{quality@{quality}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{quality}{quality}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint8\+\_\+t} quality}\hypertarget{struct_full_g_p_s_data_a0b48c8041be823080e6346c1731a54ed}{}\label{struct_full_g_p_s_data_a0b48c8041be823080e6346c1731a54ed}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!satellites@{satellites}}
+\index{satellites@{satellites}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{satellites}{satellites}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint8\+\_\+t} satellites}\hypertarget{struct_full_g_p_s_data_aa306fbda3e6f642c3668c299361d25d0}{}\label{struct_full_g_p_s_data_aa306fbda3e6f642c3668c299361d25d0}
+number of satellites being tracked currently \index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!spd\+Knots@{spd\+Knots}}
+\index{spd\+Knots@{spd\+Knots}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{spd\+Knots}{spdKnots}}]{\setlength{\rightskip}{0pt plus 5cm}double spd\+Knots}\hypertarget{struct_full_g_p_s_data_aafd79f80d0c8c393f4ddad96148f6175}{}\label{struct_full_g_p_s_data_aafd79f80d0c8c393f4ddad96148f6175}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!spd\+Kph@{spd\+Kph}}
+\index{spd\+Kph@{spd\+Kph}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{spd\+Kph}{spdKph}}]{\setlength{\rightskip}{0pt plus 5cm}double spd\+Kph}\hypertarget{struct_full_g_p_s_data_acdf277ddb345fbdb7ef861a9c37c290e}{}\label{struct_full_g_p_s_data_acdf277ddb345fbdb7ef861a9c37c290e}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!status@{status}}
+\index{status@{status}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{status}{status}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bool} status}\hypertarget{struct_full_g_p_s_data_ad1f0bff7112206922c9d5a87adad6f2b}{}\label{struct_full_g_p_s_data_ad1f0bff7112206922c9d5a87adad6f2b}
+\index{Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}!vdop@{vdop}}
+\index{vdop@{vdop}!Full\+G\+P\+S\+Data@{Full\+G\+P\+S\+Data}}
+\subsubsection[{\texorpdfstring{vdop}{vdop}}]{\setlength{\rightskip}{0pt plus 5cm}double vdop}\hypertarget{struct_full_g_p_s_data_a4001a0f05d0c57ebdb066d738098bff7}{}\label{struct_full_g_p_s_data_a4001a0f05d0c57ebdb066d738098bff7}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\hyperlink{types_8h}{types.\+h}\end{DoxyCompactItemize}

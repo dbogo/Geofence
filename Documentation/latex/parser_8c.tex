@@ -1,0 +1,118 @@
+\hypertarget{parser_8c}{}\section{src/\+R\+Pi\+G\+P\+S\+Demo/parser.c File Reference}
+\label{parser_8c}\index{src/\+R\+Pi\+G\+P\+S\+Demo/parser.\+c@{src/\+R\+Pi\+G\+P\+S\+Demo/parser.\+c}}
+{\ttfamily \#include \char`\"{}parser.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+Include dependency graph for parser.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{parser_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{parser_8c_ac5b07dced6a5c7d5da22e87e9786d7e1}{parse\+\_\+nmea} (char $\ast$sentence, \hyperlink{struct_full_g_p_s_data}{Full\+G\+P\+S\+Data} $\ast$samp)
+\item 
+int \hyperlink{parser_8c_a5c6b8157da5d565140f4191c7c1fb0cd}{validate\+\_\+checksum} (char $\ast$nmea)
+\item 
+void \hyperlink{parser_8c_a4cb4cd3df7023bf69341b657ae8d7bdc}{parse\+\_\+gsa} (\hyperlink{structgsa}{gsa} $\ast$\hyperlink{structgsa}{gsa}, char $\ast$nmea)
+\item 
+void \hyperlink{parser_8c_a759c53be0d7fd59939ea06003c2c080f}{parse\+\_\+gll} (\hyperlink{structgll}{gll} $\ast$samp, char $\ast$nmea)
+\item 
+void \hyperlink{parser_8c_a1aab6de4fcd029e49dbf845194b6fa55}{parse\+\_\+vtg} (\hyperlink{structvtg}{vtg} $\ast$samp, char $\ast$nmea)
+\item 
+void \hyperlink{parser_8c_a0e3b05cfdd44f7bcc48b5d227a4184fd}{parse\+\_\+gga\+\_\+new} (\hyperlink{structgga}{gga} $\ast$samp, char $\ast$nmea)
+\item 
+void \hyperlink{parser_8c_a15635b5b7940be5bef8123cd3d8d1a8d}{parse\+\_\+rmc\+\_\+new} (\hyperlink{structrmc}{rmc} $\ast$samp, char $\ast$nmea)
+\item 
+void \hyperlink{parser_8c_a3e763ea09575f4a874d10ccab857cd05}{parse\+\_\+gga} (\hyperlink{structgga}{gga} $\ast$samp, char $\ast$nmea)
+\item 
+void \hyperlink{parser_8c_a400c090e598ddcbd64aa6946a1a2ce71}{parse\+\_\+rmc} (\hyperlink{structrmc}{rmc} $\ast$samp, char $\ast$nmea)
+\item 
+\hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1}{bool} \hyperlink{parser_8c_a09fade3eab39798f55135e16c99e913a}{is\+\_\+nmea\+\_\+txt} (char $\ast$nmea)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{parser.\+c@{parser.\+c}!is\+\_\+nmea\+\_\+txt@{is\+\_\+nmea\+\_\+txt}}
+\index{is\+\_\+nmea\+\_\+txt@{is\+\_\+nmea\+\_\+txt}!parser.\+c@{parser.\+c}}
+\subsubsection[{\texorpdfstring{is\+\_\+nmea\+\_\+txt(char $\ast$nmea)}{is_nmea_txt(char *nmea)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bool} is\+\_\+nmea\+\_\+txt (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{nmea}
+\end{DoxyParamCaption}
+)}\hypertarget{parser_8c_a09fade3eab39798f55135e16c99e913a}{}\label{parser_8c_a09fade3eab39798f55135e16c99e913a}
+\index{parser.\+c@{parser.\+c}!parse\+\_\+gga@{parse\+\_\+gga}}
+\index{parse\+\_\+gga@{parse\+\_\+gga}!parser.\+c@{parser.\+c}}
+\subsubsection[{\texorpdfstring{parse\+\_\+gga(gga $\ast$samp, char $\ast$nmea)}{parse_gga(gga *samp, char *nmea)}}]{\setlength{\rightskip}{0pt plus 5cm}void parse\+\_\+gga (
+\begin{DoxyParamCaption}
+\item[{{\bf gga} $\ast$}]{samp, }
+\item[{char $\ast$}]{nmea}
+\end{DoxyParamCaption}
+)}\hypertarget{parser_8c_a3e763ea09575f4a874d10ccab857cd05}{}\label{parser_8c_a3e763ea09575f4a874d10ccab857cd05}
+\index{parser.\+c@{parser.\+c}!parse\+\_\+gga\+\_\+new@{parse\+\_\+gga\+\_\+new}}
+\index{parse\+\_\+gga\+\_\+new@{parse\+\_\+gga\+\_\+new}!parser.\+c@{parser.\+c}}
+\subsubsection[{\texorpdfstring{parse\+\_\+gga\+\_\+new(gga $\ast$samp, char $\ast$nmea)}{parse_gga_new(gga *samp, char *nmea)}}]{\setlength{\rightskip}{0pt plus 5cm}void parse\+\_\+gga\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{{\bf gga} $\ast$}]{samp, }
+\item[{char $\ast$}]{nmea}
+\end{DoxyParamCaption}
+)}\hypertarget{parser_8c_a0e3b05cfdd44f7bcc48b5d227a4184fd}{}\label{parser_8c_a0e3b05cfdd44f7bcc48b5d227a4184fd}
+\index{parser.\+c@{parser.\+c}!parse\+\_\+gll@{parse\+\_\+gll}}
+\index{parse\+\_\+gll@{parse\+\_\+gll}!parser.\+c@{parser.\+c}}
+\subsubsection[{\texorpdfstring{parse\+\_\+gll(gll $\ast$samp, char $\ast$nmea)}{parse_gll(gll *samp, char *nmea)}}]{\setlength{\rightskip}{0pt plus 5cm}void parse\+\_\+gll (
+\begin{DoxyParamCaption}
+\item[{{\bf gll} $\ast$}]{samp, }
+\item[{char $\ast$}]{nmea}
+\end{DoxyParamCaption}
+)}\hypertarget{parser_8c_a759c53be0d7fd59939ea06003c2c080f}{}\label{parser_8c_a759c53be0d7fd59939ea06003c2c080f}
+\index{parser.\+c@{parser.\+c}!parse\+\_\+gsa@{parse\+\_\+gsa}}
+\index{parse\+\_\+gsa@{parse\+\_\+gsa}!parser.\+c@{parser.\+c}}
+\subsubsection[{\texorpdfstring{parse\+\_\+gsa(gsa $\ast$gsa, char $\ast$nmea)}{parse_gsa(gsa *gsa, char *nmea)}}]{\setlength{\rightskip}{0pt plus 5cm}void parse\+\_\+gsa (
+\begin{DoxyParamCaption}
+\item[{{\bf gsa} $\ast$}]{gsa, }
+\item[{char $\ast$}]{nmea}
+\end{DoxyParamCaption}
+)}\hypertarget{parser_8c_a4cb4cd3df7023bf69341b657ae8d7bdc}{}\label{parser_8c_a4cb4cd3df7023bf69341b657ae8d7bdc}
+\index{parser.\+c@{parser.\+c}!parse\+\_\+nmea@{parse\+\_\+nmea}}
+\index{parse\+\_\+nmea@{parse\+\_\+nmea}!parser.\+c@{parser.\+c}}
+\subsubsection[{\texorpdfstring{parse\+\_\+nmea(char $\ast$sentence, Full\+G\+P\+S\+Data $\ast$samp)}{parse_nmea(char *sentence, FullGPSData *samp)}}]{\setlength{\rightskip}{0pt plus 5cm}int parse\+\_\+nmea (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{sentence, }
+\item[{{\bf Full\+G\+P\+S\+Data} $\ast$}]{samp}
+\end{DoxyParamCaption}
+)}\hypertarget{parser_8c_ac5b07dced6a5c7d5da22e87e9786d7e1}{}\label{parser_8c_ac5b07dced6a5c7d5da22e87e9786d7e1}
+\index{parser.\+c@{parser.\+c}!parse\+\_\+rmc@{parse\+\_\+rmc}}
+\index{parse\+\_\+rmc@{parse\+\_\+rmc}!parser.\+c@{parser.\+c}}
+\subsubsection[{\texorpdfstring{parse\+\_\+rmc(rmc $\ast$samp, char $\ast$nmea)}{parse_rmc(rmc *samp, char *nmea)}}]{\setlength{\rightskip}{0pt plus 5cm}void parse\+\_\+rmc (
+\begin{DoxyParamCaption}
+\item[{{\bf rmc} $\ast$}]{samp, }
+\item[{char $\ast$}]{nmea}
+\end{DoxyParamCaption}
+)}\hypertarget{parser_8c_a400c090e598ddcbd64aa6946a1a2ce71}{}\label{parser_8c_a400c090e598ddcbd64aa6946a1a2ce71}
+\index{parser.\+c@{parser.\+c}!parse\+\_\+rmc\+\_\+new@{parse\+\_\+rmc\+\_\+new}}
+\index{parse\+\_\+rmc\+\_\+new@{parse\+\_\+rmc\+\_\+new}!parser.\+c@{parser.\+c}}
+\subsubsection[{\texorpdfstring{parse\+\_\+rmc\+\_\+new(rmc $\ast$samp, char $\ast$nmea)}{parse_rmc_new(rmc *samp, char *nmea)}}]{\setlength{\rightskip}{0pt plus 5cm}void parse\+\_\+rmc\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{{\bf rmc} $\ast$}]{samp, }
+\item[{char $\ast$}]{nmea}
+\end{DoxyParamCaption}
+)}\hypertarget{parser_8c_a15635b5b7940be5bef8123cd3d8d1a8d}{}\label{parser_8c_a15635b5b7940be5bef8123cd3d8d1a8d}
+\index{parser.\+c@{parser.\+c}!parse\+\_\+vtg@{parse\+\_\+vtg}}
+\index{parse\+\_\+vtg@{parse\+\_\+vtg}!parser.\+c@{parser.\+c}}
+\subsubsection[{\texorpdfstring{parse\+\_\+vtg(vtg $\ast$samp, char $\ast$nmea)}{parse_vtg(vtg *samp, char *nmea)}}]{\setlength{\rightskip}{0pt plus 5cm}void parse\+\_\+vtg (
+\begin{DoxyParamCaption}
+\item[{{\bf vtg} $\ast$}]{samp, }
+\item[{char $\ast$}]{nmea}
+\end{DoxyParamCaption}
+)}\hypertarget{parser_8c_a1aab6de4fcd029e49dbf845194b6fa55}{}\label{parser_8c_a1aab6de4fcd029e49dbf845194b6fa55}
+\index{parser.\+c@{parser.\+c}!validate\+\_\+checksum@{validate\+\_\+checksum}}
+\index{validate\+\_\+checksum@{validate\+\_\+checksum}!parser.\+c@{parser.\+c}}
+\subsubsection[{\texorpdfstring{validate\+\_\+checksum(char $\ast$nmea)}{validate_checksum(char *nmea)}}]{\setlength{\rightskip}{0pt plus 5cm}int validate\+\_\+checksum (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{nmea}
+\end{DoxyParamCaption}
+)}\hypertarget{parser_8c_a5c6b8157da5d565140f4191c7c1fb0cd}{}\label{parser_8c_a5c6b8157da5d565140f4191c7c1fb0cd}
