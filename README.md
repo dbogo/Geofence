@@ -39,10 +39,10 @@ make
 The setup script downloads and installs the dependencies. The script may ask for the root password at one point.
 
 ## Documentation
-**Note: the documentation is still incomplete and is a work in progress. code coverage will improve over time.**
+**Note: the documentation is still incomplete and is a work in progress. Code coverage will improve over time.**
 
 Documentation is included and updated on every build so it's always up-to-date. The documentation is generated with [Doxygen](www.doxygen.org/
-). The Doxyfile is also included you are interested in generating it yourself of changing the configuration. To view the documentation open index.html under Documentaion/html in a web browser.
+). The Doxyfile is also included if you are interested in generating it yourself of changing the configuration. To view the documentation open index.html under Documentation/html in a web browser.
 
 ## Hardware Setup
 
