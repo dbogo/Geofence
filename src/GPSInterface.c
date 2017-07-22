@@ -6,11 +6,13 @@
 #include "GPSInterface.h"
 #include "logInterface.h"
 #include "serial/serialInterface.h"
+
 #ifdef RPI_GPS
-#include <libs/RPiGPSDemo/src/rpi_gps_demo.h>
+#include "RPiGPSDemo/rpi_gps_demo.h"
 #else
-#include <libs/GPSDemo/src/gps_demo.h>
+#include "GPSDemo/gps_demo.h"
 #endif
+
 
 int GPS_init(GPS_Actions* gpsHandler){
 	#ifdef RPI_GPS

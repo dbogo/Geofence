@@ -10,16 +10,16 @@
 #include "init.h"
 #include "types.h"
 #include "utils.h"
-#include "autopilot_controller.h"
 #include "logInterface.h"
 #include "GPSInterface.h" // TODO: reconsider this hierarchy !!
+#include "autopilot_controller.h"
 #include "serial/serialInterface.h"
+#include "mavlink_interface/inc/interface.h"
 
-#include <mavlink_interface/inc/interface.h>
 #ifdef RPI_GPS
-#include <RPiGPSDemo/src/rpi_gps_demo.h>
+#include "RPiGPSDemo/rpi_gps_demo.h"
 #else
-#include <GPSDemo/src/gps_demo.h>
+#include "GPSDemo/gps_demo.h"
 #endif
 
 #ifdef RPI_ADDONS
@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
 	
 	//autopilot stuff
 	autopilot_initialize();
-	serial_start("/dev/ttyUSB0"); // TODO: receive from argv ?
+	// serial_start("/dev/ttyUSB0"); // TODO: receive from argv ?
 	// read_messages();
 	// autopilot_start();
 	// autopilot_write_helper();
