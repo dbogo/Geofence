@@ -30,25 +30,6 @@ typedef enum {
 	ARM 
 } platform_id; 
 
-/*
-int has_letters_or_symb(const char* str){
-	char* s = str;
-	while(*s){
-		if(!isdigit(*s++)) return 1;
-	}
-	return 0;
-}
-
-int is_string_clear(const char* str){
-	char* s = str;
-	int dotCount = 0;
-	while(*s){
-		if((*s != '.') && !isdigit(*s++)) return 0;
-	}
-	return 1; // true - the string has only numbers and dots.
-}
-*/
-
 /**
  * @brief      checks what platform we are on.
  * @return     returns the id of the platform. one if the values of the platform_id enum.

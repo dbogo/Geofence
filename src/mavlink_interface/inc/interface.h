@@ -105,7 +105,6 @@ void autopilot_intialize(void);
 void autopilot_start(void);
 
 //	READ 
-//void global_read_messages(void);
 void read_messages(void);
 
 // Write
@@ -133,7 +132,6 @@ int check_message (uint16_t COMMAND_ID);
 
 // Control
 
-// Mathematical approximations
 #include <mfunctions.h>
 
 void set_position(float x, float y, float z, mavlink_set_position_target_local_ned_t* sp);
