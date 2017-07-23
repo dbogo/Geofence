@@ -68,7 +68,7 @@ mavlink_set_position_target_local_ned_t current_setpoint;
 mavlink_set_position_target_local_ned_t initial_position;
 mavlink_set_position_target_local_ned_t ip;
 
-// Lock for initial position acquisation
+// Lock for initial position acquisition
 int initial_position_lock = 0;
 
 // Highres dependent flag timeout reset 
@@ -98,7 +98,7 @@ void reset_timestamps(Time_Stamps* time_stamps){
 	time_stamps->command_ack = 0;
 }
 
-// Initialisation
+// Initialization
 void autopilot_initialize(void){
 	// initialize attributes
 
@@ -265,11 +265,7 @@ void read_messages(void){
 }
 
 
-// Write
 void autopilot_write(void){
-	// signal startup
-	// prepare an initial setpoint, just stay put 
-	// void setpoint
 	mavlink_set_position_target_local_ned_t set_point;
 	set_point.type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_VELOCITY & MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_RATE;
 	set_point.coordinate_frame = MAV_FRAME_LOCAL_NED;
@@ -278,7 +274,6 @@ void autopilot_write(void){
 	set_point.vz       = 0.0;
 	set_point.yaw_rate = 0.0;
 	
-	// set position target
 	current_setpoint = set_point;
 
 	autopilot_write_setpoint();
@@ -296,23 +291,19 @@ void autopilot_write_setpoint(void){
 	set_point.target_system    = system_id;
 	set_point.target_component = autopilot_id;
 
-	//   ENCODE
 	mavlink_message_t message;
 	mavlink_msg_set_position_target_local_ned_encode(system_id, companion_id, &message, &set_point);
 
-	//   WRITE
 	autopilot_write_message(message);
 }
 
 
 void autopilot_write_message(mavlink_message_t message){
-	// Write the message to serial port
 	serial_write_message(&message);
 }
 
 
 void autopilot_update_setpoint(mavlink_set_position_target_local_ned_t setpoint){
-	// Update setpoint
 	current_setpoint = setpoint;
 }
 
@@ -388,7 +379,7 @@ void autopilot_arm(void){
 		// Check the command was written
 		if ( success ) {
 			arm_status = true;
-			printf("Autopilot successfuly armed\n");
+			printf("Autopilot successfully armed\n");
 		}
 	} 
 }
@@ -402,7 +393,7 @@ void autopilot_disarm(void){
 		// Check the command was written
 		if ( success ){
 			arm_status = false;
-			printf("Autopilot successfuly disarmed\n");
+			printf("Autopilot successfully disarmed\n");
 		}
 	} 
 }
@@ -427,7 +418,6 @@ int toggle_arm_disarm( bool flag ){
 	return len;
 }
 
-// MAVLink messages acknowledgement
 
 // NEEDS PX4 Master version or stable v1.4 
 int check_offboard_control(void){

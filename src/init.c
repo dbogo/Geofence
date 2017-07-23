@@ -10,7 +10,7 @@
 
 void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge** edges){
 	/**
-	 * TODO: Error cheking and rv
+	 * TODO: Error checking and rv
 	 */
 
 	initLogSystem(logMaster);
@@ -26,7 +26,7 @@ void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log
 
 int parse_input_args(Zone_general* zone, int argc, char** args){
 	/**
-	 * TODO: error cheking
+	 * TODO: error checking
 	 */
 	if(argc < 2 || strstr(args[1], "-h") != NULL){
 		display_help_message();
@@ -111,7 +111,7 @@ int init_geofence_from_argv(Zone_general* zone, int argc, char** args){
 		printf("Illegal geofence altitude value. %s\n", COMMON_ERR_STR);
 		return ARGV_ERROR;
 	} else if( argc <= 5){
-		printf("Not enough data for geofence initialisation. %s\n", COMMON_ERR_STR);
+		printf("Not enough data for geofence initialization. %s\n", COMMON_ERR_STR);
 		return ARGV_ERROR;
 	} else {
 		for(int i = 3; i < argc; i++){

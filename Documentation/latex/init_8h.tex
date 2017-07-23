@@ -3,16 +3,14 @@
 {\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}log\+Interface.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}G\+P\+S\+Interface.\+h\char`\"{}}\\*
-Include dependency graph for init.\+h\+:
-\nopagebreak
+Include dependency graph for init.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{init_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:
-\nopagebreak
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -40,7 +38,7 @@ void \hyperlink{init_8h_ac28005534dd7638d20979f2c625c72cd}{init\+\_\+platform\+\
 void \hyperlink{init_8h_a81d274388eeddf9b5cddcf4a29af5b0b}{init\+\_\+gps\+\_\+data} (\hyperlink{struct_full_g_p_s_data}{Full\+G\+P\+S\+Data} $\ast$$\ast$gps\+Data)
 \begin{DoxyCompactList}\small\item\em initializes the data pointed to by the {\ttfamily struct} pointer \end{DoxyCompactList}\item 
 int \hyperlink{init_8h_a297ed12bb3b7c61cddbde204b712c786}{parse\+\_\+input\+\_\+args} (\hyperlink{struct_zone__general}{Zone\+\_\+general} $\ast$zone, int argc, char $\ast$$\ast$args)
-\begin{DoxyCompactList}\small\item\em Recieves argc, argv from main and parses that input. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Receives argc, argv from main and parses that input. \end{DoxyCompactList}\item 
 int \hyperlink{init_8h_a0b0b243b7207b2a9f0bb8789c4e9dc6d}{init\+\_\+geofence\+\_\+from\+\_\+argv} (\hyperlink{struct_zone__general}{Zone\+\_\+general} $\ast$zone, int argc, char $\ast$$\ast$args)
 \begin{DoxyCompactList}\small\item\em initializes the geofence vertices etc from the argv. the format is xx.\+xxx,xx.\+xxx xx.\+xxx,xx.\+xxx ... etc \end{DoxyCompactList}\item 
 int \hyperlink{init_8h_af33c0fcf492f7f9401681bb3be490423}{init\+\_\+geofence\+\_\+from\+\_\+file} (\hyperlink{struct_zone__general}{Zone\+\_\+general} $\ast$zone, char $\ast$$\ast$args)
@@ -109,7 +107,7 @@ Initialize some important stuff.
 {\em edges} & double pointer to the \hyperlink{struct_edge}{Edge} struct. pointer to the array of edges of the polygon represented by zone. \\
 \hline
 \end{DoxyParams}
-T\+O\+DO\+: Error cheking and rv\index{init.\+h@{init.\+h}!init\+\_\+geofence\+\_\+from\+\_\+argv@{init\+\_\+geofence\+\_\+from\+\_\+argv}}
+T\+O\+DO\+: Error checking and rv\index{init.\+h@{init.\+h}!init\+\_\+geofence\+\_\+from\+\_\+argv@{init\+\_\+geofence\+\_\+from\+\_\+argv}}
 \index{init\+\_\+geofence\+\_\+from\+\_\+argv@{init\+\_\+geofence\+\_\+from\+\_\+argv}!init.\+h@{init.\+h}}
 \subsubsection[{\texorpdfstring{init\+\_\+geofence\+\_\+from\+\_\+argv(\+Zone\+\_\+general $\ast$zone, int argc, char $\ast$$\ast$args)}{init_geofence_from_argv(Zone_general *zone, int argc, char **args)}}]{\setlength{\rightskip}{0pt plus 5cm}int init\+\_\+geofence\+\_\+from\+\_\+argv (
 \begin{DoxyParamCaption}
@@ -194,7 +192,7 @@ calls function to initialize some stuff that works only on the Raspberry-\/\+Pi 
 )}\hypertarget{init_8h_a297ed12bb3b7c61cddbde204b712c786}{}\label{init_8h_a297ed12bb3b7c61cddbde204b712c786}
 
 
-Recieves argc, argv from main and parses that input. 
+Receives argc, argv from main and parses that input. 
 
 
 \begin{DoxyParams}[1]{Parameters}
@@ -208,7 +206,7 @@ Recieves argc, argv from main and parses that input.
 \begin{DoxyReturn}{Returns}
 returns different exit codes (defined in \hyperlink{init_8h}{init.\+h}) depending on the situation. 
 \end{DoxyReturn}
-T\+O\+DO\+: error cheking\index{init.\+h@{init.\+h}!parse\+\_\+line@{parse\+\_\+line}}
+T\+O\+DO\+: error checking\index{init.\+h@{init.\+h}!parse\+\_\+line@{parse\+\_\+line}}
 \index{parse\+\_\+line@{parse\+\_\+line}!init.\+h@{init.\+h}}
 \subsubsection[{\texorpdfstring{parse\+\_\+line(char $\ast$str)}{parse_line(char *str)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+E\+O\+\_\+\+Point} parse\+\_\+line (
 \begin{DoxyParamCaption}

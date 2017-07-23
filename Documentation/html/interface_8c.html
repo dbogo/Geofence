@@ -110,38 +110,55 @@ Functions</h2></td></tr>
 <tr class="memitem:a826db1ee378517996e36fba7482cb29b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_time___stamps.html">Time_Stamps</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a826db1ee378517996e36fba7482cb29b">create_TimeStamps</a> ()</td></tr>
 <tr class="separator:a826db1ee378517996e36fba7482cb29b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49dac88e99881e75459b0bc15354378b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a49dac88e99881e75459b0bc15354378b">reset_timestamps</a> (<a class="el" href="struct_time___stamps.html">Time_Stamps</a> *time_stamps)</td></tr>
+<tr class="memdesc:a49dac88e99881e75459b0bc15354378b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zeros out all the timestamps.  <a href="#a49dac88e99881e75459b0bc15354378b">More...</a><br /></td></tr>
 <tr class="separator:a49dac88e99881e75459b0bc15354378b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4bd4ad9917c2577168def15cf9aefb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#aa4bd4ad9917c2577168def15cf9aefb7">autopilot_initialize</a> (void)</td></tr>
+<tr class="memdesc:aa4bd4ad9917c2577168def15cf9aefb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize system-wide important parameters and flags.  <a href="#aa4bd4ad9917c2577168def15cf9aefb7">More...</a><br /></td></tr>
 <tr class="separator:aa4bd4ad9917c2577168def15cf9aefb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeeb66c18def4c2bb8c404a75ccf4ff07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#aeeb66c18def4c2bb8c404a75ccf4ff07">autopilot_start</a> (void)</td></tr>
+<tr class="memdesc:aeeb66c18def4c2bb8c404a75ccf4ff07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to define the initial position. This method is supposed to be called once on startup after the first call to read_message() (which listens for a position message from the autopilot).  <a href="#aeeb66c18def4c2bb8c404a75ccf4ff07">More...</a><br /></td></tr>
 <tr class="separator:aeeb66c18def4c2bb8c404a75ccf4ff07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a761018fc7556aac6d6f302b7406f791d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a761018fc7556aac6d6f302b7406f791d">read_messages</a> (void)</td></tr>
+<tr class="memdesc:a761018fc7556aac6d6f302b7406f791d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads MAVLink messages from the autopilot until all requested messages are received (this is controlled by the received_all flag inside the function). The received messages are set in the <a class="el" href="struct_mavlink___messages.html">Mavlink_Messages</a>. This method is blocking and will not exit until all requested messages are obtained (may become an infinite loop).  <a href="#a761018fc7556aac6d6f302b7406f791d">More...</a><br /></td></tr>
 <tr class="separator:a761018fc7556aac6d6f302b7406f791d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa400b6caf4a262ea4446854e90ab005d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#aa400b6caf4a262ea4446854e90ab005d">autopilot_write</a> (void)</td></tr>
+<tr class="memdesc:aa400b6caf4a262ea4446854e90ab005d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A "dummy" method that writes a void (all zeros) setpoint to the autopilot. Used to signal startup.  <a href="#aa400b6caf4a262ea4446854e90ab005d">More...</a><br /></td></tr>
 <tr class="separator:aa400b6caf4a262ea4446854e90ab005d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2559012cba7e4c72ec10a59c87f84cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#ab2559012cba7e4c72ec10a59c87f84cb">autopilot_write_setpoint</a> (void)</td></tr>
+<tr class="memdesc:ab2559012cba7e4c72ec10a59c87f84cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the current setpoint to the autopilot after it's been updated (needs to be called explicitly)  <a href="#ab2559012cba7e4c72ec10a59c87f84cb">More...</a><br /></td></tr>
 <tr class="separator:ab2559012cba7e4c72ec10a59c87f84cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8fa807910345b796fe4fd9f61101ba2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#ac8fa807910345b796fe4fd9f61101ba2">autopilot_write_message</a> (mavlink_message_t message)</td></tr>
+<tr class="memdesc:ac8fa807910345b796fe4fd9f61101ba2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a MAVLink message to the autopilot.  <a href="#ac8fa807910345b796fe4fd9f61101ba2">More...</a><br /></td></tr>
 <tr class="separator:ac8fa807910345b796fe4fd9f61101ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a3598bf63d9844fcd22328fc63842a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a7a3598bf63d9844fcd22328fc63842a4">autopilot_update_setpoint</a> (mavlink_set_position_target_local_ned_t setpoint)</td></tr>
+<tr class="memdesc:a7a3598bf63d9844fcd22328fc63842a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the current setpoint with the given setpoint.  <a href="#a7a3598bf63d9844fcd22328fc63842a4">More...</a><br /></td></tr>
 <tr class="separator:a7a3598bf63d9844fcd22328fc63842a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f0b501cf0b9b1e74c0053df49b3bdc6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a6f0b501cf0b9b1e74c0053df49b3bdc6">enable_offboard_control</a> (void)</td></tr>
+<tr class="memdesc:a6f0b501cf0b9b1e74c0053df49b3bdc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the offboard control of the autopilot, setting the appropriate flag.  <a href="#a6f0b501cf0b9b1e74c0053df49b3bdc6">More...</a><br /></td></tr>
 <tr class="separator:a6f0b501cf0b9b1e74c0053df49b3bdc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b3151ecef548d647281eba568170280"><td class="memItemLeft" align="right" valign="top"><a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a4b3151ecef548d647281eba568170280">disable_offboard_control</a> (void)</td></tr>
+<tr class="memdesc:a4b3151ecef548d647281eba568170280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disabled the offboard control of the autopilot.  <a href="#a4b3151ecef548d647281eba568170280">More...</a><br /></td></tr>
 <tr class="separator:a4b3151ecef548d647281eba568170280"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22fb091245542a81979c3d517c048d9c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a22fb091245542a81979c3d517c048d9c">toggle_offboard_control</a> (<a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a> flag)</td></tr>
+<tr class="memdesc:a22fb091245542a81979c3d517c048d9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function that's used by enable/disable_offbard_control() to actually write the appropriate command to the autopilot.  <a href="#a22fb091245542a81979c3d517c048d9c">More...</a><br /></td></tr>
 <tr class="separator:a22fb091245542a81979c3d517c048d9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4ffa041a7021553ce57bcc004721afe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#ae4ffa041a7021553ce57bcc004721afe">autopilot_arm</a> (void)</td></tr>
+<tr class="memdesc:ae4ffa041a7021553ce57bcc004721afe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Arm the autopilot.  <a href="#ae4ffa041a7021553ce57bcc004721afe">More...</a><br /></td></tr>
 <tr class="separator:ae4ffa041a7021553ce57bcc004721afe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab784fd6af4d00965889893c0cf462f26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#ab784fd6af4d00965889893c0cf462f26">autopilot_disarm</a> (void)</td></tr>
+<tr class="memdesc:ab784fd6af4d00965889893c0cf462f26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disarm the autopilot.  <a href="#ab784fd6af4d00965889893c0cf462f26">More...</a><br /></td></tr>
 <tr class="separator:ab784fd6af4d00965889893c0cf462f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2645ae25eb4ac098eb579dd9a49c1b9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#ae2645ae25eb4ac098eb579dd9a49c1b9">toggle_arm_disarm</a> (<a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a> flag)</td></tr>
+<tr class="memdesc:ae2645ae25eb4ac098eb579dd9a49c1b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by autopilot_arm/disarm() in a similar manner to toogle_offboard_control().  <a href="#ae2645ae25eb4ac098eb579dd9a49c1b9">More...</a><br /></td></tr>
 <tr class="separator:ae2645ae25eb4ac098eb579dd9a49c1b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56a6826eb5bf8127144d09ecfa6bee9a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a56a6826eb5bf8127144d09ecfa6bee9a">check_offboard_control</a> (void)</td></tr>
+<tr class="memdesc:a56a6826eb5bf8127144d09ecfa6bee9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A convenience function to check if the autopilot is in offboard control or not.  <a href="#a56a6826eb5bf8127144d09ecfa6bee9a">More...</a><br /></td></tr>
 <tr class="separator:a56a6826eb5bf8127144d09ecfa6bee9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8140deb719d9d4350a97d225d1d2cd04"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a8140deb719d9d4350a97d225d1d2cd04">check_arm_disarm</a> (void)</td></tr>
+<tr class="memdesc:a8140deb719d9d4350a97d225d1d2cd04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Similar to <a class="el" href="interface_8h.html#a56a6826eb5bf8127144d09ecfa6bee9a" title="A convenience function to check if the autopilot is in offboard control or not. ">check_offboard_control()</a>.  <a href="#a8140deb719d9d4350a97d225d1d2cd04">More...</a><br /></td></tr>
 <tr class="separator:a8140deb719d9d4350a97d225d1d2cd04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a778200ebd979982133bd3965e49976a5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a778200ebd979982133bd3965e49976a5">check_message</a> (uint16_t COMMAND_ID)</td></tr>
+<tr class="memdesc:a778200ebd979982133bd3965e49976a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function that's used by <a class="el" href="interface_8h.html#a56a6826eb5bf8127144d09ecfa6bee9a" title="A convenience function to check if the autopilot is in offboard control or not. ">check_offboard_control()</a> and <a class="el" href="interface_8h.html#a8140deb719d9d4350a97d225d1d2cd04" title="Similar to check_offboard_control(). ">check_arm_disarm()</a> to determine the status.  <a href="#a778200ebd979982133bd3965e49976a5">More...</a><br /></td></tr>
 <tr class="separator:a778200ebd979982133bd3965e49976a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e40ef161fe282aa0ca0cb9a436f56e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a9e40ef161fe282aa0ca0cb9a436f56e8">set_position</a> (float x, float y, float z, mavlink_set_position_target_local_ned_t *set_position)</td></tr>
 <tr class="separator:a9e40ef161fe282aa0ca0cb9a436f56e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,6 +217,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Arm the autopilot. </p>
+
 </div>
 </div>
 <a class="anchor" id="ab784fd6af4d00965889893c0cf462f26"></a>
@@ -215,6 +234,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Disarm the autopilot. </p>
 
 </div>
 </div>
@@ -232,6 +253,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Initialize system-wide important parameters and flags. </p>
+
 </div>
 </div>
 <a class="anchor" id="aeeb66c18def4c2bb8c404a75ccf4ff07"></a>
@@ -247,6 +270,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Used to define the initial position. This method is supposed to be called once on startup after the first call to read_message() (which listens for a position message from the autopilot). </p>
 
 </div>
 </div>
@@ -264,6 +289,14 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Update the current setpoint with the given setpoint. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">setpoint</td><td>A SET_POSITION_LOCAL_NED struct that is assigned to the current setpoint. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a class="anchor" id="aa400b6caf4a262ea4446854e90ab005d"></a>
@@ -279,6 +312,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>A "dummy" method that writes a void (all zeros) setpoint to the autopilot. Used to signal startup. </p>
 
 </div>
 </div>
@@ -296,6 +331,14 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Write a MAVLink message to the autopilot. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">message</td><td>A MAVLink message struct with the encapsulated message </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a class="anchor" id="ab2559012cba7e4c72ec10a59c87f84cb"></a>
@@ -311,6 +354,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Write the current setpoint to the autopilot after it's been updated (needs to be called explicitly) </p>
 
 </div>
 </div>
@@ -328,6 +373,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Similar to <a class="el" href="interface_8h.html#a56a6826eb5bf8127144d09ecfa6bee9a" title="A convenience function to check if the autopilot is in offboard control or not. ">check_offboard_control()</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if armed and false if disarmed. </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a778200ebd979982133bd3965e49976a5"></a>
@@ -344,6 +392,15 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>The function that's used by <a class="el" href="interface_8h.html#a56a6826eb5bf8127144d09ecfa6bee9a" title="A convenience function to check if the autopilot is in offboard control or not. ">check_offboard_control()</a> and <a class="el" href="interface_8h.html#a8140deb719d9d4350a97d225d1d2cd04" title="Similar to check_offboard_control(). ">check_arm_disarm()</a> to determine the status. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">COMMAND_ID</td><td>The ID of the command as defined by the MAVLink protocol.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 for a positive command_ack. 0 otherwise. </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a56a6826eb5bf8127144d09ecfa6bee9a"></a>
@@ -359,6 +416,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>A convenience function to check if the autopilot is in offboard control or not. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if the autopilot is under offboard control, false otherwise. </dd></dl>
 
 </div>
 </div>
@@ -391,6 +451,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Disabled the offboard control of the autopilot. </p>
+<dl class="section return"><dt>Returns</dt><dd>The offboard control status: true for active offboard control and false for disabled offboard control. </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a6f0b501cf0b9b1e74c0053df49b3bdc6"></a>
@@ -406,6 +469,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Enables the offboard control of the autopilot, setting the appropriate flag. </p>
+<dl class="section return"><dt>Returns</dt><dd>Similar to <a class="el" href="interface_8h.html#a4b3151ecef548d647281eba568170280" title="Disabled the offboard control of the autopilot. ">disable_offboard_control()</a> but the inverse (true for successfully enabling offboard control). </dd></dl>
 
 </div>
 </div>
@@ -495,6 +561,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Reads MAVLink messages from the autopilot until all requested messages are received (this is controlled by the received_all flag inside the function). The received messages are set in the <a class="el" href="struct_mavlink___messages.html">Mavlink_Messages</a>. This method is blocking and will not exit until all requested messages are obtained (may become an infinite loop). </p>
+
 </div>
 </div>
 <a class="anchor" id="a49dac88e99881e75459b0bc15354378b"></a>
@@ -505,11 +573,19 @@ Variables</h2></td></tr>
           <td class="memname">void reset_timestamps </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_time___stamps.html">Time_Stamps</a> *&#160;</td>
-          <td class="paramname"><em>time_stamps</em></td><td>)</td>
+          <td class="paramname"><em>ts</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Zeros out all the timestamps. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ts</td><td>The TimeStamps struct </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -705,6 +781,15 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Used by autopilot_arm/disarm() in a similar manner to toogle_offboard_control(). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">flag</td><td>Indicated on or off toggle.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of bytes written to the autopilot as the command to arm/disarm. 0 for failure. </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a22fb091245542a81979c3d517c048d9c"></a>
@@ -720,6 +805,15 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The function that's used by enable/disable_offbard_control() to actually write the appropriate command to the autopilot. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">flag</td><td>Indicated whether to toggle offboard control on or off.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of bytes for a successful write of the command to the autopilot. 0 for failure. </dd></dl>
 
 </div>
 </div>

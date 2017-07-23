@@ -63,7 +63,9 @@
 #define MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_RATE     0b0000010111111111
 
 
-//   Data Structures
+ /**
+  * timestamps of every message in Mavlink_Messagess
+  */
 typedef struct Time_Stamps{
 	uint64_t heartbeat;
 	uint64_t sys_status;
@@ -79,6 +81,9 @@ typedef struct Time_Stamps{
 } Time_Stamps;
 
 
+/**
+ * Holds the last messages that were received from the autopilot
+ */
 typedef struct Mavlink_Messages {
 	int sysid;
 	int compid;
@@ -92,47 +97,153 @@ typedef struct Mavlink_Messages {
 	mavlink_position_target_global_int_t position_target_global_int; // Global Position Target
 	mavlink_highres_imu_t highres_imu; // HiRes IMU
 	mavlink_attitude_t attitude; // Attitude
-	mavlink_command_ack_t command_ack; // Command acknowledgement
+	mavlink_command_ack_t command_ack; // Command acknowledgment
 	Time_Stamps time_stamps; // Time Stamps
 } Mavlink_Messages;
 
 
-// Init or zero out a Time_Stamps instance
+
+/**
+ * @brief      Zeros out all the timestamps.
+ *
+ * @param      ts    The TimeStamps struct
+ */
 void reset_timestamps(Time_Stamps* ts);
 
-// Initialisation
-void autopilot_intialize(void);
+// Initialization
+
+/**
+ * @brief      Initialize system-wide important parameters and flags
+ */
+void autopilot_initialize(void);
+
+/**
+ * @brief      Used to define the initial position.
+ *             This method is supposed to be called once on startup
+ *             after the first call to read_message() (which listens for a 
+ *             position message from the autopilot).
+ */
 void autopilot_start(void);
 
-//	READ 
+/**
+ * @brief      Reads MAVLink messages from the autopilot until all
+ *             requested messages are received (this is controlled by
+ *             the received_all flag inside the function). The received messages
+ *             are set in the Mavlink_Messages.
+ *             This method is blocking and will not exit until
+ *             all requested messages are obtained (may become an infinite loop).
+ */
 void read_messages(void);
 
-// Write
+
+/**
+ * @brief      A "dummy" method that writes a void (all zeros) 
+ *             setpoint to the autopilot.
+ *             Used to signal startup.
+ */
 void autopilot_write(void);
+
+/**
+ * @brief      Write a MAVLink message to the autopilot.
+ *
+ * @param[in]  message  A MAVLink message struct with the encapsulated message
+ */
 void autopilot_write_message(mavlink_message_t message);
+
+/**
+ * @brief      Write the current setpoint to the autopilot after it's been updated
+ * (needs to be called explicitly)
+ */
 void autopilot_write_setpoint(void);
+
+/**
+ * @brief      Update the current setpoint with the given setpoint.
+ *
+ * @param[in]  setpoint  A SET_POSITION_LOCAL_NED struct that is assigned
+ * 						 to the current setpoint.
+ */
 void autopilot_update_setpoint(mavlink_set_position_target_local_ned_t setpoint);
 
 // Offboard Control
 
+/**
+ * @brief      Disabled the offboard control of the autopilot.
+ *
+ * @return     The offboard control status: true for active offboard control
+ *                 and false for disabled offboard control.
+ */
 bool disable_offboard_control(void);
+
+/**
+ * @brief      Enables the offboard control of the autopilot, setting the appropriate flag.
+ *
+ * @return     Similar to disable_offboard_control() but the inverse 
+ *                     (true for successfully enabling offboard control).
+ */
 bool enable_offboard_control(void);
+
+/**
+ * @brief      The function that's used by enable/disable_offbard_control() 
+ *             to actually write the appropriate command to the autopilot.
+ *
+ * @param[in]  flag  Indicated whether to toggle offboard control on or off.
+ *
+ * @return     The number of bytes for a successful write of the command to the 
+ *             autopilot. 0 for failure.
+ */
 int toggle_offboard_control(bool flag);
 
 // Arm/Disarm Control
 
-void autopilot_arm (void);
+/**
+ * @brief      Arm the autopilot.
+ */
+void autopilot_arm(void);
+
+/**
+ * @brief      Disarm the autopilot.
+ */
 void autopilot_disarm(void);
+
+/**
+ * @brief      Used by autopilot_arm/disarm() in a similar manner
+ *             to toogle_offboard_control().
+ *
+ * @param[in]  flag  Indicated on or off toggle.
+ *
+ * @return     The number of bytes written to the autopilot as the command to
+ *                 arm/disarm. 0 for failure.
+ */
 int toggle_arm_disarm(bool flag);
 
-// MAVLink messages acknowledgement
+
+/**
+ * @brief      A convenience function to check if the autopilot is in offboard control or not.
+ *
+ * @return     true if the autopilot is under offboard control, false otherwise.
+ */
 int check_offboard_control(void);
+
+/**
+ * @brief      Similar to check_offboard_control().
+ *
+ * @return     true if armed and false if disarmed.
+ */
 int check_arm_disarm(void);
+
+/**
+ * @brief      The function that's used by check_offboard_control() and
+ *             check_arm_disarm() to determine the status.
+ *
+ * @param[in]  COMMAND_ID  The ID of the command as defined by the MAVLink protocol.
+ *
+ * @return     1 for a positive command_ack. 0 otherwise.
+ */
 int check_message (uint16_t COMMAND_ID);
 
-// Control
 
 #include <mfunctions.h>
+
 
 void set_position(float x, float y, float z, mavlink_set_position_target_local_ned_t* sp);
 void set__(float x, float y, float z, mavlink_set_position_target_local_ned_t* set_point);
@@ -141,7 +252,7 @@ void set_yaw(float yaw, mavlink_set_position_target_local_ned_t* sp);
 void position_and_speed_set(float x, float y, float z ,float vx, float vy, float vz, mavlink_set_position_target_local_ned_t* final_set_point);
 
 
-void set_circle (float R, float theta, float z, mavlink_set_position_target_local_ned_t* set_point);
+void set_circle(float R, float theta, float z, mavlink_set_position_target_local_ned_t* set_point);
 
 uint64_t get_time_usec(void);
 

@@ -71,7 +71,7 @@ int finiLogSystem(void);
 
 
 /**
- * @brief      logs the message into the specified stream, using the specifeied logger.
+ * @brief      logs the message into the specified stream, using the specified logger.
  * @param      str       the log message
  * @param[in]  priority  priority of the log. see LOG4C_PRIORITY enums. (log4c_priority_level_t)
  * @param[in]  logType   The log type

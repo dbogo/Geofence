@@ -30,7 +30,7 @@ int open_port(void);
  * @brief      gets one complete NMEA message from the GPS, through the serial port that its on.
  * @param[in]  fd      the file descriptor of serial port used for communication with the GPS
  * @param      buffer  the string buffer that the message will be written to.
- * @return     returns the number of charachters that were read for this NMEA sentence.
+ * @return     returns the number of characters that were read for this NMEA sentence.
  */
 int fetch_sentence_from_gps(int fd, char* buffer);
 
@@ -54,7 +54,7 @@ void serial_start(const char* portname);
  *             and populate the mavlink message struct as new bytes arrive.
  *
  * @param      message  The MAVLink message struct which is populated with the 
- *                      parse data that's received fom the serial port.
+ *                      parse data that's received from the serial port.
  *
  * @return     1 if a complete MAVLink message could be read, 0 otherwise.
  */
@@ -70,7 +70,7 @@ int serial_read_message(mavlink_message_t* message);
 int serial_write_message(const mavlink_message_t* message);
 
 /**
- * @brief      Gets the nubmer of seconds and milliseconds since epoch.
+ * @brief      Gets the number of seconds and milliseconds since epoch.
  *
  * @param      tv    the timeval struct (sys/time.h)
  * @param      tz    the timezone struct

@@ -38,7 +38,7 @@ void init_platform_specific_modules(void);
 void init_gps_data(FullGPSData** gpsData);
 
 /**
- * @brief      Recieves argc, argv from main and parses that input
+ * @brief      Receives argc, argv from main and parses that input
  * @param      zone  A struct with the geofence information (polygon, count, etc.)
  * @param[in]  argc  argc
  * @param      args  argv. should contain the name of the file with the inputs.

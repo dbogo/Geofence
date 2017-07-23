@@ -1,7 +1,7 @@
 #include "logInterface.h"
 
 //NOTE: why did I have to make it a pointer to a pointer in order to make it work ??
-//apender name is actually the stream - e.g a specific file, stdout, etc...
+//appender name is actually the stream - e.g a specific file, stdout, etc...
 int initLogSystem(Log_Master* logMaster){
 
 	/**

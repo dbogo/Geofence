@@ -1,13 +1,12 @@
 <map id="src/serial/serialInterface.h" name="src/serial/serialInterface.h">
-<area shape="rect" id="node2" href="$interface_8h.html" title="src/mavlink_interface\l/inc/interface.h" alt="" coords="476,80,623,121"/>
-<area shape="rect" id="node6" href="$main_8c.html" title="src/main.c" alt="" coords="508,348,591,375"/>
-<area shape="rect" id="node10" href="$_g_p_s_interface_8c.html" title="src/GPSInterface.c" alt="" coords="809,87,943,114"/>
-<area shape="rect" id="node11" href="$rpi__gps__demo_8c.html" title="src/RPiGPSDemo/rpi\l_gps_demo.c" alt="" coords="968,80,1115,121"/>
-<area shape="rect" id="node12" href="$serial_interface_8c.html" title="src/serial/serialInterface.c" alt="" coords="1139,87,1311,114"/>
-<area shape="rect" id="node3" href="$commands_8h.html" title="src/mavlink_interface\l/inc/commands.h" alt="" coords="237,169,384,211"/>
-<area shape="rect" id="node7" href="$mavlink__control_8h.html" title="src/mavlink_interface\l/inc/mavlink_control.h" alt="" coords="363,259,512,300"/>
-<area shape="rect" id="node9" href="$interface_8c.html" title="src/mavlink_interface\l/src/interface.c" alt="" coords="587,169,733,211"/>
+<area shape="rect" id="node2" href="$interface_8h.html" title="src/mavlink_interface\l/inc/interface.h" alt="" coords="357,80,504,121"/>
+<area shape="rect" id="node6" href="$main_8c.html" title="src/main.c" alt="" coords="335,348,417,375"/>
+<area shape="rect" id="node9" href="$_g_p_s_interface_8c.html" title="src/GPSInterface.c" alt="" coords="635,87,770,114"/>
+<area shape="rect" id="node10" href="$rpi__gps__demo_8c.html" title="src/RPiGPSDemo/rpi\l_gps_demo.c" alt="" coords="795,80,941,121"/>
+<area shape="rect" id="node11" href="$serial_interface_8c.html" title="src/serial/serialInterface.c" alt="" coords="966,87,1138,114"/>
+<area shape="rect" id="node3" href="$commands_8h.html" title="src/mavlink_interface\l/inc/commands.h" alt="" coords="192,169,339,211"/>
+<area shape="rect" id="node8" href="$interface_8c.html" title="src/mavlink_interface\l/src/interface.c" alt="" coords="413,169,560,211"/>
 <area shape="rect" id="node4" href="$autopilot__controller_8h.html" title="src/autopilot_controller.h" alt="" coords="5,266,168,293"/>
-<area shape="rect" id="node8" href="$commands_8c.html" title="src/mavlink_interface\l/src/commands.c" alt="" coords="192,259,339,300"/>
+<area shape="rect" id="node7" href="$commands_8c.html" title="src/mavlink_interface\l/src/commands.c" alt="" coords="192,259,339,300"/>
 <area shape="rect" id="node5" href="$autopilot__controller_8c.html" title="src/autopilot_controller.c" alt="" coords="5,348,168,375"/>
 </map>

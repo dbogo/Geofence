@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
 
 	// deal with argv
 	if(parse_input_args(&zone, argc, argv) != ARGV_OK){
-		printf("error parsing argumnts.\n");
+		printf("error parsing arguments.\n");
 		return -1; 
 	}
 

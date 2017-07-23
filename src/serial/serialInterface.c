@@ -27,7 +27,7 @@ int open_port(void){
 	if(streamFD < 0){
 		logEvent("open_port: Unable to open /dev/ttyACM0.", LOG4C_PRIORITY_INFO, INFO, &logMaster);
 		fileName = "/dev/ttyAMA0";
-		logEvent("openport: Trying to open /dev/ttyAMA0 instead...", LOG4C_PRIORITY_INFO, INFO, &logMaster);
+		logEvent("open_port: Trying to open /dev/ttyAMA0 instead...", LOG4C_PRIORITY_INFO, INFO, &logMaster);
 		streamFD = open(fileName, O_RDWR | O_NOCTTY | O_NDELAY);
 		if(streamFD < 0){
 			logEvent("open_port: Unable to open /dev/ttyAMA0.", LOG4C_PRIORITY_INFO, INFO, &logMaster);

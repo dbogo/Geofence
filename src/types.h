@@ -21,7 +21,7 @@ typedef unsigned char uint8_t;
 
 /* NOTE: Pay attention to to calculations where course is in radians or in degrees ! */
 /**
- * \brief Represents a smaller, truncated verion of the data gathered from GPS.
+ * \brief Represents a smaller, truncated version of the data gathered from GPS.
  * 
  * This struct contains only the most frequently used parameters.
  */
@@ -87,10 +87,10 @@ typedef struct {
 /**
  * \brief The entire collection of relevant data, gathered from GPS
  * 
- * lat_deg and lon_deg are the values of a point on the map whre google map
+ * lat_deg and lon_deg are the values of a point on the map where google map
  * would show a point.
- * lat/lon data that's recieved from NMEA sentences is in deciamal, and not
- * in degrees, hence the need for a defferenciation.
+ * lat/lon data that's received from NMEA sentences is in decimal, and not
+ * in degrees, hence the need for a differentiation.
  */
 typedef struct {
 	double latitude;
@@ -163,7 +163,7 @@ typedef struct {
 	double longitude;
 	unsigned char lon;
 	unsigned long fixTime;
-	bool status; // A (activce) or V (void)  as true/false
+	bool status; // A (active) or V (void)  as true/false
 } gll;
 
 

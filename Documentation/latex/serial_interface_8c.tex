@@ -10,8 +10,7 @@
 {\ttfamily \#include $<$stdbool.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}serial\+Interface.\+h\char`\"{}}\\*
 {\ttfamily \#include $<$src/log\+Interface.\+h$>$}\\*
-Include dependency graph for serial\+Interface.\+c\+:
-\nopagebreak
+Include dependency graph for serial\+Interface.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -34,7 +33,7 @@ int \hyperlink{serial_interface_8c_ad9b54717f7dba8da115aa84b94a8c3a2}{usart\+\_\
 int \hyperlink{serial_interface_8c_a363618b75ca75efe669e4a9223e546b9}{serial\+\_\+write\+\_\+message} (const mavlink\+\_\+message\+\_\+t $\ast$message)
 \begin{DoxyCompactList}\small\item\em Write a mavlink message to the serial port. \end{DoxyCompactList}\item 
 int \hyperlink{serial_interface_8c_a9a535380c30c260dc88af0d5bd48540e}{get\+\_\+time\+\_\+sec} (struct timeval $\ast$tv, struct timezone $\ast$tz)
-\begin{DoxyCompactList}\small\item\em Gets the nubmer of seconds and milliseconds since epoch. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Gets the number of seconds and milliseconds since epoch. \end{DoxyCompactList}\item 
 int \hyperlink{serial_interface_8c_abe6133ac999c4ce5f06e760aa3ba1827}{get\+\_\+stream\+FD} (void)
 \begin{DoxyCompactList}\small\item\em returns stream\+FD. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
@@ -75,7 +74,7 @@ gets one complete N\+M\+EA message from the G\+PS, through the serial port that 
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-returns the number of charachters that were read for this N\+M\+EA sentence. 
+returns the number of characters that were read for this N\+M\+EA sentence. 
 \end{DoxyReturn}
 \index{serial\+Interface.\+c@{serial\+Interface.\+c}!get\+\_\+stream\+FD@{get\+\_\+stream\+FD}}
 \index{get\+\_\+stream\+FD@{get\+\_\+stream\+FD}!serial\+Interface.\+c@{serial\+Interface.\+c}}
@@ -98,7 +97,7 @@ returns stream\+FD.
 )}\hypertarget{serial_interface_8c_a9a535380c30c260dc88af0d5bd48540e}{}\label{serial_interface_8c_a9a535380c30c260dc88af0d5bd48540e}
 
 
-Gets the nubmer of seconds and milliseconds since epoch. 
+Gets the number of seconds and milliseconds since epoch. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -137,7 +136,7 @@ Read one byte at a time from the M\+A\+V\+Link stream on the serial port and pop
 
 
 \begin{DoxyParams}{Parameters}
-{\em message} & The M\+A\+V\+Link message struct which is populated with the parse data that\textquotesingle{}s received fom the serial port.\\
+{\em message} & The M\+A\+V\+Link message struct which is populated with the parse data that\textquotesingle{}s received from the serial port.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}

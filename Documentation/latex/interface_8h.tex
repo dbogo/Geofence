@@ -3,8 +3,7 @@
 {\ttfamily \#include $<$stdbool.\+h$>$}\\*
 {\ttfamily \#include $<$src/serial/serial\+Interface.\+h$>$}\\*
 {\ttfamily \#include $<$mfunctions.\+h$>$}\\*
-Include dependency graph for interface.\+h\+:
-\nopagebreak
+Include dependency graph for interface.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -52,39 +51,39 @@ typedef struct \hyperlink{struct_mavlink___messages}{Mavlink\+\_\+\+Messages} \h
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{interface_8h_aa0bcb2f31d5df71593891fbacb8ff20a}{reset\+\_\+timestamps} (\hyperlink{struct_time___stamps}{Time\+\_\+\+Stamps} $\ast$ts)
-\item 
-void \hyperlink{interface_8h_a78f7aac9b86cf7131fbf867838cd88ff}{autopilot\+\_\+intialize} (void)
-\item 
+\begin{DoxyCompactList}\small\item\em Zeros out all the timestamps. \end{DoxyCompactList}\item 
+void \hyperlink{interface_8h_aa4bd4ad9917c2577168def15cf9aefb7}{autopilot\+\_\+initialize} (void)
+\begin{DoxyCompactList}\small\item\em Initialize system-\/wide important parameters and flags. \end{DoxyCompactList}\item 
 void \hyperlink{interface_8h_aeeb66c18def4c2bb8c404a75ccf4ff07}{autopilot\+\_\+start} (void)
-\item 
+\begin{DoxyCompactList}\small\item\em Used to define the initial position. This method is supposed to be called once on startup after the first call to read\+\_\+message() (which listens for a position message from the autopilot). \end{DoxyCompactList}\item 
 void \hyperlink{interface_8h_a761018fc7556aac6d6f302b7406f791d}{read\+\_\+messages} (void)
-\item 
+\begin{DoxyCompactList}\small\item\em Reads M\+A\+V\+Link messages from the autopilot until all requested messages are received (this is controlled by the received\+\_\+all flag inside the function). The received messages are set in the \hyperlink{struct_mavlink___messages}{Mavlink\+\_\+\+Messages}. This method is blocking and will not exit until all requested messages are obtained (may become an infinite loop). \end{DoxyCompactList}\item 
 void \hyperlink{interface_8h_aa400b6caf4a262ea4446854e90ab005d}{autopilot\+\_\+write} (void)
-\item 
+\begin{DoxyCompactList}\small\item\em A \char`\"{}dummy\char`\"{} method that writes a void (all zeros) setpoint to the autopilot. Used to signal startup. \end{DoxyCompactList}\item 
 void \hyperlink{interface_8h_ac8fa807910345b796fe4fd9f61101ba2}{autopilot\+\_\+write\+\_\+message} (mavlink\+\_\+message\+\_\+t message)
-\item 
+\begin{DoxyCompactList}\small\item\em Write a M\+A\+V\+Link message to the autopilot. \end{DoxyCompactList}\item 
 void \hyperlink{interface_8h_ab2559012cba7e4c72ec10a59c87f84cb}{autopilot\+\_\+write\+\_\+setpoint} (void)
-\item 
+\begin{DoxyCompactList}\small\item\em Write the current setpoint to the autopilot after it\textquotesingle{}s been updated (needs to be called explicitly) \end{DoxyCompactList}\item 
 void \hyperlink{interface_8h_a7a3598bf63d9844fcd22328fc63842a4}{autopilot\+\_\+update\+\_\+setpoint} (mavlink\+\_\+set\+\_\+position\+\_\+target\+\_\+local\+\_\+ned\+\_\+t setpoint)
-\item 
+\begin{DoxyCompactList}\small\item\em Update the current setpoint with the given setpoint. \end{DoxyCompactList}\item 
 \hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1}{bool} \hyperlink{interface_8h_a4b3151ecef548d647281eba568170280}{disable\+\_\+offboard\+\_\+control} (void)
-\item 
+\begin{DoxyCompactList}\small\item\em Disabled the offboard control of the autopilot. \end{DoxyCompactList}\item 
 \hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1}{bool} \hyperlink{interface_8h_a6f0b501cf0b9b1e74c0053df49b3bdc6}{enable\+\_\+offboard\+\_\+control} (void)
-\item 
+\begin{DoxyCompactList}\small\item\em Enables the offboard control of the autopilot, setting the appropriate flag. \end{DoxyCompactList}\item 
 int \hyperlink{interface_8h_a22fb091245542a81979c3d517c048d9c}{toggle\+\_\+offboard\+\_\+control} (\hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1}{bool} flag)
-\item 
+\begin{DoxyCompactList}\small\item\em The function that\textquotesingle{}s used by enable/disable\+\_\+offbard\+\_\+control() to actually write the appropriate command to the autopilot. \end{DoxyCompactList}\item 
 void \hyperlink{interface_8h_ae4ffa041a7021553ce57bcc004721afe}{autopilot\+\_\+arm} (void)
-\item 
+\begin{DoxyCompactList}\small\item\em Arm the autopilot. \end{DoxyCompactList}\item 
 void \hyperlink{interface_8h_ab784fd6af4d00965889893c0cf462f26}{autopilot\+\_\+disarm} (void)
-\item 
+\begin{DoxyCompactList}\small\item\em Disarm the autopilot. \end{DoxyCompactList}\item 
 int \hyperlink{interface_8h_ae2645ae25eb4ac098eb579dd9a49c1b9}{toggle\+\_\+arm\+\_\+disarm} (\hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1}{bool} flag)
-\item 
+\begin{DoxyCompactList}\small\item\em Used by autopilot\+\_\+arm/disarm() in a similar manner to toogle\+\_\+offboard\+\_\+control(). \end{DoxyCompactList}\item 
 int \hyperlink{interface_8h_a56a6826eb5bf8127144d09ecfa6bee9a}{check\+\_\+offboard\+\_\+control} (void)
-\item 
+\begin{DoxyCompactList}\small\item\em A convenience function to check if the autopilot is in offboard control or not. \end{DoxyCompactList}\item 
 int \hyperlink{interface_8h_a8140deb719d9d4350a97d225d1d2cd04}{check\+\_\+arm\+\_\+disarm} (void)
-\item 
+\begin{DoxyCompactList}\small\item\em Similar to \hyperlink{interface_8h_a56a6826eb5bf8127144d09ecfa6bee9a}{check\+\_\+offboard\+\_\+control()}. \end{DoxyCompactList}\item 
 int \hyperlink{interface_8h_a778200ebd979982133bd3965e49976a5}{check\+\_\+message} (uint16\+\_\+t C\+O\+M\+M\+A\+N\+D\+\_\+\+ID)
-\item 
+\begin{DoxyCompactList}\small\item\em The function that\textquotesingle{}s used by \hyperlink{interface_8h_a56a6826eb5bf8127144d09ecfa6bee9a}{check\+\_\+offboard\+\_\+control()} and \hyperlink{interface_8h_a8140deb719d9d4350a97d225d1d2cd04}{check\+\_\+arm\+\_\+disarm()} to determine the status. \end{DoxyCompactList}\item 
 void \hyperlink{interface_8h_a93e3fdd06c6bbc40c6fb045ba1a29bb6}{set\+\_\+position} (float x, float y, float z, mavlink\+\_\+set\+\_\+position\+\_\+target\+\_\+local\+\_\+ned\+\_\+t $\ast$sp)
 \item 
 void \hyperlink{interface_8h_a992ee3c0025abb2bba96ed4bb7277484}{set\+\_\+\+\_\+} (float x, float y, float z, mavlink\+\_\+set\+\_\+position\+\_\+target\+\_\+local\+\_\+ned\+\_\+t $\ast$set\+\_\+point)
@@ -136,10 +135,10 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \index{interface.\+h@{interface.\+h}!Mavlink\+\_\+\+Messages@{Mavlink\+\_\+\+Messages}}
 \index{Mavlink\+\_\+\+Messages@{Mavlink\+\_\+\+Messages}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{Mavlink\+\_\+\+Messages}{Mavlink_Messages}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Mavlink\+\_\+\+Messages}  {\bf Mavlink\+\_\+\+Messages}}\hypertarget{interface_8h_a5a6ca3ba0abb750a1c3ece47c50718ad}{}\label{interface_8h_a5a6ca3ba0abb750a1c3ece47c50718ad}
-\index{interface.\+h@{interface.\+h}!Time\+\_\+\+Stamps@{Time\+\_\+\+Stamps}}
+Holds the last messages that were received from the autopilot \index{interface.\+h@{interface.\+h}!Time\+\_\+\+Stamps@{Time\+\_\+\+Stamps}}
 \index{Time\+\_\+\+Stamps@{Time\+\_\+\+Stamps}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{Time\+\_\+\+Stamps}{Time_Stamps}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Time\+\_\+\+Stamps}  {\bf Time\+\_\+\+Stamps}}\hypertarget{interface_8h_a3eab1bf5782c05897f4da1f44b727016}{}\label{interface_8h_a3eab1bf5782c05897f4da1f44b727016}
-
+timestamps of every message in Mavlink\+\_\+\+Messagess 
 
 \subsection{Function Documentation}
 \index{interface.\+h@{interface.\+h}!autopilot\+\_\+arm@{autopilot\+\_\+arm}}
@@ -149,6 +148,10 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_ae4ffa041a7021553ce57bcc004721afe}{}\label{interface_8h_ae4ffa041a7021553ce57bcc004721afe}
+
+
+Arm the autopilot. 
+
 \index{interface.\+h@{interface.\+h}!autopilot\+\_\+disarm@{autopilot\+\_\+disarm}}
 \index{autopilot\+\_\+disarm@{autopilot\+\_\+disarm}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{autopilot\+\_\+disarm(void)}{autopilot_disarm(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void autopilot\+\_\+disarm (
@@ -156,13 +159,21 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_ab784fd6af4d00965889893c0cf462f26}{}\label{interface_8h_ab784fd6af4d00965889893c0cf462f26}
-\index{interface.\+h@{interface.\+h}!autopilot\+\_\+intialize@{autopilot\+\_\+intialize}}
-\index{autopilot\+\_\+intialize@{autopilot\+\_\+intialize}!interface.\+h@{interface.\+h}}
-\subsubsection[{\texorpdfstring{autopilot\+\_\+intialize(void)}{autopilot_intialize(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void autopilot\+\_\+intialize (
+
+
+Disarm the autopilot. 
+
+\index{interface.\+h@{interface.\+h}!autopilot\+\_\+initialize@{autopilot\+\_\+initialize}}
+\index{autopilot\+\_\+initialize@{autopilot\+\_\+initialize}!interface.\+h@{interface.\+h}}
+\subsubsection[{\texorpdfstring{autopilot\+\_\+initialize(void)}{autopilot_initialize(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void autopilot\+\_\+initialize (
 \begin{DoxyParamCaption}
 \item[{void}]{}
 \end{DoxyParamCaption}
-)}\hypertarget{interface_8h_a78f7aac9b86cf7131fbf867838cd88ff}{}\label{interface_8h_a78f7aac9b86cf7131fbf867838cd88ff}
+)}\hypertarget{interface_8h_aa4bd4ad9917c2577168def15cf9aefb7}{}\label{interface_8h_aa4bd4ad9917c2577168def15cf9aefb7}
+
+
+Initialize system-\/wide important parameters and flags. 
+
 \index{interface.\+h@{interface.\+h}!autopilot\+\_\+start@{autopilot\+\_\+start}}
 \index{autopilot\+\_\+start@{autopilot\+\_\+start}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{autopilot\+\_\+start(void)}{autopilot_start(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void autopilot\+\_\+start (
@@ -170,6 +181,10 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_aeeb66c18def4c2bb8c404a75ccf4ff07}{}\label{interface_8h_aeeb66c18def4c2bb8c404a75ccf4ff07}
+
+
+Used to define the initial position. This method is supposed to be called once on startup after the first call to read\+\_\+message() (which listens for a position message from the autopilot). 
+
 \index{interface.\+h@{interface.\+h}!autopilot\+\_\+update\+\_\+setpoint@{autopilot\+\_\+update\+\_\+setpoint}}
 \index{autopilot\+\_\+update\+\_\+setpoint@{autopilot\+\_\+update\+\_\+setpoint}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{autopilot\+\_\+update\+\_\+setpoint(mavlink\+\_\+set\+\_\+position\+\_\+target\+\_\+local\+\_\+ned\+\_\+t setpoint)}{autopilot_update_setpoint(mavlink_set_position_target_local_ned_t setpoint)}}]{\setlength{\rightskip}{0pt plus 5cm}void autopilot\+\_\+update\+\_\+setpoint (
@@ -177,6 +192,15 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{mavlink\+\_\+set\+\_\+position\+\_\+target\+\_\+local\+\_\+ned\+\_\+t}]{setpoint}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_a7a3598bf63d9844fcd22328fc63842a4}{}\label{interface_8h_a7a3598bf63d9844fcd22328fc63842a4}
+
+
+Update the current setpoint with the given setpoint. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em setpoint} & A S\+E\+T\+\_\+\+P\+O\+S\+I\+T\+I\+O\+N\+\_\+\+L\+O\+C\+A\+L\+\_\+\+N\+ED struct that is assigned to the current setpoint. \\
+\hline
+\end{DoxyParams}
 \index{interface.\+h@{interface.\+h}!autopilot\+\_\+write@{autopilot\+\_\+write}}
 \index{autopilot\+\_\+write@{autopilot\+\_\+write}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{autopilot\+\_\+write(void)}{autopilot_write(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void autopilot\+\_\+write (
@@ -184,6 +208,10 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_aa400b6caf4a262ea4446854e90ab005d}{}\label{interface_8h_aa400b6caf4a262ea4446854e90ab005d}
+
+
+A \char`\"{}dummy\char`\"{} method that writes a void (all zeros) setpoint to the autopilot. Used to signal startup. 
+
 \index{interface.\+h@{interface.\+h}!autopilot\+\_\+write\+\_\+message@{autopilot\+\_\+write\+\_\+message}}
 \index{autopilot\+\_\+write\+\_\+message@{autopilot\+\_\+write\+\_\+message}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{autopilot\+\_\+write\+\_\+message(mavlink\+\_\+message\+\_\+t message)}{autopilot_write_message(mavlink_message_t message)}}]{\setlength{\rightskip}{0pt plus 5cm}void autopilot\+\_\+write\+\_\+message (
@@ -191,6 +219,15 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{mavlink\+\_\+message\+\_\+t}]{message}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_ac8fa807910345b796fe4fd9f61101ba2}{}\label{interface_8h_ac8fa807910345b796fe4fd9f61101ba2}
+
+
+Write a M\+A\+V\+Link message to the autopilot. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em message} & A M\+A\+V\+Link message struct with the encapsulated message \\
+\hline
+\end{DoxyParams}
 \index{interface.\+h@{interface.\+h}!autopilot\+\_\+write\+\_\+setpoint@{autopilot\+\_\+write\+\_\+setpoint}}
 \index{autopilot\+\_\+write\+\_\+setpoint@{autopilot\+\_\+write\+\_\+setpoint}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{autopilot\+\_\+write\+\_\+setpoint(void)}{autopilot_write_setpoint(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void autopilot\+\_\+write\+\_\+setpoint (
@@ -198,6 +235,10 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_ab2559012cba7e4c72ec10a59c87f84cb}{}\label{interface_8h_ab2559012cba7e4c72ec10a59c87f84cb}
+
+
+Write the current setpoint to the autopilot after it\textquotesingle{}s been updated (needs to be called explicitly) 
+
 \index{interface.\+h@{interface.\+h}!check\+\_\+arm\+\_\+disarm@{check\+\_\+arm\+\_\+disarm}}
 \index{check\+\_\+arm\+\_\+disarm@{check\+\_\+arm\+\_\+disarm}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{check\+\_\+arm\+\_\+disarm(void)}{check_arm_disarm(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int check\+\_\+arm\+\_\+disarm (
@@ -205,6 +246,13 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_a8140deb719d9d4350a97d225d1d2cd04}{}\label{interface_8h_a8140deb719d9d4350a97d225d1d2cd04}
+
+
+Similar to \hyperlink{interface_8h_a56a6826eb5bf8127144d09ecfa6bee9a}{check\+\_\+offboard\+\_\+control()}. 
+
+\begin{DoxyReturn}{Returns}
+true if armed and false if disarmed. 
+\end{DoxyReturn}
 \index{interface.\+h@{interface.\+h}!check\+\_\+message@{check\+\_\+message}}
 \index{check\+\_\+message@{check\+\_\+message}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{check\+\_\+message(uint16\+\_\+t C\+O\+M\+M\+A\+N\+D\+\_\+\+I\+D)}{check_message(uint16_t COMMAND_ID)}}]{\setlength{\rightskip}{0pt plus 5cm}int check\+\_\+message (
@@ -212,6 +260,18 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{uint16\+\_\+t}]{C\+O\+M\+M\+A\+N\+D\+\_\+\+ID}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_a778200ebd979982133bd3965e49976a5}{}\label{interface_8h_a778200ebd979982133bd3965e49976a5}
+
+
+The function that\textquotesingle{}s used by \hyperlink{interface_8h_a56a6826eb5bf8127144d09ecfa6bee9a}{check\+\_\+offboard\+\_\+control()} and \hyperlink{interface_8h_a8140deb719d9d4350a97d225d1d2cd04}{check\+\_\+arm\+\_\+disarm()} to determine the status. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em C\+O\+M\+M\+A\+N\+D\+\_\+\+ID} & The ID of the command as defined by the M\+A\+V\+Link protocol.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 for a positive command\+\_\+ack. 0 otherwise. 
+\end{DoxyReturn}
 \index{interface.\+h@{interface.\+h}!check\+\_\+offboard\+\_\+control@{check\+\_\+offboard\+\_\+control}}
 \index{check\+\_\+offboard\+\_\+control@{check\+\_\+offboard\+\_\+control}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{check\+\_\+offboard\+\_\+control(void)}{check_offboard_control(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int check\+\_\+offboard\+\_\+control (
@@ -219,6 +279,13 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_a56a6826eb5bf8127144d09ecfa6bee9a}{}\label{interface_8h_a56a6826eb5bf8127144d09ecfa6bee9a}
+
+
+A convenience function to check if the autopilot is in offboard control or not. 
+
+\begin{DoxyReturn}{Returns}
+true if the autopilot is under offboard control, false otherwise. 
+\end{DoxyReturn}
 \index{interface.\+h@{interface.\+h}!disable\+\_\+offboard\+\_\+control@{disable\+\_\+offboard\+\_\+control}}
 \index{disable\+\_\+offboard\+\_\+control@{disable\+\_\+offboard\+\_\+control}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{disable\+\_\+offboard\+\_\+control(void)}{disable_offboard_control(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bool} disable\+\_\+offboard\+\_\+control (
@@ -226,6 +293,13 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_a4b3151ecef548d647281eba568170280}{}\label{interface_8h_a4b3151ecef548d647281eba568170280}
+
+
+Disabled the offboard control of the autopilot. 
+
+\begin{DoxyReturn}{Returns}
+The offboard control status\+: true for active offboard control and false for disabled offboard control. 
+\end{DoxyReturn}
 \index{interface.\+h@{interface.\+h}!enable\+\_\+offboard\+\_\+control@{enable\+\_\+offboard\+\_\+control}}
 \index{enable\+\_\+offboard\+\_\+control@{enable\+\_\+offboard\+\_\+control}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{enable\+\_\+offboard\+\_\+control(void)}{enable_offboard_control(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bool} enable\+\_\+offboard\+\_\+control (
@@ -233,6 +307,13 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_a6f0b501cf0b9b1e74c0053df49b3bdc6}{}\label{interface_8h_a6f0b501cf0b9b1e74c0053df49b3bdc6}
+
+
+Enables the offboard control of the autopilot, setting the appropriate flag. 
+
+\begin{DoxyReturn}{Returns}
+Similar to \hyperlink{interface_8h_a4b3151ecef548d647281eba568170280}{disable\+\_\+offboard\+\_\+control()} but the inverse (true for successfully enabling offboard control). 
+\end{DoxyReturn}
 \index{interface.\+h@{interface.\+h}!get\+\_\+time\+\_\+usec@{get\+\_\+time\+\_\+usec}}
 \index{get\+\_\+time\+\_\+usec@{get\+\_\+time\+\_\+usec}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{get\+\_\+time\+\_\+usec(void)}{get_time_usec(void)}}]{\setlength{\rightskip}{0pt plus 5cm}uint64\+\_\+t get\+\_\+time\+\_\+usec (
@@ -260,6 +341,10 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_a761018fc7556aac6d6f302b7406f791d}{}\label{interface_8h_a761018fc7556aac6d6f302b7406f791d}
+
+
+Reads M\+A\+V\+Link messages from the autopilot until all requested messages are received (this is controlled by the received\+\_\+all flag inside the function). The received messages are set in the \hyperlink{struct_mavlink___messages}{Mavlink\+\_\+\+Messages}. This method is blocking and will not exit until all requested messages are obtained (may become an infinite loop). 
+
 \index{interface.\+h@{interface.\+h}!reset\+\_\+timestamps@{reset\+\_\+timestamps}}
 \index{reset\+\_\+timestamps@{reset\+\_\+timestamps}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{reset\+\_\+timestamps(\+Time\+\_\+\+Stamps $\ast$ts)}{reset_timestamps(Time_Stamps *ts)}}]{\setlength{\rightskip}{0pt plus 5cm}void reset\+\_\+timestamps (
@@ -267,6 +352,15 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{{\bf Time\+\_\+\+Stamps} $\ast$}]{ts}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_aa0bcb2f31d5df71593891fbacb8ff20a}{}\label{interface_8h_aa0bcb2f31d5df71593891fbacb8ff20a}
+
+
+Zeros out all the timestamps. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ts} & The Time\+Stamps struct \\
+\hline
+\end{DoxyParams}
 \index{interface.\+h@{interface.\+h}!set\+\_\+\+\_\+@{set\+\_\+\+\_\+}}
 \index{set\+\_\+\+\_\+@{set\+\_\+\+\_\+}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{set\+\_\+\+\_\+(float x, float y, float z, mavlink\+\_\+set\+\_\+position\+\_\+target\+\_\+local\+\_\+ned\+\_\+t $\ast$set\+\_\+point)}{set__(float x, float y, float z, mavlink_set_position_target_local_ned_t *set_point)}}]{\setlength{\rightskip}{0pt plus 5cm}void set\+\_\+\+\_\+ (
@@ -322,6 +416,18 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{{\bf bool}}]{flag}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_ae2645ae25eb4ac098eb579dd9a49c1b9}{}\label{interface_8h_ae2645ae25eb4ac098eb579dd9a49c1b9}
+
+
+Used by autopilot\+\_\+arm/disarm() in a similar manner to toogle\+\_\+offboard\+\_\+control(). 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em flag} & Indicated on or off toggle.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of bytes written to the autopilot as the command to arm/disarm. 0 for failure. 
+\end{DoxyReturn}
 \index{interface.\+h@{interface.\+h}!toggle\+\_\+offboard\+\_\+control@{toggle\+\_\+offboard\+\_\+control}}
 \index{toggle\+\_\+offboard\+\_\+control@{toggle\+\_\+offboard\+\_\+control}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{toggle\+\_\+offboard\+\_\+control(bool flag)}{toggle_offboard_control(bool flag)}}]{\setlength{\rightskip}{0pt plus 5cm}int toggle\+\_\+offboard\+\_\+control (
@@ -329,3 +435,15 @@ Modifications made by \+: Mohamed Hage Hassan, \href{mailto:mohamed.hagehassan@y
 \item[{{\bf bool}}]{flag}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_a22fb091245542a81979c3d517c048d9c}{}\label{interface_8h_a22fb091245542a81979c3d517c048d9c}
+
+
+The function that\textquotesingle{}s used by enable/disable\+\_\+offbard\+\_\+control() to actually write the appropriate command to the autopilot. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em flag} & Indicated whether to toggle offboard control on or off.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of bytes for a successful write of the command to the autopilot. 0 for failure. 
+\end{DoxyReturn}

@@ -1,11 +1,10 @@
 <map id="src/mavlink_interface/inc/mfunctions.h" name="src/mavlink_interface/inc/mfunctions.h">
-<area shape="rect" id="node2" href="$interface_8h.html" title="src/mavlink_interface\l/inc/interface.h" alt="" coords="435,95,581,136"/>
-<area shape="rect" id="node10" href="$mfunctions_8c.html" title="src/mavlink_interface\l/src/mfunctions.c" alt="" coords="605,95,752,136"/>
-<area shape="rect" id="node3" href="$commands_8h.html" title="src/mavlink_interface\l/inc/commands.h" alt="" coords="239,184,385,225"/>
-<area shape="rect" id="node6" href="$main_8c.html" title="src/main.c" alt="" coords="349,363,432,389"/>
-<area shape="rect" id="node7" href="$mavlink__control_8h.html" title="src/mavlink_interface\l/inc/mavlink_control.h" alt="" coords="363,273,512,315"/>
-<area shape="rect" id="node9" href="$interface_8c.html" title="src/mavlink_interface\l/src/interface.c" alt="" coords="587,184,733,225"/>
+<area shape="rect" id="node2" href="$interface_8h.html" title="src/mavlink_interface\l/inc/interface.h" alt="" coords="303,95,449,136"/>
+<area shape="rect" id="node9" href="$mfunctions_8c.html" title="src/mavlink_interface\l/src/mfunctions.c" alt="" coords="473,95,620,136"/>
+<area shape="rect" id="node3" href="$commands_8h.html" title="src/mavlink_interface\l/inc/commands.h" alt="" coords="192,184,339,225"/>
+<area shape="rect" id="node6" href="$main_8c.html" title="src/main.c" alt="" coords="263,363,345,389"/>
+<area shape="rect" id="node8" href="$interface_8c.html" title="src/mavlink_interface\l/src/interface.c" alt="" coords="413,184,560,225"/>
 <area shape="rect" id="node4" href="$autopilot__controller_8h.html" title="src/autopilot_controller.h" alt="" coords="5,281,168,307"/>
-<area shape="rect" id="node8" href="$commands_8c.html" title="src/mavlink_interface\l/src/commands.c" alt="" coords="192,273,339,315"/>
+<area shape="rect" id="node7" href="$commands_8c.html" title="src/mavlink_interface\l/src/commands.c" alt="" coords="192,273,339,315"/>
 <area shape="rect" id="node5" href="$autopilot__controller_8c.html" title="src/autopilot_controller.c" alt="" coords="5,363,168,389"/>
 </map>

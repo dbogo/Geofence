@@ -59,7 +59,7 @@ void operation (float timer){
 			Program_counter = 7;
 			break;
 		case 7 : 
-			printf("Ideling..\n");
+			printf("Idling..\n");
 			Program_counter = 8;
 			break;
 		case 8 :
@@ -156,7 +156,7 @@ void square_operation (float timer){
 			Program_counter = 8; 
 			break;
 		case 8 : 
-			printf("Ideling..\n");
+			printf("Idling..\n");
 			break;
 		case 9 :
 			printf("Disarmed \n");
@@ -245,7 +245,7 @@ void automatic_takeoff (float timer, time_t *begin){
 			Program_counter = 7; 
 			break;
 		case 7 : 
-			printf("Ideling..\n");
+			printf("Idling..\n");
 			Program_counter = 8;
 			break;
 		case 8 :
@@ -313,7 +313,7 @@ void flight_control_sequence (float timer){
 				Program_counter = 9; 
 				break;
 			case 9 : 
-				printf("Ideling..\n");
+				printf("Idling..\n");
 				Program_counter = 10;
 				break;
 			case 10 :

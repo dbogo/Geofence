@@ -134,13 +134,13 @@ int geofence_polygon_check(Zone_general* zone, GEO_Point p);
  *             Called once.
  * @param      zone   The polygon - represented by its vertices
  * @param      edges  A Edge pointer. points to an array of edges that is populated in this function
- * @return     returns the number of edges. (Actually returnes the number of vertices).
+ * @return     returns the number of edges. (Actually returns the number of vertices).
  */
 int create_edges(Zone_general* zone, Edge** edges);
 
 /* TODO */
 /**
- * @brief      computes the minimun bounding rectangle of the polygon. (aka MBR)
+ * @brief      computes the minimum bounding rectangle of the polygon. (aka MBR)
  * @param      polygon  a struct with the polygon's points.
  */
 void find_mbr(Zone_general* polygon);
