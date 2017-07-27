@@ -98,10 +98,7 @@ void reset_timestamps(Time_Stamps* time_stamps){
 	time_stamps->command_ack = 0;
 }
 
-// Initialization
 void autopilot_initialize(void){
-	// initialize attributes
-
 	control_status = 0;      // whether the autopilot is in offboard control mode
 	arm_status = 0; 		 // whether the autopilot is armed or not
 
@@ -132,8 +129,6 @@ void autopilot_start(void){
 	initial_position_lock = 1;
 }
 
-
-// READ
 void read_messages(void){
 	bool success;               // receive success flag
 	bool received_all = false;  
@@ -146,7 +141,6 @@ void read_messages(void){
 		// Read one message at a time and complete the current_messages structure
 		mavlink_message_t message;
 
-		// Read from serial port
 		success = serial_read_message(&message);
 
 		if(success){
@@ -307,21 +301,12 @@ void autopilot_update_setpoint(mavlink_set_position_target_local_ned_t setpoint)
 	current_setpoint = setpoint;
 }
 
-
-// Offboard Control
-
 bool enable_offboard_control(void){
-	// Should only send this command once
 	if ( control_status == false ){
-		//   TOGGLE OFF-BOARD MODE
-
-		// Sends the command to go off-board
 		int success = toggle_offboard_control( true );
-
-		// Check the command was written
 		if ( success ){
 			control_status = true;
-			printf("Offb Cont Enabled\n");
+			printf("enable_offbaord_control: Offb Cont successfully enabled\n");
 		}
 	} else { 
 		printf("offb cont already enabled\n");
@@ -331,20 +316,13 @@ bool enable_offboard_control(void){
 
 
 bool disable_offboard_control(void){
-	// Should only send this command once
 	if ( control_status == true ){
-		
-		//   TOGGLE OFF-BOARD MODE
-
-		// Sends the command to stop off-board
 		int success = toggle_offboard_control( false );
-
-		// Check the command was written
 		if ( success ){
 			control_status = false;
 			printf("Offb Cont disabled\n");
 		}
-	} // end: if offboard_status
+	}
 	printf("offb cont already disabled\n");
 	return control_status; 
 }
@@ -359,24 +337,16 @@ int toggle_offboard_control( bool flag ){
 	com.confirmation     = true;
 	com.param1           = (float) flag; // flag >0.5 => start, <0.5 => stop
 
-	// Encode
 	mavlink_message_t message;
 	mavlink_msg_command_long_encode(system_id, companion_id, &message, &com);
-
-	// Send the message
 	int len = serial_write_message(&message);
-
 	return len;
 }
 
 
-// Arm/disarm Control
 void autopilot_arm(void){
-	// Should only send this command once
 	if ( arm_status == false ){
-		// ARM 
 		int success = toggle_arm_disarm( true );
-		// Check the command was written
 		if ( success ) {
 			arm_status = true;
 			printf("Autopilot successfully armed\n");
@@ -386,11 +356,8 @@ void autopilot_arm(void){
 
 
 void autopilot_disarm(void){
-	// Should only send this command once
 	if ( arm_status == true ){
-		// DISARM 
 		int success = toggle_arm_disarm( false );
-		// Check the command was written
 		if ( success ){
 			arm_status = false;
 			printf("Autopilot successfully disarmed\n");
@@ -408,22 +375,16 @@ int toggle_arm_disarm( bool flag ){
 	autopilot_status.confirmation     = true;
 	autopilot_status.param1           = (float) flag; // flag = 1 => arm, flag = 0 => disarm
 
-	// Encode
 	mavlink_message_t message;
 	mavlink_msg_command_long_encode(system_id, companion_id, &message, &autopilot_status);
-
-	// Send the message
 	int len = serial_write_message(&message);
-
 	return len;
 }
 
 
 // NEEDS PX4 Master version or stable v1.4 
 int check_offboard_control(void){
-	// check offboard control message reception
 	int success = check_message(MAV_CMD_NAV_GUIDED_ENABLE);
-
 	if (success){
 		printf("Offboard control checked\n");
 		return 1;
@@ -435,9 +396,7 @@ int check_offboard_control(void){
 
 
 int check_arm_disarm(void){
-	// check arm/disarm message reception
 	int success = check_message(MAV_CMD_COMPONENT_ARM_DISARM);
-
 	if (success){
 		printf("Arm/disarm checked\n");
 		return 1;
@@ -458,7 +417,6 @@ int check_message(uint16_t COMMAND_ID){
 }
 
 
-// Control
 // Set position function and masks
 void set_position(float x, float y, float z, mavlink_set_position_target_local_ned_t* set_position){
 	set_position->type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION;
@@ -468,7 +426,6 @@ void set_position(float x, float y, float z, mavlink_set_position_target_local_n
 	set_position->y = y; 
 	set_position->z = z;
 }
-
 
 // Set velocity function and masks
 void set_velocity(float vx, float vy, float vz, mavlink_set_position_target_local_ned_t* sp){
@@ -480,12 +437,10 @@ void set_velocity(float vx, float vy, float vz, mavlink_set_position_target_loca
 	sp->vz = vz;
 }
 
-
 void set_yaw(float yaw, mavlink_set_position_target_local_ned_t* sp){
 	sp->type_mask &= MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_ANGLE ;
 	sp->yaw = yaw;
 }
-
 
 // Set position, update setpoint and send the message 
 void set__(float x, float y, float z, mavlink_set_position_target_local_ned_t* final_set_point){
@@ -493,7 +448,6 @@ void set__(float x, float y, float z, mavlink_set_position_target_local_ned_t* f
 	autopilot_update_setpoint(*final_set_point);
 	autopilot_write_setpoint();
 }
-
 
 // Set position and velocity, update setpoint and send the message 
 void position_and_speed_set(float x, float y, float z ,float vx, float vy, float vz, mavlink_set_position_target_local_ned_t* final_set_point){
@@ -503,14 +457,11 @@ void position_and_speed_set(float x, float y, float z ,float vx, float vy, float
 	autopilot_write_setpoint();
 }
 
-
 // Draw a circle with R and theta (angle) coordinates from current position
 void set_circle(float R, float theta, float z, mavlink_set_position_target_local_ned_t* set_point){
 	set__( (R * tan_2pi(theta))/Beta(theta)  , R / Beta(theta), z, set_point);
 }
 
-
-// Time 
 uint64_t get_time_usec(void){
 	static struct timeval _time_stamp;
 	get_time_sec(&_time_stamp, NULL);

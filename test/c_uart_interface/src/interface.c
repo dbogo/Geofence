@@ -29,7 +29,7 @@
  * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
  * OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
@@ -47,6 +47,7 @@
  * Mohamed Hage Hassan, <mohamed.hagehassan@yahoo.com>
  *
  */
+
 
 #include <inc/interface.h>
 
@@ -244,29 +245,28 @@ void read_messages(void){
 
 		// Loop untill the full reception of the first heartbeat and local_position_ned
 		// for the first time, then depend on the highres MAVLink message for the rest
-		// if (lock_read_messages == 0){
+		if (lock_read_messages == 0){
 			// Check for receipt of all items
 			received_all =
-					// this_timestamps.heartbeat                  &&
-					this_timestamps.command_ack 
+					this_timestamps.heartbeat                  &&
+					// this_timestamps.command_ack 
 			//				this_timestamps.battery_status             &&
 			//				this_timestamps.radio_status               &&
-							// this_timestamps.local_position_ned         
+							this_timestamps.local_position_ned         
 			//				this_timestamps.global_position_int        &&
 			//				this_timestamps.position_target_local_ned  &&
 			//				this_timestamps.position_target_global_int &&
 			//				this_timestamps.highres_imu                &&
 			//				this_timestamps.attitude                   &&
 						;		
-		// } else {
-		// 	received_all = this_timestamps.highres_imu;	
-		// 	if (highres_flag == 0) break;
-		// }
+		} else {
+			received_all = this_timestamps.highres_imu;	
+			if (highres_flag == 0) break;
+		}
 	} 
-		// lock_read_messages = 1;		
+		lock_read_messages = 1;		
 	return;
 }
-
 
 // Write
 void autopilot_write(void){
@@ -337,7 +337,7 @@ bool enable_offboard_control(void){
 		// Check the command was written
 		if ( success ){
 			control_status = true;
-			printf("Offb Cont Enabled\n");
+			printf("offbaord control successfuly enabled.\n");
 		}
 	} else { 
 		printf("offb cont already enabled\n");

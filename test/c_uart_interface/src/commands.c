@@ -326,48 +326,54 @@ void flight_control_sequence (float timer){
 
 // Flight functions 
 void arm_sequence (void){
-	if (current_messages.heartbeat.base_mode != ARMED_BASE_MODE && arm_lock == 0){
+	// if (current_messages.heartbeat.base_mode != ARMED_BASE_MODE && arm_lock == 0){
 		printf("Arming\n");
 		autopilot_arm();
 		arm_lock = 1;
-	}
+	// }
 
 	usleep(100);
 }
 
 
 void offboard_control_sequence(void){
-	printf("Enable offboard control\n");
+	printf("Enabling offboard control\n");
 
-	autopilot_write();
-	enable_offboard_control();
-	autopilot_write();
-
-	if (current_messages.heartbeat.base_mode != OFFBOARD_CONTROL_BASE_MODE){
+	// if (current_messages.heartbeat.base_mode != OFFBOARD_CONTROL_BASE_MODE){
 		control_status = false;
 		autopilot_write();
+		usleep(200);
 		enable_offboard_control();
+		usleep(100);
 		autopilot_write();
-	}		
+	// }		
 		
 	usleep(100);
-	Program_counter = 2;
+	// Program_counter = 2;
 }
 
 
 void disable_offboard_control_sequence(void){
-	printf("Disabled offboard control\n");
-	disable_offboard_control(); 
+	// printf("Disabled offboard control\n");
+	printf("Disabling offbaord control...\n");
+	
+
+	// if(current_messages.heartbeat.base_mode == OFFBOARD_CONTROL_BASE_MODE){
+		autopilot_write();
+		usleep(100);
+		disable_offboard_control(); 
+		usleep(100);
+	// }
+	// usleep(100);
 } 
 
 
 void disarm_sequence (void){
-	printf("Disarmed \n");
-	autopilot_disarm();
+	printf("Disarming...\n");
 
-	if (current_messages.heartbeat.base_mode == ARMED_BASE_MODE){
+	// if (current_messages.heartbeat.base_mode == ARMED_BASE_MODE){
 		autopilot_disarm();
-	}
+	// }
 }
 
 

@@ -15,4 +15,7 @@ int main(int argc, char** argv);
 // Scheduler
 void commands(void);
 
+void send_pre_arm_void_commands(void);
+int autopilot_ok(void);
+
 #endif

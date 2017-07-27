@@ -3,47 +3,54 @@
 
 int main(int argc, char **argv)
 {
-
+	time_t begin = time(NULL);
 	autopilot_initialize();
-	serial_start(argv[1]);
 
-	
+	serial_start("/dev/ttyUSB0");
+	printf("Opened serial connection.\n");
+	read_messages(); // first read to make sure that there is a connection
+	printf("Acquired initial read\n");
 	autopilot_start();
-	// autopilot_write_helper();
-	// if (check_offboard_control()){
-	// 	printf("Offboard Control Enabled\n");
-		check_offboard_control();
-		enable_offboard_control();
-		read_messages();
-		// sleep(1);
-		// check_offboard_control();
-		// read_messages();
-		sleep(1);
-	// } else {
-	// 	// printf("Offboard Cont. disabled.\n");
-		// disable_offboard_control();
-	// }
-	check_arm_disarm();
-	sleep(1);
+	printf("locked data from read_messages()\n");
+	send_pre_arm_void_commands();
+	offboard_control_sequence();
+	usleep(200000); // 200ms = 5Hz
+	arm_sequence();
+	usleep(200000);
 
-	autopilot_arm();
-	autopilot_arm();
-	read_messages();
-	sleep(2);
+	mavlink_set_position_target_local_ned_t set_point;
+	for(int i = 0; i < 190; i++){
+		// printf("Current Initial position : x = %f , y = %f , z = %f\n", ip.x, ip.y, ip.z);
+		printf("%d: Current set point : x = %f, y = %f z=%f\n", i, ip.x, ip.y, ip.z - 0.25);
+		set_yaw (ip.yaw, &set_point);
+		set__(- 1.0 + ip.x , ip.y, ip.z - 2, &set_point);
+		usleep(100000);
+	}
 
-	// autopilot_arm();
-	// sleep(1);
-	check_arm_disarm();
-	sleep(5);
-	autopilot_disarm();
-	read_messages();
-	
+	disarm_sequence();
 
-	// while (1) {
-	// 	commands();
-	// }
+	usleep(200000);
+
+	disable_offboard_control_sequence();
+
+	usleep(200000);
 
 	return 0;
+}
+
+void send_pre_arm_void_commands(){
+	for(int i = 0; i < 20 && autopilot_ok(); i++){
+		autopilot_write_helper();
+		usleep(200000);
+	}
+}
+
+int autopilot_ok(){
+	mavlink_message_t msg;
+	while(!msg.msgid == MAVLINK_MSG_ID_HEARTBEAT){
+		serial_read_message(&msg);
+	}
+	return 1;
 }
 
 // Scheduler

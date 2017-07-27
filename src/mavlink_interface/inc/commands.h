@@ -32,4 +32,4 @@ void program_counter_sequence(float timer, time_t* begin);
 // Function helpers
 void autopilot_write_helper(void);
 
-#endif
+#endif /* COMMANDS_H_ */

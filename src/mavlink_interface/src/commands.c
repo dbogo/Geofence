@@ -343,7 +343,9 @@ void offboard_control_sequence(void){
 	printf("Enable offboard control\n");
 
 	autopilot_write();
+	usleep(200);
 	enable_offboard_control();
+	usleep(200);
 	autopilot_write();
 
 	if (current_messages.heartbeat.base_mode != OFFBOARD_CONTROL_BASE_MODE){
