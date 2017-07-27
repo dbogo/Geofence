@@ -9,5 +9,6 @@ void update_autopilot(void);
 
 int takeover_control(time_t *commanderTimestamp);
 
+int stop_autopilt();
 
 #endif /* AUTOPILOT_CONTROLLER_H */

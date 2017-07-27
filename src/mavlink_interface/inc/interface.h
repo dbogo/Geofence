@@ -53,6 +53,7 @@
 
 #include <stdbool.h>
 #include <src/serial/serialInterface.h>
+#include <src/types.h>
 
                                                 // bit number  876543210987654321
 #define MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION     0b0000110111111000
@@ -73,6 +74,7 @@ typedef struct Time_Stamps{
 	uint64_t radio_status;
 	uint64_t local_position_ned;
 	uint64_t global_position_int;
+	uint64_t global_pos_cov;
 	uint64_t position_target_local_ned;
 	uint64_t position_target_global_int;
 	uint64_t highres_imu;
@@ -93,6 +95,7 @@ typedef struct Mavlink_Messages {
 	mavlink_radio_status_t radio_status; // Radio Status
 	mavlink_local_position_ned_t local_position_ned; // Local Position
 	mavlink_global_position_int_t global_position_int; // Global Position
+	mavlink_global_position_int_cov_t global_pos_cov; // A more accurate global position data
 	mavlink_position_target_local_ned_t position_target_local_ned; // Local Position Target
 	mavlink_position_target_global_int_t position_target_global_int; // Global Position Target
 	mavlink_highres_imu_t highres_imu; // HiRes IMU
@@ -241,6 +244,43 @@ int check_arm_disarm(void);
  */
 int check_message (uint16_t COMMAND_ID);
 
+/**
+ * @brief      Update the FullGPSData based on information from the GLOBAL_POSITION_INT_COV message.
+ *
+ * @param      gpsData  Pointer to a FullGPSData struct
+ *
+ * @return     1 for success.
+ */
+int get_gps_from_autopilot(FullGPSData *gpsData);
+
+/**
+ * @brief      Used to send "dummy" setpoints to the autopilot.
+ *             This method is meant to be used before switching to offboard mode.
+ *             It's required that the setpoint streaming will already begin before 
+ *             switching to offboard, otherwise the autopilot will reject the mode switch.
+ *
+ * @return     0 for success.
+ */
+int pre_arm_void_commands();
+
+/**
+ * @brief      Receive a HEARTBEAT message from the autopilot.
+ *             Used to verify that the autopilot is up and running and is connected.
+ *
+ * @return     1 for success
+ */
+int autopilot_ok();
+
+#ifdef DEBUG
+/**
+ * @brief      Used to shutdown everything autopilot-related (like disarming and
+ *             disabling offboard control)
+ *             This is called upon a SIGINT to avoid autopilot failsafes.
+ *
+ * @return     0 for success.
+ */
+int handle_quit_autopilot();
+#endif
 
 #include <mfunctions.h>
 

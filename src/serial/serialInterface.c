@@ -56,14 +56,15 @@ int fetch_sentence_from_gps(int fd, char* buffer){
 	return i;
 }
 
-void serial_start(const char* portname){
+int serial_start(const char* portname){
 	RS232_DEVICE_const = portname;
 	printf("Open port : %s\n", portname);
 	fd = open(portname, O_RDWR | O_NOCTTY);
 
 	if (fd < 0){
 		perror(portname);
-		exit(-1);
+		// exit(-1);
+		return -1;
 	}
 
 	tcgetattr(fd, &oldtio);							  /* save current serial port settings */
@@ -76,6 +77,7 @@ void serial_start(const char* portname){
 	printf("Succeeded\n");
 	tcflush(fd, TCIFLUSH);
 	tcsetattr(fd, TCSANOW, &newtio);
+	return 1;
 }
 
 
@@ -111,3 +113,11 @@ int get_time_sec(struct timeval *tv, struct timezone *tz){
 int get_streamFD(void){
 	return streamFD;
 }
+
+#ifdef DEBUG
+int handle_quit_serial(){
+	int close1 = close(fd);
+	int close2 = close(streamFD);
+	return close1 && close2;
+}
+#endif

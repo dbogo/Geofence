@@ -198,6 +198,13 @@ void read_messages(void){
 					this_timestamps.global_position_int = current_messages.time_stamps.global_position_int;
 					break;
 					}
+				
+				case MAVLINK_MSG_ID_GLOBAL_POSITION_INT_COV: {
+					mavlink_msg_global_position_int_cov_decode(&message, &(current_messages.global_pos_cov));
+					current_messages.time_stamps.global_pos_cov = get_time_usec();
+					this_timestamps.global_pos_cov = current_messages.time_stamps.global_pos_cov;
+					break;
+				}
 
 				case MAVLINK_MSG_ID_POSITION_TARGET_LOCAL_NED:{
 					mavlink_msg_position_target_local_ned_decode(&message, &(current_messages.position_target_local_ned));
@@ -242,8 +249,9 @@ void read_messages(void){
 					// this_timestamps.command_ack 
 			//				this_timestamps.battery_status             &&
 			//				this_timestamps.radio_status               &&
-							this_timestamps.local_position_ned         
+							this_timestamps.local_position_ned         &&
 			//				this_timestamps.global_position_int        &&
+							this_timestamps.global_pos_cov
 			//				this_timestamps.position_target_local_ned  &&
 			//				this_timestamps.position_target_global_int &&
 			//				this_timestamps.highres_imu                &&
@@ -462,8 +470,40 @@ void set_circle(float R, float theta, float z, mavlink_set_position_target_local
 	set__( (R * tan_2pi(theta))/Beta(theta)  , R / Beta(theta), z, set_point);
 }
 
+int get_gps_from_autopilot(FullGPSData *gpsData){
+	gpsData->lat = (double)current_messages.global_pos_cov.lat / 1E7;
+	printf("getting gps from autopilot.\n");
+	return 1;
+}
+
+int pre_arm_void_commands(){
+	for(int i = 0; i < 10 && autopilot_ok(); i++){
+		autopilot_write_helper();
+		usleep(20000);
+	}
+	return 0;
+}
+
+int autopilot_ok(){
+	mavlink_message_t msg;
+	while(!msg.msgid == MAVLINK_MSG_ID_HEARTBEAT){
+		serial_read_message(&msg);
+	}
+	return 1;
+}
+
 uint64_t get_time_usec(void){
 	static struct timeval _time_stamp;
 	get_time_sec(&_time_stamp, NULL);
 	return _time_stamp.tv_sec*1000000 + _time_stamp.tv_usec;
 }
+
+#ifdef DEBUG
+int handle_quit_autopilot(){
+	printf("handling autopilot shutdown...\n");
+	autopilot_disarm();
+	usleep();
+	disable_offboard_control();
+	return 0;
+}
+#endif

@@ -46,8 +46,9 @@ int usart_recv_blocking(int i);
 /**
  * @brief      Open a serial connection on a specified port
  * @param[in]  portname  The name of the serial port
+ * @return     -1 for error and 1 for success.
  */
-void serial_start(const char* portname);
+int serial_start(const char* portname);
 
 /**
  * @brief      Read one byte at a time from the MAVLink stream on the serial port
@@ -78,6 +79,16 @@ int serial_write_message(const mavlink_message_t* message);
  * @return     0 for successful write to structs and -1 for failure.
  */
 int get_time_sec(struct timeval *tv, struct timezone *tz);
+
+#ifdef DEBUG
+/**
+ * @brief      Closes the opened serial ports.
+ *             Used in the signal handler to allow peaceful termination when a SIGINT is received
+ *
+ * @return     The result of close()ing the opened ports (&&)
+ */
+int handle_quit_serial();
+#endif
 
 
 #endif /* SERIALTEST_H_ */

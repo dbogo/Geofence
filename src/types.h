@@ -2,13 +2,14 @@
 #define TYPES_H
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 	
-typedef enum { false, true } bool;
+// typedef enum { false, true } bool;
 typedef unsigned char uint8_t;
 
 /* 	TODO: deprecated ?? */
