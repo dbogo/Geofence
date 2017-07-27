@@ -5,6 +5,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <signal.h>
 
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 #define min(a, b) (((a) < (b)) ? (a) : (b))
@@ -43,6 +44,16 @@ platform_id identify_platform(void);
  * @return     returns the rv of nanosleep()
  */
 int suspend_loop(time_t tv_sec, long nsec);
+
+
+#ifdef DEBUG
+/**
+ * @brief      Peacefully shuts down important components upon a SIGINT reception.
+ *
+ * @param[in]  sig   The signal id.
+ */
+void quit_handler(int sig);
+#endif
 
 
 #endif /* UTILS_H */

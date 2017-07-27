@@ -7,7 +7,7 @@ PROJECT = geofence
 CC 		= gcc
       
 COMMANDLINE_OPTIONS = #/dev/ttyUSB0
-MACROS = -DRPI_GPS
+MACROS = -DRPI_GPS -DDEBUG
 
 COMPILE_OPTIONS = -Wall -Wextra -std=gnu11 -g
 

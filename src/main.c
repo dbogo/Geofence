@@ -29,6 +29,7 @@
 
 
 int main(int argc, char** argv) {
+	signal(SIGINT, quit_handler);
 	FullGPSData gpsData; /* stores every kind of data we may need, that's possible to extract from NMEA */
 	Zone_general zone; 
 	Edge* edges = NULL;
@@ -44,9 +45,13 @@ int main(int argc, char** argv) {
 	
 	//autopilot stuff
 	autopilot_initialize();
-	// serial_start("/dev/ttyUSB0"); // TODO: receive from argv ?
-	// read_messages();
-	// autopilot_start();
+	serial_start("/dev/ttyUSB0"); // TODO: receive from argv ?
+
+	read_messages();
+	autopilot_start();
+
+	get_gps_from_autopilot(&gpsData);
+
 	// autopilot_write_helper();
 
 	//gpsData.latitude = 13.0f;
@@ -86,3 +91,17 @@ int main(int argc, char** argv) {
 	
 	return (0);
 }
+
+#ifdef DEBUG
+void quit_handler( int sig ){
+	printf("\n");
+	printf("TERMINATING AT USER REQUEST\n");
+	printf("\n");
+
+	// autopilot interface
+	handle_quit_autopilot();
+
+	handle_quit_serial();
+	exit(0);
+}
+#endif
