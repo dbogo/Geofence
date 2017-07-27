@@ -101,8 +101,8 @@ Include dependency graph for GPSInterface.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_g_p_s_interface_8h__incl.png" border="0" usemap="#src_2_g_p_s_interface_8h" alt=""/></div>
 <map name="src_2_g_p_s_interface_8h" id="src_2_g_p_s_interface_8h">
-<area shape="rect" id="node2" href="types_8h.html" title="types.h" alt="" coords="59,80,125,107"/>
-<area shape="rect" id="node4" href="utils_8h.html" title="utils.h" alt="" coords="227,80,285,107"/>
+<area shape="rect" id="node2" href="types_8h.html" title="types.h" alt="" coords="98,80,163,107"/>
+<area shape="rect" id="node5" href="utils_8h.html" title="utils.h" alt="" coords="367,80,425,107"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -171,7 +171,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a2a940fd545a524efc707bf883f5be6a9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_g_p_s_interface_8h.html#a2a940fd545a524efc707bf883f5be6a9">GPS_init</a> (<a class="el" href="struct_g_p_s___actions.html">GPS_Actions</a> *gpsHandler)</td></tr>
 <tr class="memdesc:a2a940fd545a524efc707bf883f5be6a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">assignes the correct library for the getGPS function pointer. either an RPi or a demo implementation of the getGPSSample() will be used.  <a href="#a2a940fd545a524efc707bf883f5be6a9">More...</a><br /></td></tr>
 <tr class="separator:a2a940fd545a524efc707bf883f5be6a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac71865e68cf32819594bdcd0c4244f8d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_g_p_s_interface_8h.html#ac71865e68cf32819594bdcd0c4244f8d">geofence_breached</a> (<a class="el" href="struct_full_g_p_s_data.html">FullGPSData</a> *location, <a class="el" href="struct_zone__general.html">Zone_general</a> *zone)</td></tr>
+<tr class="memitem:ac71865e68cf32819594bdcd0c4244f8d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_g_p_s_interface_8h.html#ac71865e68cf32819594bdcd0c4244f8d">geofence_breached</a> (<a class="el" href="struct_full_g_p_s_data.html">FullGPSData</a> *location, <a class="el" href="struct_zone__general.html">Zone_general</a> *zone)</td></tr>
 <tr class="memdesc:ac71865e68cf32819594bdcd0c4244f8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">runs tests for different kinds of possible geofence violations, if one of the tests is failed (i.e some kind of violation has occured), there's a breach. Winding Number algorithm for test of Point-In-Polygon inclusion. see <a href="http://geomalgorithms.com/a03-_inclusion.html">http://geomalgorithms.com/a03-_inclusion.html</a>  <a href="#ac71865e68cf32819594bdcd0c4244f8d">More...</a><br /></td></tr>
 <tr class="separator:ac71865e68cf32819594bdcd0c4244f8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6b4d89308a2b0eab06656a5dd3d5858"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_g_p_s_interface_8h.html#ac6b4d89308a2b0eab06656a5dd3d5858">geofecnce_alt_check</a> (<a class="el" href="struct_zone__general.html">Zone_general</a> *zone, double altitude)</td></tr>
@@ -502,7 +502,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a> geofence_breached </td>
+          <td class="memname">bool geofence_breached </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_full_g_p_s_data.html">FullGPSData</a> *&#160;</td>
           <td class="paramname"><em>location</em>, </td>

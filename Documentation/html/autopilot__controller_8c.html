@@ -91,17 +91,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">autopilot_controller.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="autopilot__controller_8h_source.html">autopilot_controller.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="autopilot__controller_8h_source.html">autopilot_controller.h</a>&quot;</code><br />
+<code>#include &lt;<a class="el" href="interface_8h_source.html">mavlink_interface/inc/interface.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for autopilot_controller.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="autopilot__controller_8c__incl.png" border="0" usemap="#src_2autopilot__controller_8c" alt=""/></div>
 <map name="src_2autopilot__controller_8c" id="src_2autopilot__controller_8c">
-<area shape="rect" id="node2" href="autopilot__controller_8h.html" title="autopilot_controller.h" alt="" coords="56,80,197,107"/>
-<area shape="rect" id="node4" href="commands_8h.html" title="mavlink_interface/inc\l/commands.h" alt="" coords="118,155,263,196"/>
-<area shape="rect" id="node5" href="interface_8h.html" title="interface.h" alt="" coords="149,244,232,271"/>
-<area shape="rect" id="node7" href="serial_interface_8h.html" title="src/serial/serialInterface.h" alt="" coords="105,319,277,345"/>
-<area shape="rect" id="node10" href="mfunctions_8h.html" title="mfunctions.h" alt="" coords="301,319,398,345"/>
+<area shape="rect" id="node3" href="autopilot__controller_8h.html" title="autopilot_controller.h" alt="" coords="299,80,440,107"/>
+<area shape="rect" id="node6" href="interface_8h.html" title="interface.h" alt="" coords="339,244,421,271"/>
+<area shape="rect" id="node5" href="commands_8h.html" title="mavlink_interface/inc\l/commands.h" alt="" coords="211,155,357,196"/>
+<area shape="rect" id="node8" href="serial_interface_8h.html" title="src/serial/serialInterface.h" alt="" coords="117,319,289,345"/>
+<area shape="rect" id="node11" href="types_8h.html" title="src/types.h" alt="" coords="378,319,465,345"/>
+<area shape="rect" id="node13" href="mfunctions_8h.html" title="mfunctions.h" alt="" coords="489,319,586,345"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -111,8 +114,25 @@ Functions</h2></td></tr>
 <tr class="separator:a4840fc5da500f994fe893dab4c7dbd79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa06f4432f5f1ab850f2e7a8190d3dabd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="autopilot__controller_8c.html#aa06f4432f5f1ab850f2e7a8190d3dabd">takeover_control</a> (time_t *commanderTimestamp)</td></tr>
 <tr class="separator:aa06f4432f5f1ab850f2e7a8190d3dabd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5fe1f84cf7e35435903237309cafc90"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="autopilot__controller_8c.html#aa5fe1f84cf7e35435903237309cafc90">stop_autopilot</a> ()</td></tr>
+<tr class="separator:aa5fe1f84cf7e35435903237309cafc90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="aa5fe1f84cf7e35435903237309cafc90"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int stop_autopilot </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="aa06f4432f5f1ab850f2e7a8190d3dabd"></a>
 <div class="memitem">
 <div class="memproto">

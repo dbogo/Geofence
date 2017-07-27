@@ -1,6 +1,6 @@
 <map id="src/init.h" name="src/init.h">
 <area shape="rect" id="node2" href="$types_8h.html" title="types.h" alt="" coords="153,162,218,189"/>
-<area shape="rect" id="node4" href="$log_interface_8h.html" title="logInterface.h" alt="" coords="27,80,128,107"/>
-<area shape="rect" id="node6" href="$_g_p_s_interface_8h.html" title="GPSInterface.h" alt="" coords="208,80,320,107"/>
-<area shape="rect" id="node7" href="$utils_8h.html" title="utils.h" alt="" coords="283,162,341,189"/>
+<area shape="rect" id="node5" href="$log_interface_8h.html" title="logInterface.h" alt="" coords="31,80,132,107"/>
+<area shape="rect" id="node7" href="$_g_p_s_interface_8h.html" title="GPSInterface.h" alt="" coords="215,80,327,107"/>
+<area shape="rect" id="node8" href="$utils_8h.html" title="utils.h" alt="" coords="377,162,434,189"/>
 </map>

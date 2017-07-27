@@ -1,5 +1,6 @@
 <map id="src/mavlink_interface/src/interface.c" name="src/mavlink_interface/src/interface.c">
-<area shape="rect" id="node3" href="$interface_8h.html" title="../inc/interface.h" alt="" coords="133,95,249,121"/>
-<area shape="rect" id="node5" href="$serial_interface_8h.html" title="src/serial/serialInterface.h" alt="" coords="105,169,277,196"/>
-<area shape="rect" id="node8" href="$mfunctions_8h.html" title="mfunctions.h" alt="" coords="301,169,398,196"/>
+<area shape="rect" id="node3" href="$interface_8h.html" title="../inc/interface.h" alt="" coords="322,95,438,121"/>
+<area shape="rect" id="node5" href="$serial_interface_8h.html" title="src/serial/serialInterface.h" alt="" coords="117,169,289,196"/>
+<area shape="rect" id="node8" href="$types_8h.html" title="src/types.h" alt="" coords="378,169,465,196"/>
+<area shape="rect" id="node10" href="$mfunctions_8h.html" title="mfunctions.h" alt="" coords="489,169,586,196"/>
 </map>

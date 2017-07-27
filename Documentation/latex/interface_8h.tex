@@ -2,8 +2,10 @@
 \label{interface_8h}\index{src/mavlink\+\_\+interface/inc/interface.\+h@{src/mavlink\+\_\+interface/inc/interface.\+h}}
 {\ttfamily \#include $<$stdbool.\+h$>$}\\*
 {\ttfamily \#include $<$src/serial/serial\+Interface.\+h$>$}\\*
+{\ttfamily \#include $<$src/types.\+h$>$}\\*
 {\ttfamily \#include $<$mfunctions.\+h$>$}\\*
-Include dependency graph for interface.\+h\+:\nopagebreak
+Include dependency graph for interface.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -66,17 +68,17 @@ void \hyperlink{interface_8h_ab2559012cba7e4c72ec10a59c87f84cb}{autopilot\+\_\+w
 \begin{DoxyCompactList}\small\item\em Write the current setpoint to the autopilot after it\textquotesingle{}s been updated (needs to be called explicitly) \end{DoxyCompactList}\item 
 void \hyperlink{interface_8h_a7a3598bf63d9844fcd22328fc63842a4}{autopilot\+\_\+update\+\_\+setpoint} (mavlink\+\_\+set\+\_\+position\+\_\+target\+\_\+local\+\_\+ned\+\_\+t setpoint)
 \begin{DoxyCompactList}\small\item\em Update the current setpoint with the given setpoint. \end{DoxyCompactList}\item 
-\hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1}{bool} \hyperlink{interface_8h_a4b3151ecef548d647281eba568170280}{disable\+\_\+offboard\+\_\+control} (void)
+bool \hyperlink{interface_8h_a4b3151ecef548d647281eba568170280}{disable\+\_\+offboard\+\_\+control} (void)
 \begin{DoxyCompactList}\small\item\em Disabled the offboard control of the autopilot. \end{DoxyCompactList}\item 
-\hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1}{bool} \hyperlink{interface_8h_a6f0b501cf0b9b1e74c0053df49b3bdc6}{enable\+\_\+offboard\+\_\+control} (void)
+bool \hyperlink{interface_8h_a6f0b501cf0b9b1e74c0053df49b3bdc6}{enable\+\_\+offboard\+\_\+control} (void)
 \begin{DoxyCompactList}\small\item\em Enables the offboard control of the autopilot, setting the appropriate flag. \end{DoxyCompactList}\item 
-int \hyperlink{interface_8h_a22fb091245542a81979c3d517c048d9c}{toggle\+\_\+offboard\+\_\+control} (\hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1}{bool} flag)
+int \hyperlink{interface_8h_a22fb091245542a81979c3d517c048d9c}{toggle\+\_\+offboard\+\_\+control} (bool flag)
 \begin{DoxyCompactList}\small\item\em The function that\textquotesingle{}s used by enable/disable\+\_\+offbard\+\_\+control() to actually write the appropriate command to the autopilot. \end{DoxyCompactList}\item 
 void \hyperlink{interface_8h_ae4ffa041a7021553ce57bcc004721afe}{autopilot\+\_\+arm} (void)
 \begin{DoxyCompactList}\small\item\em Arm the autopilot. \end{DoxyCompactList}\item 
 void \hyperlink{interface_8h_ab784fd6af4d00965889893c0cf462f26}{autopilot\+\_\+disarm} (void)
 \begin{DoxyCompactList}\small\item\em Disarm the autopilot. \end{DoxyCompactList}\item 
-int \hyperlink{interface_8h_ae2645ae25eb4ac098eb579dd9a49c1b9}{toggle\+\_\+arm\+\_\+disarm} (\hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1}{bool} flag)
+int \hyperlink{interface_8h_ae2645ae25eb4ac098eb579dd9a49c1b9}{toggle\+\_\+arm\+\_\+disarm} (bool flag)
 \begin{DoxyCompactList}\small\item\em Used by autopilot\+\_\+arm/disarm() in a similar manner to toogle\+\_\+offboard\+\_\+control(). \end{DoxyCompactList}\item 
 int \hyperlink{interface_8h_a56a6826eb5bf8127144d09ecfa6bee9a}{check\+\_\+offboard\+\_\+control} (void)
 \begin{DoxyCompactList}\small\item\em A convenience function to check if the autopilot is in offboard control or not. \end{DoxyCompactList}\item 
@@ -84,6 +86,12 @@ int \hyperlink{interface_8h_a8140deb719d9d4350a97d225d1d2cd04}{check\+\_\+arm\+\
 \begin{DoxyCompactList}\small\item\em Similar to \hyperlink{interface_8h_a56a6826eb5bf8127144d09ecfa6bee9a}{check\+\_\+offboard\+\_\+control()}. \end{DoxyCompactList}\item 
 int \hyperlink{interface_8h_a778200ebd979982133bd3965e49976a5}{check\+\_\+message} (uint16\+\_\+t C\+O\+M\+M\+A\+N\+D\+\_\+\+ID)
 \begin{DoxyCompactList}\small\item\em The function that\textquotesingle{}s used by \hyperlink{interface_8h_a56a6826eb5bf8127144d09ecfa6bee9a}{check\+\_\+offboard\+\_\+control()} and \hyperlink{interface_8h_a8140deb719d9d4350a97d225d1d2cd04}{check\+\_\+arm\+\_\+disarm()} to determine the status. \end{DoxyCompactList}\item 
+int \hyperlink{interface_8h_a2c968172095b29933cf3b8997e2cb140}{get\+\_\+gps\+\_\+from\+\_\+autopilot} (\hyperlink{struct_full_g_p_s_data}{Full\+G\+P\+S\+Data} $\ast$gps\+Data)
+\begin{DoxyCompactList}\small\item\em Update the \hyperlink{struct_full_g_p_s_data}{Full\+G\+P\+S\+Data} based on information from the G\+L\+O\+B\+A\+L\+\_\+\+P\+O\+S\+I\+T\+I\+O\+N\+\_\+\+I\+N\+T\+\_\+\+C\+OV message. \end{DoxyCompactList}\item 
+int \hyperlink{interface_8h_a8f2570bef0f8d567d0eee6648951a9bb}{pre\+\_\+arm\+\_\+void\+\_\+commands} ()
+\begin{DoxyCompactList}\small\item\em Used to send \char`\"{}dummy\char`\"{} setpoints to the autopilot. This method is meant to be used before switching to offboard mode. It\textquotesingle{}s required that the setpoint streaming will already begin before switching to offboard, otherwise the autopilot will reject the mode switch. \end{DoxyCompactList}\item 
+int \hyperlink{interface_8h_a6ea50ba9fe9c2ae23ab9cbc9a1a6adda}{autopilot\+\_\+ok} ()
+\begin{DoxyCompactList}\small\item\em Receive a H\+E\+A\+R\+T\+B\+E\+AT message from the autopilot. Used to verify that the autopilot is up and running and is connected. \end{DoxyCompactList}\item 
 void \hyperlink{interface_8h_a93e3fdd06c6bbc40c6fb045ba1a29bb6}{set\+\_\+position} (float x, float y, float z, mavlink\+\_\+set\+\_\+position\+\_\+target\+\_\+local\+\_\+ned\+\_\+t $\ast$sp)
 \item 
 void \hyperlink{interface_8h_a992ee3c0025abb2bba96ed4bb7277484}{set\+\_\+\+\_\+} (float x, float y, float z, mavlink\+\_\+set\+\_\+position\+\_\+target\+\_\+local\+\_\+ned\+\_\+t $\ast$set\+\_\+point)
@@ -174,6 +182,20 @@ Disarm the autopilot.
 
 Initialize system-\/wide important parameters and flags. 
 
+\index{interface.\+h@{interface.\+h}!autopilot\+\_\+ok@{autopilot\+\_\+ok}}
+\index{autopilot\+\_\+ok@{autopilot\+\_\+ok}!interface.\+h@{interface.\+h}}
+\subsubsection[{\texorpdfstring{autopilot\+\_\+ok()}{autopilot_ok()}}]{\setlength{\rightskip}{0pt plus 5cm}int autopilot\+\_\+ok (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{interface_8h_a6ea50ba9fe9c2ae23ab9cbc9a1a6adda}{}\label{interface_8h_a6ea50ba9fe9c2ae23ab9cbc9a1a6adda}
+
+
+Receive a H\+E\+A\+R\+T\+B\+E\+AT message from the autopilot. Used to verify that the autopilot is up and running and is connected. 
+
+\begin{DoxyReturn}{Returns}
+1 for success 
+\end{DoxyReturn}
 \index{interface.\+h@{interface.\+h}!autopilot\+\_\+start@{autopilot\+\_\+start}}
 \index{autopilot\+\_\+start@{autopilot\+\_\+start}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{autopilot\+\_\+start(void)}{autopilot_start(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void autopilot\+\_\+start (
@@ -288,7 +310,7 @@ true if the autopilot is under offboard control, false otherwise.
 \end{DoxyReturn}
 \index{interface.\+h@{interface.\+h}!disable\+\_\+offboard\+\_\+control@{disable\+\_\+offboard\+\_\+control}}
 \index{disable\+\_\+offboard\+\_\+control@{disable\+\_\+offboard\+\_\+control}!interface.\+h@{interface.\+h}}
-\subsubsection[{\texorpdfstring{disable\+\_\+offboard\+\_\+control(void)}{disable_offboard_control(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bool} disable\+\_\+offboard\+\_\+control (
+\subsubsection[{\texorpdfstring{disable\+\_\+offboard\+\_\+control(void)}{disable_offboard_control(void)}}]{\setlength{\rightskip}{0pt plus 5cm}bool disable\+\_\+offboard\+\_\+control (
 \begin{DoxyParamCaption}
 \item[{void}]{}
 \end{DoxyParamCaption}
@@ -302,7 +324,7 @@ The offboard control status\+: true for active offboard control and false for di
 \end{DoxyReturn}
 \index{interface.\+h@{interface.\+h}!enable\+\_\+offboard\+\_\+control@{enable\+\_\+offboard\+\_\+control}}
 \index{enable\+\_\+offboard\+\_\+control@{enable\+\_\+offboard\+\_\+control}!interface.\+h@{interface.\+h}}
-\subsubsection[{\texorpdfstring{enable\+\_\+offboard\+\_\+control(void)}{enable_offboard_control(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bool} enable\+\_\+offboard\+\_\+control (
+\subsubsection[{\texorpdfstring{enable\+\_\+offboard\+\_\+control(void)}{enable_offboard_control(void)}}]{\setlength{\rightskip}{0pt plus 5cm}bool enable\+\_\+offboard\+\_\+control (
 \begin{DoxyParamCaption}
 \item[{void}]{}
 \end{DoxyParamCaption}
@@ -313,6 +335,25 @@ Enables the offboard control of the autopilot, setting the appropriate flag.
 
 \begin{DoxyReturn}{Returns}
 Similar to \hyperlink{interface_8h_a4b3151ecef548d647281eba568170280}{disable\+\_\+offboard\+\_\+control()} but the inverse (true for successfully enabling offboard control). 
+\end{DoxyReturn}
+\index{interface.\+h@{interface.\+h}!get\+\_\+gps\+\_\+from\+\_\+autopilot@{get\+\_\+gps\+\_\+from\+\_\+autopilot}}
+\index{get\+\_\+gps\+\_\+from\+\_\+autopilot@{get\+\_\+gps\+\_\+from\+\_\+autopilot}!interface.\+h@{interface.\+h}}
+\subsubsection[{\texorpdfstring{get\+\_\+gps\+\_\+from\+\_\+autopilot(\+Full\+G\+P\+S\+Data $\ast$gps\+Data)}{get_gps_from_autopilot(FullGPSData *gpsData)}}]{\setlength{\rightskip}{0pt plus 5cm}int get\+\_\+gps\+\_\+from\+\_\+autopilot (
+\begin{DoxyParamCaption}
+\item[{{\bf Full\+G\+P\+S\+Data} $\ast$}]{gps\+Data}
+\end{DoxyParamCaption}
+)}\hypertarget{interface_8h_a2c968172095b29933cf3b8997e2cb140}{}\label{interface_8h_a2c968172095b29933cf3b8997e2cb140}
+
+
+Update the \hyperlink{struct_full_g_p_s_data}{Full\+G\+P\+S\+Data} based on information from the G\+L\+O\+B\+A\+L\+\_\+\+P\+O\+S\+I\+T\+I\+O\+N\+\_\+\+I\+N\+T\+\_\+\+C\+OV message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gps\+Data} & Pointer to a \hyperlink{struct_full_g_p_s_data}{Full\+G\+P\+S\+Data} struct\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 for success. 
 \end{DoxyReturn}
 \index{interface.\+h@{interface.\+h}!get\+\_\+time\+\_\+usec@{get\+\_\+time\+\_\+usec}}
 \index{get\+\_\+time\+\_\+usec@{get\+\_\+time\+\_\+usec}!interface.\+h@{interface.\+h}}
@@ -334,6 +375,20 @@ Similar to \hyperlink{interface_8h_a4b3151ecef548d647281eba568170280}{disable\+\
 \item[{mavlink\+\_\+set\+\_\+position\+\_\+target\+\_\+local\+\_\+ned\+\_\+t $\ast$}]{final\+\_\+set\+\_\+point}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_aaf2bde2dc6e6e3ea59ddd5e36549f3ab}{}\label{interface_8h_aaf2bde2dc6e6e3ea59ddd5e36549f3ab}
+\index{interface.\+h@{interface.\+h}!pre\+\_\+arm\+\_\+void\+\_\+commands@{pre\+\_\+arm\+\_\+void\+\_\+commands}}
+\index{pre\+\_\+arm\+\_\+void\+\_\+commands@{pre\+\_\+arm\+\_\+void\+\_\+commands}!interface.\+h@{interface.\+h}}
+\subsubsection[{\texorpdfstring{pre\+\_\+arm\+\_\+void\+\_\+commands()}{pre_arm_void_commands()}}]{\setlength{\rightskip}{0pt plus 5cm}int pre\+\_\+arm\+\_\+void\+\_\+commands (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{interface_8h_a8f2570bef0f8d567d0eee6648951a9bb}{}\label{interface_8h_a8f2570bef0f8d567d0eee6648951a9bb}
+
+
+Used to send \char`\"{}dummy\char`\"{} setpoints to the autopilot. This method is meant to be used before switching to offboard mode. It\textquotesingle{}s required that the setpoint streaming will already begin before switching to offboard, otherwise the autopilot will reject the mode switch. 
+
+\begin{DoxyReturn}{Returns}
+0 for success. 
+\end{DoxyReturn}
 \index{interface.\+h@{interface.\+h}!read\+\_\+messages@{read\+\_\+messages}}
 \index{read\+\_\+messages@{read\+\_\+messages}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{read\+\_\+messages(void)}{read_messages(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void read\+\_\+messages (
@@ -413,7 +468,7 @@ Zeros out all the timestamps.
 \index{toggle\+\_\+arm\+\_\+disarm@{toggle\+\_\+arm\+\_\+disarm}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{toggle\+\_\+arm\+\_\+disarm(bool flag)}{toggle_arm_disarm(bool flag)}}]{\setlength{\rightskip}{0pt plus 5cm}int toggle\+\_\+arm\+\_\+disarm (
 \begin{DoxyParamCaption}
-\item[{{\bf bool}}]{flag}
+\item[{bool}]{flag}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_ae2645ae25eb4ac098eb579dd9a49c1b9}{}\label{interface_8h_ae2645ae25eb4ac098eb579dd9a49c1b9}
 
@@ -432,7 +487,7 @@ The number of bytes written to the autopilot as the command to arm/disarm. 0 for
 \index{toggle\+\_\+offboard\+\_\+control@{toggle\+\_\+offboard\+\_\+control}!interface.\+h@{interface.\+h}}
 \subsubsection[{\texorpdfstring{toggle\+\_\+offboard\+\_\+control(bool flag)}{toggle_offboard_control(bool flag)}}]{\setlength{\rightskip}{0pt plus 5cm}int toggle\+\_\+offboard\+\_\+control (
 \begin{DoxyParamCaption}
-\item[{{\bf bool}}]{flag}
+\item[{bool}]{flag}
 \end{DoxyParamCaption}
 )}\hypertarget{interface_8h_a22fb091245542a81979c3d517c048d9c}{}\label{interface_8h_a22fb091245542a81979c3d517c048d9c}
 

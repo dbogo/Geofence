@@ -24,7 +24,7 @@ int \hyperlink{serial_interface_8c_a0f6c661829d74ed8dc7a5256e6ce7f8a}{open\+\_\+
 \begin{DoxyCompactList}\small\item\em Opens a port for serial communication. \end{DoxyCompactList}\item 
 int \hyperlink{serial_interface_8c_a00c4e146d0eac524e06a95ee43472ff7}{fetch\+\_\+sentence\+\_\+from\+\_\+gps} (int fd, char $\ast$buffer)
 \begin{DoxyCompactList}\small\item\em gets one complete N\+M\+EA message from the G\+PS, through the serial port that its on. \end{DoxyCompactList}\item 
-void \hyperlink{serial_interface_8c_af0a54246c3213f8835daeebce5e83b0c}{serial\+\_\+start} (const char $\ast$portname)
+int \hyperlink{serial_interface_8c_ac3488c028852363a6724ece542d6c5f8}{serial\+\_\+start} (const char $\ast$portname)
 \begin{DoxyCompactList}\small\item\em Open a serial connection on a specified port. \end{DoxyCompactList}\item 
 int \hyperlink{serial_interface_8c_af13dbfaf23b6064cc504fa4bbd81c4ea}{serial\+\_\+read\+\_\+message} (mavlink\+\_\+message\+\_\+t $\ast$message)
 \begin{DoxyCompactList}\small\item\em Read one byte at a time from the M\+A\+V\+Link stream on the serial port and populate the mavlink message struct as new bytes arrive. \end{DoxyCompactList}\item 
@@ -43,7 +43,7 @@ int \hyperlink{serial_interface_8c_a13869b414e88f5f13a1b32c488e06490}{stream\+FD
 \item 
 mavlink\+\_\+status\+\_\+t \hyperlink{serial_interface_8c_acdef7b92239f1e607ef6caa33a16d2ed}{status}
 \item 
-\hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1}{bool} \hyperlink{serial_interface_8c_a0c0196118cf8dc54df66d79e21a975c7}{msg\+Received} = \hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1ae9de385ef6fe9bf3360d1038396b884c}{false}
+bool \hyperlink{serial_interface_8c_a0c0196118cf8dc54df66d79e21a975c7}{msg\+Received} = false
 \item 
 volatile float \hyperlink{serial_interface_8c_a6238cddccea71aca0723a82b1411dff6}{seconds}
 \item 
@@ -144,11 +144,11 @@ Read one byte at a time from the M\+A\+V\+Link stream on the serial port and pop
 \end{DoxyReturn}
 \index{serial\+Interface.\+c@{serial\+Interface.\+c}!serial\+\_\+start@{serial\+\_\+start}}
 \index{serial\+\_\+start@{serial\+\_\+start}!serial\+Interface.\+c@{serial\+Interface.\+c}}
-\subsubsection[{\texorpdfstring{serial\+\_\+start(const char $\ast$portname)}{serial_start(const char *portname)}}]{\setlength{\rightskip}{0pt plus 5cm}void serial\+\_\+start (
+\subsubsection[{\texorpdfstring{serial\+\_\+start(const char $\ast$portname)}{serial_start(const char *portname)}}]{\setlength{\rightskip}{0pt plus 5cm}int serial\+\_\+start (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{portname}
 \end{DoxyParamCaption}
-)}\hypertarget{serial_interface_8c_af0a54246c3213f8835daeebce5e83b0c}{}\label{serial_interface_8c_af0a54246c3213f8835daeebce5e83b0c}
+)}\hypertarget{serial_interface_8c_ac3488c028852363a6724ece542d6c5f8}{}\label{serial_interface_8c_ac3488c028852363a6724ece542d6c5f8}
 
 
 Open a serial connection on a specified port. 
@@ -158,6 +158,9 @@ Open a serial connection on a specified port.
 \mbox{\tt in}  & {\em portname} & The name of the serial port \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/1 for error and 1 for success. 
+\end{DoxyReturn}
 \index{serial\+Interface.\+c@{serial\+Interface.\+c}!serial\+\_\+write\+\_\+message@{serial\+\_\+write\+\_\+message}}
 \index{serial\+\_\+write\+\_\+message@{serial\+\_\+write\+\_\+message}!serial\+Interface.\+c@{serial\+Interface.\+c}}
 \subsubsection[{\texorpdfstring{serial\+\_\+write\+\_\+message(const mavlink\+\_\+message\+\_\+t $\ast$message)}{serial_write_message(const mavlink_message_t *message)}}]{\setlength{\rightskip}{0pt plus 5cm}int serial\+\_\+write\+\_\+message (
@@ -201,7 +204,7 @@ The read byte.
 \subsection{Variable Documentation}
 \index{serial\+Interface.\+c@{serial\+Interface.\+c}!msg\+Received@{msg\+Received}}
 \index{msg\+Received@{msg\+Received}!serial\+Interface.\+c@{serial\+Interface.\+c}}
-\subsubsection[{\texorpdfstring{msg\+Received}{msgReceived}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bool} msg\+Received = {\bf false}}\hypertarget{serial_interface_8c_a0c0196118cf8dc54df66d79e21a975c7}{}\label{serial_interface_8c_a0c0196118cf8dc54df66d79e21a975c7}
+\subsubsection[{\texorpdfstring{msg\+Received}{msgReceived}}]{\setlength{\rightskip}{0pt plus 5cm}bool msg\+Received = false}\hypertarget{serial_interface_8c_a0c0196118cf8dc54df66d79e21a975c7}{}\label{serial_interface_8c_a0c0196118cf8dc54df66d79e21a975c7}
 \index{serial\+Interface.\+c@{serial\+Interface.\+c}!newtio@{newtio}}
 \index{newtio@{newtio}!serial\+Interface.\+c@{serial\+Interface.\+c}}
 \subsubsection[{\texorpdfstring{newtio}{newtio}}]{\setlength{\rightskip}{0pt plus 5cm}struct termios oldtio newtio}\hypertarget{serial_interface_8c_abc97f5054a1b45039965e4ee787abc03}{}\label{serial_interface_8c_abc97f5054a1b45039965e4ee787abc03}

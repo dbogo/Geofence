@@ -2,7 +2,8 @@
 \label{_g_p_s_interface_8h}\index{src/\+G\+P\+S\+Interface.\+h@{src/\+G\+P\+S\+Interface.\+h}}
 {\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}utils.\+h\char`\"{}}\\*
-Include dependency graph for G\+P\+S\+Interface.\+h\+:\nopagebreak
+Include dependency graph for G\+P\+S\+Interface.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -60,7 +61,7 @@ float \hyperlink{_g_p_s_interface_8h_a22f27d68e1909aff8c3d3f8f19be4d02}{det} (\h
 \begin{DoxyCompactList}\small\item\em the signed area of the triangle loc,P1,P2 \end{DoxyCompactList}\item 
 int \hyperlink{_g_p_s_interface_8h_a2a940fd545a524efc707bf883f5be6a9}{G\+P\+S\+\_\+init} (\hyperlink{struct_g_p_s___actions}{G\+P\+S\+\_\+\+Actions} $\ast$gps\+Handler)
 \begin{DoxyCompactList}\small\item\em assignes the correct library for the get\+G\+PS function pointer. either an R\+Pi or a demo implementation of the get\+G\+P\+S\+Sample() will be used. \end{DoxyCompactList}\item 
-\hyperlink{types_8h_af6a258d8f3ee5206d682d799316314b1}{bool} \hyperlink{_g_p_s_interface_8h_ac71865e68cf32819594bdcd0c4244f8d}{geofence\+\_\+breached} (\hyperlink{struct_full_g_p_s_data}{Full\+G\+P\+S\+Data} $\ast$location, \hyperlink{struct_zone__general}{Zone\+\_\+general} $\ast$zone)
+bool \hyperlink{_g_p_s_interface_8h_ac71865e68cf32819594bdcd0c4244f8d}{geofence\+\_\+breached} (\hyperlink{struct_full_g_p_s_data}{Full\+G\+P\+S\+Data} $\ast$location, \hyperlink{struct_zone__general}{Zone\+\_\+general} $\ast$zone)
 \begin{DoxyCompactList}\small\item\em runs tests for different kinds of possible geofence violations, if one of the tests is failed (i.\+e some kind of violation has occured), there\textquotesingle{}s a breach. Winding Number algorithm for test of Point-\/\+In-\/\+Polygon inclusion. see \href{http://geomalgorithms.com/a03-_inclusion.html}{\tt http\+://geomalgorithms.\+com/a03-\/\+\_\+inclusion.\+html} \end{DoxyCompactList}\item 
 int \hyperlink{_g_p_s_interface_8h_ac6b4d89308a2b0eab06656a5dd3d5858}{geofecnce\+\_\+alt\+\_\+check} (\hyperlink{struct_zone__general}{Zone\+\_\+general} $\ast$zone, double altitude)
 \begin{DoxyCompactList}\small\item\em checks if the altitude in question is within the geofence\textquotesingle{}s height. \end{DoxyCompactList}\item 
@@ -207,7 +208,7 @@ one of the constants describing the status, according to the outcome of the heig
 \end{DoxyReturn}
 \index{G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}!geofence\+\_\+breached@{geofence\+\_\+breached}}
 \index{geofence\+\_\+breached@{geofence\+\_\+breached}!G\+P\+S\+Interface.\+h@{G\+P\+S\+Interface.\+h}}
-\subsubsection[{\texorpdfstring{geofence\+\_\+breached(\+Full\+G\+P\+S\+Data $\ast$location, Zone\+\_\+general $\ast$zone)}{geofence_breached(FullGPSData *location, Zone_general *zone)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bool} geofence\+\_\+breached (
+\subsubsection[{\texorpdfstring{geofence\+\_\+breached(\+Full\+G\+P\+S\+Data $\ast$location, Zone\+\_\+general $\ast$zone)}{geofence_breached(FullGPSData *location, Zone_general *zone)}}]{\setlength{\rightskip}{0pt plus 5cm}bool geofence\+\_\+breached (
 \begin{DoxyParamCaption}
 \item[{{\bf Full\+G\+P\+S\+Data} $\ast$}]{location, }
 \item[{{\bf Zone\+\_\+general} $\ast$}]{zone}

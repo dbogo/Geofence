@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['false',['false',['../types_8h.html#af6a258d8f3ee5206d682d799316314b1ae9de385ef6fe9bf3360d1038396b884c',1,'types.h']]],
   ['fetch_5fsentence_5ffrom_5fgps',['fetch_sentence_from_gps',['../serial_interface_8c.html#a00c4e146d0eac524e06a95ee43472ff7',1,'fetch_sentence_from_gps(int fd, char *buffer):&#160;serialInterface.c'],['../serial_interface_8h.html#a00c4e146d0eac524e06a95ee43472ff7',1,'fetch_sentence_from_gps(int fd, char *buffer):&#160;serialInterface.c']]],
   ['find_5fmbr',['find_mbr',['../_g_p_s_interface_8c.html#a8e93b5c352c25afd3fa2aa27ae411e3a',1,'find_mbr(Zone_general *polygon):&#160;GPSInterface.c'],['../_g_p_s_interface_8h.html#a8e93b5c352c25afd3fa2aa27ae411e3a',1,'find_mbr(Zone_general *polygon):&#160;GPSInterface.c']]],
   ['finilogsystem',['finiLogSystem',['../log_interface_8c.html#a76fb3b7c139c9d2ec85c565cc48e4b7a',1,'finiLogSystem(void):&#160;logInterface.c'],['../log_interface_8h.html#a76fb3b7c139c9d2ec85c565cc48e4b7a',1,'finiLogSystem(void):&#160;logInterface.c']]],

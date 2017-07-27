@@ -1,7 +1,10 @@
 \hypertarget{autopilot__controller_8c}{}\section{src/autopilot\+\_\+controller.c File Reference}
 \label{autopilot__controller_8c}\index{src/autopilot\+\_\+controller.\+c@{src/autopilot\+\_\+controller.\+c}}
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}autopilot\+\_\+controller.\+h\char`\"{}}\\*
-Include dependency graph for autopilot\+\_\+controller.\+c\+:\nopagebreak
+{\ttfamily \#include $<$mavlink\+\_\+interface/inc/interface.\+h$>$}\\*
+Include dependency graph for autopilot\+\_\+controller.\+c\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -14,10 +17,19 @@ Include dependency graph for autopilot\+\_\+controller.\+c\+:\nopagebreak
 void \hyperlink{autopilot__controller_8c_a4840fc5da500f994fe893dab4c7dbd79}{update\+\_\+autopilot} (void)
 \item 
 int \hyperlink{autopilot__controller_8c_aa06f4432f5f1ab850f2e7a8190d3dabd}{takeover\+\_\+control} (time\+\_\+t $\ast$commander\+Timestamp)
+\item 
+int \hyperlink{autopilot__controller_8c_aa5fe1f84cf7e35435903237309cafc90}{stop\+\_\+autopilot} ()
 \end{DoxyCompactItemize}
 
 
 \subsection{Function Documentation}
+\index{autopilot\+\_\+controller.\+c@{autopilot\+\_\+controller.\+c}!stop\+\_\+autopilot@{stop\+\_\+autopilot}}
+\index{stop\+\_\+autopilot@{stop\+\_\+autopilot}!autopilot\+\_\+controller.\+c@{autopilot\+\_\+controller.\+c}}
+\subsubsection[{\texorpdfstring{stop\+\_\+autopilot()}{stop_autopilot()}}]{\setlength{\rightskip}{0pt plus 5cm}int stop\+\_\+autopilot (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{autopilot__controller_8c_aa5fe1f84cf7e35435903237309cafc90}{}\label{autopilot__controller_8c_aa5fe1f84cf7e35435903237309cafc90}
 \index{autopilot\+\_\+controller.\+c@{autopilot\+\_\+controller.\+c}!takeover\+\_\+control@{takeover\+\_\+control}}
 \index{takeover\+\_\+control@{takeover\+\_\+control}!autopilot\+\_\+controller.\+c@{autopilot\+\_\+controller.\+c}}
 \subsubsection[{\texorpdfstring{takeover\+\_\+control(time\+\_\+t $\ast$commander\+Timestamp)}{takeover_control(time_t *commanderTimestamp)}}]{\setlength{\rightskip}{0pt plus 5cm}int takeover\+\_\+control (

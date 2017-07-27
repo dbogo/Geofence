@@ -103,11 +103,11 @@ Include dependency graph for GPSInterface.c:</div>
 <div class="center"><img src="_g_p_s_interface_8c__incl.png" border="0" usemap="#src_2_g_p_s_interface_8c" alt=""/></div>
 <map name="src_2_g_p_s_interface_8c" id="src_2_g_p_s_interface_8c">
 <area shape="rect" id="node4" href="_g_p_s_interface_8h.html" title="GPSInterface.h" alt="" coords="198,162,310,189"/>
-<area shape="rect" id="node12" href="log_interface_8h.html" title="logInterface.h" alt="" coords="417,80,518,107"/>
-<area shape="rect" id="node14" href="serial_interface_8h.html" title="serial/serialInterface.h" alt="" coords="543,80,693,107"/>
-<area shape="rect" id="node17" href="gps__demo_8h.html" title="GPSDemo/gps_demo.h" alt="" coords="233,80,393,107"/>
-<area shape="rect" id="node5" href="types_8h.html" title="types.h" alt="" coords="112,244,177,271"/>
-<area shape="rect" id="node7" href="utils_8h.html" title="utils.h" alt="" coords="280,244,337,271"/>
+<area shape="rect" id="node14" href="log_interface_8h.html" title="logInterface.h" alt="" coords="417,80,518,107"/>
+<area shape="rect" id="node16" href="serial_interface_8h.html" title="serial/serialInterface.h" alt="" coords="543,80,693,107"/>
+<area shape="rect" id="node19" href="gps__demo_8h.html" title="GPSDemo/gps_demo.h" alt="" coords="233,80,393,107"/>
+<area shape="rect" id="node5" href="types_8h.html" title="types.h" alt="" coords="109,244,175,271"/>
+<area shape="rect" id="node8" href="utils_8h.html" title="utils.h" alt="" coords="379,244,436,271"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -119,7 +119,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a6b2e7c4d2b3a08fa15ebb18365a9264c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_g_p_s_interface_8c.html#a6b2e7c4d2b3a08fa15ebb18365a9264c">to_deg</a> (double x)</td></tr>
 <tr class="memdesc:a6b2e7c4d2b3a08fa15ebb18365a9264c"><td class="mdescLeft">&#160;</td><td class="mdescRight">converts NMEA decimal value to degrees (used for conversion of lat lon values)  <a href="#a6b2e7c4d2b3a08fa15ebb18365a9264c">More...</a><br /></td></tr>
 <tr class="separator:a6b2e7c4d2b3a08fa15ebb18365a9264c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac71865e68cf32819594bdcd0c4244f8d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_g_p_s_interface_8c.html#ac71865e68cf32819594bdcd0c4244f8d">geofence_breached</a> (<a class="el" href="struct_full_g_p_s_data.html">FullGPSData</a> *location, <a class="el" href="struct_zone__general.html">Zone_general</a> *zone)</td></tr>
+<tr class="memitem:ac71865e68cf32819594bdcd0c4244f8d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_g_p_s_interface_8c.html#ac71865e68cf32819594bdcd0c4244f8d">geofence_breached</a> (<a class="el" href="struct_full_g_p_s_data.html">FullGPSData</a> *location, <a class="el" href="struct_zone__general.html">Zone_general</a> *zone)</td></tr>
 <tr class="memdesc:ac71865e68cf32819594bdcd0c4244f8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">runs tests for different kinds of possible geofence violations, if one of the tests is failed (i.e some kind of violation has occured), there's a breach. Winding Number algorithm for test of Point-In-Polygon inclusion. see <a href="http://geomalgorithms.com/a03-_inclusion.html">http://geomalgorithms.com/a03-_inclusion.html</a>  <a href="#ac71865e68cf32819594bdcd0c4244f8d">More...</a><br /></td></tr>
 <tr class="separator:ac71865e68cf32819594bdcd0c4244f8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6b4d89308a2b0eab06656a5dd3d5858"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_g_p_s_interface_8c.html#ac6b4d89308a2b0eab06656a5dd3d5858">geofecnce_alt_check</a> (<a class="el" href="struct_zone__general.html">Zone_general</a> *zone, double altitude)</td></tr>
@@ -291,7 +291,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a> geofence_breached </td>
+          <td class="memname">bool geofence_breached </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_full_g_p_s_data.html">FullGPSData</a> *&#160;</td>
           <td class="paramname"><em>location</em>, </td>

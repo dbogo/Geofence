@@ -99,9 +99,10 @@ Include dependency graph for interface.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="interface_8c__incl.png" border="0" usemap="#src_2mavlink__interface_2src_2interface_8c" alt=""/></div>
 <map name="src_2mavlink__interface_2src_2interface_8c" id="src_2mavlink__interface_2src_2interface_8c">
-<area shape="rect" id="node3" href="interface_8h.html" title="../inc/interface.h" alt="" coords="133,95,249,121"/>
-<area shape="rect" id="node5" href="serial_interface_8h.html" title="src/serial/serialInterface.h" alt="" coords="105,169,277,196"/>
-<area shape="rect" id="node8" href="mfunctions_8h.html" title="mfunctions.h" alt="" coords="301,169,398,196"/>
+<area shape="rect" id="node3" href="interface_8h.html" title="../inc/interface.h" alt="" coords="322,95,438,121"/>
+<area shape="rect" id="node5" href="serial_interface_8h.html" title="src/serial/serialInterface.h" alt="" coords="117,169,289,196"/>
+<area shape="rect" id="node8" href="types_8h.html" title="src/types.h" alt="" coords="378,169,465,196"/>
+<area shape="rect" id="node10" href="mfunctions_8h.html" title="mfunctions.h" alt="" coords="489,169,586,196"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -133,13 +134,13 @@ Functions</h2></td></tr>
 <tr class="memitem:a7a3598bf63d9844fcd22328fc63842a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a7a3598bf63d9844fcd22328fc63842a4">autopilot_update_setpoint</a> (mavlink_set_position_target_local_ned_t setpoint)</td></tr>
 <tr class="memdesc:a7a3598bf63d9844fcd22328fc63842a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the current setpoint with the given setpoint.  <a href="#a7a3598bf63d9844fcd22328fc63842a4">More...</a><br /></td></tr>
 <tr class="separator:a7a3598bf63d9844fcd22328fc63842a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f0b501cf0b9b1e74c0053df49b3bdc6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a6f0b501cf0b9b1e74c0053df49b3bdc6">enable_offboard_control</a> (void)</td></tr>
+<tr class="memitem:a6f0b501cf0b9b1e74c0053df49b3bdc6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a6f0b501cf0b9b1e74c0053df49b3bdc6">enable_offboard_control</a> (void)</td></tr>
 <tr class="memdesc:a6f0b501cf0b9b1e74c0053df49b3bdc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the offboard control of the autopilot, setting the appropriate flag.  <a href="#a6f0b501cf0b9b1e74c0053df49b3bdc6">More...</a><br /></td></tr>
 <tr class="separator:a6f0b501cf0b9b1e74c0053df49b3bdc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b3151ecef548d647281eba568170280"><td class="memItemLeft" align="right" valign="top"><a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a4b3151ecef548d647281eba568170280">disable_offboard_control</a> (void)</td></tr>
+<tr class="memitem:a4b3151ecef548d647281eba568170280"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a4b3151ecef548d647281eba568170280">disable_offboard_control</a> (void)</td></tr>
 <tr class="memdesc:a4b3151ecef548d647281eba568170280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disabled the offboard control of the autopilot.  <a href="#a4b3151ecef548d647281eba568170280">More...</a><br /></td></tr>
 <tr class="separator:a4b3151ecef548d647281eba568170280"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22fb091245542a81979c3d517c048d9c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a22fb091245542a81979c3d517c048d9c">toggle_offboard_control</a> (<a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a> flag)</td></tr>
+<tr class="memitem:a22fb091245542a81979c3d517c048d9c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a22fb091245542a81979c3d517c048d9c">toggle_offboard_control</a> (bool flag)</td></tr>
 <tr class="memdesc:a22fb091245542a81979c3d517c048d9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function that's used by enable/disable_offbard_control() to actually write the appropriate command to the autopilot.  <a href="#a22fb091245542a81979c3d517c048d9c">More...</a><br /></td></tr>
 <tr class="separator:a22fb091245542a81979c3d517c048d9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4ffa041a7021553ce57bcc004721afe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#ae4ffa041a7021553ce57bcc004721afe">autopilot_arm</a> (void)</td></tr>
@@ -148,7 +149,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ab784fd6af4d00965889893c0cf462f26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#ab784fd6af4d00965889893c0cf462f26">autopilot_disarm</a> (void)</td></tr>
 <tr class="memdesc:ab784fd6af4d00965889893c0cf462f26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disarm the autopilot.  <a href="#ab784fd6af4d00965889893c0cf462f26">More...</a><br /></td></tr>
 <tr class="separator:ab784fd6af4d00965889893c0cf462f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2645ae25eb4ac098eb579dd9a49c1b9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#ae2645ae25eb4ac098eb579dd9a49c1b9">toggle_arm_disarm</a> (<a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a> flag)</td></tr>
+<tr class="memitem:ae2645ae25eb4ac098eb579dd9a49c1b9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#ae2645ae25eb4ac098eb579dd9a49c1b9">toggle_arm_disarm</a> (bool flag)</td></tr>
 <tr class="memdesc:ae2645ae25eb4ac098eb579dd9a49c1b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by autopilot_arm/disarm() in a similar manner to toogle_offboard_control().  <a href="#ae2645ae25eb4ac098eb579dd9a49c1b9">More...</a><br /></td></tr>
 <tr class="separator:ae2645ae25eb4ac098eb579dd9a49c1b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56a6826eb5bf8127144d09ecfa6bee9a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a56a6826eb5bf8127144d09ecfa6bee9a">check_offboard_control</a> (void)</td></tr>
@@ -172,6 +173,15 @@ Functions</h2></td></tr>
 <tr class="separator:aaf2bde2dc6e6e3ea59ddd5e36549f3ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66e1f11d723feacc42bbca4020f3a858"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a66e1f11d723feacc42bbca4020f3a858">set_circle</a> (float R, float theta, float z, mavlink_set_position_target_local_ned_t *set_point)</td></tr>
 <tr class="separator:a66e1f11d723feacc42bbca4020f3a858"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c968172095b29933cf3b8997e2cb140"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a2c968172095b29933cf3b8997e2cb140">get_gps_from_autopilot</a> (<a class="el" href="struct_full_g_p_s_data.html">FullGPSData</a> *gpsData)</td></tr>
+<tr class="memdesc:a2c968172095b29933cf3b8997e2cb140"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the <a class="el" href="struct_full_g_p_s_data.html" title="The entire collection of relevant data, gathered from GPS. ">FullGPSData</a> based on information from the GLOBAL_POSITION_INT_COV message.  <a href="#a2c968172095b29933cf3b8997e2cb140">More...</a><br /></td></tr>
+<tr class="separator:a2c968172095b29933cf3b8997e2cb140"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f2570bef0f8d567d0eee6648951a9bb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a8f2570bef0f8d567d0eee6648951a9bb">pre_arm_void_commands</a> ()</td></tr>
+<tr class="memdesc:a8f2570bef0f8d567d0eee6648951a9bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to send "dummy" setpoints to the autopilot. This method is meant to be used before switching to offboard mode. It's required that the setpoint streaming will already begin before switching to offboard, otherwise the autopilot will reject the mode switch.  <a href="#a8f2570bef0f8d567d0eee6648951a9bb">More...</a><br /></td></tr>
+<tr class="separator:a8f2570bef0f8d567d0eee6648951a9bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ea50ba9fe9c2ae23ab9cbc9a1a6adda"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a6ea50ba9fe9c2ae23ab9cbc9a1a6adda">autopilot_ok</a> ()</td></tr>
+<tr class="memdesc:a6ea50ba9fe9c2ae23ab9cbc9a1a6adda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a HEARTBEAT message from the autopilot. Used to verify that the autopilot is up and running and is connected.  <a href="#a6ea50ba9fe9c2ae23ab9cbc9a1a6adda">More...</a><br /></td></tr>
+<tr class="separator:a6ea50ba9fe9c2ae23ab9cbc9a1a6adda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ac9437af95602ce4e5ba39be2d2429b"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_8c.html#a2ac9437af95602ce4e5ba39be2d2429b">get_time_usec</a> (void)</td></tr>
 <tr class="separator:a2ac9437af95602ce4e5ba39be2d2429b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -254,6 +264,24 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initialize system-wide important parameters and flags. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6ea50ba9fe9c2ae23ab9cbc9a1a6adda"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int autopilot_ok </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Receive a HEARTBEAT message from the autopilot. Used to verify that the autopilot is up and running and is connected. </p>
+<dl class="section return"><dt>Returns</dt><dd>1 for success </dd></dl>
 
 </div>
 </div>
@@ -442,7 +470,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a> disable_offboard_control </td>
+          <td class="memname">bool disable_offboard_control </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -461,7 +489,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a> enable_offboard_control </td>
+          <td class="memname">bool enable_offboard_control </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -472,6 +500,31 @@ Variables</h2></td></tr>
 
 <p>Enables the offboard control of the autopilot, setting the appropriate flag. </p>
 <dl class="section return"><dt>Returns</dt><dd>Similar to <a class="el" href="interface_8h.html#a4b3151ecef548d647281eba568170280" title="Disabled the offboard control of the autopilot. ">disable_offboard_control()</a> but the inverse (true for successfully enabling offboard control). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2c968172095b29933cf3b8997e2cb140"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int get_gps_from_autopilot </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_full_g_p_s_data.html">FullGPSData</a> *&#160;</td>
+          <td class="paramname"><em>gpsData</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update the <a class="el" href="struct_full_g_p_s_data.html" title="The entire collection of relevant data, gathered from GPS. ">FullGPSData</a> based on information from the GLOBAL_POSITION_INT_COV message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gpsData</td><td>Pointer to a <a class="el" href="struct_full_g_p_s_data.html" title="The entire collection of relevant data, gathered from GPS. ">FullGPSData</a> struct</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 for success. </dd></dl>
 
 </div>
 </div>
@@ -544,6 +597,24 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a8f2570bef0f8d567d0eee6648951a9bb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int pre_arm_void_commands </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Used to send "dummy" setpoints to the autopilot. This method is meant to be used before switching to offboard mode. It's required that the setpoint streaming will already begin before switching to offboard, otherwise the autopilot will reject the mode switch. </p>
+<dl class="section return"><dt>Returns</dt><dd>0 for success. </dd></dl>
 
 </div>
 </div>
@@ -774,7 +845,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">int toggle_arm_disarm </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a>&#160;</td>
+          <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>flag</em></td><td>)</td>
           <td></td>
         </tr>
@@ -799,7 +870,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">int toggle_offboard_control </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a>&#160;</td>
+          <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>flag</em></td><td>)</td>
           <td></td>
         </tr>

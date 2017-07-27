@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['false',['false',['../types_8h.html#af6a258d8f3ee5206d682d799316314b1ae9de385ef6fe9bf3360d1038396b884c',1,'types.h']]]
+  ['unknown_5fplatform',['UNKNOWN_PLATFORM',['../utils_8h.html#ac172b6ea96d5e5322771db859ad1e65fa8e0da7a705cf9d08ebffe49c0c8441d9',1,'utils.h']]]
 ];

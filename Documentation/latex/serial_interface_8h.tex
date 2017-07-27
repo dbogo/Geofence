@@ -37,7 +37,7 @@ int \hyperlink{serial_interface_8h_a00c4e146d0eac524e06a95ee43472ff7}{fetch\+\_\
 \begin{DoxyCompactList}\small\item\em gets one complete N\+M\+EA message from the G\+PS, through the serial port that its on. \end{DoxyCompactList}\item 
 int \hyperlink{serial_interface_8h_ad9b54717f7dba8da115aa84b94a8c3a2}{usart\+\_\+recv\+\_\+blocking} (int i)
 \begin{DoxyCompactList}\small\item\em Blocking read of one byte from the serial port. \end{DoxyCompactList}\item 
-void \hyperlink{serial_interface_8h_af0a54246c3213f8835daeebce5e83b0c}{serial\+\_\+start} (const char $\ast$portname)
+int \hyperlink{serial_interface_8h_ac3488c028852363a6724ece542d6c5f8}{serial\+\_\+start} (const char $\ast$portname)
 \begin{DoxyCompactList}\small\item\em Open a serial connection on a specified port. \end{DoxyCompactList}\item 
 int \hyperlink{serial_interface_8h_af13dbfaf23b6064cc504fa4bbd81c4ea}{serial\+\_\+read\+\_\+message} (mavlink\+\_\+message\+\_\+t $\ast$message)
 \begin{DoxyCompactList}\small\item\em Read one byte at a time from the M\+A\+V\+Link stream on the serial port and populate the mavlink message struct as new bytes arrive. \end{DoxyCompactList}\item 
@@ -157,11 +157,11 @@ Read one byte at a time from the M\+A\+V\+Link stream on the serial port and pop
 \end{DoxyReturn}
 \index{serial\+Interface.\+h@{serial\+Interface.\+h}!serial\+\_\+start@{serial\+\_\+start}}
 \index{serial\+\_\+start@{serial\+\_\+start}!serial\+Interface.\+h@{serial\+Interface.\+h}}
-\subsubsection[{\texorpdfstring{serial\+\_\+start(const char $\ast$portname)}{serial_start(const char *portname)}}]{\setlength{\rightskip}{0pt plus 5cm}void serial\+\_\+start (
+\subsubsection[{\texorpdfstring{serial\+\_\+start(const char $\ast$portname)}{serial_start(const char *portname)}}]{\setlength{\rightskip}{0pt plus 5cm}int serial\+\_\+start (
 \begin{DoxyParamCaption}
 \item[{const char $\ast$}]{portname}
 \end{DoxyParamCaption}
-)}\hypertarget{serial_interface_8h_af0a54246c3213f8835daeebce5e83b0c}{}\label{serial_interface_8h_af0a54246c3213f8835daeebce5e83b0c}
+)}\hypertarget{serial_interface_8h_ac3488c028852363a6724ece542d6c5f8}{}\label{serial_interface_8h_ac3488c028852363a6724ece542d6c5f8}
 
 
 Open a serial connection on a specified port. 
@@ -171,6 +171,9 @@ Open a serial connection on a specified port.
 \mbox{\tt in}  & {\em portname} & The name of the serial port \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/1 for error and 1 for success. 
+\end{DoxyReturn}
 \index{serial\+Interface.\+h@{serial\+Interface.\+h}!serial\+\_\+write\+\_\+message@{serial\+\_\+write\+\_\+message}}
 \index{serial\+\_\+write\+\_\+message@{serial\+\_\+write\+\_\+message}!serial\+Interface.\+h@{serial\+Interface.\+h}}
 \subsubsection[{\texorpdfstring{serial\+\_\+write\+\_\+message(const mavlink\+\_\+message\+\_\+t $\ast$message)}{serial_write_message(const mavlink_message_t *message)}}]{\setlength{\rightskip}{0pt plus 5cm}int serial\+\_\+write\+\_\+message (

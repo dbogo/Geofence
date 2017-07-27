@@ -1,10 +1,10 @@
 <map id="src/mavlink_interface/inc/mfunctions.h" name="src/mavlink_interface/inc/mfunctions.h">
-<area shape="rect" id="node2" href="$interface_8h.html" title="src/mavlink_interface\l/inc/interface.h" alt="" coords="303,95,449,136"/>
-<area shape="rect" id="node9" href="$mfunctions_8c.html" title="src/mavlink_interface\l/src/mfunctions.c" alt="" coords="473,95,620,136"/>
-<area shape="rect" id="node3" href="$commands_8h.html" title="src/mavlink_interface\l/inc/commands.h" alt="" coords="192,184,339,225"/>
-<area shape="rect" id="node6" href="$main_8c.html" title="src/main.c" alt="" coords="263,363,345,389"/>
-<area shape="rect" id="node8" href="$interface_8c.html" title="src/mavlink_interface\l/src/interface.c" alt="" coords="413,184,560,225"/>
-<area shape="rect" id="node4" href="$autopilot__controller_8h.html" title="src/autopilot_controller.h" alt="" coords="5,281,168,307"/>
-<area shape="rect" id="node7" href="$commands_8c.html" title="src/mavlink_interface\l/src/commands.c" alt="" coords="192,273,339,315"/>
-<area shape="rect" id="node5" href="$autopilot__controller_8c.html" title="src/autopilot_controller.c" alt="" coords="5,363,168,389"/>
+<area shape="rect" id="node2" href="$interface_8h.html" title="src/mavlink_interface\l/inc/interface.h" alt="" coords="262,95,408,136"/>
+<area shape="rect" id="node9" href="$mfunctions_8c.html" title="src/mavlink_interface\l/src/mfunctions.c" alt="" coords="432,95,579,136"/>
+<area shape="rect" id="node3" href="$commands_8h.html" title="src/mavlink_interface\l/inc/commands.h" alt="" coords="203,184,350,225"/>
+<area shape="rect" id="node5" href="$autopilot__controller_8c.html" title="src/autopilot_controller.c" alt="" coords="36,363,199,389"/>
+<area shape="rect" id="node6" href="$main_8c.html" title="src/main.c" alt="" coords="294,363,376,389"/>
+<area shape="rect" id="node8" href="$interface_8c.html" title="src/mavlink_interface\l/src/interface.c" alt="" coords="432,184,579,225"/>
+<area shape="rect" id="node4" href="$autopilot__controller_8h.html" title="src/autopilot_controller.h" alt="" coords="195,281,358,307"/>
+<area shape="rect" id="node7" href="$commands_8c.html" title="src/mavlink_interface\l/src/commands.c" alt="" coords="24,273,171,315"/>
 </map>

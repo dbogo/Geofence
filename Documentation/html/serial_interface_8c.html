@@ -120,9 +120,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a00c4e146d0eac524e06a95ee43472ff7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_interface_8c.html#a00c4e146d0eac524e06a95ee43472ff7">fetch_sentence_from_gps</a> (int fd, char *buffer)</td></tr>
 <tr class="memdesc:a00c4e146d0eac524e06a95ee43472ff7"><td class="mdescLeft">&#160;</td><td class="mdescRight">gets one complete NMEA message from the GPS, through the serial port that its on.  <a href="#a00c4e146d0eac524e06a95ee43472ff7">More...</a><br /></td></tr>
 <tr class="separator:a00c4e146d0eac524e06a95ee43472ff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0a54246c3213f8835daeebce5e83b0c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_interface_8c.html#af0a54246c3213f8835daeebce5e83b0c">serial_start</a> (const char *portname)</td></tr>
-<tr class="memdesc:af0a54246c3213f8835daeebce5e83b0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open a serial connection on a specified port.  <a href="#af0a54246c3213f8835daeebce5e83b0c">More...</a><br /></td></tr>
-<tr class="separator:af0a54246c3213f8835daeebce5e83b0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3488c028852363a6724ece542d6c5f8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_interface_8c.html#ac3488c028852363a6724ece542d6c5f8">serial_start</a> (const char *portname)</td></tr>
+<tr class="memdesc:ac3488c028852363a6724ece542d6c5f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open a serial connection on a specified port.  <a href="#ac3488c028852363a6724ece542d6c5f8">More...</a><br /></td></tr>
+<tr class="separator:ac3488c028852363a6724ece542d6c5f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af13dbfaf23b6064cc504fa4bbd81c4ea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_interface_8c.html#af13dbfaf23b6064cc504fa4bbd81c4ea">serial_read_message</a> (mavlink_message_t *message)</td></tr>
 <tr class="memdesc:af13dbfaf23b6064cc504fa4bbd81c4ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read one byte at a time from the MAVLink stream on the serial port and populate the mavlink message struct as new bytes arrive.  <a href="#af13dbfaf23b6064cc504fa4bbd81c4ea">More...</a><br /></td></tr>
 <tr class="separator:af13dbfaf23b6064cc504fa4bbd81c4ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,7 +145,7 @@ Variables</h2></td></tr>
 <tr class="separator:a13869b414e88f5f13a1b32c488e06490"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acdef7b92239f1e607ef6caa33a16d2ed"><td class="memItemLeft" align="right" valign="top">mavlink_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_interface_8c.html#acdef7b92239f1e607ef6caa33a16d2ed">status</a></td></tr>
 <tr class="separator:acdef7b92239f1e607ef6caa33a16d2ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c0196118cf8dc54df66d79e21a975c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_interface_8c.html#a0c0196118cf8dc54df66d79e21a975c7">msgReceived</a> = <a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1ae9de385ef6fe9bf3360d1038396b884c">false</a></td></tr>
+<tr class="memitem:a0c0196118cf8dc54df66d79e21a975c7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_interface_8c.html#a0c0196118cf8dc54df66d79e21a975c7">msgReceived</a> = false</td></tr>
 <tr class="separator:a0c0196118cf8dc54df66d79e21a975c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6238cddccea71aca0723a82b1411dff6"><td class="memItemLeft" align="right" valign="top">volatile float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_interface_8c.html#a6238cddccea71aca0723a82b1411dff6">seconds</a></td></tr>
 <tr class="separator:a6238cddccea71aca0723a82b1411dff6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -289,12 +289,12 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af0a54246c3213f8835daeebce5e83b0c"></a>
+<a class="anchor" id="ac3488c028852363a6724ece542d6c5f8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void serial_start </td>
+          <td class="memname">int serial_start </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>portname</em></td><td>)</td>
@@ -310,6 +310,7 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>-1 for error and 1 for success. </dd></dl>
 
 </div>
 </div>
@@ -369,7 +370,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a> msgReceived = <a class="el" href="types_8h.html#af6a258d8f3ee5206d682d799316314b1ae9de385ef6fe9bf3360d1038396b884c">false</a></td>
+          <td class="memname">bool msgReceived = false</td>
         </tr>
       </table>
 </div><div class="memdoc">

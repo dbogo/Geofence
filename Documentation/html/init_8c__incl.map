@@ -1,7 +1,7 @@
 <map id="src/init.c" name="src/init.c">
-<area shape="rect" id="node5" href="$init_8h.html" title="init.h" alt="" coords="227,80,277,107"/>
-<area shape="rect" id="node10" href="$utils_8h.html" title="utils.h" alt="" coords="302,237,359,263"/>
-<area shape="rect" id="node6" href="$types_8h.html" title="types.h" alt="" coords="209,237,274,263"/>
-<area shape="rect" id="node7" href="$log_interface_8h.html" title="logInterface.h" alt="" coords="67,155,168,181"/>
-<area shape="rect" id="node9" href="$_g_p_s_interface_8h.html" title="GPSInterface.h" alt="" coords="243,155,355,181"/>
+<area shape="rect" id="node5" href="$init_8h.html" title="init.h" alt="" coords="265,80,316,107"/>
+<area shape="rect" id="node11" href="$utils_8h.html" title="utils.h" alt="" coords="394,237,451,263"/>
+<area shape="rect" id="node6" href="$types_8h.html" title="types.h" alt="" coords="222,237,287,263"/>
+<area shape="rect" id="node8" href="$log_interface_8h.html" title="logInterface.h" alt="" coords="91,155,192,181"/>
+<area shape="rect" id="node10" href="$_g_p_s_interface_8h.html" title="GPSInterface.h" alt="" coords="281,155,393,181"/>
 </map>
