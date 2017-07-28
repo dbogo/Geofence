@@ -7,9 +7,6 @@
 extern mavlink_set_position_target_local_ned_t initial_position;
 extern mavlink_set_position_target_local_ned_t ip;
 
-#define OFFBOARD_CONTROL_BASE_MODE 157
-#define ARMED_BASE_MODE 209
-
 extern Mavlink_Messages current_messages;
 
 extern char arm_status;

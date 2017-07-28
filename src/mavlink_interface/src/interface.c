@@ -49,6 +49,7 @@
  */
 
 #include <stdio.h>
+#include <unistd.h>
 #include "../inc/interface.h"
 
 
@@ -62,20 +63,14 @@ int companion_id;
 // Current messages and current_setpoint definitions
 Mavlink_Messages current_messages;
 mavlink_set_position_target_local_ned_t current_setpoint;
-
-// Initial position setpoints and first time lock
-
 mavlink_set_position_target_local_ned_t initial_position;
 mavlink_set_position_target_local_ned_t ip;
 
-// Lock for initial position acquisition
-int initial_position_lock = 0;
+int initial_position_lock = 0; // Lock for initial position acquisition
+int lock_read_messages = 0; // First read lock 
 
 // Highres dependent flag timeout reset 
 float highres_flag = 1;
-
-// First read lock 
-int lock_read_messages = 0;
 
 
 Time_Stamps create_TimeStamps(){
@@ -110,9 +105,8 @@ void autopilot_initialize(void){
 	current_messages.compid = autopilot_id; // Set current autopilot id to predefined one
 }
 
-
 void autopilot_start(void){
-	// This is used only once to define the initial position
+	// Used only once to define the initial position
 
 	if (initial_position_lock == 0){
 		Mavlink_Messages local_data = current_messages;
@@ -153,7 +147,7 @@ void read_messages(void){
 					current_messages.time_stamps.command_ack = get_time_usec();
 					this_timestamps.command_ack = current_messages.time_stamps.command_ack;
 					break;
-					}
+				}
 
 				case MAVLINK_MSG_ID_HEARTBEAT:{
 					mavlink_msg_heartbeat_decode(&message, &(current_messages.heartbeat));
@@ -162,42 +156,42 @@ void read_messages(void){
 					current_messages.time_stamps.heartbeat = get_time_usec();
 					this_timestamps.heartbeat = current_messages.time_stamps.heartbeat;	
 					break;
-					}
+				}
 
 				case MAVLINK_MSG_ID_SYS_STATUS:{
 					mavlink_msg_sys_status_decode(&message, &(current_messages.sys_status));
 					current_messages.time_stamps.sys_status = get_time_usec();
 					this_timestamps.sys_status = current_messages.time_stamps.sys_status;
 					break;
-					}
+				}
 
 				case MAVLINK_MSG_ID_BATTERY_STATUS:{
 					mavlink_msg_battery_status_decode(&message, &(current_messages.battery_status));
 					current_messages.time_stamps.battery_status = get_time_usec();
 					this_timestamps.battery_status = current_messages.time_stamps.battery_status;
 					break;
-					}
+				}
 
 				case MAVLINK_MSG_ID_RADIO_STATUS:{
 					mavlink_msg_radio_status_decode(&message, &(current_messages.radio_status));
 					current_messages.time_stamps.radio_status = get_time_usec();
 					this_timestamps.radio_status = current_messages.time_stamps.radio_status;
 					break;
-					}
+				}
 
 				case MAVLINK_MSG_ID_LOCAL_POSITION_NED:{
 					mavlink_msg_local_position_ned_decode(&message, &(current_messages.local_position_ned));
 					current_messages.time_stamps.local_position_ned = get_time_usec();
 					this_timestamps.local_position_ned = current_messages.time_stamps.local_position_ned;
 					break;
-					}
+				}
 
 				case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:{
 					mavlink_msg_global_position_int_decode(&message, &(current_messages.global_position_int));
 					current_messages.time_stamps.global_position_int = get_time_usec();
 					this_timestamps.global_position_int = current_messages.time_stamps.global_position_int;
 					break;
-					}
+				}
 				
 				case MAVLINK_MSG_ID_GLOBAL_POSITION_INT_COV: {
 					mavlink_msg_global_position_int_cov_decode(&message, &(current_messages.global_pos_cov));
@@ -211,28 +205,28 @@ void read_messages(void){
 					current_messages.time_stamps.position_target_local_ned = get_time_usec();
 					this_timestamps.position_target_local_ned = current_messages.time_stamps.position_target_local_ned;
 					break;
-					}
+				}
 
 				case MAVLINK_MSG_ID_POSITION_TARGET_GLOBAL_INT:{
 					mavlink_msg_position_target_global_int_decode(&message, &(current_messages.position_target_global_int));
 					current_messages.time_stamps.position_target_global_int = get_time_usec();
 					this_timestamps.position_target_global_int = current_messages.time_stamps.position_target_global_int;
 					break;
-					}
+				}
 
 				case MAVLINK_MSG_ID_HIGHRES_IMU: {
 					mavlink_msg_highres_imu_decode(&message, &(current_messages.highres_imu));
 					current_messages.time_stamps.highres_imu = get_time_usec();
 					this_timestamps.highres_imu = current_messages.time_stamps.highres_imu;
 					break;
-					}
+				}
 
 				case MAVLINK_MSG_ID_ATTITUDE: {
 					mavlink_msg_attitude_decode(&message, &(current_messages.attitude));
 					current_messages.time_stamps.attitude = get_time_usec();
 					this_timestamps.attitude = current_messages.time_stamps.attitude;
 					break;
-					}
+				}
 
 				default:
 					break;
@@ -266,7 +260,6 @@ void read_messages(void){
 	return;
 }
 
-
 void autopilot_write(void){
 	mavlink_set_position_target_local_ned_t set_point;
 	set_point.type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_VELOCITY & MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_RATE;
@@ -280,7 +273,6 @@ void autopilot_write(void){
 
 	autopilot_write_setpoint();
 }
-
 
 void autopilot_write_setpoint(void){
 
@@ -299,20 +291,18 @@ void autopilot_write_setpoint(void){
 	autopilot_write_message(message);
 }
 
-
 void autopilot_write_message(mavlink_message_t message){
 	serial_write_message(&message);
 }
-
 
 void autopilot_update_setpoint(mavlink_set_position_target_local_ned_t setpoint){
 	current_setpoint = setpoint;
 }
 
 bool enable_offboard_control(void){
-	if ( control_status == false ){
-		int success = toggle_offboard_control( true );
-		if ( success ){
+	if (!control_status){
+		int success = toggle_offboard_control(true);
+		if (success){
 			control_status = true;
 			printf("enable_offbaord_control: Offb Cont successfully enabled\n");
 		}
@@ -322,21 +312,20 @@ bool enable_offboard_control(void){
 	return control_status;
 }
 
-
 bool disable_offboard_control(void){
-	if ( control_status == true ){
-		int success = toggle_offboard_control( false );
-		if ( success ){
+	if (control_status){
+		int success = toggle_offboard_control(false);
+		if (success){
 			control_status = false;
-			printf("Offb Cont disabled\n");
+			printf("Offb Cont disabled successfully\n");
 		}
+	} else {
+		printf("offb cont already disabled\n");
 	}
-	printf("offb cont already disabled\n");
 	return control_status; 
 }
 
-
-int toggle_offboard_control( bool flag ){
+int toggle_offboard_control(bool flag){
 	// Prepare command for off-board mode
 	mavlink_command_long_t com = { 0 };
 	com.target_system    = system_id;
@@ -348,33 +337,38 @@ int toggle_offboard_control( bool flag ){
 	mavlink_message_t message;
 	mavlink_msg_command_long_encode(system_id, companion_id, &message, &com);
 	int len = serial_write_message(&message);
-	return len;
+
+	if(len && verify_command_ack(MAV_CMD_NAV_GUIDED_ENABLE)){
+		return 1;
+	}
+	return 0;
 }
 
-
 void autopilot_arm(void){
-	if ( arm_status == false ){
+	if (!arm_status){
 		int success = toggle_arm_disarm( true );
-		if ( success ) {
+		if (success) {
 			arm_status = true;
 			printf("Autopilot successfully armed\n");
 		}
-	} 
+	} else {
+		printf("Autopilot is already armed!\n");
+	}
 }
 
-
 void autopilot_disarm(void){
-	if ( arm_status == true ){
+	if (arm_status == true){
 		int success = toggle_arm_disarm( false );
-		if ( success ){
+		if (success){
 			arm_status = false;
 			printf("Autopilot successfully disarmed\n");
 		}
-	} 
+	} else {
+		printf("Autopilot is already disarmed!\n");
+	}
 }
 
-
-int toggle_arm_disarm( bool flag ){
+int toggle_arm_disarm(bool flag){
 	// Prepare command for arming/disarming
 	mavlink_command_long_t autopilot_status = { 0 };
 	autopilot_status.target_system    = system_id;
@@ -386,9 +380,26 @@ int toggle_arm_disarm( bool flag ){
 	mavlink_message_t message;
 	mavlink_msg_command_long_encode(system_id, companion_id, &message, &autopilot_status);
 	int len = serial_write_message(&message);
-	return len;
+
+	if(len && verify_command_ack(MAV_CMD_COMPONENT_ARM_DISARM)){
+		return 1;
+	}
+	return 0;
 }
 
+int verify_command_ack(int cmd){
+	mavlink_message_t msg;
+	uint32_t start_us = get_time_usec()/1000;
+	while(!msg.msgid == MAVLINK_MSG_ID_COMMAND_ACK && (get_time_usec()/1000 - start_us < TIMEOUT_MS)){
+		serial_read_message(msg);
+	}
+	mavlink_command_ack_t com_ack;
+	mavlink_msg_command_ack_decode(&msg, &com_ack);
+	if(com_ack.command == cmd && com_ack.result == MAV_RESULT_ACCEPTED){
+		return 1;
+	}
+	return 0;
+}
 
 // NEEDS PX4 Master version or stable v1.4 
 int check_offboard_control(void){
@@ -402,7 +413,6 @@ int check_offboard_control(void){
 	}
 }
 
-
 int check_arm_disarm(void){
 	int success = check_message(MAV_CMD_COMPONENT_ARM_DISARM);
 	if (success){
@@ -414,7 +424,6 @@ int check_arm_disarm(void){
 	}
 }
 
-
 int check_message(uint16_t COMMAND_ID){
 	if((current_messages.command_ack.command == COMMAND_ID) &&
 	   (current_messages.command_ack.result == MAV_RESULT_ACCEPTED)){
@@ -423,7 +432,6 @@ int check_message(uint16_t COMMAND_ID){
 		return 0;
 	}
 }
-
 
 // Set position function and masks
 void set_position(float x, float y, float z, mavlink_set_position_target_local_ned_t* set_position){
@@ -478,10 +486,10 @@ int get_gps_from_autopilot(FullGPSData *gpsData){
 
 int pre_arm_void_commands(){
 	for(int i = 0; i < 10 && autopilot_ok(); i++){
-		autopilot_write_helper();
+		autopilot_write();
 		usleep(20000);
 	}
-	return 0;
+return 0;
 }
 
 int autopilot_ok(){
@@ -502,7 +510,7 @@ uint64_t get_time_usec(void){
 int handle_quit_autopilot(){
 	printf("handling autopilot shutdown...\n");
 	autopilot_disarm();
-	usleep();
+	usleep(200);
 	disable_offboard_control();
 	return 0;
 }

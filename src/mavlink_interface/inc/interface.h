@@ -52,8 +52,9 @@
 #define _INTERFACE_H_
 
 #include <stdbool.h>
-#include <src/serial/serialInterface.h>
 #include <src/types.h>
+#include <src/serial/serialInterface.h>
+#include "mfunctions.h"
 
                                                 // bit number  876543210987654321
 #define MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION     0b0000110111111000
@@ -63,23 +64,30 @@
 #define MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_ANGLE    0b0000100111111111
 #define MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_RATE     0b0000010111111111
 
+#define TIMEOUT_MS 500 // 500 milliseconds to wait until a command_ack timeout.
+
+/**
+ * The following constants are possible values of the armed/offb. cont. states as 
+ * available in the base_mode field of the HEARTBEAT message.
+#define ARMED_BASE_MODE 209
+#define OFFBAORD_CONTROL_BASE_MDOE 157
 
  /**
   * timestamps of every message in Mavlink_Messagess
   */
 typedef struct Time_Stamps{
-	uint64_t heartbeat;
-	uint64_t sys_status;
-	uint64_t battery_status;
-	uint64_t radio_status;
-	uint64_t local_position_ned;
-	uint64_t global_position_int;
-	uint64_t global_pos_cov;
-	uint64_t position_target_local_ned;
-	uint64_t position_target_global_int;
-	uint64_t highres_imu;
-	uint64_t attitude;
-	uint64_t command_ack;
+    uint64_t heartbeat;
+    uint64_t sys_status;
+    uint64_t battery_status;
+    uint64_t radio_status;
+    uint64_t local_position_ned;
+    uint64_t global_position_int;
+    uint64_t global_pos_cov;
+    uint64_t position_target_local_ned;
+    uint64_t position_target_global_int;
+    uint64_t highres_imu;
+    uint64_t attitude;
+    uint64_t command_ack;
 } Time_Stamps;
 
 
@@ -87,23 +95,22 @@ typedef struct Time_Stamps{
  * Holds the last messages that were received from the autopilot
  */
 typedef struct Mavlink_Messages {
-	int sysid;
-	int compid;
-	mavlink_heartbeat_t heartbeat; // Heartbeat
-	mavlink_sys_status_t sys_status; // System Status
-	mavlink_battery_status_t battery_status; // Battery Status
-	mavlink_radio_status_t radio_status; // Radio Status
-	mavlink_local_position_ned_t local_position_ned; // Local Position
-	mavlink_global_position_int_t global_position_int; // Global Position
-	mavlink_global_position_int_cov_t global_pos_cov; // A more accurate global position data
-	mavlink_position_target_local_ned_t position_target_local_ned; // Local Position Target
-	mavlink_position_target_global_int_t position_target_global_int; // Global Position Target
-	mavlink_highres_imu_t highres_imu; // HiRes IMU
-	mavlink_attitude_t attitude; // Attitude
-	mavlink_command_ack_t command_ack; // Command acknowledgment
-	Time_Stamps time_stamps; // Time Stamps
+    int sysid;
+    int compid;
+    mavlink_heartbeat_t heartbeat; // Heartbeat
+    mavlink_sys_status_t sys_status; // System Status
+    mavlink_battery_status_t battery_status; // Battery Status
+    mavlink_radio_status_t radio_status; // Radio Status
+    mavlink_local_position_ned_t local_position_ned; // Local Position
+    mavlink_global_position_int_t global_position_int; // Global Position
+    mavlink_global_position_int_cov_t global_pos_cov; // A more accurate global position data
+    mavlink_position_target_local_ned_t position_target_local_ned; // Local Position Target
+    mavlink_position_target_global_int_t position_target_global_int; // Global Position Target
+    mavlink_highres_imu_t highres_imu; // HiRes IMU
+    mavlink_attitude_t attitude; // Attitude
+    mavlink_command_ack_t command_ack; // Command acknowledgment
+    Time_Stamps time_stamps; // Time Stamps
 } Mavlink_Messages;
-
 
 
 /**
@@ -137,7 +144,6 @@ void autopilot_start(void);
  *             all requested messages are obtained (may become an infinite loop).
  */
 void read_messages(void);
-
 
 /**
  * @brief      A "dummy" method that writes a void (all zeros) 
@@ -188,15 +194,13 @@ bool enable_offboard_control(void);
 /**
  * @brief      The function that's used by enable/disable_offbard_control() 
  *             to actually write the appropriate command to the autopilot.
+ *             The function will wait for a command_ack() from the autopilot.
  *
  * @param[in]  flag  Indicated whether to toggle offboard control on or off.
  *
- * @return     The number of bytes for a successful write of the command to the 
- *             autopilot. 0 for failure.
+ * @return     1 for a successful command. 0 for failure.
  */
 int toggle_offboard_control(bool flag);
-
-// Arm/Disarm Control
 
 /**
  * @brief      Arm the autopilot.
@@ -210,15 +214,26 @@ void autopilot_disarm(void);
 
 /**
  * @brief      Used by autopilot_arm/disarm() in a similar manner
- *             to toogle_offboard_control().
+ *             to toggle_offboard_control(). The function will wait for a command_ack 
+ *             from the autopilot.
  *
  * @param[in]  flag  Indicated on or off toggle.
  *
- * @return     The number of bytes written to the autopilot as the command to
- *                 arm/disarm. 0 for failure.
+ * @return     1 for a successful command. 0 for failure.
  */
 int toggle_arm_disarm(bool flag);
 
+/**
+ * @brief      Listens to a COMMAND_ACK message from the autopilot to verify
+ *             the successful delivery of a command. Blocks execution until an
+ *             acknowledgement is received.
+ *
+ * @param[in]  cmd  The CMD_ID of the command to check acknowledgement for 
+ *                  (as defined in the corresponding mavlink header).
+ *
+ * @return     1 if the autopilot confirmed the acknowledgement, 0 otherwise.
+ */
+int verify_command_ack(int cmd);
 
 /**
  * @brief      A convenience function to check if the autopilot is in offboard control or not.
@@ -242,7 +257,7 @@ int check_arm_disarm(void);
  *
  * @return     1 for a positive command_ack. 0 otherwise.
  */
-int check_message (uint16_t COMMAND_ID);
+int check_message(uint16_t COMMAND_ID);
 
 /**
  * @brief      Update the FullGPSData based on information from the GLOBAL_POSITION_INT_COV message.
@@ -282,15 +297,11 @@ int autopilot_ok();
 int handle_quit_autopilot();
 #endif
 
-#include <mfunctions.h>
-
-
 void set_position(float x, float y, float z, mavlink_set_position_target_local_ned_t* sp);
 void set__(float x, float y, float z, mavlink_set_position_target_local_ned_t* set_point);
 void set_velocity(float vx, float vy, float va, mavlink_set_position_target_local_ned_t* set_point);
 void set_yaw(float yaw, mavlink_set_position_target_local_ned_t* sp);
 void position_and_speed_set(float x, float y, float z ,float vx, float vy, float vz, mavlink_set_position_target_local_ned_t* final_set_point);
-
 
 void set_circle(float R, float theta, float z, mavlink_set_position_target_local_ned_t* set_point);
 
