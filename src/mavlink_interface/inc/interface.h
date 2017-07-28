@@ -64,13 +64,15 @@
 #define MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_ANGLE    0b0000100111111111
 #define MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_RATE     0b0000010111111111
 
-#define TIMEOUT_MS 500 // 500 milliseconds to wait until a command_ack timeout.
+#define TIMEOUT_MS 500  // milliseconds to wait until a command_ack timeout.
 
 /**
  * The following constants are possible values of the armed/offb. cont. states as 
  * available in the base_mode field of the HEARTBEAT message.
-#define ARMED_BASE_MODE 209
-#define OFFBAORD_CONTROL_BASE_MDOE 157
+ */
+#define ARMED_BASE_MODE             209
+#define DISARMED_BASE_MODE          81
+#define OFFBOARD_CONTROL_BASE_MODE  157
 
  /**
   * timestamps of every message in Mavlink_Messagess

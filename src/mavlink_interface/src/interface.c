@@ -300,7 +300,7 @@ void autopilot_update_setpoint(mavlink_set_position_target_local_ned_t setpoint)
 }
 
 bool enable_offboard_control(void){
-	if (!control_status){
+	if (!control_status && current_messages.heartbeat.base_mode != ARMED_BASE_MODE){
 		int success = toggle_offboard_control(true);
 		if (success){
 			control_status = true;
@@ -313,7 +313,7 @@ bool enable_offboard_control(void){
 }
 
 bool disable_offboard_control(void){
-	if (control_status){
+	if (control_status && current_messages.heartbeat.base_mode == ARMED_BASE_MODE){
 		int success = toggle_offboard_control(false);
 		if (success){
 			control_status = false;
@@ -345,7 +345,7 @@ int toggle_offboard_control(bool flag){
 }
 
 void autopilot_arm(void){
-	if (!arm_status){
+	if (!arm_status && current_messages.heartbeat.base_mode != ARMED_BASE_MODE){
 		int success = toggle_arm_disarm( true );
 		if (success) {
 			arm_status = true;
@@ -357,7 +357,7 @@ void autopilot_arm(void){
 }
 
 void autopilot_disarm(void){
-	if (arm_status == true){
+	if (arm_status && current_messages.heartbeat.base_mode == ARMED_BASE_MODE){
 		int success = toggle_arm_disarm( false );
 		if (success){
 			arm_status = false;
@@ -390,8 +390,8 @@ int toggle_arm_disarm(bool flag){
 int verify_command_ack(int cmd){
 	mavlink_message_t msg;
 	uint32_t start_us = get_time_usec()/1000;
-	while(!msg.msgid == MAVLINK_MSG_ID_COMMAND_ACK && (get_time_usec()/1000 - start_us < TIMEOUT_MS)){
-		serial_read_message(msg);
+	while((msg.msgid != MAVLINK_MSG_ID_COMMAND_ACK) && (get_time_usec()/1000 - start_us < TIMEOUT_MS)){
+		serial_read_message(&msg);
 	}
 	mavlink_command_ack_t com_ack;
 	mavlink_msg_command_ack_decode(&msg, &com_ack);
