@@ -8,7 +8,7 @@
 Geofence provides PX4/Pixhawk based autopilots with Geo-fencing capabilities by 
 utilizing an external computer that's onboard the drone together with the flight controller.
 
-Users can feed custom geofences to the program, by specifying multiple coordinates that enclose a geographical area and the external computer will make sure that the drone stays within the defined boundries, or out of restricted areas.
+Users can feed custom geofences to the program, by specifying multiple coordinates that enclose a geographical area and the external computer will make sure that the drone stays within the defined boundaries, or out of restricted areas.
 
 Geofence communicates with a drone's flight controller via the [MAVLink Protocol](http://qgroundcontrol.org/mavlink/start) over a physical serial connection (e.g an FTDI cable etc.) and continuously receives flight data from the autopilot. In case of a geofence violation, based on location information from a GPS receiver that's connected to the Autopilot or the external computer itself, the program immediately takes over the control of the drone by switching the PX4 Autopilot to ['Offboard Mode'](https://dev.px4.io/en/concept/flight_modes.html) and executing the necessary commands to return to a safe area/land/get away from the border etc. In addition, the external computer will disarm the drone to prevent it from taking off if it's detected to be in a no-fly zone.
 ______________________________________
@@ -22,10 +22,9 @@ ______________________________________
 ## Pre-requisites
 The software is mainly intended for use with the Pixhawk Flight Controller running the [PX4 Autopilot](http://px4.io/), thus:
 - The [Pixhawk](https://pixhawk.org/) Flight Controller. Installation instructions for PX4 are [here](https://www.gitbook.com/book/px4/px4-user-guide/details). 
-- A computer running any \*nix based OS, small enough to fit on a drone. The reference implementation assumes a Raspberry-Pi computer running the lastest [Raspbian OS](https://www.raspberrypi.org/downloads/raspbian/) and this is the recommended (although not mandatory option).
-- Means of connecting the flight controller with the external computer. Preferrably an FTDI cable (by default PX4 will not fly with a USB connection as it's an unsafe for flight).
+- A computer running any \*nix based OS, small enough to fit on a drone. The reference implementation assumes a Raspberry-Pi computer running the latest [Raspbian OS](https://www.raspberrypi.org/downloads/raspbian/) and this is the recommended (although not mandatory option).
+- Means of connecting the flight controller with the external computer. Preferably an FTDI cable (by default PX4 will not fly with a USB connection as it's an unsafe for flight).
 - GPS module (should be connected to the external computer), if one is not used with the Pixhawk.
-
 
 
 ## Installation and Building
@@ -41,8 +40,13 @@ The setup script downloads and installs the dependencies. The script may ask for
 ## Documentation
 **Note: the documentation is still incomplete and is a work in progress. Code coverage will improve over time.**
 
-Documentation is included and updated on every build so it's always up-to-date. The documentation is generated with [Doxygen](www.doxygen.org/
-). The Doxyfile is also included if you are interested in generating it yourself of changing the configuration. To view the documentation open index.html under Documentation/html in a web browser.
+[Doxygen](www.doxygen.org/) is needed to generate the documentation.
+
+The included doxyfile can be used to generate the documentation for the source code. from the top-level directory run:
+```
+doxygen
+```
+The resulting documentation will be placed in a 'Documentation' folder with html and latex formats to choose from. To view the documentation open index.html under Documentation/html/ in a web browser.
 
 ## Hardware Setup
 

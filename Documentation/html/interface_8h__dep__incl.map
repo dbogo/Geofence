@@ -1,8 +1,0 @@
-<map id="src/mavlink_interface/inc/interface.h" name="src/mavlink_interface/inc/interface.h">
-<area shape="rect" id="node2" href="$commands_8h.html" title="src/mavlink_interface\l/inc/commands.h" alt="" coords="203,95,350,136"/>
-<area shape="rect" id="node4" href="$autopilot__controller_8c.html" title="src/autopilot_controller.c" alt="" coords="36,273,199,300"/>
-<area shape="rect" id="node5" href="$main_8c.html" title="src/main.c" alt="" coords="294,273,376,300"/>
-<area shape="rect" id="node7" href="$interface_8c.html" title="src/mavlink_interface\l/src/interface.c" alt="" coords="432,95,579,136"/>
-<area shape="rect" id="node3" href="$autopilot__controller_8h.html" title="src/autopilot_controller.h" alt="" coords="195,191,358,218"/>
-<area shape="rect" id="node6" href="$commands_8c.html" title="src/mavlink_interface\l/src/commands.c" alt="" coords="24,184,171,225"/>
-</map>

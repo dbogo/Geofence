@@ -1,9 +1,0 @@
-<map id="src/RPiGPSDemo/rpi_gps_demo.c" name="src/RPiGPSDemo/rpi_gps_demo.c">
-<area shape="rect" id="node4" href="$rpi__gps__demo_8h.html" title="rpi_gps_demo.h" alt="" coords="146,95,261,121"/>
-<area shape="rect" id="node14" href="$parser_8h.html" title="parser.h" alt="" coords="285,95,353,121"/>
-<area shape="rect" id="node15" href="$serial_interface_8h.html" title="src/serial/serialInterface.h" alt="" coords="377,95,549,121"/>
-<area shape="rect" id="node18" href="$log_interface_8h.html" title="src/logInterface.h" alt="" coords="613,95,735,121"/>
-<area shape="rect" id="node5" href="$_g_p_s_interface_8h.html" title="src/GPSInterface.h" alt="" coords="180,177,315,203"/>
-<area shape="rect" id="node6" href="$types_8h.html" title="types.h" alt="" coords="533,259,599,285"/>
-<area shape="rect" id="node9" href="$utils_8h.html" title="utils.h" alt="" coords="219,259,276,285"/>
-</map>
