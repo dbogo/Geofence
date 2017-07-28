@@ -40,7 +40,7 @@ The setup script downloads and installs the dependencies. The script may ask for
 ## Documentation
 **Note: the documentation is still incomplete and is a work in progress. Code coverage will improve over time.**
 
-[Doxygen](www.doxygen.org/) is needed to generate the documentation.
+[Doxygen](http://www.doxygen.org/) is needed to generate the documentation.
 
 The included doxyfile can be used to generate the documentation for the source code. from the top-level directory run:
 ```
