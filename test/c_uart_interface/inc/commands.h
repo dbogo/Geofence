@@ -22,11 +22,7 @@ void circle_operation (float timer);
 void automatic_takeoff(float timer);
 void flight_control_sequence(float timer);
 
-// Flight Functions
-void arm_sequence (void);
-void offboard_control_sequence(void);
-void disable_offboard_control_sequence(void);
-void disarm_sequence (void);
+
 void program_counter_sequence(float timer, time_t* begin);
 
 // Function helpers

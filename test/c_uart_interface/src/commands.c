@@ -324,57 +324,7 @@ void flight_control_sequence (float timer){
 		if (Program_counter == 11) { Program_counter = 11;}
 }
 
-// Flight functions 
-void arm_sequence (void){
-	// if (current_messages.heartbeat.base_mode != ARMED_BASE_MODE && arm_lock == 0){
-		printf("Arming\n");
-		autopilot_arm();
-		arm_lock = 1;
-	// }
 
-	usleep(100);
-}
-
-
-void offboard_control_sequence(void){
-	printf("Enabling offboard control\n");
-
-	// if (current_messages.heartbeat.base_mode != OFFBOARD_CONTROL_BASE_MODE){
-		control_status = false;
-		autopilot_write();
-		usleep(200);
-		enable_offboard_control();
-		usleep(100);
-		autopilot_write();
-	// }		
-		
-	usleep(100);
-	// Program_counter = 2;
-}
-
-
-void disable_offboard_control_sequence(void){
-	// printf("Disabled offboard control\n");
-	printf("Disabling offbaord control...\n");
-	
-
-	// if(current_messages.heartbeat.base_mode == OFFBOARD_CONTROL_BASE_MODE){
-		autopilot_write();
-		usleep(100);
-		disable_offboard_control(); 
-		usleep(100);
-	// }
-	// usleep(100);
-} 
-
-
-void disarm_sequence (void){
-	printf("Disarming...\n");
-
-	// if (current_messages.heartbeat.base_mode == ARMED_BASE_MODE){
-		autopilot_disarm();
-	// }
-}
 
 
 void program_counter_sequence(float timer, time_t* begin){

@@ -12,14 +12,17 @@ int main(int argc, char **argv)
 	printf("Acquired initial read\n");
 	autopilot_start();
 	printf("locked data from read_messages()\n");
+
 	send_pre_arm_void_commands();
-	offboard_control_sequence();
+	// arm_sequence();
+	
 	usleep(200000); // 200ms = 5Hz
-	arm_sequence();
+	
+	offboard_control_sequence();
 	usleep(200000);
 
 	mavlink_set_position_target_local_ned_t set_point;
-	for(int i = 0; i < 190; i++){
+	for(int i = 0; i < 30; i++){
 		// printf("Current Initial position : x = %f , y = %f , z = %f\n", ip.x, ip.y, ip.z);
 		printf("%d: Current set point : x = %f, y = %f z=%f\n", i, ip.x, ip.y, ip.z - 0.25);
 		set_yaw (ip.yaw, &set_point);
@@ -27,31 +30,29 @@ int main(int argc, char **argv)
 		usleep(100000);
 	}
 
-	disarm_sequence();
-
+	// disarm_sequence();
 	usleep(200000);
 
 	disable_offboard_control_sequence();
-
 	usleep(200000);
 
 	return 0;
 }
 
 void send_pre_arm_void_commands(){
-	for(int i = 0; i < 20 && autopilot_ok(); i++){
+	for(int i = 0; i < 20; i++){
 		autopilot_write_helper();
-		usleep(200000);
+		usleep(20000);
 	}
 }
 
-int autopilot_ok(){
-	mavlink_message_t msg;
-	while(!msg.msgid == MAVLINK_MSG_ID_HEARTBEAT){
-		serial_read_message(&msg);
-	}
-	return 1;
-}
+// int autopilot_ok(){
+// 	mavlink_message_t msg;
+// 	while(!msg.msgid == MAVLINK_MSG_ID_HEARTBEAT){
+// 		serial_read_message(&msg);
+// 	}
+// 	return 1;
+// }
 
 // Scheduler
 // void commands(void){
