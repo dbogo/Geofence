@@ -4,12 +4,8 @@
 #include <time.h>
 #include "mavlink_interface/inc/commands.h"
 
-
-void update_autopilot(void);
-
 int takeover_control(time_t *commanderTimestamp);
 
 int stop_autopilot();
-
 
 #endif /* AUTOPILOT_CONTROLLER_H */

@@ -22,7 +22,7 @@ static int fd;
 const char* RS232_DEVICE_const;
 
 int open_port(void){
-	char* fileName = "/dev/ttyACM0";
+	char* fileName = "/dev/ttyACM1";
 	streamFD = open(fileName, O_RDWR | O_NOCTTY | O_NDELAY);
 	if(streamFD < 0){
 		logEvent("open_port: Unable to open /dev/ttyACM0.", LOG4C_PRIORITY_INFO, INFO, &logMaster);
@@ -93,9 +93,9 @@ int usart_recv_blocking(int i){
 }
 
 int serial_write_message(const mavlink_message_t* message){
-	char buff[300];
+	uint8_t buff[300];
 	int bytesWritten;
-	unsigned len = mavlink_msg_to_send_buffer((uint8_t *)buff, message);
+	unsigned len = mavlink_msg_to_send_buffer(buff, message);
 
 	for (unsigned short i = 0; i < sizeof(buff); i++)	{
 		write(fd, &buff[i], 1);

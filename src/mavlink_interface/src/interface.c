@@ -52,6 +52,7 @@
 #include <unistd.h>
 #include "../inc/interface.h"
 
+#include <GPSInterface.h>
 
 char control_status;
 char arm_status;
@@ -65,6 +66,8 @@ Mavlink_Messages current_messages;
 mavlink_set_position_target_local_ned_t current_setpoint;
 mavlink_set_position_target_local_ned_t initial_position;
 mavlink_set_position_target_local_ned_t ip;
+
+uint64_t last_global_pos_time = 0;
 
 int initial_position_lock = 0; // Lock for initial position acquisition
 int lock_read_messages = 0; // First read lock 
@@ -258,6 +261,21 @@ void read_messages(void){
 		} 
 		lock_read_messages = 1;		
 	return;
+}
+
+void print_global_pos_int(){
+	// if(current_messages.time_stamps.global_position_int > last_global_pos_time){
+	printf("lat: %f, lon: %f, alt: %f, vx: %f, vy: %f, vz: %f, hdg: %f\n",
+		(float) current_messages.global_position_int.lat / 1E7,
+		(float) current_messages.global_position_int.lon / 1E7,
+		(float) current_messages.global_position_int.alt / 1000,
+		(float) current_messages.global_position_int.vx / 100,
+		(float) current_messages.global_position_int.vy / 100,
+		(float) current_messages.global_position_int.vz / 100,
+		(float) current_messages.global_position_int.hdg / 100
+	);
+		// last_global_
+	// }
 }
 
 void autopilot_write(void){
@@ -458,6 +476,28 @@ void set_yaw(float yaw, mavlink_set_position_target_local_ned_t* sp){
 	sp->yaw = yaw;
 }
 
+int write_gps_to_autopilot(FullGPSData *info){
+	mavlink_hil_gps_t gps = {
+		.time_usec = get_time_usec(),
+		.lat = to_deg(info->latitude) * 1E7,
+		.lon = to_deg(info->longitude) * 1E7,
+		.alt = info->altitude * 1000,
+		.eph = 65535,
+		.epv = 65535,
+		.vel = (uint16_t ) info->spdKph * 27.7778f,
+		.vn = 0,
+		.ve = 0,
+		.vd = 0,
+		.cog = 65535,
+		.fix_type = (uint8_t) info->fixType,
+		.satellites_visible = info->satellites
+	};
+
+	mavlink_message_t msg;
+	mavlink_msg_hil_gps_encode(system_id, companion_id, &msg, &gps);
+	return serial_write_message(&msg);
+}
+
 // Set position, update setpoint and send the message 
 void set__(float x, float y, float z, mavlink_set_position_target_local_ned_t* final_set_point){
 	set_position(x, y, z, final_set_point);
@@ -473,14 +513,14 @@ void position_and_speed_set(float x, float y, float z ,float vx, float vy, float
 	autopilot_write_setpoint();
 }
 
-// Draw a circle with R and theta (angle) coordinates from current position
-void set_circle(float R, float theta, float z, mavlink_set_position_target_local_ned_t* set_point){
-	set__( (R * tan_2pi(theta))/Beta(theta)  , R / Beta(theta), z, set_point);
+// Draw a circle with R and theta (angle) coordinates from current positioe
+void set_circle(float r, float theta, float z, mavlink_set_position_target_local_ned_t* set_point){
+	set__( (r * tan_2pi(theta))/Beta(theta)  , r / Beta(theta), z, set_point);
 }
 
-int get_gps_from_autopilot(FullGPSData *gpsData){
-	gpsData->lat = (double)current_messages.global_pos_cov.lat / 1E7;
-	printf("getting gps from autopilot.\n");
+int get_gps_from_autopilot(FullGPSData *gpsdata){
+	// gpsdata->lat = (double)current_messages.global_pos_cov.lat / 1e7;
+	// printf("getting gps from autopilot.\n");
 	return 1;
 }
 

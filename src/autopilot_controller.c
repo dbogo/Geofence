@@ -2,13 +2,6 @@
 #include "autopilot_controller.h"
 #include <mavlink_interface/inc/interface.h>
 
-void update_autopilot(void){
-	/**
-	 * TODO
-	 */
-	return;
-}
-
 int takeover_control(time_t *commanderTimestamp){
 	pre_arm_void_commands();
 	offboard_control_sequence();
@@ -28,13 +21,3 @@ int stop_autopilot(){
 	autopilot_write_setpoint();
 	return 0;
 }
-
-
-// void arm_sequence(){
-// 	if (current_messages.heartbeat.base_mode != ARMED_BASE_MODE && arm_lock == 0){
-// 			printf("Arming\n");
-// 			autopilot_arm();
-// 			arm_lock = 1;
-// 	}
-// 	usleep(100);
-// }

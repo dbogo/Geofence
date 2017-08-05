@@ -1,11 +1,11 @@
+#include <time.h>
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
+#include <signal.h>
 #include <stdlib.h>
 #include <inttypes.h>
-#include <math.h>
 #include <sys/time.h>
-#include <signal.h>
 
 #include "init.h"
 #include "types.h"
@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
 	read_messages();
 	autopilot_start();
 
-	get_gps_from_autopilot(&gpsData);
+	// get_gps_from_autopilot(&gpsData);
 
 	// autopilot_write_helper();
 
@@ -65,7 +65,9 @@ int main(int argc, char** argv) {
 		GPSHandler.getGPS(&gpsData, true, NULL);
 		
 		printf("lon: %f, lat %f\n", gpsData.longitude, gpsData.latitude);
-		
+		write_gps_to_autopilot(&gpsData);
+		print_global_pos_int();
+
 		// whether currently in border
 		if(!geofence_breached(&gpsData, &zone)){
 			printf("Current pos - within border\n");
@@ -75,7 +77,7 @@ int main(int argc, char** argv) {
 		} else {
 			printf("Current pos - outside the border\n");
 			commanderTimestamp = time(NULL);
-			takeover_control(&commanderTimestamp);
+			// takeover_control(&commanderTimestamp);
 			#ifdef WIRINGPI
 				led(GEOFENCE_OK_LED, LOW);
 			#endif

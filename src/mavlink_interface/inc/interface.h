@@ -55,6 +55,7 @@
 #include <src/types.h>
 #include <src/serial/serialInterface.h>
 #include "mfunctions.h"
+#include <types.h>
 
                                                 // bit number  876543210987654321
 #define MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION     0b0000110111111000
@@ -114,6 +115,9 @@ typedef struct Mavlink_Messages {
     Time_Stamps time_stamps; // Time Stamps
 } Mavlink_Messages;
 
+
+int write_gps_to_autopilot(FullGPSData* info);
+void print_global_pos_int();
 
 /**
  * @brief      Zeros out all the timestamps.
@@ -287,6 +291,7 @@ int pre_arm_void_commands();
  * @return     1 for success
  */
 int autopilot_ok();
+
 
 #ifdef DEBUG
 /**
