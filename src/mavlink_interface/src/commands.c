@@ -348,14 +348,14 @@ void offboard_control_sequence(void){
 	usleep(200);
 	autopilot_write();
 
-	if (current_messages.heartbeat.base_mode != OFFBOARD_CONTROL_BASE_MODE){
-		control_status = false;
-		autopilot_write();
-		enable_offboard_control();
-		autopilot_write();
-	}		
+	// if (current_messages.heartbeat.base_mode != OFFBOARD_CONTROL_BASE_MODE){
+	// 	control_status = false;
+	// 	autopilot_write();
+	// 	enable_offboard_control();
+	// 	autopilot_write();
+	// }		
 		
-	usleep(100);
+	// usleep(100);
 	Program_counter = 2;
 }
 

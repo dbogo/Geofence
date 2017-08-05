@@ -8,4 +8,5 @@ int takeover_control(time_t *commanderTimestamp);
 
 int stop_autopilot();
 
+int release_control();
 #endif /* AUTOPILOT_CONTROLLER_H */

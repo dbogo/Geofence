@@ -242,13 +242,13 @@ void read_messages(void){
 		if (lock_read_messages == 0){
 			// Check for receipt of all items
 			received_all =
-					this_timestamps.heartbeat                  &&
+					this_timestamps.heartbeat                 // &&
 					// this_timestamps.command_ack 
 			//				this_timestamps.battery_status             &&
 			//				this_timestamps.radio_status               &&
-							this_timestamps.local_position_ned         &&
+							// this_timestamps.local_position_ned         &&
 			//				this_timestamps.global_position_int        &&
-							this_timestamps.global_pos_cov
+							// this_timestamps.global_pos_cov
 			//				this_timestamps.position_target_local_ned  &&
 			//				this_timestamps.position_target_global_int &&
 			//				this_timestamps.highres_imu                &&
@@ -318,7 +318,7 @@ void autopilot_update_setpoint(mavlink_set_position_target_local_ned_t setpoint)
 }
 
 bool enable_offboard_control(void){
-	if (!control_status && current_messages.heartbeat.base_mode != ARMED_BASE_MODE){
+	if (!control_status /* && current_messages.heartbeat.base_mode != ARMED_BASE_MODE */){
 		int success = toggle_offboard_control(true);
 		if (success){
 			control_status = true;
@@ -331,7 +331,7 @@ bool enable_offboard_control(void){
 }
 
 bool disable_offboard_control(void){
-	if (control_status && current_messages.heartbeat.base_mode == ARMED_BASE_MODE){
+	if (control_status /* && current_messages.heartbeat.base_mode == ARMED_BASE_MODE */){
 		int success = toggle_offboard_control(false);
 		if (success){
 			control_status = false;
@@ -345,7 +345,7 @@ bool disable_offboard_control(void){
 
 int toggle_offboard_control(bool flag){
 	// Prepare command for off-board mode
-	mavlink_command_long_t com = { 0 };
+	mavlink_command_long_t com;
 	com.target_system    = system_id;
 	com.target_component = autopilot_id;
 	com.command          = MAV_CMD_NAV_GUIDED_ENABLE;
@@ -356,7 +356,7 @@ int toggle_offboard_control(bool flag){
 	mavlink_msg_command_long_encode(system_id, companion_id, &message, &com);
 	int len = serial_write_message(&message);
 
-	if(len && verify_command_ack(MAV_CMD_NAV_GUIDED_ENABLE)){
+	if(len/*  && verify_command_ack(MAV_CMD_NAV_GUIDED_ENABLE )*/){
 		return 1;
 	}
 	return 0;
@@ -525,7 +525,7 @@ int get_gps_from_autopilot(FullGPSData *gpsdata){
 }
 
 int pre_arm_void_commands(){
-	for(int i = 0; i < 10 && autopilot_ok(); i++){
+	for(int i = 0; i < 12 && autopilot_ok(); i++){
 		autopilot_write();
 		usleep(20000);
 	}

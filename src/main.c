@@ -59,8 +59,15 @@ int main(int argc, char** argv) {
 	clock_t start, end;
 	double dt;
 	time_t commanderTimestamp;
+	int counter = 0;
 	while (!suspend_loop(TIME_TO_WAIT_SEC, TIME_TO_WAIT_NSEC)) {
 		start = clock();
+
+		if(counter == 10){
+			takeover_control(&commanderTimestamp);
+			release_control();
+			counter = 0;
+		}
  
 		GPSHandler.getGPS(&gpsData, true, NULL);
 		
@@ -86,6 +93,8 @@ int main(int argc, char** argv) {
 		end = clock();
 		dt = (double)(end - start)/CLOCKS_PER_SEC;
 		printf("--------------%f----------------\n", dt);
+
+		counter++;
 
 	}
 
