@@ -8,7 +8,7 @@ echo -e "first_setup.sh: performing first time installation.\n"
 
 
 echo -e "cloning mavlink library to libs/mavlink"
-cd libs/
+mkdir -p libs/ && cd libs/
 git clone https://github.com/mavlink/c_library_v1.git
 mv c_library_v1 mavlink
 cd ../

@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "logInterface.h"
 
+
 /* function wraps the use of nanosleep() function and does error handling 
 	if toleratesInterrupt is true, then the nanosleep function will be checked
 	for a premature stop, and will be resumed to finish the planned time (the remainder) 
@@ -16,6 +17,7 @@ int suspend_loop(time_t tv_sec, long nsec){
 	/* FIXME: maybe this function should call itself recursively
 	 to make sure that the pause is fully ended, instead of checking only once.. */
 	// NOTE: this struct declaration should maybe be somewhere else
+#ifndef __arm__
 	struct timespec ts = { .tv_sec = tv_sec , .tv_nsec = nsec };
 	int errCode = 0;
 
@@ -24,12 +26,15 @@ int suspend_loop(time_t tv_sec, long nsec){
 		errCode = nanosleep(&ts, &remainingTime);
 		// if EINTR then the pause has been interrupted
 		if(errCode == EINTR) {
-			logEvent("suspend_loop: nanosleep() has been interrupted and will now continue.",
+			logEvent("suspend_loop: nanosleep() was interrupted. continuing now.",
 						LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
 			nanosleep(&remainingTime, NULL);
 		}
 	}
 	return nanosleep(&ts, NULL);
+#else
+	usleep(nsec/1000);
+#endif
 }
 
 platform_id identify_platform(void){

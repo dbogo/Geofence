@@ -1,6 +1,7 @@
 #include <time.h>
 #include <math.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <string.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -27,13 +28,19 @@
 	// #include "led.h"
 #endif
 
+#define UNKNOWN 0
+#define IN_BORDER 1
+#define OUT_OF_BORDER 2
+#define RETURNING 3
 
 int main(int argc, char** argv) {
+	int state = UNKNOWN;
 	signal(SIGINT, quit_handler);
 	FullGPSData gpsData; /* stores every kind of data we may need, that's possible to extract from NMEA */
 	Zone_general zone; 
 	Edge* edges = NULL;
 	GPS_Actions GPSHandler;
+	GEO_Point home;
 
 	// deal with argv
 	if(parse_input_args(&zone, argc, argv) != ARGV_OK){
@@ -43,6 +50,21 @@ int main(int argc, char** argv) {
 
 	init(&GPSHandler, &gpsData, &zone, &logMaster, &edges);
 	
+
+	while(!gpsData.latitude && !gpsData.longitude){
+		GPSHandler.getGPS(&gpsData, true, NULL);
+		usleep(500000); //500ms
+	}
+
+	home.latitude = gpsData.latitude;
+	home.longitude = gpsData.longitude;
+
+	if(!geofence_breached(&gpsData, &zone)){
+		state = IN_BORDER;
+	} else {
+		state = OUT_OF_BORDER;
+	}
+
 	//autopilot stuff
 	autopilot_initialize();
 	serial_start("/dev/ttyUSB0"); // TODO: receive from argv ?
@@ -50,30 +72,68 @@ int main(int argc, char** argv) {
 	read_messages();
 	autopilot_start();
 
-	// get_gps_from_autopilot(&gpsData);
-
-	// autopilot_write_helper();
 
 	//gpsData.latitude = 13.0f;
 	// takeover_control();
+	
 	clock_t start, end;
 	double dt;
 	time_t commanderTimestamp;
 	int counter = 0;
-	while (!suspend_loop(TIME_TO_WAIT_SEC, TIME_TO_WAIT_NSEC)) {
-		start = clock();
 
-		if(counter == 10){
-			takeover_control(&commanderTimestamp);
-			release_control();
+	while (true) {
+
+		switch(state){
+			case IN_BORDER:{
+				// autopilot_write();
+				break;
+			}
+
+			case OUT_OF_BORDER:{
+				takeover_control(&commanderTimestamp);
+				return_to_zone(home);
+				state = RETURNING;
+				break;
+			}
+
+			case RETURNING: {
+				if(geofence_breached(&gpsData, &zone)){
+					return_to_zone(home);
+				} else {
+					release_control();
+					state = IN_BORDER;
+				}
+				// if(in_radius(gpsData, dest, radius)){
+				// 	release_control();
+				// 	state = IN_BORDER;
+				// }
+				break;
+			}
+		}
+		start = clock();
+		
+		autopilot_write();
+
+		write_gps_to_autopilot(&gpsData);
+		
+		read_local_pos_ned();
+
+		//sample GPS apprx every 1 sec 
+		if(counter == 100){
+			GPSHandler.getGPS(&gpsData, true, NULL);
 			counter = 0;
 		}
- 
-		GPSHandler.getGPS(&gpsData, true, NULL);
 		
-		printf("lon: %f, lat %f\n", gpsData.longitude, gpsData.latitude);
-		write_gps_to_autopilot(&gpsData);
-		print_global_pos_int();
+
+		if(counter == 10){
+		// 	takeover_control(&commanderTimestamp);
+		// 	release_control();
+		// 	counter = 0;
+		}
+		
+		// printf("lon: %f, lat %f\n", gpsData.longitude, gpsData.latitude);
+		// write_gps_to_autopilot(&gpsData);
+		// print_global_pos_int();
 
 		// whether currently in border
 		if(!geofence_breached(&gpsData, &zone)){
@@ -83,7 +143,7 @@ int main(int argc, char** argv) {
 			#endif
 		} else {
 			printf("Current pos - outside the border\n");
-			commanderTimestamp = time(NULL);
+			// commanderTimestamp = time(NULL);
 			// takeover_control(&commanderTimestamp);
 			#ifdef WIRINGPI
 				led(GEOFENCE_OK_LED, LOW);
@@ -92,10 +152,10 @@ int main(int argc, char** argv) {
 
 		end = clock();
 		dt = (double)(end - start)/CLOCKS_PER_SEC;
-		printf("--------------%f----------------\n", dt);
+		// printf("--------------%f----------------\n", dt);
 
 		counter++;
-
+		usleep(10000); // 10ms
 	}
 
 	finiLogSystem();

@@ -53,6 +53,7 @@
 #include "../inc/interface.h"
 
 #include <GPSInterface.h>
+#include <logInterface.h>
 
 char control_status;
 char arm_status;
@@ -124,6 +125,52 @@ void autopilot_start(void){
 		ip = initial_position;
 	}
 	initial_position_lock = 1;
+}
+
+int read_global_pos(){
+	mavlink_message_t msg;
+	bool success = false;
+	while(!success && msg.msgid != MAVLINK_MSG_ID_GLOBAL_POSITION_INT){
+		success = serial_read_message(&msg);
+	}
+	mavlink_msg_global_position_int_decode(&msg, &(current_messages.global_position_int));
+	current_messages.time_stamps.global_position_int = get_time_usec();
+	// this_timestamps.global_position_int = current_messages.time_stamps.global_position_int;
+	char pos_log[80];
+	sprintf(pos_log, "%ld # GPI: lat: %d, lon: %d, alt: %d | vx: %d, vy: %d, vz: %d",
+		get_time_usec(),
+		current_messages.global_position_int.lat,
+		current_messages.global_position_int.lon,
+		current_messages.global_position_int.alt,
+		current_messages.global_position_int.vx,
+		current_messages.global_position_int.vy,
+		current_messages.global_position_int.vz);
+	logEvent(pos_log, LOG4C_PRIORITY_INFO, INFO, &logMaster);
+
+	return 1;
+}
+
+int read_local_pos_ned(){
+	mavlink_message_t msg;
+	bool success = false;
+	while(!success && msg.msgid != MAVLINK_MSG_ID_LOCAL_POSITION_NED){
+		success = serial_read_message(&msg);
+	}
+	mavlink_msg_local_position_ned_decode(&msg, &(current_messages.local_position_ned));
+	current_messages.time_stamps.local_position_ned = get_time_usec();
+	// this_timestamps.global_position_int = current_messages.time_stamps.global_position_int;
+	char pos_log[80];
+	sprintf(pos_log, "%ld # LPN: x: %f, y: %f, z: %f | vx: %f, vy: %f, vz: %f",
+		get_time_usec(),
+		current_messages.local_position_ned.x,
+		current_messages.local_position_ned.y,
+		current_messages.local_position_ned.z,
+		current_messages.local_position_ned.vx,
+		current_messages.local_position_ned.vy,
+		current_messages.local_position_ned.vz);
+	logEvent(pos_log, LOG4C_PRIORITY_INFO, INFO, &logMaster);
+
+	return 1;
 }
 
 void read_messages(void){
@@ -388,7 +435,7 @@ void autopilot_disarm(void){
 
 int toggle_arm_disarm(bool flag){
 	// Prepare command for arming/disarming
-	mavlink_command_long_t autopilot_status = { 0 };
+	mavlink_command_long_t autopilot_status;
 	autopilot_status.target_system    = system_id;
 	autopilot_status.target_component = autopilot_id;
 	autopilot_status.command          = MAV_CMD_COMPONENT_ARM_DISARM;
@@ -399,7 +446,7 @@ int toggle_arm_disarm(bool flag){
 	mavlink_msg_command_long_encode(system_id, companion_id, &message, &autopilot_status);
 	int len = serial_write_message(&message);
 
-	if(len && verify_command_ack(MAV_CMD_COMPONENT_ARM_DISARM)){
+	if(len/*  && verify_command_ack(MAV_CMD_COMPONENT_ARM_DISARM) */){
 		return 1;
 	}
 	return 0;
@@ -474,6 +521,13 @@ void set_velocity(float vx, float vy, float vz, mavlink_set_position_target_loca
 void set_yaw(float yaw, mavlink_set_position_target_local_ned_t* sp){
 	sp->type_mask &= MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_ANGLE ;
 	sp->yaw = yaw;
+}
+
+void set_acceleration(float z, mavlink_set_position_target_local_ned_t* sp){
+	sp->type_mask &= MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_FORCE;
+	sp->afz = z;
+	sp->afx = 0;
+	sp->afy = 0;
 }
 
 int write_gps_to_autopilot(FullGPSData *info){

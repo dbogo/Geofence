@@ -116,9 +116,11 @@ typedef struct Mavlink_Messages {
 } Mavlink_Messages;
 
 
+int read_global_pos();
+int read_local_pos_ned();
 int write_gps_to_autopilot(FullGPSData* info);
 void print_global_pos_int();
-
+void set_acceleration(float z, mavlink_set_position_target_local_ned_t *sp);
 /**
  * @brief      Zeros out all the timestamps.
  *
