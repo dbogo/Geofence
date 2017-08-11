@@ -5,10 +5,10 @@
 #include "mavlink_interface/inc/commands.h"
 #include <types.h>
 
-int takeover_control(time_t *commanderTimestamp);
+void controller_take_control();
 
-int stop_autopilot();
+void controller_stop_drone();
 
-int return_to_zone(GEO_Point home);
-int release_control();
+void return_to_zone(GEO_Point home);
+void controller_release_control();
 #endif /* AUTOPILOT_CONTROLLER_H */

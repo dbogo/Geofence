@@ -55,8 +55,11 @@
 #include <GPSInterface.h>
 #include <logInterface.h>
 
-char control_status;
-char arm_status;
+
+Autopilot_Info autopilot_info;
+
+bool control_status;
+bool arm_status;
 
 int system_id;
 int autopilot_id;
@@ -81,6 +84,10 @@ Time_Stamps create_TimeStamps(){
 	Time_Stamps ts;
 	reset_timestamps(&ts);
 	return ts;
+}
+
+bool autopilot_control_status(void){
+	return control_status;
 }
 
 void reset_timestamps(Time_Stamps* time_stamps){
@@ -364,7 +371,7 @@ void autopilot_update_setpoint(mavlink_set_position_target_local_ned_t setpoint)
 	current_setpoint = setpoint;
 }
 
-bool enable_offboard_control(void){
+bool autopilot_enable_offboard(void){
 	if (!control_status /* && current_messages.heartbeat.base_mode != ARMED_BASE_MODE */){
 		int success = toggle_offboard_control(true);
 		if (success){
@@ -377,7 +384,7 @@ bool enable_offboard_control(void){
 	return control_status;
 }
 
-bool disable_offboard_control(void){
+bool autopilot_disable_offboard(void){
 	if (control_status /* && current_messages.heartbeat.base_mode == ARMED_BASE_MODE */){
 		int success = toggle_offboard_control(false);
 		if (success){
@@ -578,7 +585,7 @@ int get_gps_from_autopilot(FullGPSData *gpsdata){
 	return 1;
 }
 
-int pre_arm_void_commands(){
+int pre_arm_void_commands(void){
 	for(int i = 0; i < 12 && autopilot_ok(); i++){
 		autopilot_write();
 		usleep(20000);
@@ -586,7 +593,7 @@ int pre_arm_void_commands(){
 return 0;
 }
 
-int autopilot_ok(){
+int autopilot_ok(void){
 	mavlink_message_t msg;
 	while(!msg.msgid == MAVLINK_MSG_ID_HEARTBEAT){
 		serial_read_message(&msg);
@@ -601,11 +608,11 @@ uint64_t get_time_usec(void){
 }
 
 #ifdef DEBUG
-int handle_quit_autopilot(){
+int handle_quit_autopilot(void){
 	printf("handling autopilot shutdown...\n");
 	autopilot_disarm();
 	usleep(200);
-	disable_offboard_control();
+	autopilot_disable_offboard();
 	return 0;
 }
 #endif

@@ -152,7 +152,7 @@ void square_operation (float timer){
 		case 7 : 
 			printf("Disabled offboard control\n");
 
-			disable_offboard_control(); 
+			autopilot_disable_offboard(); 
 			Program_counter = 8; 
 			break;
 		case 8 : 
@@ -344,7 +344,7 @@ void offboard_control_sequence(void){
 
 	autopilot_write();
 	usleep(200);
-	enable_offboard_control();
+	autopilot_enable_offboard();
 	usleep(200);
 	autopilot_write();
 
@@ -362,7 +362,7 @@ void offboard_control_sequence(void){
 
 void disable_offboard_control_sequence(void){
 	printf("Disabled offboard control\n");
-	disable_offboard_control(); 
+	autopilot_disable_offboard(); 
 } 
 
 

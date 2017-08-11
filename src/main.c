@@ -33,6 +33,38 @@
 #define OUT_OF_BORDER 2
 #define RETURNING 3
 
+
+// int test(){
+
+// 	uint64_t last_gps = 0;
+
+// 	while(true){
+
+// 		if(get_time_usec() - last_gps > 1000){
+// 			GPSHandler.getGPS(&gpsData, true, NULL);
+// 			last_gps = get_time_usec();
+// 		}
+
+// 		write_gps_to_autopilot(&gpsData);
+		
+// 		if(geofence_breached(&gpsData, &zone)){
+// 			if(!autopilot_control_status()){
+// 				controller_take_control();
+// 			}
+// 			controller_stop_drone();
+// 		} else {
+// 			if(autopilot_control_status()){
+// 				controller_release_control();
+// 			}
+// 		}
+
+// 		if ()
+		
+// 		sleep(10000);
+// 	}
+
+// }
+
 int main(int argc, char** argv) {
 	int state = UNKNOWN;
 	signal(SIGINT, quit_handler);
@@ -51,19 +83,20 @@ int main(int argc, char** argv) {
 	init(&GPSHandler, &gpsData, &zone, &logMaster, &edges);
 	
 
-	while(!gpsData.latitude && !gpsData.longitude){
-		GPSHandler.getGPS(&gpsData, true, NULL);
-		usleep(500000); //500ms
-	}
+	// while(!gpsData.latitude && !gpsData.longitude){
+	// 	printf("At first GPS loop...\n");
+	// 	GPSHandler.getGPS(&gpsData, true, NULL);
+	// 	usleep(500000); //500ms
+	// }
 
 	home.latitude = gpsData.latitude;
 	home.longitude = gpsData.longitude;
 
-	if(!geofence_breached(&gpsData, &zone)){
-		state = IN_BORDER;
-	} else {
-		state = OUT_OF_BORDER;
-	}
+	// if(!geofence_breached(&gpsData, &zone)){
+	// 	state = IN_BORDER;
+	// } else {
+	// 	state = OUT_OF_BORDER;
+	// }
 
 	//autopilot stuff
 	autopilot_initialize();
@@ -76,87 +109,123 @@ int main(int argc, char** argv) {
 	//gpsData.latitude = 13.0f;
 	// takeover_control();
 	
-	clock_t start, end;
-	double dt;
-	time_t commanderTimestamp;
-	int counter = 0;
+	// clock_t start, end;
+	// double dt;
+	// time_t commanderTimestamp;
+	// int counter = 0;
 
-	while (true) {
 
-		switch(state){
-			case IN_BORDER:{
-				// autopilot_write();
-				break;
-			}
+	uint64_t last_gps = 0;
 
-			case OUT_OF_BORDER:{
-				takeover_control(&commanderTimestamp);
-				return_to_zone(home);
-				state = RETURNING;
-				break;
-			}
+	while(true){
 
-			case RETURNING: {
-				if(geofence_breached(&gpsData, &zone)){
-					return_to_zone(home);
-				} else {
-					release_control();
-					state = IN_BORDER;
-				}
-				// if(in_radius(gpsData, dest, radius)){
-				// 	release_control();
-				// 	state = IN_BORDER;
-				// }
-				break;
-			}
+		if(get_time_usec() - last_gps > 1000){
+			GPSHandler.getGPS(&gpsData, true, NULL);
+			last_gps = get_time_usec();
 		}
-		start = clock();
-		
-		autopilot_write();
 
 		write_gps_to_autopilot(&gpsData);
 		
-		read_local_pos_ned();
+		if(geofence_breached(&gpsData, &zone)){
 
-		//sample GPS apprx every 1 sec 
-		if(counter == 100){
-			GPSHandler.getGPS(&gpsData, true, NULL);
-			counter = 0;
-		}
+			if(!autopilot_control_status()){
+				controller_take_control();
+			}
+
+			controller_stop_drone();
 		
-
-		if(counter == 10){
-		// 	takeover_control(&commanderTimestamp);
-		// 	release_control();
-		// 	counter = 0;
-		}
-		
-		// printf("lon: %f, lat %f\n", gpsData.longitude, gpsData.latitude);
-		// write_gps_to_autopilot(&gpsData);
-		// print_global_pos_int();
-
-		// whether currently in border
-		if(!geofence_breached(&gpsData, &zone)){
-			printf("Current pos - within border\n");
-			#ifdef WIRINGPI
-				led(GEOFENCE_OK_LED, HIGH);
-			#endif
 		} else {
-			printf("Current pos - outside the border\n");
-			// commanderTimestamp = time(NULL);
-			// takeover_control(&commanderTimestamp);
-			#ifdef WIRINGPI
-				led(GEOFENCE_OK_LED, LOW);
-			#endif
-		}	
 
-		end = clock();
-		dt = (double)(end - start)/CLOCKS_PER_SEC;
-		// printf("--------------%f----------------\n", dt);
+			if(autopilot_control_status()){
+				controller_release_control();
 
-		counter++;
-		usleep(10000); // 10ms
+			}
+		}
+
+		
+		sleep(10000);
 	}
+
+
+
+
+
+	// while (true) {
+
+	// 	switch(state){
+	// 		case IN_BORDER:{
+	// 			// autopilot_write();
+	// 			break;
+	// 		}
+
+	// 		case OUT_OF_BORDER:{
+	// 			controller_take_control();
+	// 			return_to_zone(home);
+	// 			state = RETURNING;
+	// 			break;
+	// 		}
+
+	// 		case RETURNING: {
+	// 			if(geofence_breached(&gpsData, &zone)){
+	// 				return_to_zone(home);
+	// 			} else {
+	// 				release_control();
+	// 				state = IN_BORDER;
+	// 			}
+	// 			// if(in_radius(gpsData, dest, radius)){
+	// 			// 	release_control();
+	// 			// 	state = IN_BORDER;
+	// 			// }
+	// 			break;
+	// 		}
+	// 	}
+	// 	start = clock();
+		
+	// 	autopilot_write();
+
+	// 	write_gps_to_autopilot(&gpsData);
+		
+	// 	read_local_pos_ned();
+
+	// 	//sample GPS apprx every 1 sec 
+	// 	if(counter == 100){
+	// 		GPSHandler.getGPS(&gpsData, true, NULL);
+	// 		counter = 0;
+	// 	}
+		
+
+	// 	if(counter == 10){
+	// 	// 	takeover_control(&commanderTimestamp);
+	// 	// 	release_control();
+	// 	// 	counter = 0;
+	// 	}
+		
+	// 	// printf("lon: %f, lat %f\n", gpsData.longitude, gpsData.latitude);
+	// 	// write_gps_to_autopilot(&gpsData);
+	// 	// print_global_pos_int();
+
+	// 	// whether currently in border
+	// 	if(!geofence_breached(&gpsData, &zone)){
+	// 		printf("Current pos - within border\n");
+	// 		#ifdef WIRINGPI
+	// 			led(GEOFENCE_OK_LED, HIGH);
+	// 		#endif
+	// 	} else {
+	// 		printf("Current pos - outside the border\n");
+	// 		// commanderTimestamp = time(NULL);
+	// 		// takeover_control(&commanderTimestamp);
+	// 		#ifdef WIRINGPI
+	// 			led(GEOFENCE_OK_LED, LOW);
+	// 		#endif
+	// 	}	
+
+	// 	end = clock();
+	// 	dt = (double)(end - start)/CLOCKS_PER_SEC;
+	// 	// printf("--------------%f----------------\n", dt);
+
+	// 	counter++;
+	// 	usleep(10000); // 10ms
+	// }
 
 	finiLogSystem();
 	

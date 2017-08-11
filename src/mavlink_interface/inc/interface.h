@@ -116,11 +116,26 @@ typedef struct Mavlink_Messages {
 } Mavlink_Messages;
 
 
-int read_global_pos();
-int read_local_pos_ned();
+typedef struct autopilot_info {
+    bool control_status;
+    bool arm_status;
+    Mavlink_Messages current_messages;
+    mavlink_set_position_target_local_ned_t current_setpoint;
+} Autopilot_Info;
+
+
+extern bool control_status;
+extern bool arm_status;
+
+
+int read_global_pos(void);
+int read_local_pos_ned(void);
 int write_gps_to_autopilot(FullGPSData* info);
-void print_global_pos_int();
+void print_global_pos_int(void);
 void set_acceleration(float z, mavlink_set_position_target_local_ned_t *sp);
+
+bool autopilot_control_status(void);// { return control_status; }
+
 /**
  * @brief      Zeros out all the timestamps.
  *
@@ -189,7 +204,7 @@ void autopilot_update_setpoint(mavlink_set_position_target_local_ned_t setpoint)
  * @return     The offboard control status: true for active offboard control
  *                 and false for disabled offboard control.
  */
-bool disable_offboard_control(void);
+bool autopilot_disable_offboard(void);
 
 /**
  * @brief      Enables the offboard control of the autopilot, setting the appropriate flag.
@@ -197,7 +212,7 @@ bool disable_offboard_control(void);
  * @return     Similar to disable_offboard_control() but the inverse 
  *                     (true for successfully enabling offboard control).
  */
-bool enable_offboard_control(void);
+bool autopilot_enable_offboard(void);
 
 /**
  * @brief      The function that's used by enable/disable_offbard_control() 
@@ -284,7 +299,7 @@ int get_gps_from_autopilot(FullGPSData *gpsData);
  *
  * @return     0 for success.
  */
-int pre_arm_void_commands();
+int pre_arm_void_commands(void);
 
 /**
  * @brief      Receive a HEARTBEAT message from the autopilot.
@@ -292,7 +307,7 @@ int pre_arm_void_commands();
  *
  * @return     1 for success
  */
-int autopilot_ok();
+int autopilot_ok(void);
 
 
 #ifdef DEBUG
@@ -303,7 +318,7 @@ int autopilot_ok();
  *
  * @return     0 for success.
  */
-int handle_quit_autopilot();
+int handle_quit_autopilot(void);
 #endif
 
 void set_position(float x, float y, float z, mavlink_set_position_target_local_ned_t* sp);

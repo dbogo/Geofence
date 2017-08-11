@@ -9,8 +9,8 @@ extern mavlink_set_position_target_local_ned_t ip;
 
 extern Mavlink_Messages current_messages;
 
-extern char arm_status;
-extern char control_status;
+// extern char arm_status;
+// extern char control_status;
 
 void operation (float timer);
 void operation_extended (float timer);
