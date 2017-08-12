@@ -3,15 +3,13 @@
 
 #include <src/GPSInterface.h>
 
-/* This library gets raw NMEA sentences from the GPS module. */
-
 /**
- * @brief      basically gets GPS data
+ * @brief      Gets information from GPS
  * @param      samp       struct with necessary data
  * @param[in]  passToLog  true if we want to log the stuff
- * @return     the ID of the sentence we got on this call.
+ * @return     the ID of the sentence that was received on this call.
  */
- int getGPSSample_RPI(FullGPSData* samp, bool passToLog, void* userData);
+ int getGPSSample_RPI(FullGPSData* samp, bool passToLog);
 
 #endif /* RPI_GPS_DEMO_H */
 

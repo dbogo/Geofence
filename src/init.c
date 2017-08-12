@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 
 #include "init.h"
 #include "utils.h"
@@ -8,7 +9,7 @@
 	// #include "led.h" //NOTE: include this only if on RPi.
 #endif
 
-void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge** edges){
+void init(GPS_actions_t *GPSHandler, FullGPSData* gpsData, Zone_general* zone, log_master_t *logMaster, Edge** edges){
 	/**
 	 * TODO: Error checking and rv
 	 */
@@ -72,7 +73,7 @@ void display_help_message(void){
 
 #ifdef WIRINGPI
 void init_platform_specific_modules(void){
-	logEvent("Program detected to be run on ARM.", LOG4C_PRIORITY_INFO, INFO, &logMaster);
+	log_info(&logMaster, "Program detected to be run on ARM.");
 	init_wiringPi();
 	set_led_output(STATUSLED);
 	spet_led_output(GEOFENCE_OK_LED);
@@ -148,9 +149,8 @@ int init_geofence_from_file(Zone_general* zone, char** args){
 	
 	if(argvInputFile == NULL){
 		char errStr[60];
-		perror("fopen() has failed");
-		sprintf(errStr, "Error: fopen() has failed. Couldn't find '%s'.", args[2]);
-		logEvent(errStr, LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
+		sprintf(errStr, "Error: fopen() has failed. Couldn't find '%s'%s", args[2], strerror(errno));
+		log_info(&logMaster, errStr);
 		return FOPEN_FAIL;
 	}
 

@@ -7,17 +7,17 @@
 #include <src/logInterface.h>
 
 
-int getGPSSample_RPI(FullGPSData* samp, bool passToLog, void* userData){
+int getGPSSample_RPI(FullGPSData* samp, bool passToLog){
 	char nmea[MAX_NMEA_MSG_SIZE];
     memset(nmea, '\0', MAX_NMEA_MSG_SIZE);
     fetch_sentence_from_gps(get_streamFD(), nmea);
     if(validate_checksum(nmea) != CHECKSUM_OK){
-    	logEvent("checksum error. exiting getGPSSample_RPI() with CHECKSUM_ERR", LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
+    	log_err(&logMaster, "checksum error. exiting getGPSSample_RPI() with CHECKSUM_ERR");
     	return CHECKSUM_ERR;
     }
 
     if(passToLog){
-        logEvent(nmea, LOG4C_PRIORITY_INFO, NMEA, &logMaster);    
+        log_info(&logMaster, nmea);    
     }
 
     return parse_nmea(nmea, samp);	

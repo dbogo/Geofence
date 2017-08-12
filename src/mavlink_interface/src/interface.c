@@ -152,7 +152,7 @@ int read_global_pos(){
 		current_messages.global_position_int.vx,
 		current_messages.global_position_int.vy,
 		current_messages.global_position_int.vz);
-	logEvent(pos_log, LOG4C_PRIORITY_INFO, INFO, &logMaster);
+	log_info(&logMaster, pos_log);
 
 	return 1;
 }
@@ -175,8 +175,7 @@ int read_local_pos_ned(){
 		current_messages.local_position_ned.vx,
 		current_messages.local_position_ned.vy,
 		current_messages.local_position_ned.vz);
-	logEvent(pos_log, LOG4C_PRIORITY_INFO, INFO, &logMaster);
-
+	log_info(&logMaster, pos_log);
 	return 1;
 }
 
@@ -580,8 +579,7 @@ void set_circle(float r, float theta, float z, mavlink_set_position_target_local
 }
 
 int get_gps_from_autopilot(FullGPSData *gpsdata){
-	// gpsdata->lat = (double)current_messages.global_pos_cov.lat / 1e7;
-	// printf("getting gps from autopilot.\n");
+	gpsdata->lat = (double)current_messages.global_pos_cov.lat / 1e7;
 	return 1;
 }
 

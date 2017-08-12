@@ -22,7 +22,6 @@
 
 #define TOLERATES_INTERRUPT 1 //NOTE: may need to NOT be constant later..
 
-#define EINTR -1
 
 /* TODO: add more platforms (and a distinction between x86_32/64) ??? */
 typedef enum {  
@@ -49,10 +48,8 @@ int suspend_loop(time_t tv_sec, long nsec);
 #ifdef DEBUG
 /**
  * @brief      Peacefully shuts down important components upon a SIGINT reception.
- *
- * @param[in]  sig   The signal id.
  */
-void quit_handler(int sig);
+void quit_handler();
 #endif
 
 

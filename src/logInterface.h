@@ -18,9 +18,6 @@ LOG4C_PRIORITY_UNKNOWN 	unknown
 
 #include <libs/log4c/include/log4c.h>
 
-/* All the different log files are placed in a special 'logs' folder that is
-	at the top of the project directory (same level as src/) */
-
 #define OPERATION_LOG_FILE "logs/operation.log"
 #define NMEA_LOG_FILE "logs/nmea.log"
 #define ERROR_LOG_FILE "logs/errors.log"
@@ -30,53 +27,41 @@ LOG4C_PRIORITY_UNKNOWN 	unknown
 #define NMEA 2
 
 /**
- * \brief Represents a single type of logger (e.g. one for error, one for info, etc.)
+ * @brief Represents a single type of logger (e.g. one for error, one for info, etc.)
  */
-typedef struct Logger{
-	FILE* logFile;
-	log4c_category_t* logObj;
-	char* logInstanceName;
-} Logger;
+typedef struct logger{
+	FILE* file;
+	log4c_category_t* obj;
+	char* instanceName;
+} logger_t;
 
 
 /**
- * \brief Holds all the loggers that are used to record different types of logs.
+ * @brief Holds all the loggers that are used to record different types of logs.
  */
-typedef struct Log_Master{
-	Logger operationLogger;
-	Logger errorLogger;
-	Logger nmeaLogger;
-} Log_Master;
+typedef struct log_master{
+	logger_t operationLogger;
+	logger_t errLogger;
+	logger_t nmeaLogger;
+} log_master_t;
 
-Log_Master logMaster;
+log_master_t logMaster;
 
 /**
  * @brief      initializes the Loggers from log4c library
  * @param      logMaster  LogMaster struct that contains all loggers
- * @return     errCode
+ * @return	   0 for failure and 1 for success
  */
-int initLogSystem(Log_Master* logMaster);
+int initLogSystem(log_master_t *logMaster);
 
-/* DEPRECATED */
-#if 0
-int initLogSystem(log4c_category_t** logObj, const char* instanceName, const char* appenderName);
-void logEvent(log4c_category_t* logObj, int logPriority, const char* format);
-#endif
+void log_info(log_master_t *lm, const char *msg);
+
+void log_err(log_master_t *lm, const char *msg);
 
 /**
  * @brief      close and stop the logging system
  * @return     errCode
  */
 int finiLogSystem(void);
-
-
-/**
- * @brief      logs the message into the specified stream, using the specified logger.
- * @param      str       the log message
- * @param[in]  priority  priority of the log. see LOG4C_PRIORITY enums. (log4c_priority_level_t)
- * @param[in]  logType   The log type
- * @param logMaster a pointer to the Log_Master struct that contains log objects
- */
-void logEvent(char* str, int priority, int logType, Log_Master* logMaster);
 
 #endif /* LOGINTERFACE_H */

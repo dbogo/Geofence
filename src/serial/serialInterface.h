@@ -24,7 +24,14 @@ int get_streamFD(void);
  * @brief      Opens a port for serial communication.
  * @return     returns an int that's the file descriptor of the opened port.
  */
-int open_port(void);
+int open_gps_port(const char* portname);
+
+/**
+ * @brief      Open a serial connection on a specified port
+ * @param[in]  portname  The name of the serial port
+ * @return     -1 for error and 1 for success.
+ */
+int open_telem_port(const char* portname);
 
 /**
  * @brief      gets one complete NMEA message from the GPS, through the serial port that its on.
@@ -37,18 +44,11 @@ int fetch_sentence_from_gps(int fd, char* buffer);
 /**
  * @brief      Blocking read of one byte from the serial port.
  *
- * @param[in]  i     Unused
- *
  * @return     The read byte.
  */
-int usart_recv_blocking(int i);
+int usart_recv_blocking();
 
-/**
- * @brief      Open a serial connection on a specified port
- * @param[in]  portname  The name of the serial port
- * @return     -1 for error and 1 for success.
- */
-int serial_start(const char* portname);
+
 
 /**
  * @brief      Read one byte at a time from the MAVLink stream on the serial port

@@ -22,7 +22,7 @@ extern FILE* argvInputFile;
  * @param      edges      double pointer to the Edge struct. pointer to the array of edges 
  * 						  of the polygon represented by zone.
  */
-void init(GPS_Actions* GPSHandler, FullGPSData* gpsData, Zone_general* zone, Log_Master* logMaster, Edge** edges);
+void init(GPS_actions_t *GPSHandler, FullGPSData* gpsData, Zone_general* zone, log_master_t *logMaster, Edge** edges);
 
 /**
  * @brief      calls function to initialize some stuff that works only on the Raspberry-Pi

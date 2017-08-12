@@ -44,10 +44,10 @@
  * @brief      This struct contains function pointers to functions that
  *             GPSInterface provides for handling gps stuff.
  */
-struct GPS_Actions{
+struct GPS_actions{
 	int (*getGPS)(FullGPSData*, bool, void*);
 };
-typedef struct GPS_Actions GPS_Actions;
+typedef struct GPS_actions GPS_actions_t;
 
 
 /**
@@ -63,11 +63,11 @@ typedef struct GPS_Actions GPS_Actions;
 float det(GEO_Point p1, GEO_Point p2, GEO_Point location);
 
 /**
- * @brief      assignes the correct library for the getGPS function pointer.
+ * @brief      assigns the correct library for the getGPS function pointer.
  *             either an RPi or a demo implementation of the getGPSSample() will be used.
  * @return     0 on success.
  */
-int GPS_init(GPS_Actions* gpsHandler);
+int GPS_init(GPS_actions_t *gpsHandler);
 
 #if 0 /* DEPRECATED ?? */
 /**

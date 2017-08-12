@@ -9,7 +9,6 @@ extern "C" {
 #endif
 
 	
-// typedef enum { false, true } bool;
 typedef unsigned char uint8_t;
 
 /* 	TODO: deprecated ?? */

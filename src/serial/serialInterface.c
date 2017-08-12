@@ -21,19 +21,10 @@ struct termios oldtio, newtio;
 static int fd;
 const char* RS232_DEVICE_const;
 
-int open_port(void){
-	char* fileName = "/dev/ttyACM1";
-	streamFD = open(fileName, O_RDWR | O_NOCTTY | O_NDELAY);
+int open_gps_port(const char *portname){
+	streamFD = open(portname, O_RDWR | O_NOCTTY | O_NDELAY);
 	if(streamFD < 0){
-		logEvent("open_port: Unable to open /dev/ttyACM0.", LOG4C_PRIORITY_INFO, INFO, &logMaster);
-		fileName = "/dev/ttyAMA0";
-		logEvent("open_port: Trying to open /dev/ttyAMA0 instead...", LOG4C_PRIORITY_INFO, INFO, &logMaster);
-		streamFD = open(fileName, O_RDWR | O_NOCTTY | O_NDELAY);
-		if(streamFD < 0){
-			logEvent("open_port: Unable to open /dev/ttyAMA0.", LOG4C_PRIORITY_INFO, INFO, &logMaster);
-		} else { 
-			fcntl(streamFD, F_SETFL, 0);
-		}
+		log_err(&logMaster, "open_port: Unable to open /dev/ttyACM0");
 	} else {
 		fcntl(streamFD, F_SETFL, 0);
 	}
@@ -41,22 +32,7 @@ int open_port(void){
 	return(streamFD);
 }
 
-/* Using the fileDescriptor that's obtained from open_port(), this function
- * reads the characters from the associated file, one by one, until the end of the
- * sentence, and places them into the dedicated buffer.
- */
-int fetch_sentence_from_gps(int fd, char* buffer){
-	// TODO: benchmark and look for a fester way.
-	char c = '\0';
-	int i = 0; // index of the current end of the string
-	while(read(fd, &c, 1) > 0 && c != '\n'){
-			buffer[i] = c;
-			i++;
-	}
-	return i;
-}
-
-int serial_start(const char* portname){
+int open_telem_port(const char* portname){
 	RS232_DEVICE_const = portname;
 	printf("Open port : %s\n", portname);
 	fd = open(portname, O_RDWR | O_NOCTTY);
@@ -80,13 +56,27 @@ int serial_start(const char* portname){
 	return 1;
 }
 
+/* Using the fileDescriptor that's obtained from open_port(), this function
+ * reads the characters from the associated file, one by one, until the end of the
+ * sentence, and places them into the dedicated buffer.
+ */
+int fetch_sentence_from_gps(int fd, char* buffer){
+	// TODO: benchmark and look for a fester way.
+	char c = '\0';
+	int i = 0; // index of the current end of the string
+	while(read(fd, &c, 1) > 0 && c != '\n'){
+			buffer[i] = c;
+			i++;
+	}
+	return i;
+}
 
 int serial_read_message(mavlink_message_t* message){
-	msgReceived = mavlink_parse_char(MAVLINK_COMM_1, usart_recv_blocking(USART3), message, &status);
+	msgReceived = mavlink_parse_char(MAVLINK_COMM_1, usart_recv_blocking(), message, &status);
 	return msgReceived;
 }
 
-int usart_recv_blocking(int i){
+int usart_recv_blocking(){
 	char c;
 	read(fd, &c, 1);
 	return (c);

@@ -1,3 +1,4 @@
+#include <errno.h>
 #include <string.h>
 
 #include "utils.h"
@@ -26,8 +27,7 @@ int suspend_loop(time_t tv_sec, long nsec){
 		errCode = nanosleep(&ts, &remainingTime);
 		// if EINTR then the pause has been interrupted
 		if(errCode == EINTR) {
-			logEvent("suspend_loop: nanosleep() was interrupted. continuing now.",
-						LOG4C_PRIORITY_ERROR, ERROR, &logMaster);
+			log_err(&logMaster, "suspend_loop: nanosleep() was interrupted. continuing now.");
 			nanosleep(&remainingTime, NULL);
 		}
 	}

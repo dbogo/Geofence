@@ -71,10 +71,9 @@ int main(int argc, char** argv) {
 	FullGPSData gpsData; /* stores every kind of data we may need, that's possible to extract from NMEA */
 	Zone_general zone; 
 	Edge* edges = NULL;
-	GPS_Actions GPSHandler;
+	GPS_actions_t GPSHandler;
 	GEO_Point home;
 
-	// deal with argv
 	if(parse_input_args(&zone, argc, argv) != ARGV_OK){
 		printf("error parsing arguments.\n");
 		return -1; 
@@ -82,6 +81,7 @@ int main(int argc, char** argv) {
 
 	init(&GPSHandler, &gpsData, &zone, &logMaster, &edges);
 	
+	log_info(&logMaster, "Hello World!");
 
 	// while(!gpsData.latitude && !gpsData.longitude){
 	// 	printf("At first GPS loop...\n");
@@ -89,8 +89,8 @@ int main(int argc, char** argv) {
 	// 	usleep(500000); //500ms
 	// }
 
-	home.latitude = gpsData.latitude;
-	home.longitude = gpsData.longitude;
+	// home.latitude = gpsData.latitude;
+	// home.longitude = gpsData.longitude;
 
 	// if(!geofence_breached(&gpsData, &zone)){
 	// 	state = IN_BORDER;
@@ -100,7 +100,11 @@ int main(int argc, char** argv) {
 
 	//autopilot stuff
 	autopilot_initialize();
-	serial_start("/dev/ttyUSB0"); // TODO: receive from argv ?
+	#ifdef __arm__
+	open_telem_port("/dev/ttyAMA0"); // TELEM2 is connected to RPi's GPIO
+	#else
+	open_telem_port("/dev/ttyUSB0"); // TELEM2 is connected via FTDI cable.
+	#endif
 
 	read_messages();
 	autopilot_start();
@@ -119,7 +123,7 @@ int main(int argc, char** argv) {
 
 	while(true){
 
-		if(get_time_usec() - last_gps > 1000){
+		if(get_time_usec() - last_gps > 1000000){
 			GPSHandler.getGPS(&gpsData, true, NULL);
 			last_gps = get_time_usec();
 		}
@@ -143,7 +147,7 @@ int main(int argc, char** argv) {
 		}
 
 		
-		sleep(10000);
+		usleep(10000);
 	}
 
 
@@ -233,7 +237,7 @@ int main(int argc, char** argv) {
 }
 
 #ifdef DEBUG
-void quit_handler( int sig ){
+void quit_handler(){
 	printf("\n");
 	printf("TERMINATING AT USER REQUEST\n");
 	printf("\n");

@@ -14,14 +14,14 @@
 #endif
 
 
-int GPS_init(GPS_Actions* gpsHandler){
+int GPS_init(GPS_actions_t* gpsHandler){
 	#ifdef RPI_GPS
 		gpsHandler->getGPS = getGPSSample_RPI;
-		logEvent("Running code for the RPi implementation.", LOG4C_PRIORITY_INFO, INFO, &logMaster);
-		open_port(); // inits the file descriptor for gps serial communication
+		log_info(&logMaster, "Running Code for the RPi implementation.");
+		open_gps_port("/dev/ttyUSB0"); // inits the file descriptor for gps serial communication
 	#else
 		gpsHandler->getGPS = getGPSSample_DEMO;
-		logEvent("Running code for the Demo implementation.", LOG4C_PRIORITY_INFO, INFO, &logMaster);
+		log_int(&logMaster, "Running code for the Demo implementation.");
 	#endif
 
 	return 0;
