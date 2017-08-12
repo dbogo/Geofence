@@ -18,7 +18,7 @@ int GPS_init(GPS_actions_t* gpsHandler){
 	#ifdef RPI_GPS
 		gpsHandler->getGPS = getGPSSample_RPI;
 		log_info(&logMaster, "Running Code for the RPi implementation.");
-		open_gps_port("/dev/ttyUSB0"); // inits the file descriptor for gps serial communication
+		open_gps_port("/dev/ttyUSB0");
 	#else
 		gpsHandler->getGPS = getGPSSample_DEMO;
 		log_int(&logMaster, "Running code for the Demo implementation.");
@@ -40,15 +40,13 @@ bool geofence_breached(FullGPSData* location, zone_t* zone){
 
 
 	#ifdef RPI_GPS // convert for use with real world coordinates. (deg)
-		// printf("HARDWARE - RPi.\n");
 		p.lon= to_deg(location->lon); 
 		p.lat = to_deg(location->lat);
 		printf("\n");
 	#endif
 
 	/**
-	 * TODO: differentiate between WGS and MSL.
-	 * TODO: check for minimum altitude ?
+	 * TODO: differentiate between WGS and MSL. check for minimum altitude ?
 	 */
 	if(geofence_alt_check(zone, location->alt) == GEOFENCE_ALT_BREACH){
 		return true;
@@ -98,7 +96,7 @@ inline float det(geo_point_t p1, geo_point_t p2, geo_point_t location){
 
 int create_edges(zone_t* zone, edge_t** edges){
 
-	edge_t tmp[zone->numVertices]; //dummy
+	edge_t tmp[zone->numVertices];
 
 	// create the edges in the dummy array
 	for(size_t i = 0; i < zone->numVertices; i++){
@@ -114,12 +112,9 @@ int create_edges(zone_t* zone, edge_t** edges){
 	const unsigned char ZONE_STR_LINE_LENGTH = 40;
 
 	char zone_str[ZONE_STR_LINE_LENGTH];
-	// logEvent("Initialized the following zone vertices: ", LOG4C_PRIORITY_INFO, INFO, &logMaster);
 	for(size_t i = 0; i < zone->numVertices; i++){
 		sprintf(zone_str, "V%d: (%lf, %f)", (int)(i%zone->numVertices), 
 					zone->vertices[i].lon, zone->vertices[i].lat);
-		// logEvent(zone_str, LOG4C_PRIORITY_INFO, INFO, &logMaster);
-		//memset(zone_str, '\0', ZONE_STR_LINE_LENGTH); NOTE: should memset ???
 	}	
 
 	for(size_t i = 0; i < zone->numVertices; i++){
@@ -149,7 +144,6 @@ void find_mbr(zone_t* polygon){
 			polygon->mbr.p2.lat = (polygon->vertices[i]).lat;
 	}
 
-	//TODO: log.
 	printf("xmin:%f xmax%f\nYmin:%f Ymax:%f\n\n", polygon->mbr.p1.lon, polygon->mbr.p2.lon,
 												 polygon->mbr.p1.lat, polygon->mbr.p2.lat);
 }

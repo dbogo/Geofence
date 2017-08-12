@@ -63,7 +63,7 @@ typedef struct Edge{
 	may consist of more than 2 vertices. */
 
 /**
- * \brief Represents a single polygon
+ * @brief Represents a single polygon
  */
 typedef struct Zone{
 	size_t numVertices;
@@ -110,7 +110,7 @@ typedef struct {
 
 
 /**
- * \brief Used to hold relevant data from $GPGGA NMEA sentences from GPS
+ * @brief Used to hold relevant data from $GPGGA NMEA sentences from GPS
  */
 typedef struct {
 	double latitude; // Latitude e.g: 4124.8963 (XXYY.ZZKK.. DEG, MIN, SEC.SS)
@@ -124,7 +124,7 @@ typedef struct {
 
 
 /**
- * \brief Used to hold relevant data from $GPGSA NMEA sentences from GPS
+ * @brief Used to hold relevant data from $GPGSA NMEA sentences from GPS
  */
 typedef struct {
 	unsigned char fixType; // 1 = no fix; 2 = 2D fix; 3 = 3D fix
@@ -135,7 +135,7 @@ typedef struct {
 
 
 /**
- * \brief Used to hold relevant data from $GPVTG NMEA sentences from GPS
+ * @brief Used to hold relevant data from $GPVTG NMEA sentences from GPS
  */
 typedef struct {
 	double spdKnots;
@@ -144,7 +144,7 @@ typedef struct {
 
 
 /**
- * \brief Used to hold relevant data from $GPGLL NMEA sentences from GPS
+ * @brief Used to hold relevant data from $GPGLL NMEA sentences from GPS
  */
 typedef struct {
 	double latitude;
@@ -157,7 +157,7 @@ typedef struct {
 
 
 /**
- * \brief Used to hold relevant data from $GPRMC NMEA sentences from GPS
+ * @brief Used to hold relevant data from $GPRMC NMEA sentences from GPS
  */
 typedef struct {
 	double latitude;

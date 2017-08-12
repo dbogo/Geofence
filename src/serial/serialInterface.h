@@ -4,10 +4,7 @@
 #include <sys/time.h>
 #include <mavlink/common/mavlink.h>
 
-/**
- * the file descriptor of the port that will be opened using open_port().
- */
-extern int streamFD;
+extern int gps_fd;
 extern const char* RS232_DEVICE_const;
 
 #define USART3 3
@@ -15,10 +12,9 @@ extern const char* RS232_DEVICE_const;
 #define RS232_DEVICE "dev/ttyUSB0"
 
 /**
- * @brief      returns streamFD.
+ * @brief      returns gps_fd.
  */
-int get_streamFD(void);
-
+int get_gps_fd(void);
 
 /**
  * @brief      Opens a port for serial communication.
@@ -46,9 +42,7 @@ int fetch_sentence_from_gps(int fd, char* buffer);
  *
  * @return     The read byte.
  */
-int usart_recv_blocking();
-
-
+int usart_recv_blocking(void);
 
 /**
  * @brief      Read one byte at a time from the MAVLink stream on the serial port
@@ -85,9 +79,9 @@ int get_time_sec(struct timeval *tv, struct timezone *tz);
  * @brief      Closes the opened serial ports.
  *             Used in the signal handler to allow peaceful termination when a SIGINT is received
  *
- * @return     The result of close()ing the opened ports (&&)
+ * @return     The result of close() on the opened ports (&&)
  */
-int handle_quit_serial();
+int handle_quit_serial(void);
 #endif
 
 

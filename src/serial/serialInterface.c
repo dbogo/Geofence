@@ -10,7 +10,7 @@
 #include "serialInterface.h"
 #include <src/logInterface.h>
 
-int streamFD = 0;
+int gps_fd = 0;
 
 mavlink_status_t status;
 bool msgReceived = false;
@@ -22,14 +22,14 @@ static int fd;
 const char* RS232_DEVICE_const;
 
 int open_gps_port(const char *portname){
-	streamFD = open(portname, O_RDWR | O_NOCTTY | O_NDELAY);
-	if(streamFD < 0){
+	gps_fd = open(portname, O_RDWR | O_NOCTTY | O_NDELAY);
+	if(gps_fd < 0){
 		log_err(&logMaster, "open_port: Unable to open /dev/ttyACM0");
 	} else {
-		fcntl(streamFD, F_SETFL, 0);
+		fcntl(gps_fd, F_SETFL, 0);
 	}
 	
-	return(streamFD);
+	return(gps_fd);
 }
 
 int open_telem_port(const char* portname){
@@ -76,7 +76,7 @@ int serial_read_message(mavlink_message_t* message){
 	return msgReceived;
 }
 
-int usart_recv_blocking(){
+int usart_recv_blocking(void){
 	char c;
 	read(fd, &c, 1);
 	return (c);
@@ -100,14 +100,14 @@ int get_time_sec(struct timeval *tv, struct timezone *tz){
 	return gettimeofday(tv, tz);
 }
 
-int get_streamFD(void){
-	return streamFD;
+int get_gps_fd(void){
+	return gps_fd;
 }
 
 #ifdef DEBUG
 int handle_quit_serial(){
 	int close1 = close(fd);
-	int close2 = close(streamFD);
+	int close2 = close(gps_fd);
 	return close1 && close2;
 }
 #endif

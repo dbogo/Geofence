@@ -4,6 +4,7 @@
 #include <mavlink_interface/inc/interface.h>
 
 void controller_take_control(void){
+	// Autopilot rejects mode switch if no setpoints are sent in advance
 	for(int i = 0; i < 10; ++i){
 		autopilot_write();
 		usleep(500);
@@ -16,10 +17,11 @@ void controller_stop_drone(void){
 	autopilot_write();
 }
 
+#ifdef 0
 void return_to_zone(geo_point_t home){
 	return;
-	// mavlink_set_position_target_global_int_t
 }
+#endif
 
 void controller_release_control(void){
 	autopilot_write();

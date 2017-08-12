@@ -1,8 +1,5 @@
 
 /*
-					Latitude = Y (0-90)
-					Longitude = X (0-180)
-
  						AT THE EQUATOR
 		One degree of latitude =  110.57 km or  68.71 mi
 		One minute of latitude =    1.84 km or   1.15 mi
@@ -10,7 +7,7 @@
 		One degree of longitude = 111.32 km or  69.17 mi
 		One minute of longitude =   1.86 km or   1.15 mi
 		One second of longitude =  30.92 m  or 101.45 ft
- * 
+  
 						AT THE POLES
 		One degree of latitude =  111.69 km or  69.40 mi
 		One minute of latitude =    1.86 km or  1.16 mi
@@ -51,7 +48,6 @@ typedef struct GPS_actions GPS_actions_t;
 
 
 /**
- * TODO: inline ?
  * @brief the signed area of the triangle loc,P1,P2
  *
  * @param[in]  p1        Polygon's first point
@@ -68,31 +64,6 @@ float det(geo_point_t p1, geo_point_t p2, geo_point_t location);
  * @return     0 on success.
  */
 int GPS_init(GPS_actions_t *gpsHandler);
-
-#if 0 /* DEPRECATED ?? */
-/**
- * @brief      Determines if the test point is to the left of the vector,
- *             accounting for the direction of the vector (up or down).
- * @param[in]  p     The test point
- * @param[in]  e     the vector, represented by a segment of it as an edge_t. (two points)
- * @return     return a positive integer if the point is on the left, and a negative otherwise.
- *             A special case: 0, if the point is on the line.
- */
-int isLeft(geo_point_t p, edge_t e);
-
-/**
- * @brief      checks if a polygon's segment crosses a ray in the upwards direction.
- * @param      e     A polygons edge_t
- * @param[in]  p     the test point
- * @return     true if a upwards cross, false otherwise
- */
-bool upwards_cross(edge_t e, geo_point_t p);
-
-/**
- * @brief      see upwards_cross(). This is the opposite.
- */
-bool downwards_cross(edge_t e, geo_point_t p);
-#endif 
 
 /**
  * @brief      runs tests for different kinds of possible geofence violations,
@@ -138,7 +109,6 @@ int geofence_polygon_check(zone_t* zone, geo_point_t p);
  */
 int create_edges(zone_t* zone, edge_t** edges);
 
-/* TODO */
 /**
  * @brief      computes the minimum bounding rectangle of the polygon. (aka MBR)
  * @param      polygon  a struct with the polygon's points.
@@ -152,9 +122,5 @@ void find_mbr(zone_t* polygon);
  * @return     a value converted from dec to deg
  */
 double to_deg(double x);
-
-#if 0
-bool isDroneGoingOffBorder(FullGPSData* location, zone_t* zone_gen);
-#endif
 
 #endif /* GPSINTERFACE_H */

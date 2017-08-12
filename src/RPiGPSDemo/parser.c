@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-/* TODO: REDESIGN. */
 
 int parse_nmea(char* sentence, FullGPSData* samp){
     if((strstr(sentence, "$GPGGA") != NULL)){
@@ -66,12 +65,7 @@ int validate_checksum(char* nmea){
     char checksum_str[2]; // only need 2 digits. no <CR><LF>
     snprintf(checksum_str, 3, "%s", p); // string's length will be (n-1).
 
-    /*
-    printf("checksum_str:\t%s\n", checksum_str);
-    printf("nmea + (p-nmea):%s", nmea+(p-nmea));
-    */
 
-    // if this test is not 0 then strigs are equal.
     if(!strncmp(checksum_str, nmea+(p-nmea), 2))
         return CHECKSUM_OK;
     

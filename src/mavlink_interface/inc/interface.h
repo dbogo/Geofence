@@ -127,9 +127,17 @@ typedef struct autopilot_info {
 extern bool control_status;
 extern bool arm_status;
 
+/**
+ * @brief      Read data from the GLOBAL_POSOTION_INT message
+ *
+ * @return     { description_of_the_return_value }
+ */
+void read_global_pos(void);
 
-int read_global_pos(void);
-int read_local_pos_ned(void);
+/**
+ * @brief      Reads data from the LOCAL_POS_NED message
+ */
+void read_local_pos_ned(void);
 int write_gps_to_autopilot(FullGPSData* info);
 void print_global_pos_int(void);
 void set_acceleration(float z, mavlink_set_position_target_local_ned_t *sp);
@@ -249,12 +257,12 @@ int toggle_arm_disarm(bool flag);
 /**
  * @brief      Listens to a COMMAND_ACK message from the autopilot to verify
  *             the successful delivery of a command. Blocks execution until an
- *             acknowledgement is received.
+ *             acknowledgment is received.
  *
- * @param[in]  cmd  The CMD_ID of the command to check acknowledgement for 
+ * @param[in]  cmd  The CMD_ID of the command to check acknowledgment for 
  *                  (as defined in the corresponding mavlink header).
  *
- * @return     1 if the autopilot confirmed the acknowledgement, 0 otherwise.
+ * @return     1 if the autopilot confirmed the acknowledgment, 0 otherwise.
  */
 int verify_command_ack(int cmd);
 

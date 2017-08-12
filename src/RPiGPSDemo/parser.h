@@ -6,7 +6,17 @@
 #define CHECKSUM_OK 0
 #define CHECKSUM_ERR 1
 
+/**
+ * @brief      Parses a given NMEA sentence according to it's type, and updates
+ *             the FullGPSData struct with the extracted data.
+ *
+ * @param      sentence  The nmea sentence that will be parsed.
+ * @param      samp      Pointer to a struct that will hold the extracted information.
+ *
+ * @return     An integer corresponding to the type of the sentence.
+ */
 int parse_nmea(char *sentence, FullGPSData* samp);
+
 int validate_checksum(char *nmea);
 
 bool is_nmea_txt(char *nmea);

@@ -16,7 +16,6 @@ volatile float seconds = 0;
 volatile float omega = 0;
 
 time_t end;
-// time_t begin = time(NULL);
 
 
 void operation (float timer){

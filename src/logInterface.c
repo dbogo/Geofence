@@ -28,8 +28,6 @@ int initLogSystem(log_master_t *logMaster){
 	return 1;
 }
 
-
-
 void log_info(log_master_t *lm, const char *msg){
 	log4c_category_info(lm->operationLogger.obj, "%s", msg);
 }

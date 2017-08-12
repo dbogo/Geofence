@@ -5,14 +5,6 @@
 #include "logInterface.h"
 
 
-/* function wraps the use of nanosleep() function and does error handling 
-	if toleratesInterrupt is true, then the nanosleep function will be checked
-	for a premature stop, and will be resumed to finish the planned time (the remainder) 
-	NOTE: should this function be in a separate file for such things ?
-	
-	//TODO: maybe instead of nanosleep implement a way using signals..
-	// see: http://stackoverflow.com/questions/36953010/using-signals-in-c-how-to-stop-and-continue-a-program-when-timer-ends?
-*/
 int suspend_loop(time_t tv_sec, long nsec){
 	/* TODO: consider the use of clock_nanosleep() */
 	/* FIXME: maybe this function should call itself recursively
