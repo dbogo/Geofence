@@ -16,7 +16,7 @@ void controller_stop_drone(void){
 	autopilot_write();
 }
 
-void return_to_zone(GEO_Point home){
+void return_to_zone(geo_point_t home){
 	return;
 	// mavlink_set_position_target_global_int_t
 }

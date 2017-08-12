@@ -60,7 +60,7 @@ typedef struct GPS_actions GPS_actions_t;
  *
  * @return     the determinant
  */
-float det(GEO_Point p1, GEO_Point p2, GEO_Point location);
+float det(geo_point_t p1, geo_point_t p2, geo_point_t location);
 
 /**
  * @brief      assigns the correct library for the getGPS function pointer.
@@ -74,24 +74,24 @@ int GPS_init(GPS_actions_t *gpsHandler);
  * @brief      Determines if the test point is to the left of the vector,
  *             accounting for the direction of the vector (up or down).
  * @param[in]  p     The test point
- * @param[in]  e     the vector, represented by a segment of it as an Edge. (two points)
+ * @param[in]  e     the vector, represented by a segment of it as an edge_t. (two points)
  * @return     return a positive integer if the point is on the left, and a negative otherwise.
  *             A special case: 0, if the point is on the line.
  */
-int isLeft(GEO_Point p, Edge e);
+int isLeft(geo_point_t p, edge_t e);
 
 /**
  * @brief      checks if a polygon's segment crosses a ray in the upwards direction.
- * @param      e     A polygons edge
+ * @param      e     A polygons edge_t
  * @param[in]  p     the test point
  * @return     true if a upwards cross, false otherwise
  */
-bool upwards_cross(Edge e, GEO_Point p);
+bool upwards_cross(edge_t e, geo_point_t p);
 
 /**
  * @brief      see upwards_cross(). This is the opposite.
  */
-bool downwards_cross(Edge e, GEO_Point p);
+bool downwards_cross(edge_t e, geo_point_t p);
 #endif 
 
 /**
@@ -106,18 +106,18 @@ bool downwards_cross(Edge e, GEO_Point p);
  *             if the point is inside the polygon, the winding number is non-zero.
  *             a detailed description of the algorithm is in the link.
  */
-bool geofence_breached(FullGPSData* location, Zone_general* zone);
+bool geofence_breached(FullGPSData* location, zone_t* zone);
 
 /**
  * TODO: min and max alt.
  * @brief      checks if the altitude in question is within the geofence's height.
  *
- * @param      zone      The Polygon. the Zone_general struct contains the limit altitude	
+ * @param      zone      The Polygon. the zone_t struct contains the limit altitude	
  * @param[in]  altitude  The altitude of the point in question.
  *
  * @return     one of the constants describing the status, according to the outcome of the height test.
  */
-int geofecnce_alt_check(Zone_general* zone, double altitude);
+int geofence_alt_check(zone_t* zone, double altitude);
 
 /**
  * @brief      checks if the point in question is inside or outside the geofence polygon.
@@ -127,23 +127,23 @@ int geofecnce_alt_check(Zone_general* zone, double altitude);
  * @param[in]  p     the POI
  * @return     one of the constants describing the status, according to the outcome of the PiP test.
  */
-int geofence_polygon_check(Zone_general* zone, GEO_Point p);
+int geofence_polygon_check(zone_t* zone, geo_point_t p);
 
 /**
  * @brief      Creates the edges of the polygon from its vertices.
  *             Called once.
  * @param      zone   The polygon - represented by its vertices
- * @param      edges  A Edge pointer. points to an array of edges that is populated in this function
+ * @param      edges  A edge_t pointer. points to an array of edges that is populated in this function
  * @return     returns the number of edges. (Actually returns the number of vertices).
  */
-int create_edges(Zone_general* zone, Edge** edges);
+int create_edges(zone_t* zone, edge_t** edges);
 
 /* TODO */
 /**
  * @brief      computes the minimum bounding rectangle of the polygon. (aka MBR)
  * @param      polygon  a struct with the polygon's points.
  */
-void find_mbr(Zone_general* polygon);
+void find_mbr(zone_t* polygon);
 
 /**
  * @brief      converts NMEA decimal value to degrees
@@ -154,7 +154,7 @@ void find_mbr(Zone_general* polygon);
 double to_deg(double x);
 
 #if 0
-bool isDroneGoingOffBorder(FullGPSData* location, Zone_general* zone_gen);
+bool isDroneGoingOffBorder(FullGPSData* location, zone_t* zone_gen);
 #endif
 
 #endif /* GPSINTERFACE_H */

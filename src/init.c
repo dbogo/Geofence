@@ -9,7 +9,7 @@
 	// #include "led.h" //NOTE: include this only if on RPi.
 #endif
 
-void init(GPS_actions_t *GPSHandler, FullGPSData* gpsData, Zone_general* zone, log_master_t *logMaster, Edge** edges){
+void init(GPS_actions_t *GPSHandler, FullGPSData* gpsData, zone_t* zone, log_master_t *logMaster, edge_t** edges){
 	/**
 	 * TODO: Error checking and rv
 	 */
@@ -25,7 +25,7 @@ void init(GPS_actions_t *GPSHandler, FullGPSData* gpsData, Zone_general* zone, l
 	#endif
 }
 
-int parse_input_args(Zone_general* zone, int argc, char** args){
+int parse_input_args(zone_t* zone, int argc, char** args){
 	/**
 	 * TODO: error checking
 	 */
@@ -89,7 +89,7 @@ void init_gps_data(FullGPSData** gpsData){
 		.longitude = 0.0f,
 		.lat = '\0',
 		.lon = '\0',
-		.altitude = 0.0f,
+		.alt = 0.0f,
 		.course = 0.0f,
 		.spdKph = 0.0f,
 		.quality = 0,
@@ -106,7 +106,7 @@ void init_gps_data(FullGPSData** gpsData){
 	*gpsData = &tmp;
 }
 
-int init_geofence_from_argv(Zone_general* zone, int argc, char** args){ 	
+int init_geofence_from_argv(zone_t* zone, int argc, char** args){ 	
 
 	if(!range_valid(atof(args[2]), MIN_ALT, MAX_ALT)){
 		printf("Illegal geofence altitude value. %s\n", COMMON_ERR_STR);
@@ -123,13 +123,13 @@ int init_geofence_from_argv(Zone_general* zone, int argc, char** args){
 		}
 	}
 
-	zone->altitude = atof(args[2]);
+	zone->alt = atof(args[2]);
 	zone->numVertices = argc - 3;
-	zone->vertices = malloc((zone->numVertices + 1) * sizeof(GEO_Point));
+	zone->vertices = malloc((zone->numVertices + 1) * sizeof(geo_point_t));
 	for(int i = 3; i < argc; ++i){
 		char* pa = strchr(args[i], ',') + 1; // go to second number of the pair (lat,lon)
-		zone->vertices[i-3].longitude = atof(args[i]);
-		zone->vertices[i-3].latitude = atof(pa);
+		zone->vertices[i-3].lon = atof(args[i]);
+		zone->vertices[i-3].lat = atof(pa);
 	}
 	zone->vertices[zone->numVertices] = zone->vertices[0];
 
@@ -137,7 +137,7 @@ int init_geofence_from_argv(Zone_general* zone, int argc, char** args){
 }
 
 
-int init_geofence_from_file(Zone_general* zone, char** args){
+int init_geofence_from_file(zone_t* zone, char** args){
 
 	/**
 	 * TODO: proper error checking
@@ -164,9 +164,9 @@ int init_geofence_from_file(Zone_general* zone, char** args){
 	char* p = line;
 	p = strchr(p, '=')+1; // skip the '='
 	zone->numVertices = atoi(p);
-	zone->vertices = malloc((zone->numVertices + 1) * sizeof(GEO_Point));
-	//memset(zone->vertices, 0.0f, zone->numVertices * sizeof(GEO_Point)); NOTE: should memset ?
-	GEO_Point tmp[(const unsigned int)zone->numVertices + 1];
+	zone->vertices = malloc((zone->numVertices + 1) * sizeof(geo_point_t));
+	//memset(zone->vertices, 0.0f, zone->numVertices * sizeof(geo_point_t)); NOTE: should memset ?
+	geo_point_t tmp[(const unsigned int)zone->numVertices + 1];
 	lineNumber++;
 
 	while(fgets(line, MAX_LINE_LEN, argvInputFile) != NULL){
@@ -175,7 +175,7 @@ int init_geofence_from_file(Zone_general* zone, char** args){
 			case 2: {
 				char* p = line;
 				p = strchr(p, '=')+1;
-				zone->altitude = atof(p);
+				zone->alt = atof(p);
 				break;
 			}
 			default: {
@@ -191,7 +191,7 @@ int init_geofence_from_file(Zone_general* zone, char** args){
 	return ARGV_OK;
 }
 
-GEO_Point parse_line(char* str){
-	GEO_Point p = { .longitude = atof(str), .latitude = atof(strchr(str, ',') + 1) };
+geo_point_t parse_line(char* str){
+	geo_point_t p = { .lon = atof(str), .lat = atof(strchr(str, ',') + 1) };
 	return p;
 }

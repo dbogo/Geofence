@@ -25,50 +25,39 @@ typedef unsigned char uint8_t;
  * 
  * This struct contains only the most frequently used parameters.
  */
-typedef struct {
-	double latitude; // value from 0.0 to 90.0
-	double longitude; // value from 0.0 to 180.0 NOTE:east/west !
-	double speed;
-	double altitude;
+typedef struct GPSSamp{
+	double lat; // value from 0.0 to 90.0
+	double lon; // value from 0.0 to 180.0 NOTE:east/west !
+	double spd;
+	double alt;
 	double course;
-} GPSSamp;
+} GPS_samp_t;
 
 
 /**
- * \brief Represents a single 2D point
+ * @brief Represents a single 2D point
  */
-typedef struct {
-	double longitude;
-	double latitude;
-} GEO_Point;
+typedef struct GEO_point{
+	double lon;
+	double lat;
+} geo_point_t;
 
 /**
- * \brief Minimum bounding rectangle of a certain polygon
+ * @brief Minimum bounding rectangle of a certain polygon
  */
-typedef struct {
-	GEO_Point p1;
-	GEO_Point p2;
-} MBR;
-
-// deprecated
-#if 0
-/* A TEMPORARY implementaion of a Geo-zone.
-	implemented as a rectangle */
-typedef struct {
-	GEO_Point p1;
-	GEO_Point p2;
-	double altitude; // NOTE: Zone is a 3D shape
-} Zone;
-#endif
+typedef struct MBR{
+	geo_point_t p1;
+	geo_point_t p2;
+} mbr_t;
 
 
 /**
- * \brief A straight line between two points
+ * @brief A straight line between two points
  */
-typedef struct {
-	GEO_Point p1;
-	GEO_Point p2;
-} Edge;
+typedef struct Edge{
+	geo_point_t p1;
+	geo_point_t p2;
+} edge_t;
 
 /* An arbitrary Geo-zone that is a simple polygon.
 	may consist of more than 2 vertices. */
@@ -76,16 +65,16 @@ typedef struct {
 /**
  * \brief Represents a single polygon
  */
-typedef struct {
+typedef struct Zone{
 	size_t numVertices;
-	double altitude;
-	MBR mbr;
-	GEO_Point* vertices;
-} Zone_general;
+	double alt;
+	mbr_t mbr;
+	geo_point_t* vertices;
+} zone_t;
 
 
 /**
- * \brief The entire collection of relevant data, gathered from GPS
+ * @brief The entire collection of relevant data, gathered from GPS
  * 
  * lat_deg and lon_deg are the values of a point on the map where google map
  * would show a point.
@@ -103,7 +92,7 @@ typedef struct {
 
 	unsigned char lat;
 	unsigned char lon;
-	double altitude;
+	double alt;
 	double course;
 	double spdKph;
 

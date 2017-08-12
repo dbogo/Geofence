@@ -35,14 +35,14 @@ double to_deg(double x){
 	return deg;	                                              	        
 }
 
-bool geofence_breached(FullGPSData* location, Zone_general* zone){
-	GEO_Point p = { .longitude = location->longitude, .latitude = location->latitude };
+bool geofence_breached(FullGPSData* location, zone_t* zone){
+	geo_point_t p = { .lon= location->lon, .lat = location->lat };
 
 
 	#ifdef RPI_GPS // convert for use with real world coordinates. (deg)
 		// printf("HARDWARE - RPi.\n");
-		p.longitude = to_deg(location->longitude); 
-		p.latitude = to_deg(location->latitude);
+		p.lon= to_deg(location->lon); 
+		p.lat = to_deg(location->lat);
 		printf("\n");
 	#endif
 
@@ -50,7 +50,7 @@ bool geofence_breached(FullGPSData* location, Zone_general* zone){
 	 * TODO: differentiate between WGS and MSL.
 	 * TODO: check for minimum altitude ?
 	 */
-	if(geofecnce_alt_check(zone, location->altitude) == GEOFENCE_ALT_BREACH){
+	if(geofence_alt_check(zone, location->alt) == GEOFENCE_ALT_BREACH){
 		return true;
 	}
 
@@ -61,22 +61,22 @@ bool geofence_breached(FullGPSData* location, Zone_general* zone){
 	return false;
 }
 
-int geofecnce_alt_check(Zone_general* zone, double altitude){
-	if(altitude > zone->altitude){
+int geofence_alt_check(zone_t* zone, double altitude){
+	if(altitude > zone->alt){
 		return GEOFENCE_ALT_BREACH;
 	}
 	return GEOFENCE_ALT_OK;
 }
 
-int geofence_polygon_check(Zone_general* zone, GEO_Point p){
+int geofence_polygon_check(zone_t* zone, geo_point_t p){
 	float w = 0; // the winding number
 	
 	for(size_t i = 0; i < zone->numVertices; i++){
-		if((zone->vertices[i].latitude < p.latitude && zone->vertices[i+1].latitude >=p.latitude) ||
-			(zone->vertices[i].latitude >= p.latitude && zone->vertices[i+1].latitude < p.latitude)){
-				if(((det(zone->vertices[i], zone->vertices[i+1], p) > 0) && zone->vertices[i+1].latitude > zone->vertices[i].latitude) ||
-					((det(zone->vertices[i], zone->vertices[i+1], p) < 0) && zone->vertices[i+1].latitude < zone->vertices[i].latitude)){
-					if(zone->vertices[i+1].latitude > zone->vertices[i].latitude){
+		if((zone->vertices[i].lat < p.lat && zone->vertices[i+1].lat >=p.lat) ||
+			(zone->vertices[i].lat >= p.lat && zone->vertices[i+1].lat < p.lat)){
+				if(((det(zone->vertices[i], zone->vertices[i+1], p) > 0) && zone->vertices[i+1].lat > zone->vertices[i].lat) ||
+					((det(zone->vertices[i], zone->vertices[i+1], p) < 0) && zone->vertices[i+1].lat < zone->vertices[i].lat)){
+					if(zone->vertices[i+1].lat > zone->vertices[i].lat){
 						w++;
 					} else {
 						w--;
@@ -91,14 +91,14 @@ int geofence_polygon_check(Zone_general* zone, GEO_Point p){
 	return GEOFENCE_POLYGON_OK;
 }
 
-inline float det(GEO_Point p1, GEO_Point p2, GEO_Point location){
-	return (p1.longitude - location.longitude)*(p2.latitude - location.latitude)
-		- (p2.longitude - location.longitude)*(p1.latitude - location.latitude);
+inline float det(geo_point_t p1, geo_point_t p2, geo_point_t location){
+	return (p1.lon- location.lon)*(p2.lat - location.lat)
+		- (p2.lon- location.lon)*(p1.lat - location.lat);
 }
 
-int create_edges(Zone_general* zone, Edge** edges){
+int create_edges(zone_t* zone, edge_t** edges){
 
-	Edge tmp[zone->numVertices]; //dummy
+	edge_t tmp[zone->numVertices]; //dummy
 
 	// create the edges in the dummy array
 	for(size_t i = 0; i < zone->numVertices; i++){
@@ -117,39 +117,39 @@ int create_edges(Zone_general* zone, Edge** edges){
 	// logEvent("Initialized the following zone vertices: ", LOG4C_PRIORITY_INFO, INFO, &logMaster);
 	for(size_t i = 0; i < zone->numVertices; i++){
 		sprintf(zone_str, "V%d: (%lf, %f)", (int)(i%zone->numVertices), 
-					zone->vertices[i].longitude, zone->vertices[i].latitude);
+					zone->vertices[i].lon, zone->vertices[i].lat);
 		// logEvent(zone_str, LOG4C_PRIORITY_INFO, INFO, &logMaster);
 		//memset(zone_str, '\0', ZONE_STR_LINE_LENGTH); NOTE: should memset ???
 	}	
 
 	for(size_t i = 0; i < zone->numVertices; i++){
-		printf("E%d: (%1.6lf, %1.6lf), (%1.6lf,%1.6lf)\n", (int)(i % zone->numVertices), (*edges)[i].p1.longitude,
-						(*edges)[i].p1.latitude, (*edges)[i].p2.longitude, (*edges)[i].p2.latitude);
+		printf("E%d: (%1.6lf, %1.6lf), (%1.6lf,%1.6lf)\n", (int)(i % zone->numVertices), (*edges)[i].p1.lon,
+						(*edges)[i].p1.lat, (*edges)[i].p2.lon, (*edges)[i].p2.lat);
 	}	
 
 	return zone->numVertices;
 }
 
 /* NOTE: still relevant ? */
-void find_mbr(Zone_general* polygon){
-	polygon->mbr.p1.longitude =  polygon->vertices[0].longitude;
-	polygon->mbr.p2.longitude = polygon->vertices[0].longitude;
-	polygon->mbr.p1.latitude = polygon->vertices[0].latitude;
-	polygon->mbr.p1.latitude = polygon->vertices[0].latitude;
+void find_mbr(zone_t* polygon){
+	polygon->mbr.p1.lon=  polygon->vertices[0].lon;
+	polygon->mbr.p2.lon= polygon->vertices[0].lon;
+	polygon->mbr.p1.lat = polygon->vertices[0].lat;
+	polygon->mbr.p1.lat = polygon->vertices[0].lat;
 
 	for(size_t i = 0; i < polygon->numVertices; i++){
-		if (polygon->vertices[i].longitude < polygon->mbr.p1.longitude)
-			polygon->mbr.p1.longitude = (polygon->vertices[i]).longitude;
-		else if(polygon->vertices[i].longitude > polygon->mbr.p2.longitude)
-			polygon->mbr.p2.longitude = (polygon->vertices[i]).longitude;
+		if (polygon->vertices[i].lon< polygon->mbr.p1.lon)
+			polygon->mbr.p1.lon= (polygon->vertices[i]).lon;
+		else if(polygon->vertices[i].lon> polygon->mbr.p2.lon)
+			polygon->mbr.p2.lon= (polygon->vertices[i]).lon;
 
-		if (polygon->vertices[i].latitude < polygon->mbr.p1.latitude)
-			polygon->mbr.p1.latitude = (polygon->vertices[i]).latitude;
-		else if(polygon->vertices[i].latitude > polygon->mbr.p2.latitude)
-			polygon->mbr.p2.latitude = (polygon->vertices[i]).latitude;
+		if (polygon->vertices[i].lat < polygon->mbr.p1.lat)
+			polygon->mbr.p1.lat = (polygon->vertices[i]).lat;
+		else if(polygon->vertices[i].lat > polygon->mbr.p2.lat)
+			polygon->mbr.p2.lat = (polygon->vertices[i]).lat;
 	}
 
 	//TODO: log.
-	printf("xmin:%f xmax%f\nYmin:%f Ymax:%f\n\n", polygon->mbr.p1.longitude, polygon->mbr.p2.longitude,
-												 polygon->mbr.p1.latitude, polygon->mbr.p2.latitude);
+	printf("xmin:%f xmax%f\nYmin:%f Ymax:%f\n\n", polygon->mbr.p1.lon, polygon->mbr.p2.lon,
+												 polygon->mbr.p1.lat, polygon->mbr.p2.lat);
 }

@@ -69,10 +69,10 @@ int main(int argc, char** argv) {
 	int state = UNKNOWN;
 	signal(SIGINT, quit_handler);
 	FullGPSData gpsData; /* stores every kind of data we may need, that's possible to extract from NMEA */
-	Zone_general zone; 
-	Edge* edges = NULL;
+	zone_t zone; 
+	edge_t* edges = NULL;
 	GPS_actions_t GPSHandler;
-	GEO_Point home;
+	geo_point_t home;
 
 	if(parse_input_args(&zone, argc, argv) != ARGV_OK){
 		printf("error parsing arguments.\n");
