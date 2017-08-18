@@ -57,18 +57,16 @@ int initLogSystem(log_master_t *logMaster);
 /**
  * @brief      Logs a message with INFO prioruty
  *
- * @param      lm    a log_master_t object
  * @param[in]  msg   the messages to log
  */
-void log_info(log_master_t *lm, const char *msg);
+void log_info(const char *msg);
 
 /**
  * @brief      Logs a message with ERROR priority
  *
- * @param      lm    a log_master_t object
  * @param[in]  msg   the message to log
  */
-void log_err(log_master_t *lm, const char *msg);
+void log_err(const char *msg);
 
 /**
  * @brief      close and stop the logging system

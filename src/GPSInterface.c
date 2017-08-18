@@ -17,7 +17,7 @@
 int GPS_init(GPS_actions_t* gpsHandler){
 	#ifdef RPI_GPS
 		gpsHandler->getGPS = getGPSSample_RPI;
-		log_info(&logMaster, "Running Code for the RPi implementation.");
+		log_info("Running Code for the RPi implementation.");
 		open_gps_port("/dev/ttyUSB0");
 	#else
 		gpsHandler->getGPS = getGPSSample_DEMO;
@@ -35,7 +35,7 @@ double to_deg(double x){
 	return deg;	                                              	        
 }
 
-bool geofence_breached(FullGPSData* location, zone_t* zone){
+bool geofence_breached(full_gps_data_t* location, zone_t* zone){
 	geo_point_t p = { .lon= location->lon, .lat = location->lat };
 
 

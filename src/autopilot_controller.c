@@ -1,8 +1,8 @@
-#include <unistd.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "autopilot_controller.h"
-#include <mavlink_interface/inc/interface.h>
-#include <mavlink_interface/inc/commands.h>
+#include <mavlink_interface/interface.h>
+#include <mavlink_interface/commands.h>
 
 void controller_take_control(void){
 	// Autopilot rejects mode switch if no setpoints are sent in advance

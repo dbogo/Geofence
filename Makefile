@@ -17,7 +17,6 @@ HEADERS = -Ilibs/log4c/include \
 			-Ilibs/mavlink \
 			-Isrc/ \
 			-Isrc/mavlink_interface/ \
-			-Isrc/mavlink_interface/inc \
 			-Ilibs/ \
 			-I.
 			
@@ -31,7 +30,7 @@ LIBS 	= -Llibs/libpifacecad \
 DEPENDENCY_OPTIONS = -MM
 
 # Subdirs to search for additional source files
-SUBDIRS 		= src/ src/pifaceCAD/ src/serial/ src/mavlink_interface/src/ src/RPiGPSDemo/ src/GPSDemo/ #$(shell ls -F src/ | grep "\/" )
+SUBDIRS 		= src/ src/pifaceCAD/ src/serial/ src/mavlink_interface/ src/RPiGPSDemo/ src/GPSDemo/ #$(shell ls -F src/ | grep "\/" )
 DIRS 			= $(SUBDIRS)
 SOURCE_FILES 	= $(foreach d, $(DIRS), $(wildcard $(d)*.c) )
 OBJECTS			= $(patsubst %.c, %.o, $(SOURCE_FILES))

@@ -49,7 +49,7 @@
  */
 
 #include <unistd.h>
-#include "../inc/interface.h"
+#include "interface.h"
 
 #include <GPSInterface.h>
 #include <logInterface.h>
@@ -151,7 +151,7 @@ void autopilot_read_global_pos(){
 		current_messages.global_position_int.vx,
 		current_messages.global_position_int.vy,
 		current_messages.global_position_int.vz);
-	log_info(&logMaster, pos_log);
+	log_info(pos_log);
 }
 
 void autopilot_read_local_pos_ned(){
@@ -172,7 +172,7 @@ void autopilot_read_local_pos_ned(){
 		current_messages.local_position_ned.vx,
 		current_messages.local_position_ned.vy,
 		current_messages.local_position_ned.vz);
-	log_info(&logMaster, pos_log);
+	log_info(pos_log);
 }
 
 void read_messages(void){
@@ -521,7 +521,7 @@ void set_acceleration(float z, mavlink_set_position_target_local_ned_t* sp){
 	sp->afy = 0;
 }
 
-int autopilot_write_gps(FullGPSData *info){
+int autopilot_write_gps(full_gps_data_t *info){
 	mavlink_hil_gps_t gps = {
 		.time_usec = get_time_usec(),
 		.lat = to_deg(info->latitude) * 1E7,
@@ -563,7 +563,7 @@ void set_circle(float r, float theta, float z, mavlink_set_position_target_local
 	set__( (r * tan_2pi(theta))/Beta(theta)  , r / Beta(theta), z, set_point);
 }
 
-int get_gps_from_autopilot(FullGPSData *gpsdata){
+int get_gps_from_autopilot(full_gps_data_t *gpsdata){
 	gpsdata->lat = (double)current_messages.global_pos_cov.lat / 1e7;
 	return 1;
 }

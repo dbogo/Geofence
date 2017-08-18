@@ -19,7 +19,7 @@ int suspend_loop(time_t tv_sec, long nsec){
 		errCode = nanosleep(&ts, &remainingTime);
 		// if EINTR then the pause has been interrupted
 		if(errCode == EINTR) {
-			log_err(&logMaster, "suspend_loop: nanosleep() was interrupted. continuing now.");
+			log_err("suspend_loop: nanosleep() was interrupted. continuing now.");
 			nanosleep(&remainingTime, NULL);
 		}
 	}

@@ -22,7 +22,7 @@ extern FILE* argvInputFile;
  * @param      edges      double pointer to the edge_t struct. pointer to the array of edge_ts 
  * 						  of the polygon represented by zone.
  */
-void init(GPS_actions_t *GPSHandler, FullGPSData* gpsData, zone_t* zone, log_master_t *logMaster, edge_t** edges);
+void init(GPS_actions_t *GPSHandler, full_gps_data_t* gpsData, zone_t* zone, log_master_t *logMaster, edge_t** edges);
 
 /**
  * @brief      calls function to initialize some stuff that works only on the Raspberry-Pi
@@ -35,7 +35,7 @@ void init_platform_specific_modules(void);
  * @brief      initializes the data pointed to by the @p struct pointer
  * @param      gpsData  double pointer to the data
  */
-void init_gps_data(FullGPSData** gpsData);
+void init_gps_data(full_gps_data_t** gpsData);
 
 /**
  * @brief      Receives argc, argv from main and parses that input

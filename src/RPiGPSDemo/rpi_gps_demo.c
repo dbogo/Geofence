@@ -6,17 +6,17 @@
 #include <src/logInterface.h>
 
 
-int getGPSSample_RPI(FullGPSData* samp, bool passToLog){
+int getGPSSample_RPI(full_gps_data_t* samp, bool passToLog){
 	char nmea[MAX_NMEA_MSG_SIZE];
     memset(nmea, '\0', MAX_NMEA_MSG_SIZE);
     fetch_sentence_from_gps(get_gps_fd(), nmea);
     if(validate_checksum(nmea) != CHECKSUM_OK){
-    	log_err(&logMaster, "checksum error. exiting getGPSSample_RPI() with CHECKSUM_ERR");
+    	log_err("checksum error. exiting getGPSSample_RPI() with CHECKSUM_ERR");
     	return CHECKSUM_ERR;
     }
 
     if(passToLog){
-        log_info(&logMaster, nmea);    
+        log_info(nmea);    
     }
 
     return parse_nmea(nmea, samp);	

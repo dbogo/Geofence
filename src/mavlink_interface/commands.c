@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
-#include "../inc/commands.h"
+#include "commands.h"
 
 int arm_lock = 0;
 int offboard_control_lock = 0;

@@ -8,20 +8,17 @@
 extern "C" {
 #endif
 
-	
 typedef unsigned char uint8_t;
 
-/* 	TODO: deprecated ?? */
 #define OUTSIDE 0
 #define INSIDE 1
 
-/* min & max values (meters), that are valid for geofence altitude boundaries */
+/* min & max values (meters), for valid for geofence altitude boundaries */
 #define MIN_ALT -500
 #define MAX_ALT  10000
 
-/* NOTE: Pay attention to to calculations where course is in radians or in degrees ! */
 /**
- * \brief Represents a smaller, truncated version of the data gathered from GPS.
+ * @brief Represents a smaller, truncated version of the data gathered from GPS.
  * 
  * This struct contains only the most frequently used parameters.
  */
@@ -32,7 +29,6 @@ typedef struct GPSSamp{
 	double alt;
 	double course;
 } GPS_samp_t;
-
 
 /**
  * @brief Represents a single 2D point
@@ -59,8 +55,6 @@ typedef struct Edge{
 	geo_point_t p2;
 } edge_t;
 
-/* An arbitrary Geo-zone that is a simple polygon.
-	may consist of more than 2 vertices. */
 
 /**
  * @brief Represents a single polygon
@@ -77,9 +71,8 @@ typedef struct Zone{
  * @brief The entire collection of relevant data, gathered from GPS
  * 
  * lat_deg and lon_deg are the values of a point on the map where google map
- * would show a point.
- * lat/lon data that's received from NMEA sentences is in decimal, and not
- * in degrees, hence the need for a differentiation.
+ * would show a point. lat/lon data that's received from NMEA sentences is in
+ * decimal, and not in degrees, hence the need for a differentiation.
  */
 typedef struct {
 	double latitude;
@@ -106,25 +99,25 @@ typedef struct {
 	double vdop;
 	double spdKnots;
 	bool status; 
-} FullGPSData;
+} full_gps_data_t;
 
 
 /**
- * @brief Used to hold relevant data from $GPGGA NMEA sentences from GPS
+ * @brief Relevant data from $GPGGA
  */
 typedef struct {
-	double latitude; // Latitude e.g: 4124.8963 (XXYY.ZZKK.. DEG, MIN, SEC.SS)
-	unsigned char lat; // Latitude e.g: N
-	double longitude; // Longitude e.g: 08151.6838 (XXXYY.ZZKK.. DEG, MIN, SEC.SS)
-	unsigned char lon; // Longitude e.g: W
-	uint8_t quality;  // Quality 0, 1, 2
-	uint8_t satellites; // Number of satellites: 1,2,3,4,5...
-	double altitude; // Altitude e.g: 280.2 (Meters above mean sea level)
+	double latitude;
+	unsigned char lat;
+	double longitude;
+	unsigned char lon;
+	uint8_t quality;
+	uint8_t satellites;
+	double altitude;
 } gga;
 
 
 /**
- * @brief Used to hold relevant data from $GPGSA NMEA sentences from GPS
+ * @brief Relevant data from $GPGSA
  */
 typedef struct {
 	unsigned char fixType; // 1 = no fix; 2 = 2D fix; 3 = 3D fix
@@ -135,7 +128,7 @@ typedef struct {
 
 
 /**
- * @brief Used to hold relevant data from $GPVTG NMEA sentences from GPS
+ * @brief Relevant data from $GPVTG
  */
 typedef struct {
 	double spdKnots;
@@ -144,7 +137,7 @@ typedef struct {
 
 
 /**
- * @brief Used to hold relevant data from $GPGLL NMEA sentences from GPS
+ * @brief Relevant data from $GPGLL
  */
 typedef struct {
 	double latitude;
@@ -157,7 +150,7 @@ typedef struct {
 
 
 /**
- * @brief Used to hold relevant data from $GPRMC NMEA sentences from GPS
+ * @brief Relevant data from $GPRMC
  */
 typedef struct {
 	double latitude;

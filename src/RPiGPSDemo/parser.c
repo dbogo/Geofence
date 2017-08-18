@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 
-int parse_nmea(char* sentence, FullGPSData* samp){
+int parse_nmea(char* sentence, full_gps_data_t* samp){
     if((strstr(sentence, "$GPGGA") != NULL)){
         gga ggaSamp;
         parse_gga(&ggaSamp, sentence);

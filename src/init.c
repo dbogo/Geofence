@@ -8,7 +8,7 @@
 	// #include "led.h" //NOTE: include this only if on RPi.
 #endif
 
-void init(GPS_actions_t *GPSHandler, FullGPSData* gpsData, zone_t* zone, log_master_t *logMaster, edge_t** edges){
+void init(GPS_actions_t *GPSHandler, full_gps_data_t* gpsData, zone_t* zone, log_master_t *logMaster, edge_t** edges){
 	/**
 	 * TODO: Error checking and rv
 	 */
@@ -72,7 +72,7 @@ void display_help_message(void){
 
 #ifdef WIRINGPI
 void init_platform_specific_modules(void){
-	log_info(&logMaster, "Program detected to be run on ARM.");
+	log_info("Program detected to be run on ARM.");
 	init_wiringPi();
 	set_led_output(STATUSLED);
 	spet_led_output(GEOFENCE_OK_LED);
@@ -82,8 +82,8 @@ void init_platform_specific_modules(void){
 }
 #endif
 
-void init_gps_data(FullGPSData** gpsData){
-	FullGPSData tmp = {
+void init_gps_data(full_gps_data_t** gpsData){
+	full_gps_data_t tmp = {
 		.latitude = 0.0f,
 		.longitude = 0.0f,
 		.lat = '\0',
@@ -141,15 +141,15 @@ int init_geofence_from_file(zone_t* zone, char** args){
 	/**
 	 * TODO: proper error checking
 	 * TODO: throw an error if geofence in file consists of less than 3 polygons.
-	 * 		Add support for a circle geofence (essentialy a cylinder cuz height).
+	 * 		Add support for a circle geofence (essentially a cylinder cuz height).
 	 */
 
-	FILE* argvInputFile = fopen(args[2], "r"); // declared extern in init.h
+	FILE* argvInputFile = fopen(args[2], "r");
 	
 	if(argvInputFile == NULL){
 		char errStr[60];
 		sprintf(errStr, "Error: fopen() has failed. Couldn't find '%s'%s", args[2], strerror(errno));
-		log_info(&logMaster, errStr);
+		log_info(errStr);
 		return FOPEN_FAIL;
 	}
 

@@ -24,7 +24,7 @@ const char* RS232_DEVICE_const;
 int open_gps_port(const char *portname){
 	gps_fd = open(portname, O_RDWR | O_NOCTTY | O_NDELAY);
 	if(gps_fd < 0){
-		log_err(&logMaster, "open_port: Unable to open /dev/ttyACM0");
+		log_err("open_port: Unable to open /dev/ttyACM0");
 	} else {
 		fcntl(gps_fd, F_SETFL, 0);
 	}

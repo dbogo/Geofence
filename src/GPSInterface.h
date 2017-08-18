@@ -42,7 +42,7 @@
  *             GPSInterface provides for handling gps stuff.
  */
 struct GPS_actions{
-	int (*getGPS)(FullGPSData*, bool, void*);
+	int (*getGPS)(full_gps_data_t*, bool, void*);
 };
 typedef struct GPS_actions GPS_actions_t;
 
@@ -77,7 +77,7 @@ int GPS_init(GPS_actions_t *gpsHandler);
  *             if the point is inside the polygon, the winding number is non-zero.
  *             a detailed description of the algorithm is in the link.
  */
-bool geofence_breached(FullGPSData* location, zone_t* zone);
+bool geofence_breached(full_gps_data_t* location, zone_t* zone);
 
 /**
  * TODO: min and max alt.

@@ -9,7 +9,7 @@
  * @param[in]  passToLog  true if we want to log the stuff
  * @return     the ID of the sentence we got on this call.
  */
-int getGPSSample_DEMO(FullGPSData* samp, bool passToLog);
+int getGPSSample_DEMO(full_gps_data_t* samp, bool passToLog);
 
 #endif /* GPS_DEMO_H */
 

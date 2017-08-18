@@ -51,10 +51,10 @@
 #ifndef _INTERFACE_H_
 #define _INTERFACE_H_
 
+#include <types.h>
+#include "mfunctions.h"
 #include <src/types.h>
 #include <src/serial/serialInterface.h>
-#include "mfunctions.h"
-#include <types.h>
 
                                                 // bit number  876543210987654321
 #define MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION     0b0000110111111000
@@ -144,7 +144,7 @@ void autopilot_read_local_pos_ned(void);
  *
  * @return     The result of writing the message to the serial port
  */
-int autopilot_write_gps(FullGPSData* info);
+int autopilot_write_gps(full_gps_data_t* info);
 
 /**
  * @brief      A utility function to print the current global position from 
@@ -314,13 +314,13 @@ int check_arm_disarm(void);
 int check_message(uint16_t COMMAND_ID);
 
 /**
- * @brief      Update the FullGPSData based on information from the GLOBAL_POSITION_INT_COV message.
+ * @brief      Update the full_gps_data_t based on information from the GLOBAL_POSITION_INT_COV message.
  *
- * @param      gpsData  Pointer to a FullGPSData struct
+ * @param      gpsData  Pointer to a full_gps_data_t struct
  *
  * @return     1 for success.
  */
-int get_gps_from_autopilot(FullGPSData *gpsData);
+int get_gps_from_autopilot(full_gps_data_t *gpsData);
 
 /**
  * @brief      Used to send "dummy" setpoints to the autopilot.

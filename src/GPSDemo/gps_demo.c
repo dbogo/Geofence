@@ -3,7 +3,7 @@
 #include "gps_demo.h"
 #include <src/logInterface.h>
   
-int getGPSSample_DEMO(FullGPSData* samp, bool passToLog){
+int getGPSSample_DEMO(full_gps_data_t* samp, bool passToLog){
 	samp->spdKph = 1.34f;
 	samp->course = 50.0f;
 
@@ -17,7 +17,7 @@ int getGPSSample_DEMO(FullGPSData* samp, bool passToLog){
 		char logStr[120];
 		sprintf(logStr, "DEMO: lat: %f, lon: %f, alt: %f, crs: %f, spd(kph): %f",
 				samp->latitude, samp->longitude, samp->alt, samp->course, samp->spdKph);
-		log_info(&logMaster, logStr);
+		log_info(logStr);
 	}
 	return FULL_SAMPLE;
 }

@@ -28,12 +28,12 @@ int initLogSystem(log_master_t *logMaster){
 	return 1;
 }
 
-void log_info(log_master_t *lm, const char *msg){
-	log4c_category_info(lm->operationLogger.obj, "%s", msg);
+void log_info(const char *msg){
+	log4c_category_info(logMaster.operationLogger.obj, "%s", msg);
 }
 
-void log_err(log_master_t *lm, const char *msg){
-	log4c_category_error(lm->errLogger.obj, "%s", msg);
+void log_err(const char *msg){
+	log4c_category_error(logMaster.errLogger.obj, "%s", msg);
 }
 
 int finiLogSystem(void){
