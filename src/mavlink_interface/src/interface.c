@@ -48,7 +48,6 @@
  *
  */
 
-#include <stdio.h>
 #include <unistd.h>
 #include "../inc/interface.h"
 
@@ -134,7 +133,7 @@ void autopilot_start(void){
 	initial_position_lock = 1;
 }
 
-int read_global_pos(){
+void autopilot_read_global_pos(){
 	mavlink_message_t msg;
 	bool success = false;
 	while(!success && msg.msgid != MAVLINK_MSG_ID_GLOBAL_POSITION_INT){
@@ -153,11 +152,9 @@ int read_global_pos(){
 		current_messages.global_position_int.vy,
 		current_messages.global_position_int.vz);
 	log_info(&logMaster, pos_log);
-
-	return 1;
 }
 
-int read_local_pos_ned(){
+void autopilot_read_local_pos_ned(){
 	mavlink_message_t msg;
 	bool success = false;
 	while(!success && msg.msgid != MAVLINK_MSG_ID_LOCAL_POSITION_NED){
@@ -176,7 +173,6 @@ int read_local_pos_ned(){
 		current_messages.local_position_ned.vy,
 		current_messages.local_position_ned.vz);
 	log_info(&logMaster, pos_log);
-	return 1;
 }
 
 void read_messages(void){
@@ -286,30 +282,27 @@ void read_messages(void){
 
 				default:
 					break;
-				 // MAVLINK_MESSAGES
-			} // end: switch msgid
-		} // end: if read message
+			}
+		}
 
-		// Loop untill the full reception of the first heartbeat and local_position_ned
-		// for the first time, then depend on the highres MAVLink message for the rest
-		if (lock_read_messages == 0){
-			// Check for receipt of all items
+		if (!lock_read_messages){
 			received_all =
-					this_timestamps.heartbeat                 // &&
-					// this_timestamps.command_ack 
-			//				this_timestamps.battery_status             &&
-			//				this_timestamps.radio_status               &&
-							// this_timestamps.local_position_ned         &&
-			//				this_timestamps.global_position_int        &&
-							// this_timestamps.global_pos_cov
-			//				this_timestamps.position_target_local_ned  &&
-			//				this_timestamps.position_target_global_int &&
-			//				this_timestamps.highres_imu                &&
-			//				this_timestamps.attitude                   &&
+							this_timestamps.heartbeat					  &&
+							// this_timestamps.command_ack 
+							// this_timestamps.battery_status             &&
+							// this_timestamps.radio_status               &&
+							this_timestamps.local_position_ned      	  //&&
+							// this_timestamps.global_position_int        &&
+							// this_timestamps.global_pos_cov          	  &&
+							// this_timestamps.position_target_local_ned  &&
+							// this_timestamps.position_target_global_int &&
+							// this_timestamps.highres_imu                &&
+							// this_timestamps.attitude                   &&
 						;		
 			} else {
 				received_all = this_timestamps.highres_imu;	
-				if (highres_flag == 0) break;
+				if (!highres_flag)
+					break;
 			}
 		} 
 		lock_read_messages = 1;		
@@ -317,7 +310,6 @@ void read_messages(void){
 }
 
 void print_global_pos_int(){
-	// if(current_messages.time_stamps.global_position_int > last_global_pos_time){
 	printf("lat: %f, lon: %f, alt: %f, vx: %f, vy: %f, vz: %f, hdg: %f\n",
 		(float) current_messages.global_position_int.lat / 1E7,
 		(float) current_messages.global_position_int.lon / 1E7,
@@ -327,8 +319,6 @@ void print_global_pos_int(){
 		(float) current_messages.global_position_int.vz / 100,
 		(float) current_messages.global_position_int.hdg / 100
 	);
-		// last_global_
-	// }
 }
 
 void autopilot_write(void){
@@ -347,10 +337,8 @@ void autopilot_write(void){
 
 void autopilot_write_setpoint(void){
 
-	// pull from position target
 	mavlink_set_position_target_local_ned_t set_point = current_setpoint;
 
-	// double check some system parameters
 	if (!set_point.time_boot_ms)
 		set_point.time_boot_ms = (uint32_t) (get_time_usec()/1000);
 	set_point.target_system    = system_id;
@@ -397,7 +385,6 @@ bool autopilot_disable_offboard(void){
 }
 
 int toggle_offboard_control(bool flag){
-	// Prepare command for off-board mode
 	mavlink_command_long_t com;
 	com.target_system    = system_id;
 	com.target_component = autopilot_id;
@@ -440,13 +427,12 @@ void autopilot_disarm(void){
 }
 
 int toggle_arm_disarm(bool flag){
-	// Prepare command for arming/disarming
 	mavlink_command_long_t autopilot_status;
 	autopilot_status.target_system    = system_id;
 	autopilot_status.target_component = autopilot_id;
 	autopilot_status.command          = MAV_CMD_COMPONENT_ARM_DISARM;
 	autopilot_status.confirmation     = true;
-	autopilot_status.param1           = (float) flag; // flag = 1 => arm, flag = 0 => disarm
+	autopilot_status.param1           = (float) flag; // flag - 1: arm, 0: disarm
 
 	mavlink_message_t message;
 	mavlink_msg_command_long_encode(system_id, companion_id, &message, &autopilot_status);
@@ -504,7 +490,6 @@ int check_message(uint16_t COMMAND_ID){
 	}
 }
 
-// Set position function and masks
 void set_position(float x, float y, float z, mavlink_set_position_target_local_ned_t* set_position){
 	set_position->type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION;
 	set_position->coordinate_frame = MAV_FRAME_LOCAL_NED;
@@ -536,12 +521,12 @@ void set_acceleration(float z, mavlink_set_position_target_local_ned_t* sp){
 	sp->afy = 0;
 }
 
-int write_gps_to_autopilot(FullGPSData *info){
+int autopilot_write_gps(FullGPSData *info){
 	mavlink_hil_gps_t gps = {
 		.time_usec = get_time_usec(),
 		.lat = to_deg(info->latitude) * 1E7,
 		.lon = to_deg(info->longitude) * 1E7,
-		.alt = info->altitude * 1000,
+		.alt = info->alt * 1000,
 		.eph = 65535,
 		.epv = 65535,
 		.vel = (uint16_t ) info->spdKph * 27.7778f,
@@ -573,7 +558,7 @@ void position_and_speed_set(float x, float y, float z ,float vx, float vy, float
 	autopilot_write_setpoint();
 }
 
-// Draw a circle with R and theta (angle) coordinates from current positioe
+// Draw a circle with R and theta (angle) coordinates from current position
 void set_circle(float r, float theta, float z, mavlink_set_position_target_local_ned_t* set_point){
 	set__( (r * tan_2pi(theta))/Beta(theta)  , r / Beta(theta), z, set_point);
 }
@@ -607,7 +592,7 @@ uint64_t get_time_usec(void){
 
 #ifdef DEBUG
 int handle_quit_autopilot(void){
-	printf("handling autopilot shutdown...\n");
+	printf(" > handling autopilot shutdown...\n");
 	autopilot_disarm();
 	usleep(200);
 	autopilot_disable_offboard();

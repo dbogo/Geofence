@@ -1,6 +1,5 @@
 #include "parser.h"
 #include <string.h>
-#include <stdlib.h>
 #include <stdio.h>
 
 
@@ -8,7 +7,7 @@ int parse_nmea(char* sentence, FullGPSData* samp){
     if((strstr(sentence, "$GPGGA") != NULL)){
         gga ggaSamp;
         parse_gga(&ggaSamp, sentence);
-        samp->altitude = ggaSamp.altitude;
+        samp->alt = ggaSamp.altitude;
         samp->longitude = ggaSamp.longitude;
         samp->latitude = ggaSamp.latitude;
         samp->satellites = ggaSamp.quality;

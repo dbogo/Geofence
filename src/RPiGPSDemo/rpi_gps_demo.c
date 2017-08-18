@@ -1,5 +1,4 @@
 #include <string.h>
-#include <stdio.h>
 
 #include "rpi_gps_demo.h"
 #include "parser.h"

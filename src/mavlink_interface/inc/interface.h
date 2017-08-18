@@ -51,7 +51,6 @@
 #ifndef _INTERFACE_H_
 #define _INTERFACE_H_
 
-#include <stdbool.h>
 #include <src/types.h>
 #include <src/serial/serialInterface.h>
 #include "mfunctions.h"
@@ -129,20 +128,44 @@ extern bool arm_status;
 
 /**
  * @brief      Read data from the GLOBAL_POSOTION_INT message
- *
- * @return     { description_of_the_return_value }
  */
-void read_global_pos(void);
+void autopilot_read_global_pos(void);
 
 /**
  * @brief      Reads data from the LOCAL_POS_NED message
  */
-void read_local_pos_ned(void);
-int write_gps_to_autopilot(FullGPSData* info);
+void autopilot_read_local_pos_ned(void);
+
+/**
+ * @brief      Writes a HIL_GPS message to the autopilot with data from a 
+ *             GPS unit that is connected to the companion computer
+ *
+ * @param      info  the struct from which the data is pulled
+ *
+ * @return     The result of writing the message to the serial port
+ */
+int autopilot_write_gps(FullGPSData* info);
+
+/**
+ * @brief      A utility function to print the current global position from 
+ *             a GLOBAL_POS_INT message.
+ */
 void print_global_pos_int(void);
+
+/**
+ * @brief      Sets the acceleration of the autopilot along the axis
+ *
+ * @param[in]  z     The eccleration along the z axis (vertical)
+ * @param      sp    the setpoint to which the acceleration value is written
+ */
 void set_acceleration(float z, mavlink_set_position_target_local_ned_t *sp);
 
-bool autopilot_control_status(void);// { return control_status; }
+/**
+ * @brief      Used to check whether the flag for offboard mode is set or not.
+ *
+ * @return     True if the flag is set, false otherwise
+ */
+bool autopilot_control_status(void);
 
 /**
  * @brief      Zeros out all the timestamps.
@@ -184,7 +207,7 @@ void read_messages(void);
 void autopilot_write(void);
 
 /**
- * @brief      Write a MAVLink message to the autopilot.
+ * @brief      Writes a MAVLink message to the autopilot.
  *
  * @param[in]  message  A MAVLink message struct with the encapsulated message
  */
@@ -197,7 +220,7 @@ void autopilot_write_message(mavlink_message_t message);
 void autopilot_write_setpoint(void);
 
 /**
- * @brief      Update the current setpoint with the given setpoint.
+ * @brief      Updates the current setpoint with the given setpoint.
  *
  * @param[in]  setpoint  A SET_POSITION_LOCAL_NED struct that is assigned
  * 						 to the current setpoint.
@@ -207,7 +230,7 @@ void autopilot_update_setpoint(mavlink_set_position_target_local_ned_t setpoint)
 // Offboard Control
 
 /**
- * @brief      Disabled the offboard control of the autopilot.
+ * @brief      Disables the offboard control of the autopilot.
  *
  * @return     The offboard control status: true for active offboard control
  *                 and false for disabled offboard control.
@@ -329,14 +352,54 @@ int autopilot_ok(void);
 int handle_quit_autopilot(void);
 #endif
 
+/**
+ * @brief      Sets the desired position to a setpoint in a local NED frame.
+ *
+ * @param[in]  x     The x (North) component of the target setpoint.
+ * @param[in]  y     The y (East) component of the target setpoint.
+ * @param[in]  z     The z (Down) component of the target setpoint.
+ * @param      sp    The setpoint to which the values will be written.
+ */
 void set_position(float x, float y, float z, mavlink_set_position_target_local_ned_t* sp);
+
+/**
+ * @brief      A convenirence function that does the three steps together: Create
+ *             a position setpoint according to passed values, updates the autopilot
+ *             interface internal setpoint variable with the new setpoint, and
+ *             writes the setpoint. 
+ *
+ * @param[in]  x          The x (North) component of the target setpoint.
+ * @param[in]  y          The y (East) component of the target setpoint.
+ * @param[in]  z          The z (Down) component of the target setpoint.
+ * @param      set_point  The setpoint to which the values will be written.
+ */
 void set__(float x, float y, float z, mavlink_set_position_target_local_ned_t* set_point);
+
+/**
+ * @brief      Sets the velocity for the autopilot
+ *
+ * @param[in]  vx         Velocity along the North axis.
+ * @param[in]  vy         Velocity along the East axis.
+ * @param[in]  va         Velocity along the Down axis.
+ * @param      set_point  The setpoint to which the values will be written
+ */
 void set_velocity(float vx, float vy, float va, mavlink_set_position_target_local_ned_t* set_point);
+
+/**
+ * @brief      Sets the yaw for the autopilot
+ *
+ * @param[in]  yaw   The yaw in radians.	
+ * @param      sp    The setpoint to which the values will be written
+ */
 void set_yaw(float yaw, mavlink_set_position_target_local_ned_t* sp);
+
 void position_and_speed_set(float x, float y, float z ,float vx, float vy, float vz, mavlink_set_position_target_local_ned_t* final_set_point);
 
 void set_circle(float R, float theta, float z, mavlink_set_position_target_local_ned_t* set_point);
 
+/**
+ * @brief      Gets the time since epoch in microseconds
+ */
 uint64_t get_time_usec(void);
 
 #endif // _INTERFACE_H_

@@ -1,9 +1,6 @@
 #ifndef AUTOPILOT_CONTROLLER_H
 #define AUTOPILOT_CONTROLLER_H
 
-#include <time.h>
-#include "mavlink_interface/inc/commands.h"
-#include <types.h>
 
 /**
  * @brief      Takes control over the drone by setting the flight controller
@@ -17,7 +14,7 @@ void controller_take_control(void);
  */
 void controller_stop_drone(void);
 
-#ifdef 0
+#if 0
 void return_to_zone(geo_point_t home);
 #endif
 

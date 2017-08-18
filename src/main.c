@@ -1,21 +1,11 @@
-#include <time.h>
 #include <math.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
-#include <signal.h>
-#include <stdlib.h>
 #include <inttypes.h>
-#include <sys/time.h>
 
 #include "init.h"
-#include "types.h"
-#include "utils.h"
-#include "logInterface.h"
-#include "GPSInterface.h" // TODO: reconsider this hierarchy !!
 #include "autopilot_controller.h"
-#include "serial/serialInterface.h"
-#include "mavlink_interface/inc/interface.h"
+#include <mavlink_interface/inc/interface.h>
 
 #ifdef RPI_GPS
 #include "RPiGPSDemo/rpi_gps_demo.h"
@@ -33,37 +23,6 @@
 #define OUT_OF_BORDER 2
 #define RETURNING 3
 
-
-// int test(){
-
-// 	uint64_t last_gps = 0;
-
-// 	while(true){
-
-// 		if(get_time_usec() - last_gps > 1000){
-// 			GPSHandler.getGPS(&gpsData, true, NULL);
-// 			last_gps = get_time_usec();
-// 		}
-
-// 		write_gps_to_autopilot(&gpsData);
-		
-// 		if(geofence_breached(&gpsData, &zone)){
-// 			if(!autopilot_control_status()){
-// 				controller_take_control();
-// 			}
-// 			controller_stop_drone();
-// 		} else {
-// 			if(autopilot_control_status()){
-// 				controller_release_control();
-// 			}
-// 		}
-
-// 		if ()
-		
-// 		sleep(10000);
-// 	}
-
-// }
 
 int main(int argc, char** argv) {
 	int state = UNKNOWN;
@@ -128,7 +87,7 @@ int main(int argc, char** argv) {
 			last_gps = get_time_usec();
 		}
 
-		write_gps_to_autopilot(&gpsData);
+		autopilot_write_gps(&gpsData);
 		
 		if(geofence_breached(&gpsData, &zone)){
 
@@ -238,13 +197,8 @@ int main(int argc, char** argv) {
 
 #ifdef DEBUG
 void quit_handler(){
-	printf("\n");
-	printf("TERMINATING AT USER REQUEST\n");
-	printf("\n");
-
-	// autopilot interface
+	printf("\nTERMINATING AT USER REQUEST\n\n");
 	handle_quit_autopilot();
-
 	handle_quit_serial();
 	exit(0);
 }

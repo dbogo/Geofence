@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "autopilot_controller.h"
 #include <mavlink_interface/inc/interface.h>
+#include <mavlink_interface/inc/commands.h>
 
 void controller_take_control(void){
 	// Autopilot rejects mode switch if no setpoints are sent in advance
@@ -17,7 +18,7 @@ void controller_stop_drone(void){
 	autopilot_write();
 }
 
-#ifdef 0
+#if 0
 void return_to_zone(geo_point_t home){
 	return;
 }
