@@ -175,6 +175,15 @@ void autopilot_read_local_pos_ned(){
 	log_info(pos_log);
 }
 
+void read_heartbeat(void){
+	mavlink_message_t msg;
+	while(msg.msgid != MAVLINK_MSG_ID_HEARTBEAT){
+		serial_read_message(&msg);
+	}
+	mavlink_msg_heartbeat_decode(&msg, &(current_messages.heartbeat));
+	current_messages.time_stamps.heartbeat = get_time_usec();
+}
+
 void read_messages(void){
 	bool success;               // receive success flag
 	bool received_all = false;  
@@ -287,11 +296,11 @@ void read_messages(void){
 
 		if (!lock_read_messages){
 			received_all =
-							this_timestamps.heartbeat					  &&
+							this_timestamps.heartbeat					  // &&
 							// this_timestamps.command_ack 
 							// this_timestamps.battery_status             &&
 							// this_timestamps.radio_status               &&
-							this_timestamps.local_position_ned      	  //&&
+							// this_timestamps.local_position_ned      	  //&&
 							// this_timestamps.global_position_int        &&
 							// this_timestamps.global_pos_cov          	  &&
 							// this_timestamps.position_target_local_ned  &&
@@ -369,6 +378,10 @@ bool autopilot_enable_offboard(void){
 		printf("offb cont already enabled\n");
 	}
 	return control_status;
+}
+
+bool check_arm(){
+	return current_messages.heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY;
 }
 
 bool autopilot_disable_offboard(void){

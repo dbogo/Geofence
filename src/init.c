@@ -16,7 +16,7 @@ void init(GPS_actions_t *GPSHandler, full_gps_data_t* gpsData, zone_t* zone, log
 	initLogSystem(logMaster);
 	GPS_init(GPSHandler);
 	init_gps_data(&gpsData);
-	find_mbr(zone);
+	// find_mbr(zone);
 	create_edges(zone, edges);
 
 	#ifdef WIRINGPI

@@ -126,6 +126,9 @@ typedef struct autopilot_info {
 extern bool control_status;
 extern bool arm_status;
 
+void read_heartbeat(void);
+bool check_arm();
+
 /**
  * @brief      Read data from the GLOBAL_POSOTION_INT message
  */

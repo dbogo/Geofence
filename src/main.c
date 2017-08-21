@@ -45,25 +45,29 @@ int main(int argc, char** argv) {
 	// 	usleep(500000); //500ms
 	// }
 
-
-	// if(!geofence_breached(&gpsData, &zone)){
-	// 	state = IN_BORDER;
-	// } else {
-	// 	state = OUT_OF_BORDER;
-	// }
+	sleep(16);
+	log_info("Done waiting for autopilot boot (16 sec)");
 
 	//autopilot stuff
 	autopilot_initialize();
 	#ifdef __arm__
 	open_telem_port("/dev/ttyAMA0"); // TELEM2 is connected to RPi's GPIO
+	log_info("Opened /dev/ttyAMA0 as telem port");
 	#else
 	open_telem_port("/dev/ttyUSB0"); // TELEM2 is connected via FTDI cable.
 	#endif
 
 	read_messages();
+	log_info("Completed initial read from drone");
 	autopilot_start();
 
 	uint64_t last_gps = 0;
+
+//	while(!check_arm()){
+		// printf("Reading heartbeat\n");
+//		read_heartbeat();
+//	}
+
 
 	while(true){
 
@@ -75,9 +79,10 @@ int main(int argc, char** argv) {
 		autopilot_write_gps(&gpsData);
 		
 		if(geofence_breached(&gpsData, &zone)){
-
+			log_info("Out of border.");
 			if(!autopilot_control_status()){
 				controller_take_control();
+				log_info("Taking control over drone");
 			}
 
 			controller_stop_drone();
@@ -86,6 +91,7 @@ int main(int argc, char** argv) {
 
 			if(autopilot_control_status()){
 				controller_release_control();
+				log_info("released control of drone");
 
 			}
 		}

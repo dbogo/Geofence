@@ -18,7 +18,7 @@ int GPS_init(GPS_actions_t* gpsHandler){
 	#ifdef RPI_GPS
 		gpsHandler->getGPS = getGPSSample_RPI;
 		log_info("Running Code for the RPi implementation.");
-		open_gps_port("/dev/ttyUSB0");
+		open_gps_port("/dev/ttyACM0");
 	#else
 		gpsHandler->getGPS = getGPSSample_DEMO;
 		log_int(&logMaster, "Running code for the Demo implementation.");
